@@ -1,8 +1,8 @@
 import raf from "../utils/Raf";
+import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { PerspectiveCamera, Scene, WebGLRenderer } from "three";
 
-export class MainScene extends Scene {
+export class MainScene extends THREE.Scene {
   constructor(canvas) {
     super();
 
@@ -12,7 +12,7 @@ export class MainScene extends Scene {
     };
 
     this.canvas = canvas;
-    this.camera = new PerspectiveCamera(
+    this.camera = new THREE.PerspectiveCamera(
       55,
       this.sizes.width / this.sizes.height,
       0.1,
@@ -28,7 +28,7 @@ export class MainScene extends Scene {
     this.controls.enableRotate = true;
     this.controls.update();
 
-    this.renderer = new WebGLRenderer({
+    this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       powerPreference: "high-performance",
       antialias: true,
