@@ -4,8 +4,6 @@ import "./styles/style.scss";
 
 let mainScene, canvas;
 
-document.addEventListener("DOMContentLoaded", init);
-
 function init() {
   canvas = document.querySelector(".webgl");
   mainScene = new MainScene(canvas);
@@ -15,3 +13,5 @@ function init() {
   console.log(mainScene);
   console.log("Hello");
 }
+
+document.addEventListener("DOMContentLoaded", init);

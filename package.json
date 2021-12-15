@@ -7,6 +7,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^3.1.1",
     "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",

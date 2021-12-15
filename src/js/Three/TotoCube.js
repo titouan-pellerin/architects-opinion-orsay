@@ -1,8 +1,8 @@
-import { ShaderMaterial, BoxGeometry, Mesh } from "three";
-import vertexShader from "../../glsl/TotoCube/vertex.glsl?raw";
 import fragmentShader from "../../glsl/TotoCube/fragment.glsl?raw";
-import raf from "../utils/Raf";
+import vertexShader from "../../glsl/TotoCube/vertex.glsl?raw";
 import { textureLoader } from "../utils/Loader";
+import raf from "../utils/Raf";
+import { BoxGeometry, Mesh, ShaderMaterial } from "three";
 
 export class TotoCube extends Mesh {
   constructor() {

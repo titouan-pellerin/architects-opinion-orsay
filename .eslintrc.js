@@ -5,12 +5,16 @@ module.exports = {
     es2021: true,
   },
   // extends: ["eslint:recommended", "plugin:prettier/recommended"],
-  extends: ["eslint:recommended"],
+  extends: ["eslint:recommended", "plugin:prettier/recommended", "prettier"],
   parserOptions: {
-    ecmaVersion: 13,
+    ecmaVersion: 12,
     sourceType: "module",
   },
   rules: {
+    "no-var": "error",
+    "no-multi-spaces": "error",
+    "prefer-const": "error",
+    "no-use-before-define": "error",
     "no-duplicate-imports": 1,
     indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
