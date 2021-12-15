@@ -1,3 +1,4 @@
+import { stats } from "./Debug";
 import { Clock } from "three";
 
 class Raf {
@@ -22,12 +23,16 @@ class Raf {
   }
 
   update() {
-    requestAnimationFrame(this.update);
+    if (stats) stats.begin();
 
     this.elapsedTime = this.clock.getElapsedTime();
     this.functions.forEach((fn) => {
       fn();
     });
+
+    if (stats) stats.end();
+
+    requestAnimationFrame(this.update);
   }
 }
 

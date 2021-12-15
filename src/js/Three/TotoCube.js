@@ -1,5 +1,5 @@
-import fragmentShader from "../../glsl/TotoCube/fragment.glsl?raw";
-import vertexShader from "../../glsl/TotoCube/vertex.glsl?raw";
+import fragmentShader from "../../glsl/TotoCube/fragment.glsl";
+import vertexShader from "../../glsl/TotoCube/vertex.glsl";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import * as THREE from "three";
