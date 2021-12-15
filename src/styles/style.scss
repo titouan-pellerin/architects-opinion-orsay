@@ -1,0 +1,9 @@
+@import './utils/_fonts';
+@import './utils/_var';
+@import './utils/_reset';
+
+#app {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
