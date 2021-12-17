@@ -9,8 +9,9 @@ import * as THREE from "three";
 export class Ground {
   constructor() {
     const parameters = {
-      groundScale: 40,
-      color: new THREE.Color("#36422f"),
+      groundScale: 4,
+      color: new THREE.Color("#0ff5dd"),
+      color2: new THREE.Color("#000000"),
     };
 
     // this.grassMat = new THREE.ShaderMaterial({
@@ -30,28 +31,35 @@ export class Ground {
       transparent: true,
       uniforms: {
         uTime: { value: 0 },
+        uColor: { value: parameters.color },
+        uColor2: { value: parameters.color2 }
       },
+    });
+
+    this.test = new THREE.MeshBasicMaterial({
+      color: parameters.color,
+      side: THREE.DoubleSide
     });
 
     this.geometry = new THREE.BoxGeometry();
     this.geometry2 = new THREE.PlaneGeometry();
 
-    // this.plane = new THREE.Mesh(this.geometry2, this.grassMat);
-    // this.plane.rotation.x = Math.PI * 0.5;
-    // this.plane.position.x = 5;
-    // this.plane.scale.set(
-    //   parameters.groundScale,
-    //   parameters.groundScale,
-    //   parameters.groundScale,
-    // );
+    this.plane = new THREE.Mesh(this.geometry2, this.grassMat);
+    this.plane.rotation.x = Math.PI * 0.5;
+    this.plane.position.y = -3;
+    this.plane.scale.set(
+      100,
+      100,
+      100,
+    );
 
-    this.ground = new THREE.Mesh(this.geometry2, this.grassMat);
-    this.ground.rotation.x = Math.PI * 0.5;
-    this.ground.position.y = -0.2;
-    this.ground.scale.set(
-      parameters.groundScale,
-      parameters.groundScale,
-      parameters.groundScale,
+    this.mask = new THREE.Mesh(this.geometry2, this.test);
+    this.mask.rotation.x = Math.PI * 0.5;
+    this.mask.position.y = -3.01;
+    this.mask.scale.set(
+      100,
+      100,
+      100,
     );
 
     raf.subscribe("Ground", this.update.bind(this));

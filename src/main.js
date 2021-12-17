@@ -9,15 +9,13 @@ function init() {
   canvas = document.querySelector(".webgl");
   mainScene = new MainScene(canvas);
 
-  // const grassInstancedMesh = new GrassInstancedMesh();
-  // mainScene.add(
-  //   grassInstancedMesh.grassGroup,
-  //   grassInstancedMesh.grass2Group,
-  //   grassInstancedMesh.grass3Group,
-  // );
+  const grassInstancedMesh = new GrassInstancedMesh();
+  mainScene.add(
+    grassInstancedMesh.grassGroup,
+  );
 
   const ground = new Ground();
-  mainScene.add(ground.ground);
+  mainScene.add(ground.plane, ground.mask);
 }
 
 document.addEventListener("DOMContentLoaded", init);

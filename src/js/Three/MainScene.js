@@ -36,18 +36,22 @@ export class MainScene extends THREE.Scene {
 
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor("#000000");
+    this.renderer.setClearColor("#0ff5dd");
 
     this.add(this.camera);
     // this.camera.position.set(5, 0, 0);
+
+    const fog = new THREE.Fog("#0ff5dd", 20, 21)
+    console.log(this);
+    this.fog = fog
 
     window.addEventListener("resize", this.resize.bind(this));
 
     raf.subscribe("scene", this.update.bind(this));
 
-    const light = new THREE.PointLight(0xffffff, 2, 100);
-    light.position.set(50, 50, 50);
-    this.add(light);
+    // const light = new THREE.PointLight(0xffffff, 2, 100);
+    // light.position.set(50, 50, 50);
+    // this.add(light);
   }
 
   resize() {
