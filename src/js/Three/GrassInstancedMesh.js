@@ -1,51 +1,118 @@
-import fragmentShader from "../../glsl/GrassInstancedMesh/fragment.glsl";
-import vertexShader from "../../glsl/GrassInstancedMesh/vertex.glsl";
+import fragmentShader from "../../glsl/grass/fragment.glsl";
+import vertexShader from "../../glsl/grass/vertex.glsl";
+import { gui } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import * as THREE from "three";
 
 export class GrassInstancedMesh {
   constructor() {
-    this.material = new THREE.ShaderMaterial({
+    const parameters = {
+      color: new THREE.Color("#36422f"),
+      color2: new THREE.Color("#244922"),
+      color3: new THREE.Color("#1a512d"),
+      displaceIntensity: 0.05,
+      displaceIntensity2: 0.1,
+      displaceIntensity3: 0.2,
+      grassQuantity: 50,
+    };
+
+    this.grassMat = new THREE.ShaderMaterial({
       vertexShader,
       fragmentShader,
       uniforms: {
         uTime: { value: 0 },
+        uColor: { value: parameters.color },
+        uDisplaceIntensity: { value: parameters.displaceIntensity },
       },
       side: THREE.DoubleSide,
+      transparent: true,
     });
 
-    const instanceNumber = 50000;
-    const dummy = new THREE.Object3D();
+    this.grassMat2 = this.grassMat.clone();
+    this.grassMat2.uniforms.uColor.value = parameters.color2;
+    this.grassMat2.uniforms.uDisplaceIntensity.value = parameters.displaceIntensity2;
 
-    this.geometry = new THREE.PlaneGeometry(0.01, 1, 1, 128);
+    this.grassMat3 = this.grassMat.clone();
+    this.grassMat3.uniforms.uColor.value = parameters.color3;
+    this.grassMat3.uniforms.uDisplaceIntensity.value = parameters.displaceIntensity3;
 
-    this.instancedMesh = new THREE.InstancedMesh(
+    const instanceNumber = 50;
+    const instance = new THREE.Object3D();
+
+    this.geometry = new THREE.PlaneGeometry(0.01, 0.5, 1, 128);
+
+    this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
-      this.material,
+      this.grassMat,
       instanceNumber,
     );
-    this.instancedMesh.rotation.y = Math.PI * 0.5;
+    this.grassPattern.scale.set(3, 3, 3);
 
     // Position and scale the grass blade instances randomly.
     for (let i = 0; i < instanceNumber; i++) {
-      dummy.position.set((Math.random() - 0.5) * 20, 0, (Math.random() - 0.5) * 20);
+      instance.position.set(Math.random() - 0.5, 0, Math.random() - 0.5);
 
-      dummy.scale.setScalar(0.5 + Math.random() * 0.5);
+      instance.scale.setScalar(Math.random());
 
-      dummy.rotation.y = Math.random() * Math.PI;
-
-      dummy.updateMatrix();
-      this.instancedMesh.setMatrixAt(i, dummy.matrix);
+      instance.updateMatrix();
+      this.grassPattern.setMatrixAt(i, instance.matrix);
     }
 
-    // const this.instancedMesh2 = this.instancedMesh.clone();
-    // this.instancedMesh2.position.y = 1;
+    this.grassGroup = new THREE.Group();
+    this.grass2Group = new THREE.Group();
+    this.grass3Group = new THREE.Group();
 
-    raf.subscribe("totoCube", this.update.bind(this));
+    for (let i = 0; i < parameters.grassQuantity; i++) {
+      this.grass = this.grassPattern.clone();
+      this.grass.position.set((Math.random() - 0.5) * 40, 0, (Math.random() - 0.5) * 40);
+      this.grassGroup.add(this.grass);
+
+      this.grass2 = this.grassPattern.clone();
+      this.grass2.material = this.grassMat2;
+      this.grass2.scale.set(3, 1.5, 3);
+      this.grass2.position.set((Math.random() - 0.5) * 40, 0, (Math.random() - 0.5) * 40);
+      this.grass2Group.add(this.grass2);
+
+      this.grass3 = this.grassPattern.clone();
+      this.grass3.material = this.grassMat3;
+      this.grass2.scale.set(3, 0.75, 3);
+      this.grass3.position.set((Math.random() - 0.5) * 40, 0, (Math.random() - 0.5) * 40);
+      this.grass3Group.add(this.grass3);
+    }
+
+    raf.subscribe("Grass", this.update.bind(this));
+
+    const grassFolder = gui.addFolder("Grass");
+    grassFolder.addColor(parameters, "color").onChange(() => {
+      this.grassMat.uniforms.uColor.set(parameters.color);
+    });
+    grassFolder
+      .add(this.grassMat.uniforms.uDisplaceIntensity, "value")
+      .min(0)
+      .max(1)
+      .name("DisplaceIntensity");
+    grassFolder.addColor(parameters, "color2").onChange(() => {
+      this.grassMat2.uniforms.uColor.set(parameters.color);
+    });
+    grassFolder
+      .add(this.grassMat2.uniforms.uDisplaceIntensity, "value")
+      .min(0)
+      .max(1)
+      .name("DisplaceIntensity2");
+    grassFolder.addColor(parameters, "color3").onChange(() => {
+      this.grassMat3.uniforms.uColor.set(parameters.color);
+    });
+    grassFolder
+      .add(this.grassMat3.uniforms.uDisplaceIntensity, "value")
+      .min(0)
+      .max(1)
+      .name("DisplaceIntensity3");
   }
 
   update() {
-    this.material.uniforms.uTime.value = raf.elapsedTime;
+    this.grassMat.uniforms.uTime.value = raf.elapsedTime;
+    this.grassMat2.uniforms.uTime.value = raf.elapsedTime;
+    this.grassMat3.uniforms.uTime.value = raf.elapsedTime;
   }
 }
