@@ -4,6 +4,7 @@
 
 varying vec2 vUv;
 uniform float uTime;
+uniform float uSpeed;
 uniform float uDisplaceIntensity;
 
 float N(vec2 st) {
@@ -28,17 +29,15 @@ float smoothNoise(vec2 ip) {
 }
 
 void main() {
+    // Speed
+    float time = uTime * uSpeed;
 
     vUv = uv;
 
     vec4 mvPosition = vec4(position, 1.0);
     mvPosition = instanceMatrix * mvPosition;
 
-    float noise = smoothNoise(mvPosition.xz + vec2(0., uTime * 0.5));
-
-    float posNoise = cnoise(step(0.5, mvPosition.xz));
-    float strength = mod(mvPosition.y * 10.0, 1.0);
-    strength = step(0.5, strength);
+    float noise = smoothNoise(mvPosition.xz + vec2(0., time));
 
     float dispPower = 1. - cos(uv.y * PI * uDisplaceIntensity);
 

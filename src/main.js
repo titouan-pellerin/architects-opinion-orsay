@@ -1,6 +1,7 @@
+import { Environnement } from "./js/Three/Environnement";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
-import { Ground } from "./js/Three/Ground";
 import { MainScene } from "./js/Three/MainScene";
+import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
 import "./styles/style.scss";
 
 let mainScene, canvas;
@@ -10,12 +11,13 @@ function init() {
   mainScene = new MainScene(canvas);
 
   const grassInstancedMesh = new GrassInstancedMesh();
-  mainScene.add(
-    grassInstancedMesh.grassGroup,
-  );
+  mainScene.add(grassInstancedMesh.group);
 
-  const ground = new Ground();
-  mainScene.add(ground.plane, ground.mask, ground.sphere);
+  const rockInstancedMesh = new RockInstancedMesh();
+  mainScene.add(rockInstancedMesh.group);
+
+  const environnement = new Environnement();
+  mainScene.add(environnement.ground, environnement.mask, environnement.sky);
 }
 
 document.addEventListener("DOMContentLoaded", init);
