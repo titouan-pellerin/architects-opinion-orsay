@@ -15,7 +15,7 @@ function init() {
   );
 
   const ground = new Ground();
-  mainScene.add(ground.plane, ground.mask);
+  mainScene.add(ground.plane, ground.mask, ground.sphere);
 }
 
 document.addEventListener("DOMContentLoaded", init);

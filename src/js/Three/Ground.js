@@ -41,7 +41,7 @@ export class Ground {
       side: THREE.DoubleSide
     });
 
-    this.geometry = new THREE.BoxGeometry();
+    this.geometry = new THREE.SphereGeometry( .9, 128, 128, );
     this.geometry2 = new THREE.PlaneGeometry();
 
     this.plane = new THREE.Mesh(this.geometry2, this.grassMat);
@@ -57,6 +57,13 @@ export class Ground {
     this.mask.rotation.x = Math.PI * 0.5;
     this.mask.position.y = -3.01;
     this.mask.scale.set(
+      100,
+      100,
+      100,
+    );
+
+    this.sphere = new THREE.Mesh(this.geometry, this.grassMat);
+    this.sphere.scale.set(
       100,
       100,
       100,

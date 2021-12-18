@@ -13,14 +13,12 @@ export class MainScene extends THREE.Scene {
 
     this.canvas = canvas;
     this.camera = new THREE.PerspectiveCamera(
-      55,
+      75,
       this.sizes.width / this.sizes.height,
       0.1,
-      100,
+      1000,
     );
     this.camera.updateProjectionMatrix();
-
-    this.camera.position.set(0, 0, 10);
 
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.enableDamping = true;
@@ -39,10 +37,9 @@ export class MainScene extends THREE.Scene {
     this.renderer.setClearColor("#0ff5dd");
 
     this.add(this.camera);
-    // this.camera.position.set(5, 0, 0);
+    this.camera.position.set(0, 0, 10);
 
-    const fog = new THREE.Fog("#0ff5dd", 20, 21)
-    console.log(this);
+    const fog = new THREE.Fog("#f0f5dd", 15, 0)
     this.fog = fog
 
     window.addEventListener("resize", this.resize.bind(this));
