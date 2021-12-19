@@ -8,7 +8,7 @@ import * as THREE from "three";
 export class RockInstancedMesh {
   constructor() {
     const parameters = {
-      color: new THREE.Color("#bed5bf"),
+      color: new THREE.Color("#949c90"),
       color2: new THREE.Color("#236760"),
       rockQuantity: 20,
     };
@@ -21,12 +21,9 @@ export class RockInstancedMesh {
         uSpeed: { value: parameters.speed },
         uColor: { value: parameters.color },
         uColor2: { value: parameters.color2 },
-        uDisplaceIntensity: { value: parameters.displaceIntensity },
       },
-      side: THREE.DoubleSide,
       transparent: true,
     });
-    // this.material = new THREE.MeshBasicMaterial();
 
     const instanceNumber = 5;
     const instance = new THREE.Object3D();

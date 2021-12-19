@@ -8,7 +8,7 @@ import * as THREE from "three";
 export class GrassInstancedMesh {
   constructor() {
     const parameters = {
-      color: new THREE.Color("#bed5bf"),
+      color: new THREE.Color("#84b15a"),
       color2: new THREE.Color("#236760"),
       displaceIntensity: 0.125,
       grassQuantity: 100,
@@ -25,11 +25,10 @@ export class GrassInstancedMesh {
         uColor2: { value: parameters.color2 },
         uDisplaceIntensity: { value: parameters.displaceIntensity },
       },
-      side: THREE.DoubleSide,
       transparent: true,
     });
 
-    const instanceNumber = 100;
+    const instanceNumber = 500;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.5, 1, 64);

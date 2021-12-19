@@ -10,14 +10,15 @@ function init() {
   canvas = document.querySelector(".webgl");
   mainScene = new MainScene(canvas);
 
+  const environnement = new Environnement();
+  mainScene.add(environnement.ground, environnement.sky);
+  mainScene.add(environnement.mask, environnement.test);
+
   const grassInstancedMesh = new GrassInstancedMesh();
   mainScene.add(grassInstancedMesh.group);
 
   const rockInstancedMesh = new RockInstancedMesh();
   mainScene.add(rockInstancedMesh.group);
-
-  const environnement = new Environnement();
-  mainScene.add(environnement.ground, environnement.mask, environnement.sky);
 }
 
 document.addEventListener("DOMContentLoaded", init);

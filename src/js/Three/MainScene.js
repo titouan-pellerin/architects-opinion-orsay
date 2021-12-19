@@ -1,16 +1,16 @@
+import { gui } from "../utils/Debug";
 import raf from "../utils/Raf";
 import * as THREE from "three";
-import { gui } from "../utils/Debug";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { AfterimagePass } from "three/examples/jsm/postprocessing/AfterimagePass.js";
+import { BokehPass } from "three/examples/jsm/postprocessing/BokehPass.js";
+import { CubeTexturePass } from "three/examples/jsm/postprocessing/CubeTexturePass.js";
+import { DotScreenPass } from "three/examples/jsm/postprocessing/DotScreenPass.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
-import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js'
-import { DotScreenPass } from 'three/examples/jsm/postprocessing/DotScreenPass.js'
-import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass.js'
-import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js'
-import { CubeTexturePass } from 'three/examples/jsm/postprocessing/CubeTexturePass.js'
 
 export class MainScene extends THREE.Scene {
   constructor(canvas) {
@@ -41,41 +41,53 @@ export class MainScene extends THREE.Scene {
       powerPreference: "high-performance",
       antialias: true,
     });
-
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
+    this.renderer.physicallyCorrectLights = true;
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1;
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor("#0ff5dd");
+    this.renderer.setClearColor("#81cbea");
 
     this.add(this.camera);
     this.camera.position.set(0, 0, 10);
 
-    // const fog = new THREE.Fog("#0ff5dd", 10, 20);
+    // const fog = new THREE.Fog("#b4daeb", 5, 90);
     // this.fog = fog;
 
-    let renderScene = new RenderPass(this, this.camera)
+    const directionalLight = new THREE.DirectionalLight("#ffffff", 3);
+    directionalLight.castShadow = true;
+    directionalLight.shadow.bias = 0.0001;
+    directionalLight.shadow.mapSize.set(2048, 2048);
+    directionalLight.position.set(1, 2, -2.25);
+    this.add(directionalLight);
 
-    let unrealBloomPass = new UnrealBloomPass()
-    unrealBloomPass.strength = 0.1
-    unrealBloomPass.radius = 0
-    unrealBloomPass.threshold = 0.05
+    let renderScene = new RenderPass(this, this.camera);
 
-    let afterimagePass = new AfterimagePass()
-    afterimagePass.uniforms.damp.value = .99
+    let unrealBloomPass = new UnrealBloomPass();
+    unrealBloomPass.strength = 0.1;
+    unrealBloomPass.radius = 0;
+    unrealBloomPass.threshold = 0.05;
+
+    let afterimagePass = new AfterimagePass();
+    afterimagePass.uniforms.damp.value = 0.99;
 
     let dotScreenPass = new DotScreenPass();
     let filmPass = new FilmPass();
     let cubeTexturePass = new CubeTexturePass();
     // let bokehPass = new BokehPass();
 
-    this.composer = new EffectComposer(this.renderer)
-    this.composer.setSize(this.sizes.width, this.sizes.height)
-    this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    this.composer = new EffectComposer(this.renderer);
+    this.composer.setSize(this.sizes.width, this.sizes.height);
+    this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    this.composer.addPass(renderScene)
+    this.composer.addPass(renderScene);
     // this.composer.addPass(this.afterimagePass)
     // this.composer.addPass(filmPass)
     // this.composer.addPass(bokehPass)
-    // this.composer.addPass(dotScreenPass)
+    // this.composer.addPass(dotScreenPass);
     // this.composer.addPass(this.unrealBloomPass)
 
     window.addEventListener("resize", this.resize.bind(this));
@@ -98,13 +110,13 @@ export class MainScene extends THREE.Scene {
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    this.composer.setSize(this.sizes.width, this.sizes.height)
-    this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    this.composer.setSize(this.sizes.width, this.sizes.height);
+    this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   }
 
   update() {
     this.controls.update();
-    // this.composer.render()
-    this.renderer.render(this, this.camera)
+    this.renderer.render(this, this.camera);
+    // this.composer.render();
   }
 }
