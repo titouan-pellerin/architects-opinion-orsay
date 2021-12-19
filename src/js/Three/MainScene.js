@@ -13,10 +13,10 @@ export class MainScene extends THREE.Scene {
 
     this.canvas = canvas;
     this.camera = new THREE.PerspectiveCamera(
-      55,
-      this.sizes.width / this.sizes.height,
-      0.1,
       100,
+      this.sizes.width / this.sizes.height,
+      1,
+      100000,
     );
     this.camera.updateProjectionMatrix();
 
