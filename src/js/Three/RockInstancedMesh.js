@@ -2,7 +2,7 @@ import beginFragmentShader from "../../glsl/grass/beginFragment.glsl";
 import beginVertexShader from "../../glsl/grass/beginVertex.glsl";
 import voidFragmentShader from "../../glsl/grass/voidFragment.glsl";
 import voidVertexShader from "../../glsl/rock/voidVertex.glsl";
-import { gui } from "../utils/Debug";
+import { guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import * as THREE from "three";
@@ -23,22 +23,22 @@ export class RockInstancedMesh {
 
       shader.vertexShader = shader.vertexShader.replace(
         "#include <common>",
-        beginVertexShader,
+        beginVertexShader
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <project_vertex>",
-        voidVertexShader,
+        voidVertexShader
       );
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
-        beginFragmentShader,
+        beginFragmentShader
       );
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <output_fragment>",
-        voidFragmentShader,
+        voidFragmentShader
       );
 
-      const folder = gui.addFolder("Rock");
+      const folder = guiFolders.get("scene").addFolder("Rock");
       folder
         .addColor(this.parameters, "color")
         .onChange(() => {
@@ -61,7 +61,7 @@ export class RockInstancedMesh {
     this.meshPattern = new THREE.InstancedMesh(
       this.geometry,
       this.material,
-      instanceNumber,
+      instanceNumber
     );
     this.meshPattern.castShadow = true;
 
@@ -78,7 +78,11 @@ export class RockInstancedMesh {
 
     for (let i = 0; i < this.parameters.rockQuantity; i++) {
       this.rock = this.meshPattern.clone();
-      this.rock.position.set((Math.random() - 0.5) * 30, 0, (Math.random() - 0.5) * 30);
+      this.rock.position.set(
+        (Math.random() - 0.5) * 30,
+        0,
+        (Math.random() - 0.5) * 30
+      );
       this.rock.rotation.set(Math.random(), Math.random(), Math.random());
       this.rock.scale.set(0.5, Math.random() * 1.5, Math.random() * 1.5);
       this.group.add(this.rock);

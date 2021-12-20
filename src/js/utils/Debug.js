@@ -9,7 +9,17 @@ if (!location.hash.includes("debug")) {
   gui.domElement.style.display = "none";
   document.body.removeChild(stats.dom);
 }
-const guiFolders = [];
+
+const guiFolders = new Map();
 const cameraFolder = gui.addFolder("Camera");
-guiFolders.push(cameraFolder);
+guiFolders.set("camera", cameraFolder);
+
+const sceneFolder = gui.addFolder("Scene");
+sceneFolder.close();
+guiFolders.set("scene", sceneFolder);
+
+const atmosphereFolder = gui.addFolder("Atmosphere");
+atmosphereFolder.close();
+guiFolders.set("atmosphere", atmosphereFolder);
+
 export { gui, guiFolders, stats };

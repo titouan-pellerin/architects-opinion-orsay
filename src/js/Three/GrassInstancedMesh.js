@@ -2,7 +2,7 @@ import beginFragmentShader from "../../glsl/grass/beginFragment.glsl";
 import beginVertexShader from "../../glsl/grass/beginVertex.glsl";
 import voidFragmentShader from "../../glsl/grass/voidFragment.glsl";
 import voidVertexShader from "../../glsl/grass/voidVertex.glsl";
-import { gui } from "../utils/Debug";
+import { guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import * as THREE from "three";
@@ -25,26 +25,29 @@ export class GrassInstancedMesh {
       shader.uniforms.uColor = { value: this.parameters.color };
       shader.uniforms.uColor2 = { value: this.parameters.color2 };
       shader.uniforms.uSpeed = { value: this.parameters.speed };
-      shader.uniforms.uDisplaceIntensity = { value: this.parameters.displaceIntensity };
+      shader.uniforms.uDisplaceIntensity = {
+        value: this.parameters.displaceIntensity,
+      };
 
       shader.vertexShader = shader.vertexShader.replace(
         "#include <common>",
-        beginVertexShader,
+        beginVertexShader
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <project_vertex>",
-        voidVertexShader,
+        voidVertexShader
       );
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
-        beginFragmentShader,
+        beginFragmentShader
       );
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <output_fragment>",
-        voidFragmentShader,
+        voidFragmentShader
       );
 
-      const folder = gui.addFolder("Grass");
+      const sceneFolder = guiFolders.get("scene");
+      const folder = sceneFolder.addFolder("Grass");
       folder
         .addColor(this.parameters, "color")
         .onChange(() => {
@@ -73,7 +76,7 @@ export class GrassInstancedMesh {
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
       this.material,
-      instanceNumber,
+      instanceNumber
     );
     this.grassPattern.scale.set(3, 3, 3);
     this.grassPattern.castShadow = true;
@@ -88,11 +91,15 @@ export class GrassInstancedMesh {
     }
 
     this.group = new THREE.Group();
-    this.group.position.y = -3;
+    // this.group.position.y = -3;
 
     for (let i = 0; i < this.parameters.grassQuantity; i++) {
       this.grass = this.grassPattern.clone();
-      this.grass.position.set((Math.random() - 0.5) * 30, 0, (Math.random() - 0.5) * 30);
+      this.grass.position.set(
+        (Math.random() - 0.5) * 30,
+        Math.random() - 3.75,
+        (Math.random() - 0.5) * 30
+      );
       this.group.add(this.grass);
     }
 

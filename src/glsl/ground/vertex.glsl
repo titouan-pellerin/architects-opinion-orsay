@@ -9,7 +9,7 @@ void main() {
     vUv = uv;
     vNormal = normal;
     vPosition = position;
-    float bigNoise = cnoise(vec4(vec3(vPosition * 50.), uTime * 0.1)) * 0.0035;
+    float bigNoise = cnoise(vec4(vec3(vPosition * 50.), 0.5)) * 0.0045;
 
     vPosition.zy += bigNoise;
 
