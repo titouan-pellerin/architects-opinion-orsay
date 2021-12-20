@@ -120,18 +120,18 @@ export class MainScene extends THREE.Scene {
     light2Folder.add(directionalLight2.position, "y").min(0).max(30).name("PosY");
     light2Folder.add(directionalLight2.position, "z").min(-30).max(30).name("PosZ");
 
-    let renderScene = new RenderPass(this, this.camera);
+    const renderScene = new RenderPass(this, this.camera);
 
-    let unrealBloomPass = new UnrealBloomPass();
+    const unrealBloomPass = new UnrealBloomPass();
     unrealBloomPass.strength = 0.1;
     unrealBloomPass.radius = 0;
     unrealBloomPass.threshold = 0.05;
 
-    let afterimagePass = new AfterimagePass();
+    const afterimagePass = new AfterimagePass();
     afterimagePass.uniforms.damp.value = 0.99;
 
-    let dotScreenPass = new DotScreenPass();
-    let filmPass = new FilmPass();
+    const dotScreenPass = new DotScreenPass();
+    const filmPass = new FilmPass();
     // let cubeTexturePass = new CubeTexturePass();
     // let bokehPass = new BokehPass();
 

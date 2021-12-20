@@ -9,7 +9,9 @@ if (!location.hash.includes("debug")) {
   gui.domElement.style.display = "none";
   document.body.removeChild(stats.dom);
 }
+
 const guiFolders = [];
 const cameraFolder = gui.addFolder("Camera");
 guiFolders.push(cameraFolder);
+
 export { gui, guiFolders, stats };
