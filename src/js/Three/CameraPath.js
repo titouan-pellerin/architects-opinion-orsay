@@ -1,3 +1,4 @@
+import { gui, guiFolders } from "../utils/Debug";
 import raf from "../utils/Raf";
 import { mainScene } from "./MainScene";
 import {
@@ -26,7 +27,22 @@ export class CameraPath {
       color: 0xffffff,
     });
     this.splineObject = new Line(this.curveGeometry, curveMaterial);
-    raf.subscribe("path", this.update.bind(this));
+    this.debugObject = {
+      subscribe: () => {
+        raf.subscribe("path", this.update.bind(this));
+      },
+      unsubscribe: () => {
+        raf.unsubscribe("path");
+      },
+    };
+    guiFolders
+      .find((folder) => folder._title === "Camera")
+      .add(this.debugObject, "subscribe")
+      .name("Camera path on");
+    guiFolders
+      .find((folder) => folder._title === "Camera")
+      .add(this.debugObject, "unsubscribe")
+      .name("Camera path off");
   }
 
   // onWheel(e) {

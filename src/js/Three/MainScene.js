@@ -1,4 +1,4 @@
-import { gui } from "../utils/Debug";
+import { gui, guiFolders } from "../utils/Debug";
 import raf from "../utils/Raf";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -41,9 +41,10 @@ export class MainScene extends THREE.Scene {
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
     this.controls.enableRotate = true;
-    this.controls.enabled = false;
-    const cameraFolder = gui.addFolder("Camera");
-    cameraFolder.add(this.controls, "enabled").name("OrbitControls");
+    guiFolders
+      .find((folder) => folder._title === "Camera")
+      .add(this.controls, "enabled")
+      .name("OrbitControls");
     this.controls.update();
 
     this.renderer = new THREE.WebGLRenderer({
