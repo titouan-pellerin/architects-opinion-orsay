@@ -4,7 +4,7 @@ import fragmentShader from "../../glsl/ground/fragment.glsl";
 import vertexShader from "../../glsl/ground/vertex.glsl";
 import voidFragmentShader from "../../glsl/ground/voidFragment.glsl";
 import voidVertexShader from "../../glsl/ground/voidVertex.glsl";
-import { gui } from "../utils/Debug";
+import { gui, guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import { texturesMap } from "../utils/assets";
@@ -34,22 +34,22 @@ export class Environnement {
 
       shader.vertexShader = shader.vertexShader.replace(
         "#include <common>",
-        beginVertexShader,
+        beginVertexShader
       );
 
       shader.vertexShader = shader.vertexShader.replace(
         "#include <begin_vertex>",
-        voidVertexShader,
+        voidVertexShader
       );
 
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
-        beginFragmentShader,
+        beginFragmentShader
       );
 
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <output_fragment>",
-        voidFragmentShader,
+        voidFragmentShader
       );
     };
 
@@ -79,7 +79,7 @@ export class Environnement {
     this.ground.scale.set(
       this.parameters.envScale,
       this.parameters.envScale,
-      this.parameters.envScale,
+      this.parameters.envScale
     );
 
     this.mask = new THREE.Mesh(this.groundGeometry, this.groundMaskMaterial);
@@ -88,7 +88,7 @@ export class Environnement {
     this.mask.scale.set(
       this.parameters.envScale,
       this.parameters.envScale,
-      this.parameters.envScale,
+      this.parameters.envScale
     );
     this.mask.receiveShadow = true;
 
@@ -98,12 +98,14 @@ export class Environnement {
     this.sky.scale.set(
       this.parameters.envScale,
       this.parameters.envScale,
-      this.parameters.envScale,
+      this.parameters.envScale
     );
 
     raf.subscribe("Ground", this.update.bind(this));
 
-    const groundFolder = gui.addFolder("Ground");
+    const sceneFolder = guiFolders.get("scene");
+    const atmosphereFolder = guiFolders.get("atmosphere");
+    const groundFolder = sceneFolder.addFolder("Ground");
     groundFolder
       .addColor(this.parameters, "groundColor")
       .onChange(() => {
@@ -131,15 +133,17 @@ export class Environnement {
       .max(2)
       .name("Speed");
 
-    const groundMaskFolder = gui.addFolder("GroundMask");
+    const groundMaskFolder = sceneFolder.addFolder("GroundMask");
     groundMaskFolder
       .addColor(this.parameters, "groundMaskColor")
       .onChange(() => {
-        this.groundMaterial.uniforms.uColor.set(this.parameters.groundMaskColor);
+        this.groundMaterial.uniforms.uColor.set(
+          this.parameters.groundMaskColor
+        );
       })
       .name("Color");
 
-    const skyFolder = gui.addFolder("Sky");
+    const skyFolder = atmosphereFolder.addFolder("Sky");
     skyFolder
       .addColor(this.parameters, "skyColor")
       .onChange(() => {
@@ -161,7 +165,11 @@ export class Environnement {
       .min(0)
       .max(100)
       .name("BigNoise");
-    skyFolder.add(this.skyMaterial.uniforms.uSpeed, "value").min(0).max(2).name("Speed");
+    skyFolder
+      .add(this.skyMaterial.uniforms.uSpeed, "value")
+      .min(0)
+      .max(2)
+      .name("Speed");
   }
 
   update() {

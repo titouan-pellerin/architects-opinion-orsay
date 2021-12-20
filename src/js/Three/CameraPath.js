@@ -36,11 +36,11 @@ export class CameraPath {
       },
     };
     guiFolders
-      .find((folder) => folder._title === "Camera")
+      .get("camera")
       .add(this.debugObject, "subscribe")
       .name("Camera path on");
     guiFolders
-      .find((folder) => folder._title === "Camera")
+      .get("camera")
       .add(this.debugObject, "unsubscribe")
       .name("Camera path off");
   }

@@ -2,7 +2,7 @@ import beginFragmentShader from "../../glsl/grass/beginFragment.glsl";
 import beginVertexShader from "../../glsl/grass/beginVertex.glsl";
 import voidFragmentShader from "../../glsl/grass/voidFragment.glsl";
 import voidVertexShader from "../../glsl/grass/voidVertex.glsl";
-import { gui } from "../utils/Debug";
+import { guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import * as THREE from "three";
@@ -46,7 +46,8 @@ export class GrassInstancedMesh {
         voidFragmentShader
       );
 
-      const folder = gui.addFolder("Grass");
+      const sceneFolder = guiFolders.get("scene");
+      const folder = sceneFolder.addFolder("Grass");
       folder
         .addColor(this.parameters, "color")
         .onChange(() => {
