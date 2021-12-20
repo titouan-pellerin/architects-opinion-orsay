@@ -15,6 +15,13 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 export class MainScene extends THREE.Scene {
   constructor(canvas) {
     super();
+    const parameters = {
+      skyBgColor: "#fdfbd3",
+      lightColor: new THREE.Color("#84b15a"),
+      lightIntensity: 1,
+      light2Color: new THREE.Color("#236760"),
+      light2Intensity: 1,
+    };
 
     this.sizes = {
       width: window.innerWidth,
@@ -49,20 +56,65 @@ export class MainScene extends THREE.Scene {
     this.renderer.toneMappingExposure = 1;
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor("#81cbea");
+    this.background = new THREE.Color(parameters.skyBgColor);
 
     this.add(this.camera);
-    this.camera.position.set(0, 0, 10);
+    this.camera.position.set(0, 0, 20);
 
-    // const fog = new THREE.Fog("#b4daeb", 5, 90);
-    // this.fog = fog;
+    const fog = new THREE.Fog(parameters.skyBgColor, 6, 45);
+    this.fog = fog;
 
-    const directionalLight = new THREE.DirectionalLight("#ffffff", 3);
+    const directionalLight = new THREE.DirectionalLight(
+      parameters.lightColor,
+      parameters.lightIntensity,
+    );
     directionalLight.castShadow = true;
     directionalLight.shadow.bias = 0.0001;
     directionalLight.shadow.mapSize.set(2048, 2048);
-    directionalLight.position.set(1, 2, -2.25);
+    directionalLight.position.set(10, 10, -10);
     this.add(directionalLight);
+
+    const directionalLight2 = new THREE.DirectionalLight(
+      parameters.light2Color,
+      parameters.light2Intensity,
+    );
+    directionalLight2.position.set(-10, 10, 10);
+    this.add(directionalLight2);
+
+    const sceneFolder = gui.addFolder("Scene");
+    sceneFolder
+      .addColor(parameters, "skyBgColor")
+      .onChange(() => {
+        fog.color.set(parameters.skyBgColor);
+        this.background.set(parameters.skyBgColor);
+      })
+      .name("SkyBgColor");
+    sceneFolder.add(fog, "near").min(-30).max(30).name("FogNear");
+    sceneFolder.add(fog, "far").min(30).max(90).name("FogFar");
+
+    const lightFolder = gui.addFolder("Light");
+    lightFolder
+      .addColor(parameters, "lightColor")
+      .onChange(() => {
+        directionalLight.color.set(parameters.lightColor);
+      })
+      .name("Color");
+    lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
+    lightFolder.add(directionalLight.position, "x").min(-30).max(30).name("PosX");
+    lightFolder.add(directionalLight.position, "y").min(0).max(30).name("PosY");
+    lightFolder.add(directionalLight.position, "z").min(-30).max(30).name("PosZ");
+
+    const light2Folder = gui.addFolder("Light2");
+    light2Folder
+      .addColor(parameters, "light2Color")
+      .onChange(() => {
+        directionalLight2.color.set(parameters.light2Color);
+      })
+      .name("Color");
+    light2Folder.add(directionalLight2, "intensity").min(0).max(10).name("Intensity");
+    light2Folder.add(directionalLight2.position, "x").min(-30).max(30).name("PosX");
+    light2Folder.add(directionalLight2.position, "y").min(0).max(30).name("PosY");
+    light2Folder.add(directionalLight2.position, "z").min(-30).max(30).name("PosZ");
 
     let renderScene = new RenderPass(this, this.camera);
 
@@ -76,7 +128,7 @@ export class MainScene extends THREE.Scene {
 
     let dotScreenPass = new DotScreenPass();
     let filmPass = new FilmPass();
-    let cubeTexturePass = new CubeTexturePass();
+    // let cubeTexturePass = new CubeTexturePass();
     // let bokehPass = new BokehPass();
 
     this.composer = new EffectComposer(this.renderer);
@@ -84,18 +136,18 @@ export class MainScene extends THREE.Scene {
     this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     this.composer.addPass(renderScene);
-    // this.composer.addPass(this.afterimagePass)
-    // this.composer.addPass(filmPass)
+    // this.composer.addPass(afterimagePass);
+    // this.composer.addPass(filmPass);
     // this.composer.addPass(bokehPass)
     // this.composer.addPass(dotScreenPass);
-    // this.composer.addPass(this.unrealBloomPass)
+    // this.composer.addPass(unrealBloomPass);
 
     window.addEventListener("resize", this.resize.bind(this));
 
-    // const folder = gui.addFolder('PostProcessing');
-    // folder.add(unrealBloomPass, 'strength').min(0).max(5).name('Bloom Strength')
-    // folder.add(unrealBloomPass, 'radius').min(0).max(50).name('Bloom Radius')
-    // folder.add(unrealBloomPass, 'threshold').min(0).max(1).name('Bloom Threshold')
+    const folder = gui.addFolder("PostProcessing");
+    folder.add(unrealBloomPass, "strength").min(0).max(5).name("Bloom Strength");
+    folder.add(unrealBloomPass, "radius").min(0).max(50).name("Bloom Radius");
+    folder.add(unrealBloomPass, "threshold").min(0).max(1).name("Bloom Threshold");
 
     raf.subscribe("scene", this.update.bind(this));
   }
@@ -116,7 +168,7 @@ export class MainScene extends THREE.Scene {
 
   update() {
     this.controls.update();
-    this.renderer.render(this, this.camera);
-    // this.composer.render();
+    // this.renderer.render(this, this.camera);
+    this.composer.render();
   }
 }

@@ -1,7 +1,5 @@
-#define PI 3.1415926538
-
-#include ../utils/noise2d;
-
+#include ../utils/noise3d;
+#include <common>
 varying vec2 vUv;
 uniform float uTime;
 uniform float uSpeed;
@@ -26,24 +24,4 @@ float smoothNoise(vec2 ip) {
     float t = mix(tl, tr, lv.x);
 
     return mix(b, t, lv.y);
-}
-
-void main() {
-    // Speed
-    float time = uTime * uSpeed;
-
-    vUv = uv;
-
-    vec4 mvPosition = vec4(position, 1.0);
-    mvPosition = instanceMatrix * mvPosition;
-
-    float noise = smoothNoise(mvPosition.xz + vec2(0., time));
-
-    float dispPower = 1. - cos(uv.y * PI * uDisplaceIntensity);
-
-    float displacement = noise * dispPower;
-    mvPosition.x -= displacement;
-
-    gl_Position = projectionMatrix * modelViewMatrix * mvPosition;
-
 }

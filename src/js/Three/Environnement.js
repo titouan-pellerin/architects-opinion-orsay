@@ -1,7 +1,6 @@
 import beginFragmentShader from "../../glsl/ground/beginFragment.glsl";
 import beginVertexShader from "../../glsl/ground/beginVertex.glsl";
 import fragmentShader from "../../glsl/ground/fragment.glsl";
-import fragmentMaskShader from "../../glsl/ground/fragmentMask.glsl";
 import vertexShader from "../../glsl/ground/vertex.glsl";
 import voidFragmentShader from "../../glsl/ground/voidFragment.glsl";
 import voidVertexShader from "../../glsl/ground/voidVertex.glsl";
@@ -24,16 +23,6 @@ export class Environnement {
       smallNoise: 500,
       bigNoise: 50,
     };
-
-    // this.groundMaskMaterial = new THREE.ShaderMaterial({
-    //   vertexShader: vertexShader,
-    //   fragmentShader: fragmentMaskShader,
-    //   side: THREE.BackSide,
-    //   uniforms: {
-    //     uTime: { value: 0 },
-    //     uColor: { value: this.parameters.groundMaskColor },
-    //   },
-    // });
 
     this.groundMaskMaterial = new THREE.MeshToonMaterial({
       side: THREE.BackSide,
@@ -105,9 +94,6 @@ export class Environnement {
 
     this.skyGeometry = new THREE.SphereGeometry();
 
-    this.test = new THREE.Mesh(this.skyGeometry, this.groundMaskMaterial);
-    this.test.castShadow = true;
-
     this.sky = new THREE.Mesh(this.skyGeometry, this.skyMaterial);
     this.sky.scale.set(
       this.parameters.envScale,
@@ -118,9 +104,12 @@ export class Environnement {
     raf.subscribe("Ground", this.update.bind(this));
 
     const groundFolder = gui.addFolder("Ground");
-    groundFolder.addColor(this.parameters, "groundColor").onChange(() => {
-      this.groundMaterial.uniforms.uColor.set(this.parameters.groundColor);
-    });
+    groundFolder
+      .addColor(this.parameters, "groundColor")
+      .onChange(() => {
+        this.groundMaterial.uniforms.uColor.set(this.parameters.groundColor);
+      })
+      .name("GroundColor");
     groundFolder
       .add(this.groundMaterial.uniforms.uStroke, "value")
       .min(0)
@@ -143,14 +132,20 @@ export class Environnement {
       .name("Speed");
 
     const groundMaskFolder = gui.addFolder("GroundMask");
-    groundMaskFolder.addColor(this.parameters, "groundMaskColor").onChange(() => {
-      this.groundMaterial.uniforms.uColor.set(this.parameters.groundMaskColor);
-    });
+    groundMaskFolder
+      .addColor(this.parameters, "groundMaskColor")
+      .onChange(() => {
+        this.groundMaterial.uniforms.uColor.set(this.parameters.groundMaskColor);
+      })
+      .name("GroundMaskColor");
 
     const skyFolder = gui.addFolder("Sky");
-    skyFolder.addColor(this.parameters, "skyColor").onChange(() => {
-      this.skyMaterial.uniforms.uColor.set(this.parameters.skyColor);
-    });
+    skyFolder
+      .addColor(this.parameters, "skyColor")
+      .onChange(() => {
+        this.skyMaterial.uniforms.uColor.set(this.parameters.skyColor);
+      })
+      .name("SkyColor");
     skyFolder
       .add(this.skyMaterial.uniforms.uStroke, "value")
       .min(0)

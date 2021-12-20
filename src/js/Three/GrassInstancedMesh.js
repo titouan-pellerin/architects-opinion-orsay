@@ -1,5 +1,7 @@
-import fragmentShader from "../../glsl/grass/fragment.glsl";
-import vertexShader from "../../glsl/grass/vertex.glsl";
+import beginFragmentShader from "../../glsl/grass/beginFragment.glsl";
+import beginVertexShader from "../../glsl/grass/beginVertex.glsl";
+import voidFragmentShader from "../../glsl/grass/voidFragment.glsl";
+import voidVertexShader from "../../glsl/grass/voidVertex.glsl";
 import { gui } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
@@ -7,26 +9,61 @@ import * as THREE from "three";
 
 export class GrassInstancedMesh {
   constructor() {
-    const parameters = {
+    this.parameters = {
+      uTime: { value: 0 },
       color: new THREE.Color("#84b15a"),
       color2: new THREE.Color("#236760"),
       displaceIntensity: 0.125,
-      grassQuantity: 100,
+      grassQuantity: 150,
       speed: 1,
     };
 
-    this.material = new THREE.ShaderMaterial({
-      vertexShader,
-      fragmentShader,
-      uniforms: {
-        uTime: { value: 0 },
-        uSpeed: { value: parameters.speed },
-        uColor: { value: parameters.color },
-        uColor2: { value: parameters.color2 },
-        uDisplaceIntensity: { value: parameters.displaceIntensity },
-      },
-      transparent: true,
-    });
+    this.material = new THREE.MeshToonMaterial();
+
+    this.material.onBeforeCompile = (shader) => {
+      shader.uniforms.uTime = this.parameters.uTime;
+      shader.uniforms.uColor = { value: this.parameters.color };
+      shader.uniforms.uColor2 = { value: this.parameters.color2 };
+      shader.uniforms.uSpeed = { value: this.parameters.speed };
+      shader.uniforms.uDisplaceIntensity = { value: this.parameters.displaceIntensity };
+
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        beginVertexShader,
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <project_vertex>",
+        voidVertexShader,
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        beginFragmentShader,
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        voidFragmentShader,
+      );
+
+      const folder = gui.addFolder("Grass");
+      folder
+        .addColor(this.parameters, "color")
+        .onChange(() => {
+          this.material.uniforms.uColor.set(this.parameters.color);
+        })
+        .name("Color");
+      folder
+        .addColor(this.parameters, "color2")
+        .onChange(() => {
+          this.material.uniforms.uColor2.set(this.parameters.color2);
+        })
+        .name("Color2");
+      folder
+        .add(shader.uniforms.uDisplaceIntensity, "value")
+        .min(0)
+        .max(1)
+        .name("DisplaceIntensity");
+      folder.add(shader.uniforms.uSpeed, "value").min(0).max(2).name("Speed");
+    };
 
     const instanceNumber = 500;
     const instance = new THREE.Object3D();
@@ -39,6 +76,7 @@ export class GrassInstancedMesh {
       instanceNumber,
     );
     this.grassPattern.scale.set(3, 3, 3);
+    this.grassPattern.castShadow = true;
 
     for (let i = 0; i < instanceNumber; i++) {
       instance.position.set(Math.random() - 0.5, 0, Math.random() - 0.5);
@@ -52,30 +90,16 @@ export class GrassInstancedMesh {
     this.group = new THREE.Group();
     this.group.position.y = -3;
 
-    for (let i = 0; i < parameters.grassQuantity; i++) {
+    for (let i = 0; i < this.parameters.grassQuantity; i++) {
       this.grass = this.grassPattern.clone();
       this.grass.position.set((Math.random() - 0.5) * 30, 0, (Math.random() - 0.5) * 30);
       this.group.add(this.grass);
     }
 
     raf.subscribe("Grass", this.update.bind(this));
-
-    const folder = gui.addFolder("Grass");
-    folder.addColor(parameters, "color").onChange(() => {
-      this.material.uniforms.uColor.set(parameters.color);
-    });
-    folder.addColor(parameters, "color2").onChange(() => {
-      this.material.uniforms.uColor2.set(parameters.color2);
-    });
-    folder
-      .add(this.material.uniforms.uDisplaceIntensity, "value")
-      .min(0)
-      .max(1)
-      .name("DisplaceIntensity");
-    folder.add(this.material.uniforms.uSpeed, "value").min(0).max(2).name("Speed");
   }
 
   update() {
-    this.material.uniforms.uTime.value = raf.elapsedTime;
+    this.parameters.uTime.value = raf.elapsedTime;
   }
 }

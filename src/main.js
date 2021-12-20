@@ -11,8 +11,7 @@ function init() {
   mainScene = new MainScene(canvas);
 
   const environnement = new Environnement();
-  mainScene.add(environnement.ground, environnement.sky);
-  mainScene.add(environnement.mask, environnement.test);
+  mainScene.add(environnement.ground, environnement.mask, environnement.sky);
 
   const grassInstancedMesh = new GrassInstancedMesh();
   mainScene.add(grassInstancedMesh.group);
