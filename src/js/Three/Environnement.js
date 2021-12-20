@@ -15,7 +15,7 @@ export class Environnement {
     this.parameters = {
       envScale: 100,
       uTime: { value: 0 },
-      groundColor: new THREE.Color("#84b15a"),
+      groundColor: new THREE.Color("#ffffff"),
       groundMaskColor: new THREE.Color("#83ce72"),
       skyColor: new THREE.Color("#ffffff"),
       speed: 0.75,
@@ -71,7 +71,7 @@ export class Environnement {
     this.skyMaterial = this.groundMaterial.clone();
     this.skyMaterial.uniforms.uColor.value = this.parameters.skyColor;
 
-    this.groundGeometry = new THREE.PlaneGeometry(1, 1, 256, 256);
+    this.groundGeometry = new THREE.PlaneGeometry(1, 1, 512, 512);
 
     this.ground = new THREE.Mesh(this.groundGeometry, this.groundMaterial);
     this.ground.rotation.x = Math.PI * 0.5;
@@ -109,7 +109,7 @@ export class Environnement {
       .onChange(() => {
         this.groundMaterial.uniforms.uColor.set(this.parameters.groundColor);
       })
-      .name("GroundColor");
+      .name("Color");
     groundFolder
       .add(this.groundMaterial.uniforms.uStroke, "value")
       .min(0)
@@ -137,7 +137,7 @@ export class Environnement {
       .onChange(() => {
         this.groundMaterial.uniforms.uColor.set(this.parameters.groundMaskColor);
       })
-      .name("GroundMaskColor");
+      .name("Color");
 
     const skyFolder = gui.addFolder("Sky");
     skyFolder
@@ -145,7 +145,7 @@ export class Environnement {
       .onChange(() => {
         this.skyMaterial.uniforms.uColor.set(this.parameters.skyColor);
       })
-      .name("SkyColor");
+      .name("Color");
     skyFolder
       .add(this.skyMaterial.uniforms.uStroke, "value")
       .min(0)

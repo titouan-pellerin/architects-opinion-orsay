@@ -2,6 +2,16 @@
 @import './utils/_var';
 @import './utils/_reset';
 
+html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
 #app {
   position: fixed;
   width: 100vw;
