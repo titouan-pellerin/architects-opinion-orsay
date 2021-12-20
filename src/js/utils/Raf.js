@@ -6,6 +6,8 @@ class Raf {
     this.functions = new Map();
     this.clock = new Clock();
     this.elapsedTime = 0;
+    this.deltaTime = 0;
+    this.previousTime = 0;
     this.init();
   }
 
@@ -24,8 +26,9 @@ class Raf {
 
   update() {
     if (stats) stats.begin();
-
     this.elapsedTime = this.clock.getElapsedTime();
+    this.deltaTime = this.elapsedTime - this.previousTime;
+    this.previousTime = this.elapsedTime;
     this.functions.forEach((fn) => {
       fn();
     });

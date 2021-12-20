@@ -41,6 +41,9 @@ export class MainScene extends THREE.Scene {
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
     this.controls.enableRotate = true;
+    this.controls.enabled = false;
+    const cameraFolder = gui.addFolder("Camera");
+    cameraFolder.add(this.controls, "enabled").name("OrbitControls");
     this.controls.update();
 
     this.renderer = new THREE.WebGLRenderer({
@@ -168,6 +171,7 @@ export class MainScene extends THREE.Scene {
 
   update() {
     this.controls.update();
+    console.log(this.camera.position);
     // this.renderer.render(this, this.camera);
     this.composer.render();
   }

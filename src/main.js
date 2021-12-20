@@ -1,3 +1,4 @@
+import { CameraPath } from "./js/Three/CameraPath";
 import { Environnement } from "./js/Three/Environnement";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
 import { mainScene } from "./js/Three/MainScene";
@@ -13,6 +14,9 @@ function init() {
 
   const rockInstancedMesh = new RockInstancedMesh();
   mainScene.add(rockInstancedMesh.group);
+
+  const path = new CameraPath();
+  mainScene.add(path.splineObject);
 }
 
 document.addEventListener("DOMContentLoaded", init);
