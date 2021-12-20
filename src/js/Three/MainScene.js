@@ -1,4 +1,6 @@
-import { gui } from "../utils/Debug";
+import fragmentShader from "../../glsl/post/fragment.glsl";
+import vertexShader from "../../glsl/post/vertex.glsl";
+import { gui, guiFolders } from "../utils/Debug";
 import raf from "../utils/Raf";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -11,11 +13,9 @@ import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
-import vertexShader from '../../glsl/post/vertex.glsl'
-import fragmentShader from '../../glsl/post/fragment.glsl'
 
 export class MainScene extends THREE.Scene {
-  constructor(canvas) {
+  constructor() {
     super();
     const parameters = {
       skyBgColor: new THREE.Color("#fdfbd3"),
@@ -24,8 +24,7 @@ export class MainScene extends THREE.Scene {
       lightColor: new THREE.Color("#84b15a"),
       lightIntensity: 1,
       light2Color: new THREE.Color("#84b15a"),
-      light2Intensity: .5,
-
+      light2Intensity: 0.5,
     };
 
     this.sizes = {
@@ -33,12 +32,12 @@ export class MainScene extends THREE.Scene {
       height: window.innerHeight,
     };
 
-    this.canvas = canvas;
+    this.canvas = document.querySelector(".webgl");
     this.camera = new THREE.PerspectiveCamera(
       45,
       this.sizes.width / this.sizes.height,
       0.1,
-      1000,
+      1000
     );
     this.camera.updateProjectionMatrix();
 
@@ -46,6 +45,10 @@ export class MainScene extends THREE.Scene {
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
     this.controls.enableRotate = true;
+    guiFolders
+      .get("camera")
+      .add(this.controls, "enabled")
+      .name("OrbitControls");
     this.controls.update();
 
     this.renderer = new THREE.WebGLRenderer({
@@ -71,7 +74,7 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight = new THREE.DirectionalLight(
       parameters.lightColor,
-      parameters.lightIntensity,
+      parameters.lightIntensity
     );
     directionalLight.castShadow = true;
     directionalLight.shadow.bias = 0.0001;
@@ -81,7 +84,7 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight2 = new THREE.DirectionalLight(
       parameters.light2Color,
-      parameters.light2Intensity,
+      parameters.light2Intensity
     );
     directionalLight2.position.set(-10, 10, 10);
     this.add(directionalLight2);
@@ -108,8 +111,7 @@ export class MainScene extends THREE.Scene {
     this.composer.addPass(renderScene);
 
     const noiseShader = {
-      uniforms:
-      {
+      uniforms: {
         uTime: { value: 0 },
         tDiffuse: { value: null },
         uNoiseColor: { value: parameters.noiseColor },
@@ -119,74 +121,126 @@ export class MainScene extends THREE.Scene {
         uCornerSize: { value: 2 },
       },
       vertexShader: vertexShader,
-      fragmentShader: fragmentShader
-    }
+      fragmentShader: fragmentShader,
+    };
 
-    this.noisePass = new ShaderPass(noiseShader)
-    this.composer.addPass(this.noisePass)
+    this.noisePass = new ShaderPass(noiseShader);
+    this.composer.addPass(this.noisePass);
     // this.composer.addPass(afterimagePass);
     // this.composer.addPass(filmPass);
     // this.composer.addPass(bokehPass)
     // this.composer.addPass(dotScreenPass);
     // this.composer.addPass(unrealBloomPass);
 
-    const sceneFolder = gui.addFolder("Scene");
-    const globalFolder = sceneFolder.addFolder("Global")
-    globalFolder
+    const sceneFolder = guiFolders.get("scene");
+    const atmosphereFolder = guiFolders.get("atmosphere");
+    atmosphereFolder
       .addColor(parameters, "skyBgColor")
       .onChange(() => {
         fog.color.set(parameters.skyBgColor);
         this.background.set(parameters.skyBgColor);
       })
       .name("SkyBgColor");
-    globalFolder.add(fog, "near").min(-30).max(30).name("FogNear");
-    globalFolder.add(fog, "far").min(30).max(90).name("FogFar");
+    atmosphereFolder.add(fog, "near").min(-30).max(30).name("FogNear");
+    atmosphereFolder.add(fog, "far").min(30).max(90).name("FogFar");
 
-    const lightFolder = sceneFolder.addFolder("Light");
+    const lightFolder = atmosphereFolder.addFolder("Light");
     lightFolder
       .addColor(parameters, "lightColor")
       .onChange(() => {
         directionalLight.color.set(parameters.lightColor);
       })
       .name("Color");
-    lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
-    lightFolder.add(directionalLight.position, "x").min(-30).max(30).name("PosX");
+    lightFolder
+      .add(directionalLight, "intensity")
+      .min(0)
+      .max(10)
+      .name("Intensity");
+    lightFolder
+      .add(directionalLight.position, "x")
+      .min(-30)
+      .max(30)
+      .name("PosX");
     lightFolder.add(directionalLight.position, "y").min(0).max(30).name("PosY");
-    lightFolder.add(directionalLight.position, "z").min(-30).max(30).name("PosZ");
+    lightFolder
+      .add(directionalLight.position, "z")
+      .min(-30)
+      .max(30)
+      .name("PosZ");
 
-    const light2Folder = sceneFolder.addFolder("Light2");
+    const light2Folder = atmosphereFolder.addFolder("Light2");
     light2Folder
       .addColor(parameters, "light2Color")
       .onChange(() => {
         directionalLight2.color.set(parameters.light2Color);
       })
       .name("Color");
-    light2Folder.add(directionalLight2, "intensity").min(0).max(10).name("Intensity");
-    light2Folder.add(directionalLight2.position, "x").min(-30).max(30).name("PosX");
-    light2Folder.add(directionalLight2.position, "y").min(0).max(30).name("PosY");
-    light2Folder.add(directionalLight2.position, "z").min(-30).max(30).name("PosZ");
+    light2Folder
+      .add(directionalLight2, "intensity")
+      .min(0)
+      .max(10)
+      .name("Intensity");
+    light2Folder
+      .add(directionalLight2.position, "x")
+      .min(-30)
+      .max(30)
+      .name("PosX");
+    light2Folder
+      .add(directionalLight2.position, "y")
+      .min(0)
+      .max(30)
+      .name("PosY");
+    light2Folder
+      .add(directionalLight2.position, "z")
+      .min(-30)
+      .max(30)
+      .name("PosZ");
 
-    const postFolder = sceneFolder.addFolder('Postprocessing')
-    const noiseFolder = postFolder.addFolder('Noise')
+    const postFolder = atmosphereFolder.addFolder("Postprocessing");
+    const noiseFolder = postFolder.addFolder("Noise");
     noiseFolder
       .addColor(parameters, "noiseColor")
       .onChange(() => {
-        this.noisePass.uniforms.uNoiseColor.value.set(parameters.noiseColor)
+        this.noisePass.uniforms.uNoiseColor.value.set(parameters.noiseColor);
       })
       .name("Color");
-    noiseFolder.add(this.noisePass.uniforms.uNoiseIntensity, "value").min(0).max(1).name("Intensity");
+    noiseFolder
+      .add(this.noisePass.uniforms.uNoiseIntensity, "value")
+      .min(0)
+      .max(1)
+      .name("Intensity");
+    // const renderScene = new RenderPass(this, this.camera);
 
-    const cornerFolder = postFolder.addFolder('Corner')
+    const unrealBloomPass = new UnrealBloomPass();
+    unrealBloomPass.strength = 0.1;
+    unrealBloomPass.radius = 0;
+    unrealBloomPass.threshold = 0.05;
+
+    const afterimagePass = new AfterimagePass();
+    afterimagePass.uniforms.damp.value = 0.99;
+
+    const dotScreenPass = new DotScreenPass();
+    const filmPass = new FilmPass();
+    // let cubeTexturePass = new CubeTexturePass();
+    // let bokehPass = new BokehPass();
+
+    const cornerFolder = postFolder.addFolder("Corner");
     cornerFolder
       .addColor(parameters, "cornerColor")
       .onChange(() => {
-        this.noisePass.uniforms.uCornerColor.value.set(parameters.cornerColor)
+        this.noisePass.uniforms.uCornerColor.value.set(parameters.cornerColor);
       })
       .name("Color");
-    cornerFolder.add(this.noisePass.uniforms.uCornerIntensity, "value").min(-1).max(1).name("Intensity");
-    cornerFolder.add(this.noisePass.uniforms.uCornerSize, "value").min(0).max(10).name("Size");
-
-    const envFolder = gui.addFolder("Environnement");
+    cornerFolder
+      .add(this.noisePass.uniforms.uCornerIntensity, "value")
+      .min(-1)
+      .max(1)
+      .name("Intensity");
+    cornerFolder
+      .add(this.noisePass.uniforms.uCornerSize, "value")
+      .min(0)
+      .max(10)
+      .name("Size");
 
     window.addEventListener("resize", this.resize.bind(this));
 
@@ -215,8 +269,10 @@ export class MainScene extends THREE.Scene {
   update() {
     this.controls.update();
     this.composer.render();
-    this.noisePass.uniforms.uTime.value = raf.elapsedTime
-    console.log(raf.elapsedTime);
-
+    this.noisePass.uniforms.uTime.value = raf.elapsedTime;
+    // console.log(raf.elapsedTime);
   }
 }
+
+const mainScene = new MainScene();
+export { mainScene };

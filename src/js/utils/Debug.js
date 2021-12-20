@@ -10,4 +10,8 @@ if (!location.hash.includes("debug")) {
   document.body.removeChild(stats.dom);
 }
 
-export { gui, stats };
+const guiFolders = [];
+const cameraFolder = gui.addFolder("Camera");
+guiFolders.push(cameraFolder);
+
+export { gui, guiFolders, stats };
