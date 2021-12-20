@@ -17,7 +17,6 @@ module.exports = {
     "no-use-before-define": "error",
     "no-duplicate-imports": 1,
     indent: ["error", 2],
-    "linebreak-style": ["error", "unix"],
     quotes: ["error", "double"],
     // "prettier/prettier": ["error", {}, { usePrettierrc: true }],
     semi: ["error", "always"],
