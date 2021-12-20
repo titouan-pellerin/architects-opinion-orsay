@@ -13,7 +13,7 @@ import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 
 export class MainScene extends THREE.Scene {
-  constructor(canvas) {
+  constructor() {
     super();
     const parameters = {
       skyBgColor: "#fdfbd3",
@@ -28,7 +28,7 @@ export class MainScene extends THREE.Scene {
       height: window.innerHeight,
     };
 
-    this.canvas = canvas;
+    this.canvas = document.querySelector(".webgl");
     this.camera = new THREE.PerspectiveCamera(
       45,
       this.sizes.width / this.sizes.height,
@@ -172,3 +172,6 @@ export class MainScene extends THREE.Scene {
     this.composer.render();
   }
 }
+
+const mainScene = new MainScene();
+export { mainScene };
