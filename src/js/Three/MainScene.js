@@ -33,7 +33,12 @@ export class MainScene extends THREE.Scene {
     };
 
     this.canvas = document.querySelector(".webgl");
-    this.camera = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 1000);
+    this.camera = new THREE.PerspectiveCamera(
+      45,
+      this.sizes.width / this.sizes.height,
+      0.1,
+      1000
+    );
     this.camera.updateProjectionMatrix();
 
     this.controls = new OrbitControls(this.camera, this.canvas);
@@ -64,18 +69,24 @@ export class MainScene extends THREE.Scene {
     const fog = new THREE.Fog(parameters.skyBgColor, 6, 45);
     this.fog = fog;
 
-    const directionalLight = new THREE.DirectionalLight(parameters.lightColor, parameters.lightIntensity);
+    const directionalLight = new THREE.DirectionalLight(
+      parameters.lightColor,
+      parameters.lightIntensity
+    );
     directionalLight.castShadow = true;
     directionalLight.shadow.bias = 0.0001;
     directionalLight.shadow.mapSize.set(2048, 2048);
     directionalLight.position.set(10, 10, -10);
     this.add(directionalLight);
 
-    const directionalLight2 = new THREE.DirectionalLight(parameters.light2Color, parameters.light2Intensity);
+    const directionalLight2 = new THREE.DirectionalLight(
+      parameters.light2Color,
+      parameters.light2Intensity
+    );
     directionalLight2.position.set(-10, 10, 10);
     this.add(directionalLight2);
 
-    let renderScene = new RenderPass(this, this.camera);
+    const renderScene = new RenderPass(this, this.camera);
 
     // let unrealBloomPass = new UnrealBloomPass();
     // unrealBloomPass.strength = 0.1;
@@ -162,7 +173,11 @@ export class MainScene extends THREE.Scene {
         this.noisePass.uniforms.uNoiseColor.value.set(parameters.noiseColor);
       })
       .name("Color");
-    noiseFolder.add(this.noisePass.uniforms.uNoiseIntensity, "value").min(0).max(1).name("Intensity");
+    noiseFolder
+      .add(this.noisePass.uniforms.uNoiseIntensity, "value")
+      .min(0)
+      .max(1)
+      .name("Intensity");
     // const renderScene = new RenderPass(this, this.camera);
 
     const unrealBloomPass = new UnrealBloomPass();
@@ -185,8 +200,16 @@ export class MainScene extends THREE.Scene {
         this.noisePass.uniforms.uCornerColor.value.set(parameters.cornerColor);
       })
       .name("Color");
-    cornerFolder.add(this.noisePass.uniforms.uCornerIntensity, "value").min(-1).max(1).name("Intensity");
-    cornerFolder.add(this.noisePass.uniforms.uCornerSize, "value").min(0).max(10).name("Size");
+    cornerFolder
+      .add(this.noisePass.uniforms.uCornerIntensity, "value")
+      .min(-1)
+      .max(1)
+      .name("Intensity");
+    cornerFolder
+      .add(this.noisePass.uniforms.uCornerSize, "value")
+      .min(0)
+      .max(10)
+      .name("Size");
 
     window.addEventListener("resize", this.resize.bind(this));
 

@@ -2,6 +2,7 @@ import { CameraPath } from "./js/Three/CameraPath";
 import { Environnement } from "./js/Three/Environnement";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
 import { mainScene } from "./js/Three/MainScene";
+import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { Ribbon } from "./js/Three/Ribbon";
 import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
 import "./styles/style.scss";
@@ -19,8 +20,11 @@ function init() {
   const path = new CameraPath();
   mainScene.add(path.splineObject);
 
-  const ribbon = new Ribbon();
-  mainScene.add(ribbon.mesh);
+  // const ribbon = new Ribbon();
+  // mainScene.add(ribbon.mesh);
+
+  const leaves = new Leaves();
+  mainScene.add(leaves.leaveMesh);
 }
 
 document.addEventListener("DOMContentLoaded", init);

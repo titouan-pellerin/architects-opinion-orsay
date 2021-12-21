@@ -137,9 +137,7 @@ export class Environnement {
     groundMaskFolder
       .addColor(this.parameters, "groundMaskColor")
       .onChange(() => {
-        this.groundMaterial.uniforms.uColor.set(
-          this.parameters.groundMaskColor
-        );
+        this.groundMaterial.uniforms.uColor.set(this.parameters.groundMaskColor);
       })
       .name("Color");
 
@@ -165,11 +163,7 @@ export class Environnement {
       .min(0)
       .max(100)
       .name("BigNoise");
-    skyFolder
-      .add(this.skyMaterial.uniforms.uSpeed, "value")
-      .min(0)
-      .max(2)
-      .name("Speed");
+    skyFolder.add(this.skyMaterial.uniforms.uSpeed, "value").min(0).max(2).name("Speed");
   }
 
   update() {
