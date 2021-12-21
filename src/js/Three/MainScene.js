@@ -11,6 +11,7 @@ import { DotScreenPass } from "three/examples/jsm/postprocessing/DotScreenPass.j
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 
@@ -97,7 +98,7 @@ export class MainScene extends THREE.Scene {
     // unrealBloomPass.threshold = 0.05;
 
     // let afterimagePass = new AfterimagePass();
-    // afterimagePass.uniforms.damp.value = 0.99;
+    // afterimagePass.uniforms.damp.value = 0.85;
 
     // let dotScreenPass = new DotScreenPass();
     // let filmPass = new FilmPass();
@@ -131,6 +132,9 @@ export class MainScene extends THREE.Scene {
     // this.composer.addPass(bokehPass)
     // this.composer.addPass(dotScreenPass);
     // this.composer.addPass(unrealBloomPass);
+
+    const smaaPass = new SMAAPass();
+    this.composer.addPass(smaaPass);
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");
@@ -209,20 +213,6 @@ export class MainScene extends THREE.Scene {
       .min(0)
       .max(1)
       .name("Intensity");
-    // const renderScene = new RenderPass(this, this.camera);
-
-    const unrealBloomPass = new UnrealBloomPass();
-    unrealBloomPass.strength = 0.1;
-    unrealBloomPass.radius = 0;
-    unrealBloomPass.threshold = 0.05;
-
-    const afterimagePass = new AfterimagePass();
-    afterimagePass.uniforms.damp.value = 0.99;
-
-    const dotScreenPass = new DotScreenPass();
-    const filmPass = new FilmPass();
-    // let cubeTexturePass = new CubeTexturePass();
-    // let bokehPass = new BokehPass();
 
     const cornerFolder = postFolder.addFolder("Corner");
     cornerFolder

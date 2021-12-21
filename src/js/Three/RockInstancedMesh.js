@@ -1,6 +1,6 @@
 import beginFragmentShader from "../../glsl/grass/beginFragment.glsl";
 import beginVertexShader from "../../glsl/grass/beginVertex.glsl";
-import voidFragmentShader from "../../glsl/grass/voidFragment.glsl";
+import voidFragmentShader from "../../glsl/rock/voidFragment.glsl";
 import voidVertexShader from "../../glsl/rock/voidVertex.glsl";
 import { guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
@@ -58,33 +58,33 @@ export class RockInstancedMesh {
 
     this.geometry = new THREE.TetrahedronGeometry(1, 1);
 
-    this.meshPattern = new THREE.InstancedMesh(
+    this.rockPattern = new THREE.InstancedMesh(
       this.geometry,
       this.material,
       instanceNumber
     );
-    this.meshPattern.castShadow = true;
+    this.rockPattern.castShadow = true;
 
     for (let i = 0; i < instanceNumber; i++) {
       instance.position.set(Math.random() - 0.5, 0, Math.random() - 0.5);
       instance.scale.setScalar(Math.random());
 
       instance.updateMatrix();
-      this.meshPattern.setMatrixAt(i, instance.matrix);
+      this.rockPattern.setMatrixAt(i, instance.matrix);
     }
 
     this.group = new THREE.Group();
     this.group.position.y = -3;
 
     for (let i = 0; i < this.parameters.rockQuantity; i++) {
-      this.rock = this.meshPattern.clone();
+      this.rock = this.rockPattern.clone();
       this.rock.position.set(
         (Math.random() - 0.5) * 30,
         0,
         (Math.random() - 0.5) * 30
       );
       this.rock.rotation.set(Math.random(), Math.random(), Math.random());
-      this.rock.scale.set(0.5, Math.random() * 1.5, Math.random() * 1.5);
+      this.rock.scale.set(0.5, Math.random() * 1.5, 0.5);
       this.group.add(this.rock);
     }
   }

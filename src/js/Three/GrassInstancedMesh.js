@@ -18,7 +18,9 @@ export class GrassInstancedMesh {
       speed: 1,
     };
 
-    this.material = new THREE.MeshToonMaterial();
+    this.material = new THREE.MeshToonMaterial({
+      transparent: true,
+    });
 
     this.material.onBeforeCompile = (shader) => {
       shader.uniforms.uTime = this.parameters.uTime;
@@ -71,7 +73,7 @@ export class GrassInstancedMesh {
     const instanceNumber = 500;
     const instance = new THREE.Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(0.01, 0.5, 1, 64);
+    this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 64);
 
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
@@ -91,13 +93,12 @@ export class GrassInstancedMesh {
     }
 
     this.group = new THREE.Group();
-    // this.group.position.y = -3;
 
     for (let i = 0; i < this.parameters.grassQuantity; i++) {
       this.grass = this.grassPattern.clone();
       this.grass.position.set(
         (Math.random() - 0.5) * 30,
-        Math.random() - 3.75,
+        Math.random() / 2 - 3.2,
         (Math.random() - 0.5) * 30
       );
       this.group.add(this.grass);

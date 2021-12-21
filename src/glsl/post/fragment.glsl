@@ -14,7 +14,7 @@ float hash(vec2 p) { return fract(1e4 * sin(17.0 * p.x + p.y * 0.1) * (0.1 + abs
 void main()
 {
     // Noise
-    float noise = hash(vUv + sin(uTime));
+    float noise = hash(vUv + sin(uTime) * 20.);
     vec4 noiseColor = vec4(uNoiseColor + (noise * uNoiseIntensity), 1.0);
 
     // Corner

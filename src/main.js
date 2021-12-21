@@ -8,7 +8,9 @@ import "./styles/style.scss";
 
 function init() {
   const environnement = new Environnement();
-  mainScene.add(environnement.ground, environnement.mask, environnement.sky);
+  mainScene.add(environnement.mask, environnement.sky);
+
+  //environnement.ground
 
   const grassInstancedMesh = new GrassInstancedMesh();
   mainScene.add(grassInstancedMesh.group);
@@ -19,8 +21,8 @@ function init() {
   const path = new CameraPath();
   mainScene.add(path.splineObject);
 
-  const ribbon = new Ribbon();
-  mainScene.add(ribbon.mesh);
+  // const ribbon = new Ribbon();
+  // mainScene.add(ribbon.mesh);
 }
 
 document.addEventListener("DOMContentLoaded", init);
