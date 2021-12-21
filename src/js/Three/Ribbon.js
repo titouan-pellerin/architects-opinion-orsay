@@ -40,23 +40,12 @@ export class Ribbon {
     //   (Math.cos(this.travel / 5) * this.width) / 2,
     // ];
 
-    const rot = [
-      (Math.sin(time / 5) * this.width) / 2,
-      (Math.cos(time / 5) * this.width) / 2,
-    ];
+    const rot = [(Math.sin(time / 5) * this.width) / 2, (Math.cos(time / 5) * this.width) / 2];
 
     this.position.z = 3 * Math.sin(time / 5);
 
-    this.pp.unshift(
-      this.position.x + rot[0],
-      this.position.y + time * 0,
-      this.position.z + rot[1],
-    );
-    this.pp.unshift(
-      this.position.x - rot[0],
-      this.position.y + time * 0,
-      this.position.z - rot[1],
-    );
+    this.pp.unshift(this.position.x + rot[0], this.position.y + time * 0, this.position.z + rot[1]);
+    this.pp.unshift(this.position.x - rot[0], this.position.y + time * 0, this.position.z - rot[1]);
 
     this.geometry.attributes.position.array = new Float32Array(this.pp);
     this.geometry.attributes.position.needsUpdate = true;
