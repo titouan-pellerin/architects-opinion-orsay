@@ -18,7 +18,7 @@ export class MainScene extends THREE.Scene {
   constructor() {
     super();
     const parameters = {
-      skyBgColor: new THREE.Color("#87CEEB"),
+      skyBgColor: new THREE.Color("#0f3848"),
       noiseColor: new THREE.Color("#87CEEB"),
       cornerColor: new THREE.Color("#000000"),
       lightColor: new THREE.Color("#87CEEB"),
