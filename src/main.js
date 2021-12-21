@@ -8,7 +8,7 @@ import "./styles/style.scss";
 
 function init() {
   const environnement = new Environnement();
-  mainScene.add(environnement.mask, environnement.sky);
+  mainScene.add(environnement.ground, environnement.mask, environnement.sky);
 
   //environnement.ground
 

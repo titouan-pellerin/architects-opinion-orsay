@@ -173,7 +173,7 @@ export class Environnement {
   }
 
   update() {
-    this.groundMaterial.uniforms.uTime.value = raf.elapsedTime;
+    // this.groundMaterial.uniforms.uTime.value = raf.elapsedTime;
     this.skyMaterial.uniforms.uTime.value = raf.elapsedTime;
     this.parameters.uTime.value = raf.elapsedTime;
   }

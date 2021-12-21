@@ -5,7 +5,6 @@ import raf from "../utils/Raf";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { AfterimagePass } from "three/examples/jsm/postprocessing/AfterimagePass.js";
-import { BokehPass } from "three/examples/jsm/postprocessing/BokehPass.js";
 import { CubeTexturePass } from "three/examples/jsm/postprocessing/CubeTexturePass.js";
 import { DotScreenPass } from "three/examples/jsm/postprocessing/DotScreenPass.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
@@ -19,12 +18,12 @@ export class MainScene extends THREE.Scene {
   constructor() {
     super();
     const parameters = {
-      skyBgColor: new THREE.Color("#fdfbd3"),
-      noiseColor: new THREE.Color("#84b15a"),
+      skyBgColor: new THREE.Color("#87CEEB"),
+      noiseColor: new THREE.Color("#87CEEB"),
       cornerColor: new THREE.Color("#000000"),
-      lightColor: new THREE.Color("#84b15a"),
+      lightColor: new THREE.Color("#87CEEB"),
       lightIntensity: 1,
-      light2Color: new THREE.Color("#84b15a"),
+      light2Color: new THREE.Color("#87CEEB"),
       light2Intensity: 0.5,
     };
 
@@ -90,7 +89,6 @@ export class MainScene extends THREE.Scene {
     directionalLight2.position.set(-10, 10, 10);
     this.add(directionalLight2);
 
-    let renderScene = new RenderPass(this, this.camera);
 
     // let unrealBloomPass = new UnrealBloomPass();
     // unrealBloomPass.strength = 0.1;
@@ -103,7 +101,7 @@ export class MainScene extends THREE.Scene {
     // let dotScreenPass = new DotScreenPass();
     // let filmPass = new FilmPass();
     // let cubeTexturePass = new CubeTexturePass();
-    // let bokehPass = new BokehPass();
+    let renderScene = new RenderPass(this, this.camera);
 
     this.composer = new EffectComposer(this.renderer);
     this.composer.setSize(this.sizes.width, this.sizes.height);
@@ -120,6 +118,9 @@ export class MainScene extends THREE.Scene {
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0.2 },
         uCornerSize: { value: 2 },
+        uBlurIntensity: { value: .65 },
+        uBlurPos: { value: new THREE.Vector2( window.innerWidth *0.5, window.innerHeight*0.5 ) },
+        uRes: { value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -127,11 +128,6 @@ export class MainScene extends THREE.Scene {
 
     this.noisePass = new ShaderPass(noiseShader);
     this.composer.addPass(this.noisePass);
-    // this.composer.addPass(afterimagePass);
-    // this.composer.addPass(filmPass);
-    // this.composer.addPass(bokehPass)
-    // this.composer.addPass(dotScreenPass);
-    // this.composer.addPass(unrealBloomPass);
 
     const smaaPass = new SMAAPass();
     this.composer.addPass(smaaPass);
@@ -231,6 +227,13 @@ export class MainScene extends THREE.Scene {
       .min(0)
       .max(10)
       .name("Size");
+
+  const blurFolder = postFolder.addFolder('Blur')
+    blurFolder
+      .add(this.noisePass.uniforms.uBlurIntensity, "value")
+      .min(0)
+      .max(1)
+      .name("Intensity");
 
     window.addEventListener("resize", this.resize.bind(this));
 
