@@ -1,6 +1,6 @@
 #include <output_fragment>
 // Stroke
-float stroke = cos((vUv.x + vUv.y) * 4.5);
+float stroke = cos((vUv.x + vUv.y) * 4.);
 
 // Grass
 float grassPattern = 1.0 - (step(0.99, abs(vUv.x - 0.5) + vUv.y));

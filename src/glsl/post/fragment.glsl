@@ -48,6 +48,6 @@ void main()
 	vec4 p2 = color/total;
     
     // gl_FragColor = render;
-	gl_FragColor = p1 + vec4(p2.xyz, 1.0) * vec4(uNoiseColor, 1.0);
+	gl_FragColor = p1 + p2;
 	gl_FragColor.rgb /= gl_FragColor.a;
 }
