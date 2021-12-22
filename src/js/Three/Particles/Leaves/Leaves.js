@@ -142,7 +142,7 @@ export class Leaves {
     });
 
     this.leaveMesh = new Mesh(geometry, material);
-    // leaveMesh.rotation.y = Math.PI / 2;
+    this.leaveMesh.rotation.y = Math.PI / 2;
     this.leaveMesh.matrixAutoUpdate = false;
     this.leaveMesh.updateMatrix();
   }

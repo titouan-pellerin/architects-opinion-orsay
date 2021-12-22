@@ -28,14 +28,7 @@ export class LeavesGeometry extends BufferGeometry {
     }
 
     for (let f = 0; f < amount; f++) {
-      // Body
-
-      verts_push(0, -0, -1, 0, 0.2, -1, 0, 0, 1.5);
-
-      // Wings
-
       verts_push(0, 0, -0.75, -1, 0, 0, 0, 0, 0.75);
-
       verts_push(0, 0, 0.75, 1, 0, 0, 0, 0, -0.75);
     }
 
