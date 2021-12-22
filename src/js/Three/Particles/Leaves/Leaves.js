@@ -94,7 +94,8 @@ export class Leaves {
 
     for (let k = 0, kl = theArray.length; k < kl; k += 4) {
       const x = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
-      const y = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
+      // const y = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
+      const y = Math.random() * 100;
       const z = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
 
       theArray[k + 0] = x;
@@ -120,11 +121,11 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(100000, this.WIDTH);
+    const geometry = new LeavesGeometry(10000, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {
-      color: { value: new Color(0xff2200) },
+      color: { value: new Color(0x00ff00) },
       texturePosition: { value: null },
       textureVelocity: { value: null },
       time: { value: 1.0 },

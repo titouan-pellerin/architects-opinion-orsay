@@ -23,7 +23,7 @@ float alignmentThresh = 0.65;
 const float UPPER_BOUNDS = BOUNDS;
 const float LOWER_BOUNDS = -UPPER_BOUNDS;
 
-const float SPEED_LIMIT = 3.;
+const float SPEED = .3;
 
 float rand(vec2 co) {
     return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
@@ -31,7 +31,7 @@ float rand(vec2 co) {
 
 void main() {
 
-    zoneRadius = separationDistance + alignmentDistance + cohesionDistance;
+    zoneRadius = separationDistance + alignmentDistance;
     separationThresh = separationDistance / zoneRadius;
     alignmentThresh = (separationDistance + alignmentDistance) / zoneRadius;
     zoneRadiusSquared = zoneRadius * zoneRadius;
@@ -46,44 +46,25 @@ void main() {
     vec3 dir; // direction
     float distSquared;
 
-    float separationSquared = separationDistance * separationDistance;
-    float cohesionSquared = cohesionDistance * cohesionDistance;
-
     float f;
     float percent;
 
     vec3 velocity = selfVelocity;
 
-    float limit = SPEED_LIMIT;
+    // float limit = SPEED_LIMIT;
 
-    // dir = predator * UPPER_BOUNDS - selfPosition;
-    dir = UPPER_BOUNDS - selfPosition;
-    dir.z = 0.;
+    // dir = UPPER_BOUNDS - selfPosition;
+    // dir.z = 0.;
 				// dir.z *= 0.6;
-    dist = length(dir);
-    distSquared = dist * dist;
+    // dist = length(dir);
+    // distSquared = dist * dist;
 
-    float preyRadius = 25.0;
-    float preyRadiusSq = preyRadius * preyRadius;
-
-				// move birds away from predator
-    // if(dist < preyRadius) {
-
-    //     f = (distSquared / preyRadiusSq - 1.0) * delta * 100.;
-    //     velocity += normalize(dir) * f;
-    //     limit += 5.0;
-    // }
-
-				// if (testing == 0.0) {}
-				// if ( rand( uv + time ) < freedomFactor ) {}
-
-				// Attract flocks to the center
-    // vec3 central = vec3(0., 0., 0.);
     dir = selfPosition;
+    // dir.y = 1.;
     dist = length(dir);
 
     // // dir.y *= 2.5;
-    velocity -= normalize(dir) * delta * 3.;
+    // velocity -= normalize(dir) * delta * 3.;
 
     for(float y = 0.0; y < height; y++) {
         for(float x = 0.0; x < width; x++) {
@@ -94,25 +75,26 @@ void main() {
             dir = birdPosition - selfPosition;
             dist = length(dir);
 
-            if(dist < 0.0001)
-                continue;
+            // if(dist < 0.0001)
+            //     continue;
 
             distSquared = dist * dist;
 
             if(distSquared > zoneRadiusSquared)
                 continue;
 
-            percent = distSquared / zoneRadiusSquared;
+            // percent = distSquared / zoneRadiusSquared;
 
-							// Alignment - fly the same direction
-            float threshDelta = alignmentThresh - separationThresh;
-            float adjustedPercent = (percent - separationThresh) / threshDelta;
+			// 				// Alignment - fly the same direction
+            // float threshDelta = alignmentThresh - separationThresh;
+            // float adjustedPercent = (percent - separationThresh) / threshDelta;
 
-            birdVelocity = texture2D(textureVelocity, ref).xyz;
+            // birdVelocity = texture2D(textureVelocity, ref).xyz;
 
-            f = (0.5 - cos(adjustedPercent * PI_2) * 0.5 + 0.5) * delta;
-            velocity += normalize(birdVelocity) * f;
-
+            // f = (0.5 - cos(50. * PI_2) * 0.5 + 0.5) * delta;
+            // velocity += normalize(birdVelocity) * f;
+            velocity += normalize(birdVelocity) * delta;
+            velocity = normalize(velocity) * SPEED;
         }
 
     }
@@ -121,9 +103,9 @@ void main() {
 				// if (velocity.y > 0.) velocity.y *= (1. - 0.2 * delta);
 
 				// Speed Limits
-    if(length(velocity) > limit) {
-        velocity = normalize(velocity) * limit;
-    }
+    // if(length(velocity) > limit) {
+    //     velocity = normalize(velocity) * limit;
+    // }
 
     gl_FragColor = vec4(velocity, 1.0);
 

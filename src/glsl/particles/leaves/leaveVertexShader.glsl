@@ -19,10 +19,10 @@ void main() {
 
     vec3 newPosition = position;
 
-    if(leafVertex == 4.0 || leafVertex == 7.0) {
-					// flap wings
-        newPosition.y = sin(tmpPos.w) * 5.;
-    }
+    // if(leafVertex == 4.0 || leafVertex == 7.0) {
+	// 				// flap wings
+    //     newPosition.y = sin(tmpPos.w) * 5.;
+    // }
 
     newPosition = mat3(modelMatrix) * newPosition;
 

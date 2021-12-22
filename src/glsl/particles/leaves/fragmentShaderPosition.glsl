@@ -10,6 +10,9 @@ void main() {
 
     float phase = tmpPos.w;
 
+    if(position.y <= -1.)
+        position.y = 50.;
+
     phase = mod((phase + delta +
         length(velocity.xz) * delta * 3. +
         max(velocity.y, 0.0) * delta * 6.), 62.83);
