@@ -8,6 +8,7 @@ import { guiFolders } from "../../../utils/Debug";
 import { mouse } from "../../../utils/Mouse";
 import raf from "../../../utils/Raf";
 import { isSafari } from "../../../utils/misc.js";
+import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 import { mainScene } from "../../MainScene.js";
 import { LeavesGeometry } from "./LeavesGeometry";
 import { DoubleSide, HalfFloatType, RepeatWrapping } from "three";
@@ -124,7 +125,7 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(10, this.WIDTH);
+    const geometry = new LeavesGeometry(100000, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {
@@ -138,35 +139,47 @@ export class Leaves {
     const leavesFolder = guiFolders.get("atmosphere").addFolder("Leaves");
     leavesFolder.addColor(this.leavesUniforms.color, "value").name("Leaves color");
 
-    const material = new MeshToonMaterial({
-      side: DoubleSide,
-    });
-    material.onBeforeCompile = (shader) => {
-      shader.uniforms.color = this.leavesUniforms.color;
-      shader.uniforms.texturePosition = this.leavesUniforms.texturePosition;
-      shader.uniforms.textureVelocity = this.leavesUniforms.textureVelocity;
-      shader.uniforms.time = this.leavesUniforms.time;
-      shader.uniforms.delta = this.leavesUniforms.delta;
+    // const material = new MeshToonMaterial({
+    //   side: DoubleSide,
+    // });
 
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <common>",
-        beginLeaveVertexShader
-      );
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <project_vertex>",
-        endLeaveVertexShader
-      );
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <common>",
-        beginLeaveFragmentShader
-      );
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <output_fragment>",
-        endLeaveFragmentShader
-      );
+    const material = new CustomMeshToonMaterial(
+      beginLeaveFragmentShader,
+      endLeaveFragmentShader,
+      beginLeaveVertexShader,
+      endLeaveVertexShader,
+      this.leavesUniforms,
+      {
+        side: DoubleSide,
+      }
+    );
 
-      console.log(shader.fragmentShader);
-    };
+    // material.onBeforeCompile = (shader) => {
+    //   shader.uniforms.color = this.leavesUniforms.color;
+    //   shader.uniforms.texturePosition = this.leavesUniforms.texturePosition;
+    //   shader.uniforms.textureVelocity = this.leavesUniforms.textureVelocity;
+    //   shader.uniforms.time = this.leavesUniforms.time;
+    //   shader.uniforms.delta = this.leavesUniforms.delta;
+
+    //   shader.vertexShader = shader.vertexShader.replace(
+    //     "#include <common>",
+    //     beginLeaveVertexShader
+    //   );
+    //   shader.vertexShader = shader.vertexShader.replace(
+    //     "#include <project_vertex>",
+    //     endLeaveVertexShader
+    //   );
+    //   shader.fragmentShader = shader.fragmentShader.replace(
+    //     "#include <common>",
+    //     beginLeaveFragmentShader
+    //   );
+    //   shader.fragmentShader = shader.fragmentShader.replace(
+    //     "#include <output_fragment>",
+    //     endLeaveFragmentShader
+    //   );
+
+    //   console.log(shader.fragmentShader);
+    // };
     // const material = new ShaderMaterial({
     //   uniforms: this.leavesUniforms,
     //   vertexShader: leaveVertexShader,
