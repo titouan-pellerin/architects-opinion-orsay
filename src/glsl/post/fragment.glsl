@@ -23,31 +23,36 @@ void main()
     float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
     vec4 cornerColor = vec4(corner + uCornerIntensity) + vec4(uCornerColor, 1.0);
 
-	// Part1, noise & corner
-	vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * noiseColor;
+    // Part1, noise & corner
+    // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor;
+    vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * noiseColor;
 
     // Blur
-	vec4 color = vec4(uCornerColor, 0.0);
+    vec4 color = vec4(0.0);
 
-	float total = 0.0;
+    float total = 0.0;
 
-	vec2 toCenter = uBlurPos - vUv * uRes;
+    vec2 toCenter = uBlurPos - vUv * uRes;
 
-	float offset=random(vec3(12.9898,78.233,151.7182),0.0);
+    float offset=random(vec3(12.9898,78.233,151.7182),0.0);
 
-	for(float t = 0.0; t <= 40.0; t++){
-		float percent = (t + offset) / 80.0;
-		float weight = 4.0 * (percent - percent*percent);
-		vec4 blur = texture2D(tDiffuse, vUv + toCenter * percent * uBlurIntensity / uRes);
-		blur.rgb *= blur.a;
-		color += blur * weight;
-		total += weight;
-	}
+    for(float t = 0.0; t <= 40.0; t++){
+        float percent = (t + offset) / 80.0;
+        float weight = 4.0 * (percent - percent*percent);
+        vec4 blur = texture2D(tDiffuse, vUv + toCenter * percent * uBlurIntensity / uRes);
+        blur.rgb *= blur.a;
+        color += blur * weight;
+        total += weight;
+    }
 
-	// Part2, adding some blur
-	vec4 p2 = color/total;
+    // Part2, adding some blur
+    vec4 p2 = (color/total) * 0.4;
+
+	// float grassPattern = .8 - (smoothstep(0.8,1., abs(vUv.x - 0.5) + vUv.y * 1.5));
     
     // gl_FragColor = render;
-	gl_FragColor = p1 + p2;
-	gl_FragColor.rgb /= gl_FragColor.a;
+    gl_FragColor = p1 + p2;
+    // gl_FragColor.rgb /= gl_FragColor.a;
+    // gl_FragColor = p1;
+    // gl_FragColor = vec4(grassPattern);
 }

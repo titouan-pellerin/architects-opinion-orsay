@@ -13,7 +13,7 @@ export class GrassInstancedMesh {
       uTime: { value: 0 },
       color: new THREE.Color("#84b15a"),
       color2: new THREE.Color("#236760"),
-      displaceIntensity: 0.125,
+      displaceIntensity: 0.135,
       grassQuantity: 150,
       speed: 1,
     };

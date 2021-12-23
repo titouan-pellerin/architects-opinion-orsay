@@ -18,12 +18,12 @@ export class MainScene extends THREE.Scene {
   constructor() {
     super();
     const parameters = {
-      skyBgColor: new THREE.Color("#0f3848"),
-      noiseColor: new THREE.Color("#87CEEB"),
+      skyBgColor: new THREE.Color("#fdfbd3"),
+      noiseColor: new THREE.Color("#84b15a"),
       cornerColor: new THREE.Color("#000000"),
-      lightColor: new THREE.Color("#87CEEB"),
+      lightColor: new THREE.Color("#84b15a"),
       lightIntensity: 1,
-      light2Color: new THREE.Color("#87CEEB"),
+      light2Color: new THREE.Color("#84b15a"),
       light2Intensity: 0.5,
     };
 
@@ -37,7 +37,7 @@ export class MainScene extends THREE.Scene {
       45,
       this.sizes.width / this.sizes.height,
       0.1,
-      1000
+      100
     );
     this.camera.updateProjectionMatrix();
 
@@ -54,7 +54,7 @@ export class MainScene extends THREE.Scene {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       powerPreference: "high-performance",
-      antialias: true,
+      // antialias: true,
     });
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
@@ -89,18 +89,6 @@ export class MainScene extends THREE.Scene {
     directionalLight2.position.set(-10, 10, 10);
     this.add(directionalLight2);
 
-
-    // let unrealBloomPass = new UnrealBloomPass();
-    // unrealBloomPass.strength = 0.1;
-    // unrealBloomPass.radius = 0;
-    // unrealBloomPass.threshold = 0.05;
-
-    // let afterimagePass = new AfterimagePass();
-    // afterimagePass.uniforms.damp.value = 0.85;
-
-    // let dotScreenPass = new DotScreenPass();
-    // let filmPass = new FilmPass();
-    // let cubeTexturePass = new CubeTexturePass();
     let renderScene = new RenderPass(this, this.camera);
 
     this.composer = new EffectComposer(this.renderer);
@@ -118,7 +106,7 @@ export class MainScene extends THREE.Scene {
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0.2 },
         uCornerSize: { value: 2 },
-        uBlurIntensity: { value: 1 },
+        uBlurIntensity: { value: .5 },
         uBlurPos: { value: new THREE.Vector2( window.innerWidth *0.5, window.innerHeight*0.5 ) },
         uRes: { value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
       },
@@ -128,9 +116,6 @@ export class MainScene extends THREE.Scene {
 
     this.noisePass = new ShaderPass(noiseShader);
     this.composer.addPass(this.noisePass);
-
-    const smaaPass = new SMAAPass();
-    this.composer.addPass(smaaPass);
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");
@@ -219,7 +204,7 @@ export class MainScene extends THREE.Scene {
       .name("Color");
     cornerFolder
       .add(this.noisePass.uniforms.uCornerIntensity, "value")
-      .min(-1)
+      .min(0)
       .max(1)
       .name("Intensity");
     cornerFolder
