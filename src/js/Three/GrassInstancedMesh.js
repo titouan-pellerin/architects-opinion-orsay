@@ -1,7 +1,7 @@
-import beginFragmentShader from "../../glsl/grass/beginFragment.glsl";
-import beginVertexShader from "../../glsl/grass/beginVertex.glsl";
-import voidFragmentShader from "../../glsl/grass/voidFragment.glsl";
-import voidVertexShader from "../../glsl/grass/voidVertex.glsl";
+import commonFragmentShader from "../../glsl/grass/commonFragment.glsl";
+import commonVertexShader from "../../glsl/grass/commonVertex.glsl";
+import outputFragmentShader from "../../glsl/grass/outputFragment.glsl";
+import projectVertexShader from "../../glsl/grass/projectVertex.glsl";
 import { guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
@@ -23,10 +23,11 @@ export class GrassInstancedMesh {
     };
 
     this.material = new CustomMeshToonMaterial(
-      beginFragmentShader,
-      voidFragmentShader,
-      beginVertexShader,
-      voidVertexShader,
+      commonFragmentShader,
+      outputFragmentShader,
+      commonVertexShader,
+      null,
+      projectVertexShader,
       this.grassUniforms,
       {}
     );

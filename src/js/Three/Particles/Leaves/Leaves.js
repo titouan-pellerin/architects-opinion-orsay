@@ -1,9 +1,9 @@
-import beginLeaveFragmentShader from "../../../../glsl/particles/leaves/beginLeaveFragmentShader.glsl";
-import beginLeaveVertexShader from "../../../../glsl/particles/leaves/beginLeaveVertexShader.glsl";
-import endLeaveFragmentShader from "../../../../glsl/particles/leaves/endLeaveFragmentShader.glsl";
-import endLeaveVertexShader from "../../../../glsl/particles/leaves/endLeaveVertexShader.glsl";
+import commonLeaveFragmentShader from "../../../../glsl/particles/leaves/commonLeaveFragmentShader.glsl";
+import commonLeaveVertexShader from "../../../../glsl/particles/leaves/commonLeaveVertexShader.glsl";
 import fragmentShaderPosition from "../../../../glsl/particles/leaves/fragmentShaderPosition.glsl";
 import fragmentShaderVelocity from "../../../../glsl/particles/leaves/fragmentShaderVelocity.glsl";
+import outputLeaveFragmentShader from "../../../../glsl/particles/leaves/outputLeaveFragmentShader.glsl";
+import projectLeaveVertexShader from "../../../../glsl/particles/leaves/projectLeaveVertexShader.glsl";
 import { guiFolders } from "../../../utils/Debug";
 import { mouse } from "../../../utils/Mouse";
 import raf from "../../../utils/Raf";
@@ -144,48 +144,16 @@ export class Leaves {
     // });
 
     const material = new CustomMeshToonMaterial(
-      beginLeaveFragmentShader,
-      endLeaveFragmentShader,
-      beginLeaveVertexShader,
-      endLeaveVertexShader,
+      commonLeaveFragmentShader,
+      outputLeaveFragmentShader,
+      commonLeaveVertexShader,
+      null,
+      projectLeaveVertexShader,
       this.leavesUniforms,
       {
         side: DoubleSide,
       }
     );
-
-    // material.onBeforeCompile = (shader) => {
-    //   shader.uniforms.color = this.leavesUniforms.color;
-    //   shader.uniforms.texturePosition = this.leavesUniforms.texturePosition;
-    //   shader.uniforms.textureVelocity = this.leavesUniforms.textureVelocity;
-    //   shader.uniforms.time = this.leavesUniforms.time;
-    //   shader.uniforms.delta = this.leavesUniforms.delta;
-
-    //   shader.vertexShader = shader.vertexShader.replace(
-    //     "#include <common>",
-    //     beginLeaveVertexShader
-    //   );
-    //   shader.vertexShader = shader.vertexShader.replace(
-    //     "#include <project_vertex>",
-    //     endLeaveVertexShader
-    //   );
-    //   shader.fragmentShader = shader.fragmentShader.replace(
-    //     "#include <common>",
-    //     beginLeaveFragmentShader
-    //   );
-    //   shader.fragmentShader = shader.fragmentShader.replace(
-    //     "#include <output_fragment>",
-    //     endLeaveFragmentShader
-    //   );
-
-    //   console.log(shader.fragmentShader);
-    // };
-    // const material = new ShaderMaterial({
-    //   uniforms: this.leavesUniforms,
-    //   vertexShader: leaveVertexShader,
-    //   fragmentShader: leaveFragmentShader,
-    //   side: DoubleSide,
-    // });
 
     this.leaveMesh = new Mesh(geometry, material);
     this.leaveMesh.rotation.y = Math.PI / 2;
@@ -201,11 +169,6 @@ export class Leaves {
 
     this.leavesUniforms["time"].value = raf.elapsedTime;
     this.leavesUniforms["delta"].value = raf.deltaTime;
-    // this.velocityUniforms["predator"].value.set(
-    //   mouse.normalizedMouseCoords.x,
-    //   mouse.normalizedMouseCoords.y,
-    //   0
-    // );
 
     this.gpuCompute.compute();
 
