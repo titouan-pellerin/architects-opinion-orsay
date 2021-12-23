@@ -1,7 +1,9 @@
+import beginLeaveFragmentShader from "../../../../glsl/particles/leaves/beginLeaveFragmentShader.glsl";
+import beginLeaveVertexShader from "../../../../glsl/particles/leaves/beginLeaveVertexShader.glsl";
+import endLeaveFragmentShader from "../../../../glsl/particles/leaves/endLeaveFragmentShader.glsl";
+import endLeaveVertexShader from "../../../../glsl/particles/leaves/endLeaveVertexShader.glsl";
 import fragmentShaderPosition from "../../../../glsl/particles/leaves/fragmentShaderPosition.glsl";
 import fragmentShaderVelocity from "../../../../glsl/particles/leaves/fragmentShaderVelocity.glsl";
-import leaveFragmentShader from "../../../../glsl/particles/leaves/leaveFragmentShader.glsl";
-import leaveVertexShader from "../../../../glsl/particles/leaves/leaveVertexShader.glsl";
 import { guiFolders } from "../../../utils/Debug";
 import { mouse } from "../../../utils/Mouse";
 import raf from "../../../utils/Raf";
@@ -15,6 +17,7 @@ import { Color } from "three";
 import { ShaderMaterial } from "three";
 import { Mesh } from "three";
 import { MeshBasicMaterial } from "three";
+import { MeshToonMaterial } from "three";
 import { GPUComputationRenderer } from "three/examples/jsm/misc/GPUComputationRenderer";
 
 export class Leaves {
@@ -121,7 +124,7 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(1000000, this.WIDTH);
+    const geometry = new LeavesGeometry(10, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {
@@ -135,12 +138,41 @@ export class Leaves {
     const leavesFolder = guiFolders.get("atmosphere").addFolder("Leaves");
     leavesFolder.addColor(this.leavesUniforms.color, "value").name("Leaves color");
 
-    const material = new ShaderMaterial({
-      uniforms: this.leavesUniforms,
-      vertexShader: leaveVertexShader,
-      fragmentShader: leaveFragmentShader,
+    const material = new MeshToonMaterial({
       side: DoubleSide,
     });
+    material.onBeforeCompile = (shader) => {
+      shader.uniforms.color = this.leavesUniforms.color;
+      shader.uniforms.texturePosition = this.leavesUniforms.texturePosition;
+      shader.uniforms.textureVelocity = this.leavesUniforms.textureVelocity;
+      shader.uniforms.time = this.leavesUniforms.time;
+      shader.uniforms.delta = this.leavesUniforms.delta;
+
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        beginLeaveVertexShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <project_vertex>",
+        endLeaveVertexShader
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        beginLeaveFragmentShader
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        endLeaveFragmentShader
+      );
+
+      console.log(shader.fragmentShader);
+    };
+    // const material = new ShaderMaterial({
+    //   uniforms: this.leavesUniforms,
+    //   vertexShader: leaveVertexShader,
+    //   fragmentShader: leaveFragmentShader,
+    //   side: DoubleSide,
+    // });
 
     this.leaveMesh = new Mesh(geometry, material);
     this.leaveMesh.rotation.y = Math.PI / 2;

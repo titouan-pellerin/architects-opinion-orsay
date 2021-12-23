@@ -6,6 +6,7 @@ import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { Ribbon } from "./js/Three/Ribbon";
 import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
 import "./styles/style.scss";
+import { BoxHelper } from "three";
 
 function init() {
   const environnement = new Environnement();
@@ -25,6 +26,8 @@ function init() {
 
   const leaves = new Leaves();
   mainScene.add(leaves.leaveMesh);
+  const box = new BoxHelper(leaves.leaveMesh, 0xffff00);
+  mainScene.add(box);
 }
 
 document.addEventListener("DOMContentLoaded", init);
