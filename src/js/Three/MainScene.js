@@ -120,6 +120,9 @@ export class MainScene extends THREE.Scene {
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0.2 },
         uCornerSize: { value: 2 },
+        uBlurIntensity: { value: .5 },
+        uBlurPos: { value: new THREE.Vector2( window.innerWidth *0.5, window.innerHeight*0.5 ) },
+        uRes: { value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -133,8 +136,8 @@ export class MainScene extends THREE.Scene {
     // this.composer.addPass(dotScreenPass);
     // this.composer.addPass(unrealBloomPass);
 
-    const smaaPass = new SMAAPass();
-    this.composer.addPass(smaaPass);
+    // const smaaPass = new SMAAPass();
+    // this.composer.addPass(smaaPass);
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");
@@ -223,7 +226,7 @@ export class MainScene extends THREE.Scene {
       .name("Color");
     cornerFolder
       .add(this.noisePass.uniforms.uCornerIntensity, "value")
-      .min(-1)
+      .min(0)
       .max(1)
       .name("Intensity");
     cornerFolder
