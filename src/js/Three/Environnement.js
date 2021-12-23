@@ -79,7 +79,16 @@ export class Environnement {
     );
     this.mask.receiveShadow = true;
 
-    this.skyGeometry = new THREE.SphereGeometry();
+    // this.skyGeometry = new THREE.SphereGeometry();
+    this.skyGeometry = new THREE.SphereGeometry(
+      1,
+      16,
+      8,
+      0,
+      Math.PI * 2,
+      0,
+      Math.PI * 0.5
+    );
 
     this.sky = new THREE.Mesh(this.skyGeometry, this.skyMaterial);
     this.sky.scale.set(

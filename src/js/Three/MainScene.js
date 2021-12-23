@@ -37,7 +37,7 @@ export class MainScene extends THREE.Scene {
       45,
       this.sizes.width / this.sizes.height,
       0.1,
-      100
+      150
     );
     this.camera.updateProjectionMatrix();
 
@@ -57,8 +57,13 @@ export class MainScene extends THREE.Scene {
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.physicallyCorrectLights = true;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
+    this.renderer.gammaFactor = 2.2;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1;
+    this.renderer.stencil = false;
+    this.renderer.preserveDrawingBuffer = false;
+    this.renderer.depth = false;
+    this.renderer.premultipliedAlpha = false;
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.background = new THREE.Color(parameters.skyBgColor);
@@ -91,10 +96,9 @@ export class MainScene extends THREE.Scene {
     this.composer = new EffectComposer(this.renderer);
     this.composer.setSize(this.sizes.width, this.sizes.height);
     this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
     this.composer.addPass(renderScene);
 
-    const noiseShader = {
+    const customShader = {
       uniforms: {
         uTime: { value: 0 },
         tDiffuse: { value: null },
@@ -113,11 +117,17 @@ export class MainScene extends THREE.Scene {
       fragmentShader: fragmentShader,
     };
 
-    this.noisePass = new ShaderPass(noiseShader);
-    this.composer.addPass(this.noisePass);
+    this.customPass = new ShaderPass(customShader);
+    this.composer.addPass(this.customPass);
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");
+    // atmosphereFolder
+    //   .add(() => {
+    //     this.composer.removePass(noiseShader);
+    //   })
+    //   .name("Disable post");
+
     atmosphereFolder
       .addColor(parameters, "skyBgColor")
       .onChange(() => {
@@ -152,16 +162,27 @@ export class MainScene extends THREE.Scene {
     light2Folder.add(directionalLight2.position, "y").min(0).max(30).name("PosY");
     light2Folder.add(directionalLight2.position, "z").min(-30).max(30).name("PosZ");
 
+    const postGuiFunctions = {
+      disablePost: () => {
+        this.composer.removePass(this.customPass);
+      },
+      enablePost: () => {
+        this.composer.addPass(this.customPass);
+      },
+    };
+
     const postFolder = atmosphereFolder.addFolder("Postprocessing");
+    postFolder.add(postGuiFunctions, "disablePost");
+    postFolder.add(postGuiFunctions, "enablePost");
     const noiseFolder = postFolder.addFolder("Noise");
     noiseFolder
       .addColor(parameters, "noiseColor")
       .onChange(() => {
-        this.noisePass.uniforms.uNoiseColor.value.set(parameters.noiseColor);
+        this.customPass.uniforms.uNoiseColor.value.set(parameters.noiseColor);
       })
       .name("Color");
     noiseFolder
-      .add(this.noisePass.uniforms.uNoiseIntensity, "value")
+      .add(this.customPass.uniforms.uNoiseIntensity, "value")
       .min(0)
       .max(1)
       .name("Intensity");
@@ -170,23 +191,23 @@ export class MainScene extends THREE.Scene {
     cornerFolder
       .addColor(parameters, "cornerColor")
       .onChange(() => {
-        this.noisePass.uniforms.uCornerColor.value.set(parameters.cornerColor);
+        this.customPass.uniforms.uCornerColor.value.set(parameters.cornerColor);
       })
       .name("Color");
     cornerFolder
-      .add(this.noisePass.uniforms.uCornerIntensity, "value")
+      .add(this.customPass.uniforms.uCornerIntensity, "value")
       .min(0)
       .max(1)
       .name("Intensity");
     cornerFolder
-      .add(this.noisePass.uniforms.uCornerSize, "value")
+      .add(this.customPass.uniforms.uCornerSize, "value")
       .min(0)
       .max(10)
       .name("Size");
 
     const blurFolder = postFolder.addFolder("Blur");
     blurFolder
-      .add(this.noisePass.uniforms.uBlurIntensity, "value")
+      .add(this.customPass.uniforms.uBlurIntensity, "value")
       .min(0)
       .max(1)
       .name("Intensity");
@@ -218,7 +239,7 @@ export class MainScene extends THREE.Scene {
   update() {
     this.controls.update();
     this.composer.render();
-    this.noisePass.uniforms.uTime.value = raf.elapsedTime;
+    this.customPass.uniforms.uTime.value = raf.elapsedTime;
     // console.log(raf.elapsedTime);
   }
 }

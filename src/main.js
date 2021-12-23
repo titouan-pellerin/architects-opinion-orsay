@@ -13,7 +13,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 function init() {
   const environnement = new Environnement();
   mainScene.add(environnement.ground, environnement.mask, environnement.sky);
-  // mainScene.add(environnement.ground, environnement.sky);
+  // mainScene.add(environnement.ground, environnement.mask);
   // mainScene.add(environnement.mask, environnement.sky);
   // mainScene.add(environnement.sky);
 
