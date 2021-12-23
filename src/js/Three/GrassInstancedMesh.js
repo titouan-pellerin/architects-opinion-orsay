@@ -1,79 +1,54 @@
-import beginFragmentShader from "../../glsl/grass/beginFragment.glsl";
-import beginVertexShader from "../../glsl/grass/beginVertex.glsl";
-import voidFragmentShader from "../../glsl/grass/voidFragment.glsl";
-import voidVertexShader from "../../glsl/grass/voidVertex.glsl";
+import commonFragmentShader from "../../glsl/grass/commonFragment.glsl";
+import commonVertexShader from "../../glsl/grass/commonVertex.glsl";
+import outputFragmentShader from "../../glsl/grass/outputFragment.glsl";
+import projectVertexShader from "../../glsl/grass/projectVertex.glsl";
 import { guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
+import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
 import * as THREE from "three";
 
 export class GrassInstancedMesh {
   constructor() {
     this.parameters = {
-      uTime: { value: 0 },
-      color: new THREE.Color("#84b15a"),
-      color2: new THREE.Color("#236760"),
-      displaceIntensity: 0.135,
       grassQuantity: 150,
-      speed: 1,
     };
 
-    this.material = new THREE.MeshToonMaterial({
-      transparent: true,
-    });
-
-    this.material.onBeforeCompile = (shader) => {
-      shader.uniforms.uTime = this.parameters.uTime;
-      shader.uniforms.uColor = { value: this.parameters.color };
-      shader.uniforms.uColor2 = { value: this.parameters.color2 };
-      shader.uniforms.uSpeed = { value: this.parameters.speed };
-      shader.uniforms.uDisplaceIntensity = {
-        value: this.parameters.displaceIntensity,
-      };
-
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <common>",
-        beginVertexShader
-      );
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <project_vertex>",
-        voidVertexShader
-      );
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <common>",
-        beginFragmentShader
-      );
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <output_fragment>",
-        voidFragmentShader
-      );
-
-      const sceneFolder = guiFolders.get("scene");
-      const folder = sceneFolder.addFolder("Grass");
-      folder
-        .addColor(this.parameters, "color")
-        .onChange(() => {
-          this.material.uniforms.uColor.set(this.parameters.color);
-        })
-        .name("Color");
-      folder
-        .addColor(this.parameters, "color2")
-        .onChange(() => {
-          this.material.uniforms.uColor2.set(this.parameters.color2);
-        })
-        .name("Color2");
-      folder
-        .add(shader.uniforms.uDisplaceIntensity, "value")
-        .min(0)
-        .max(1)
-        .name("DisplaceIntensity");
-      folder.add(shader.uniforms.uSpeed, "value").min(0).max(2).name("Speed");
+    this.grassUniforms = {
+      uTime: { value: 0 },
+      uColor: { value: new THREE.Color("#84b15a") },
+      uColor2: { value: new THREE.Color("#236760") },
+      uDisplaceIntensity: { value: 0.135 },
+      uSpeed: { value: 1 },
     };
+
+    this.material = new CustomMeshToonMaterial(
+      commonFragmentShader,
+      outputFragmentShader,
+      commonVertexShader,
+      null,
+      projectVertexShader,
+      this.grassUniforms,
+      {
+        transparent: true,
+      }
+    );
+
+    const sceneFolder = guiFolders.get("scene");
+    const folder = sceneFolder.addFolder("Grass");
+    folder.addColor(this.grassUniforms.uColor, "value").name("Color");
+    folder.addColor(this.grassUniforms.uColor2, "value").name("Color2");
+    folder
+      .add(this.grassUniforms.uDisplaceIntensity, "value")
+      .min(0)
+      .max(1)
+      .name("DisplaceIntensity");
+    folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
     const instanceNumber = 500;
     const instance = new THREE.Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 64);
+    this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
 
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
@@ -109,6 +84,6 @@ export class GrassInstancedMesh {
   }
 
   update() {
-    this.parameters.uTime.value = raf.elapsedTime;
+    this.grassUniforms.uTime.value = raf.elapsedTime;
   }
 }

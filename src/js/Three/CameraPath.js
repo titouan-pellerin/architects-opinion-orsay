@@ -29,6 +29,7 @@ export class CameraPath {
     this.timeline = document.querySelector(".timeline");
     this.step1 = document.querySelector(".step1");
     this.onClick();
+
     this.debugObject = {
       subscribe: () => {
         raf.subscribe("path", this.update.bind(this));
@@ -37,14 +38,8 @@ export class CameraPath {
         raf.unsubscribe("path");
       },
     };
-    guiFolders
-      .get("camera")
-      .add(this.debugObject, "subscribe")
-      .name("Camera path on");
-    guiFolders
-      .get("camera")
-      .add(this.debugObject, "unsubscribe")
-      .name("Camera path off");
+    guiFolders.get("camera").add(this.debugObject, "subscribe").name("Camera path on");
+    guiFolders.get("camera").add(this.debugObject, "unsubscribe").name("Camera path off");
   }
 
   onClick() {

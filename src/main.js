@@ -1,17 +1,21 @@
 import { CameraPath } from "./js/Three/CameraPath";
 import { Environnement } from "./js/Three/Environnement";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
+import { mainScene } from "./js/Three/MainScene";
+import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
+import { Ribbon } from "./js/Three/Ribbon";
 import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
 import { TreeInstancedMesh } from "./js/Three/TreeInstancedMesh";
-import { mainScene } from "./js/Three/MainScene";
-import { Ribbon } from "./js/Three/Ribbon";
 import "./styles/style.scss";
 import * as THREE from "three";
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 function init() {
   const environnement = new Environnement();
   mainScene.add(environnement.ground, environnement.mask, environnement.sky);
+  // mainScene.add(environnement.ground, environnement.sky);
+  // mainScene.add(environnement.mask, environnement.sky);
+  // mainScene.add(environnement.sky);
 
   const grassInstancedMesh = new GrassInstancedMesh();
   mainScene.add(grassInstancedMesh.group);
@@ -20,9 +24,9 @@ function init() {
   mainScene.add(rockInstancedMesh.group);
 
   const parameters = {
-    treeQuantity: 20
-  }
-  
+    treeQuantity: 20,
+  };
+
   // const treeInstancedMesh = new TreeInstancedMesh();
   // mainScene.add(treeInstancedMesh)
 
@@ -52,6 +56,9 @@ function init() {
 
   // const ribbon = new Ribbon();
   // mainScene.add(ribbon.mesh);
+
+  const leaves = new Leaves();
+  mainScene.add(leaves.leaveMesh);
 }
 
 document.addEventListener("DOMContentLoaded", init);

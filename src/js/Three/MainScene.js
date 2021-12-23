@@ -45,10 +45,7 @@ export class MainScene extends THREE.Scene {
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
     this.controls.enableRotate = true;
-    guiFolders
-      .get("camera")
-      .add(this.controls, "enabled")
-      .name("OrbitControls");
+    guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
     this.controls.update();
 
     this.renderer = new THREE.WebGLRenderer({
@@ -89,7 +86,7 @@ export class MainScene extends THREE.Scene {
     directionalLight2.position.set(-10, 10, 10);
     this.add(directionalLight2);
 
-    let renderScene = new RenderPass(this, this.camera);
+    const renderScene = new RenderPass(this, this.camera);
 
     this.composer = new EffectComposer(this.renderer);
     this.composer.setSize(this.sizes.width, this.sizes.height);
@@ -106,9 +103,11 @@ export class MainScene extends THREE.Scene {
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0.2 },
         uCornerSize: { value: 2 },
-        uBlurIntensity: { value: .5 },
-        uBlurPos: { value: new THREE.Vector2( window.innerWidth *0.5, window.innerHeight*0.5 ) },
-        uRes: { value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
+        uBlurIntensity: { value: 0.5 },
+        uBlurPos: {
+          value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
+        },
+        uRes: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -136,22 +135,10 @@ export class MainScene extends THREE.Scene {
         directionalLight.color.set(parameters.lightColor);
       })
       .name("Color");
-    lightFolder
-      .add(directionalLight, "intensity")
-      .min(0)
-      .max(10)
-      .name("Intensity");
-    lightFolder
-      .add(directionalLight.position, "x")
-      .min(-30)
-      .max(30)
-      .name("PosX");
+    lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
+    lightFolder.add(directionalLight.position, "x").min(-30).max(30).name("PosX");
     lightFolder.add(directionalLight.position, "y").min(0).max(30).name("PosY");
-    lightFolder
-      .add(directionalLight.position, "z")
-      .min(-30)
-      .max(30)
-      .name("PosZ");
+    lightFolder.add(directionalLight.position, "z").min(-30).max(30).name("PosZ");
 
     const light2Folder = atmosphereFolder.addFolder("Light2");
     light2Folder
@@ -160,26 +147,10 @@ export class MainScene extends THREE.Scene {
         directionalLight2.color.set(parameters.light2Color);
       })
       .name("Color");
-    light2Folder
-      .add(directionalLight2, "intensity")
-      .min(0)
-      .max(10)
-      .name("Intensity");
-    light2Folder
-      .add(directionalLight2.position, "x")
-      .min(-30)
-      .max(30)
-      .name("PosX");
-    light2Folder
-      .add(directionalLight2.position, "y")
-      .min(0)
-      .max(30)
-      .name("PosY");
-    light2Folder
-      .add(directionalLight2.position, "z")
-      .min(-30)
-      .max(30)
-      .name("PosZ");
+    light2Folder.add(directionalLight2, "intensity").min(0).max(10).name("Intensity");
+    light2Folder.add(directionalLight2.position, "x").min(-30).max(30).name("PosX");
+    light2Folder.add(directionalLight2.position, "y").min(0).max(30).name("PosY");
+    light2Folder.add(directionalLight2.position, "z").min(-30).max(30).name("PosZ");
 
     const postFolder = atmosphereFolder.addFolder("Postprocessing");
     const noiseFolder = postFolder.addFolder("Noise");
@@ -213,7 +184,7 @@ export class MainScene extends THREE.Scene {
       .max(10)
       .name("Size");
 
-  const blurFolder = postFolder.addFolder('Blur')
+    const blurFolder = postFolder.addFolder("Blur");
     blurFolder
       .add(this.noisePass.uniforms.uBlurIntensity, "value")
       .min(0)

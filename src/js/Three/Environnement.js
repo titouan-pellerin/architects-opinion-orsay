@@ -1,22 +1,21 @@
-import beginFragmentShader from "../../glsl/ground/beginFragment.glsl";
 import beginVertexShader from "../../glsl/ground/beginVertex.glsl";
+import commonFragmentShader from "../../glsl/ground/commonFragment.glsl";
+import commonVertexShader from "../../glsl/ground/commonVertex.glsl";
 import fragmentShader from "../../glsl/ground/fragment.glsl";
+import outputFragmentShader from "../../glsl/ground/outputFragment.glsl";
 import vertexShader from "../../glsl/ground/vertex.glsl";
-import voidFragmentShader from "../../glsl/ground/voidFragment.glsl";
-import voidVertexShader from "../../glsl/ground/voidVertex.glsl";
 import { gui, guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import { texturesMap } from "../utils/assets";
+import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
 import * as THREE from "three";
 
 export class Environnement {
   constructor() {
     this.parameters = {
       envScale: 100,
-      uTime: { value: 0 },
       groundColor: new THREE.Color("#ffffff"),
-      groundMaskColor: new THREE.Color("#83ce72"),
       skyColor: new THREE.Color("#ffffff"),
       speed: 0.75,
       stroke: 5000,
@@ -24,34 +23,22 @@ export class Environnement {
       bigNoise: 50,
     };
 
-    this.groundMaskMaterial = new THREE.MeshToonMaterial({
-      side: THREE.BackSide,
-    });
-
-    this.groundMaskMaterial.onBeforeCompile = (shader) => {
-      shader.uniforms.uTime = this.parameters.uTime;
-      shader.uniforms.uColor = { value: this.parameters.groundMaskColor };
-
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <common>",
-        beginVertexShader
-      );
-
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <begin_vertex>",
-        voidVertexShader
-      );
-
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <common>",
-        beginFragmentShader
-      );
-
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <output_fragment>",
-        voidFragmentShader
-      );
+    this.groundMaskUniforms = {
+      uTime: { value: 0 },
+      uColor: { value: new THREE.Color("#83ce72") },
     };
+
+    this.groundMaskMaterial = new CustomMeshToonMaterial(
+      commonFragmentShader,
+      outputFragmentShader,
+      commonVertexShader,
+      beginVertexShader,
+      null,
+      this.groundMaskUniforms,
+      {
+        side: THREE.BackSide,
+      }
+    );
 
     this.groundMaterial = new THREE.ShaderMaterial({
       vertexShader: vertexShader,
@@ -134,14 +121,7 @@ export class Environnement {
       .name("Speed");
 
     const groundMaskFolder = sceneFolder.addFolder("GroundMask");
-    groundMaskFolder
-      .addColor(this.parameters, "groundMaskColor")
-      .onChange(() => {
-        this.groundMaterial.uniforms.uColor.set(
-          this.parameters.groundMaskColor
-        );
-      })
-      .name("Color");
+    groundMaskFolder.addColor(this.groundMaskUniforms.uColor, "value").name("Color");
 
     const skyFolder = atmosphereFolder.addFolder("Sky");
     skyFolder
@@ -165,16 +145,12 @@ export class Environnement {
       .min(0)
       .max(100)
       .name("BigNoise");
-    skyFolder
-      .add(this.skyMaterial.uniforms.uSpeed, "value")
-      .min(0)
-      .max(2)
-      .name("Speed");
+    skyFolder.add(this.skyMaterial.uniforms.uSpeed, "value").min(0).max(2).name("Speed");
   }
 
   update() {
     // this.groundMaterial.uniforms.uTime.value = raf.elapsedTime;
     this.skyMaterial.uniforms.uTime.value = raf.elapsedTime;
-    this.parameters.uTime.value = raf.elapsedTime;
+    this.groundMaskUniforms.uTime.value = raf.elapsedTime;
   }
 }
