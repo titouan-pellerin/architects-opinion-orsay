@@ -121,7 +121,7 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(10000, this.WIDTH);
+    const geometry = new LeavesGeometry(1000000, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {
@@ -134,6 +134,7 @@ export class Leaves {
 
     const leavesFolder = guiFolders.get("atmosphere").addFolder("Leaves");
     leavesFolder.addColor(this.leavesUniforms.color, "value").name("Leaves color");
+
     const material = new ShaderMaterial({
       uniforms: this.leavesUniforms,
       vertexShader: leaveVertexShader,

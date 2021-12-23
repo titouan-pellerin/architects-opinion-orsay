@@ -29,6 +29,7 @@ export class CameraPath {
     this.timeline = document.querySelector(".timeline");
     this.step1 = document.querySelector(".step1");
     this.onClick();
+
     this.debugObject = {
       subscribe: () => {
         raf.subscribe("path", this.update.bind(this));
