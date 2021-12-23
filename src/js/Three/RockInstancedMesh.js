@@ -7,6 +7,7 @@ import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
 import * as THREE from "three";
+import { DoubleSide } from "three";
 
 export class RockInstancedMesh {
   constructor() {
@@ -26,7 +27,7 @@ export class RockInstancedMesh {
       null,
       projectVertexShader,
       this.rockUniforms,
-      {}
+      { side: DoubleSide }
     );
 
     const folder = guiFolders.get("scene").addFolder("Rock");

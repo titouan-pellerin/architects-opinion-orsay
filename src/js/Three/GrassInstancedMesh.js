@@ -29,9 +29,7 @@ export class GrassInstancedMesh {
       null,
       projectVertexShader,
       this.grassUniforms,
-      {
-        transparent: true,
-      }
+      {}
     );
 
     const sceneFolder = guiFolders.get("scene");
@@ -49,6 +47,7 @@ export class GrassInstancedMesh {
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
+    // this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 64);
 
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
