@@ -133,10 +133,6 @@ export class Leaves {
     const leavesFolder = guiFolders.get("atmosphere").addFolder("Leaves");
     leavesFolder.addColor(this.leavesUniforms.color, "value").name("Leaves color");
 
-    // const material = new MeshToonMaterial({
-    //   side: DoubleSide,
-    // });
-
     const material = new CustomMeshToonMaterial(
       commonLeaveFragmentShader,
       outputLeaveFragmentShader,
