@@ -71,6 +71,11 @@ export class GrassInstancedMesh {
 
     for (let i = 0; i < this.parameters.grassQuantity; i++) {
       this.grass = this.grassPattern.clone();
+
+      setTimeout(() => {
+        this.grass.matrixAutoUpdate = false
+      }, 1);
+
       this.grass.position.set(
         (Math.random() - 0.5) * 30,
         Math.random() / 2 - 3.2,

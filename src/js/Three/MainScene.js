@@ -103,7 +103,7 @@ export class MainScene extends THREE.Scene {
         uTime: { value: 0 },
         tDiffuse: { value: null },
         uNoiseColor: { value: parameters.noiseColor },
-        uNoiseIntensity: { value: 0.75 },
+        uNoiseIntensity: { value: 0.25 },
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0.2 },
         uCornerSize: { value: 2 },
@@ -240,7 +240,6 @@ export class MainScene extends THREE.Scene {
     this.controls.update();
     this.composer.render();
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
-    // console.log(raf.elapsedTime);
   }
 }
 

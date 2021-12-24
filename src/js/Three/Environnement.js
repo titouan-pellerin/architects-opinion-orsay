@@ -79,7 +79,6 @@ export class Environnement {
     );
     this.mask.receiveShadow = true;
 
-    // this.skyGeometry = new THREE.SphereGeometry();
     this.skyGeometry = new THREE.SphereGeometry(
       1,
       16,
@@ -97,7 +96,14 @@ export class Environnement {
       this.parameters.envScale
     );
 
-    raf.subscribe("Ground", this.update.bind(this));
+
+    raf.subscribe("Environnement", this.update.bind(this));
+
+    setTimeout(() => {
+      this.ground.matrixAutoUpdate = false
+      this.mask.matrixAutoUpdate = false
+      this.sky.matrixAutoUpdate = false
+    }, 1);
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");

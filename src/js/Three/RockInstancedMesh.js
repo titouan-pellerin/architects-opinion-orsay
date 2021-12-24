@@ -59,6 +59,11 @@ export class RockInstancedMesh {
 
     for (let i = 0; i < this.parameters.rockQuantity; i++) {
       this.rock = this.rockPattern.clone();
+
+      setTimeout(() => {
+        this.rock.matrixAutoUpdate = false
+      }, 1);
+      
       this.rock.position.set((Math.random() - 0.5) * 30, 0, (Math.random() - 0.5) * 30);
       this.rock.rotation.set(Math.random(), Math.random(), Math.random());
       this.rock.scale.set(0.5, Math.random() * 1.5, 0.5);
