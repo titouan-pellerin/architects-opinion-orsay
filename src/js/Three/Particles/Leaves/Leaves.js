@@ -4,7 +4,7 @@ import fragmentShaderPosition from "../../../../glsl/particles/leaves/fragmentSh
 import fragmentShaderVelocity from "../../../../glsl/particles/leaves/fragmentShaderVelocity.glsl";
 import outputLeaveFragmentShader from "../../../../glsl/particles/leaves/outputLeaveFragmentShader.glsl";
 import projectLeaveVertexShader from "../../../../glsl/particles/leaves/projectLeaveVertexShader.glsl";
-import { guiFolders } from "../../../utils/Debug";
+import { gui, guiFolders } from "../../../utils/Debug";
 import { mouse } from "../../../utils/Mouse";
 import raf from "../../../utils/Raf";
 import { isSafari } from "../../../utils/misc.js";
@@ -71,12 +71,6 @@ export class Leaves {
     this.positionUniforms["delta"] = { value: 0.0 };
     this.velocityUniforms["time"] = { value: 1.0 };
     this.velocityUniforms["delta"] = { value: 0.0 };
-    // this.velocityUniforms["testing"] = { value: 1.0 };
-    // this.velocityUniforms["separationDistance"] = { value: 0.0 };
-    // this.velocityUniforms["alignmentDistance"] = { value: 0.0 };
-    // this.velocityUniforms["cohesionDistance"] = { value: 0.0 };
-    // this.velocityUniforms["freedomFactor"] = { value: 0.0 };
-    // this.velocityUniforms["predator"] = { value: new Vector3() };
     this.velocityVariable.material.defines.BOUNDS = this.BOUNDS.toFixed(2);
 
     this.velocityVariable.wrapS = RepeatWrapping;
@@ -99,7 +93,7 @@ export class Leaves {
     for (let k = 0, kl = theArray.length; k < kl; k += 4) {
       const x = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
       // const y = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
-      const y = Math.random() * 100;
+      const y = Math.random() * 50;
       const z = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
 
       theArray[k + 0] = x;
@@ -125,7 +119,7 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(100000, this.WIDTH);
+    const geometry = new LeavesGeometry(200, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {

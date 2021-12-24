@@ -1,18 +1,13 @@
 uniform float time;
-uniform float testing;
 uniform float delta; // about 0.016
 uniform float separationDistance; // 20
 uniform float alignmentDistance; // 40
-uniform float cohesionDistance; //
-uniform float freedomFactor;
-uniform vec3 predator;
 
 const float width = resolution.x;
 const float height = resolution.y;
 
 const float PI = 3.141592653589793;
 const float PI_2 = PI * 2.0;
-			// const float VISION = PI * 0.55;
 
 float zoneRadius = 40.0;
 float zoneRadiusSquared = 1600.0;
@@ -20,80 +15,40 @@ float zoneRadiusSquared = 1600.0;
 float separationThresh = 0.45;
 float alignmentThresh = 0.65;
 
-const float UPPER_BOUNDS = BOUNDS;
-const float LOWER_BOUNDS = -UPPER_BOUNDS;
-
-const float SPEED = .1;
+const float SPEED = .05;
 
 float rand(vec2 co) {
     return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
 void main() {
-
-    zoneRadius = separationDistance + alignmentDistance;
-    separationThresh = separationDistance / zoneRadius;
-    alignmentThresh = (separationDistance + alignmentDistance) / zoneRadius;
-    zoneRadiusSquared = zoneRadius * zoneRadius;
-
     vec2 uv = gl_FragCoord.xy / resolution.xy;
-    vec3 birdPosition, birdVelocity;
+    vec3 leavePosition, leaveVelocity;
 
     vec3 selfPosition = texture2D(texturePosition, uv).xyz;
     vec3 selfVelocity = texture2D(textureVelocity, uv).xyz;
 
     float dist;
-    vec3 dir; // direction
+    vec3 direction;
     float distSquared;
-
-    float f;
-    float percent;
 
     vec3 velocity = selfVelocity;
 
-    // float limit = SPEED_LIMIT;
-
-    // dir = UPPER_BOUNDS - selfPosition;
-    // dir.z = 0.;
-				// dir.z *= 0.6;
-    // dist = length(dir);
-    // distSquared = dist * dist;
-
-    dir = selfPosition;
-    // dir.y = 1.;
-    dist = length(dir);
-
-    // // dir.y *= 2.5;
-    // velocity -= normalize(dir) * delta * 3.;
+    direction = selfPosition;
+    dist = length(direction);
 
     for(float y = 0.0; y < height; y++) {
         for(float x = 0.0; x < width; x++) {
 
             vec2 ref = vec2(x + 0.5, y + 0.5) / resolution.xy;
-            birdPosition = texture2D(texturePosition, ref).xyz;
+            leavePosition = texture2D(texturePosition, ref).xyz;
 
-            dir = birdPosition - selfPosition;
-            dist = length(dir);
-
-            // if(dist < 0.0001)
-            //     continue;
+            direction = leavePosition - selfPosition;
+            dist = length(direction);
 
             distSquared = dist * dist;
 
-            if(distSquared > zoneRadiusSquared)
-                continue;
-
-            // percent = distSquared / zoneRadiusSquared;
-
-			// 				// Alignment - fly the same direction
-            // float threshDelta = alignmentThresh - separationThresh;
-            // float adjustedPercent = (percent - separationThresh) / threshDelta;
-
-            // birdVelocity = texture2D(textureVelocity, ref).xyz;
-
-            // f = (0.5 - cos(50. * PI_2) * 0.5 + 0.5) * delta;
-            // velocity += normalize(birdVelocity) * f;
-            velocity += normalize(birdVelocity) * delta;
+            velocity += normalize(leaveVelocity) * delta;
             velocity = normalize(velocity) * SPEED;
         }
 

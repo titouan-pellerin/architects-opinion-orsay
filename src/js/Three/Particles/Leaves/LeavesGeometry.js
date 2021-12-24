@@ -10,6 +10,7 @@ export class LeavesGeometry extends BufferGeometry {
     const points = triangles * 3;
 
     const vertices = new BufferAttribute(new Float32Array(points * 3), 3);
+    console.log(vertices);
     // const birdColors = new BufferAttribute(new Float32Array(points * 3), 3);
     const references = new BufferAttribute(new Float32Array(points * 2), 2);
     const leafVertex = new BufferAttribute(new Float32Array(points), 1);
@@ -30,6 +31,7 @@ export class LeavesGeometry extends BufferGeometry {
     for (let f = 0; f < amount; f++) {
       verts_push(0, 0, -0.75, -1, 0, 0, 0, 0, 0.75);
       verts_push(0, 0, 0.75, 1, 0, 0, 0, 0, -0.75);
+      // verts_push(0, 0, 0.75, 1, 0, 0, 0, 0, -0.75);
     }
 
     for (let v = 0; v < triangles * 3; v++) {
