@@ -11,7 +11,8 @@ import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import { texturesMap } from "../utils/assets";
 import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
-import { ForestPathLine } from "./ForestPath/ForestPathLine";
+import { CameraAnimation } from "./Path/CameraAnimation";
+import { ForestPathLine } from "./Path/ForestPathLine";
 import * as THREE from "three";
 import { Vector3 } from "three";
 
@@ -31,6 +32,10 @@ export class Environnement {
     this.forestPathLine.scale.set(
       this.parameters.envScale,
       this.parameters.envScale,
+      this.parameters.envScale
+    );
+    this.cameraAnimation = new CameraAnimation(
+      this.forestPathLine.spline,
       this.parameters.envScale
     );
 

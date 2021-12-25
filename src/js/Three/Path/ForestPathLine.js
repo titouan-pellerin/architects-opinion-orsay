@@ -5,7 +5,7 @@ import { Vector2 } from "three";
 import { SplineCurve } from "three";
 
 export class ForestPathLine extends Line {
-  constructor(splinePrecision = 10000) {
+  constructor(splinePrecision = 512) {
     const initPoints = [
       new Vector2(0, 0),
       new Vector2(-0.2227667969, -0.1521839844),
@@ -27,7 +27,9 @@ export class ForestPathLine extends Line {
     });
     super(geometry, material);
     this.position.y = -1;
-    this.splinePrecision = splinePrecision;
+    this.spline = spline;
     this.points = points;
+    console.log(this.spline.getPoint(0.1));
+    console.log(this.spline.getPoint(0.2));
   }
 }

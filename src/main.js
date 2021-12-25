@@ -1,4 +1,3 @@
-import { CameraPath } from "./js/Three/CameraPath";
 import { Environnement } from "./js/Three/Environnement";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
 import { mainScene } from "./js/Three/MainScene";
@@ -48,9 +47,6 @@ function init() {
   //       mainScene.add(treeGroup)
   //     },
   // )
-
-  const path = new CameraPath();
-  mainScene.add(path.splineObject);
 
   // const ribbon = new Ribbon();
   // mainScene.add(ribbon.mesh);
