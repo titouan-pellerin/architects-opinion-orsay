@@ -1,15 +1,19 @@
 import beginVertexShader from "../../glsl/ground/beginVertex.glsl";
 import commonFragmentShader from "../../glsl/ground/commonFragment.glsl";
 import commonVertexShader from "../../glsl/ground/commonVertex.glsl";
-import fragmentShader from "../../glsl/ground/fragment.glsl";
+import groundFragmentShader from "../../glsl/ground/fragment.glsl";
 import outputFragmentShader from "../../glsl/ground/outputFragment.glsl";
-import vertexShader from "../../glsl/ground/vertex.glsl";
+import groundVertexShader from "../../glsl/ground/vertex.glsl";
+import skyFragmentShader from "../../glsl/sky/fragment.glsl";
+import skyVertexShader from "../../glsl/sky/vertex.glsl";
 import { gui, guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import { texturesMap } from "../utils/assets";
 import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
+import { ForestPathLine } from "./ForestPath/ForestPathLine";
 import * as THREE from "three";
+import { Vector3 } from "three";
 
 export class Environnement {
   constructor() {
@@ -23,6 +27,13 @@ export class Environnement {
       bigNoise: 50,
     };
 
+    this.forestPathLine = new ForestPathLine();
+    this.forestPathLine.scale.set(
+      this.parameters.envScale,
+      this.parameters.envScale,
+      this.parameters.envScale
+    );
+
     this.groundMaskUniforms = {
       uTime: { value: 0 },
       uColor: { value: new THREE.Color("#83ce72") },
@@ -34,16 +45,13 @@ export class Environnement {
       commonVertexShader,
       beginVertexShader,
       null,
-      this.groundMaskUniforms,
-      {
-        side: THREE.BackSide,
-      }
+      this.groundMaskUniforms
     );
 
+    const groundTexture = textureLoader.load("/assets/ground/curve.png");
     this.groundMaterial = new THREE.ShaderMaterial({
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-      side: THREE.BackSide,
+      vertexShader: groundVertexShader,
+      fragmentShader: groundFragmentShader,
       transparent: true,
       uniforms: {
         uTime: { value: 0 },
@@ -52,16 +60,35 @@ export class Environnement {
         uSmallNoise: { value: this.parameters.smallNoise },
         uBigNoise: { value: this.parameters.bigNoise },
         uColor: { value: this.parameters.groundColor },
+        uTexture: { value: groundTexture },
       },
     });
 
-    this.skyMaterial = this.groundMaterial.clone();
-    this.skyMaterial.uniforms.uColor.value = this.parameters.skyColor;
+    this.skyMaterial = new THREE.ShaderMaterial({
+      vertexShader: skyVertexShader,
+      fragmentShader: skyFragmentShader,
+      transparent: true,
+      uniforms: {
+        uTime: { value: 0 },
+        uSpeed: { value: this.parameters.speed },
+        uStroke: { value: this.parameters.stroke },
+        uSmallNoise: { value: this.parameters.smallNoise },
+        uBigNoise: { value: this.parameters.bigNoise },
+        uColor: { value: this.parameters.skyColor },
+      },
+    });
 
     this.groundGeometry = new THREE.PlaneGeometry(1, 1, 512, 512);
+    // this.groundGeometry.setAttribute(
+    //   "curvePos",
+    //   this.forestPathLine.geometry.getAttribute("position").clone()
+    // );
+    // const pathCoords = new Float32Array(this.groundGeometry.getAttribute("uv").count * 2);
+    // console.log(this.groundGeometry.getAttribute("uv"));
+    // this.groundGeometry.setAttribute("curveUv", new THREE.BufferAttribute(pathCoords, 2));
 
     this.ground = new THREE.Mesh(this.groundGeometry, this.groundMaterial);
-    this.ground.rotation.x = Math.PI * 0.5;
+    this.ground.rotation.x = -Math.PI * 0.5;
     this.ground.position.y = -3;
     this.ground.scale.set(
       this.parameters.envScale,
@@ -70,7 +97,7 @@ export class Environnement {
     );
 
     this.mask = new THREE.Mesh(this.groundGeometry, this.groundMaskMaterial);
-    this.mask.rotation.x = Math.PI * 0.5;
+    this.mask.rotation.x = -Math.PI * 0.5;
     this.mask.position.y = -3.01;
     this.mask.scale.set(
       this.parameters.envScale,
@@ -96,7 +123,11 @@ export class Environnement {
       this.parameters.envScale
     );
 
-    raf.subscribe("Ground", this.update.bind(this));
+    raf.subscribe("environment", this.update.bind(this));
+
+    /**
+     * DEBUG
+     */
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");

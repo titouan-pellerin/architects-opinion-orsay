@@ -3,21 +3,17 @@ import { Environnement } from "./js/Three/Environnement";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
 import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
-import { ForestPathGeometry } from "./js/Three/Path/ForestPathGeometry";
-import { Ribbon } from "./js/Three/Ribbon";
 import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
-import { TreeInstancedMesh } from "./js/Three/TreeInstancedMesh";
 import "./styles/style.scss";
-import { MeshBasicMaterial } from "three";
-import { Mesh } from "three";
-import { ShaderMaterial } from "three";
 
 function init() {
   const environnement = new Environnement();
-  mainScene.add(environnement.ground, environnement.mask, environnement.sky);
-  // mainScene.add(environnement.ground, environnement.mask);
-  // mainScene.add(environnement.mask, environnement.sky);
-  // mainScene.add(environnement.sky);
+  mainScene.add(
+    environnement.ground,
+    environnement.mask,
+    environnement.forestPathLine,
+    environnement.sky
+  );
 
   const grassInstancedMesh = new GrassInstancedMesh();
   mainScene.add(grassInstancedMesh.group);
@@ -61,14 +57,6 @@ function init() {
 
   const leaves = new Leaves();
   mainScene.add(leaves.leaveMesh);
-
-  const forestPathGeometry = new ForestPathGeometry();
-
-  const forestPathMesh = new Mesh(
-    forestPathGeometry,
-    new MeshBasicMaterial({ color: 0xff0000 })
-  );
-  mainScene.add(forestPathMesh);
 }
 
 document.addEventListener("DOMContentLoaded", init);

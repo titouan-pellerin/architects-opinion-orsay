@@ -10,11 +10,8 @@ uniform float uStroke;
 uniform float uSmallNoise;
 uniform float uBigNoise;
 uniform vec3 uColor;
-uniform sampler2D uTexture;
 
 void main() {
-
-  vec3 curveCoords = texture2D(uTexture, vUv).xyz;
 
   float time = uTime * uSpeed;
 
@@ -36,11 +33,5 @@ void main() {
   // Render
   vec4 render = mix(vec4(mixNoise), vec4(uColor, 1.0) * vec4(stroke), uColor.z);
 
-  // if(vUv.x >= .5 && vUv.x <= .6)
-  //   render = vec4(1.);
-  if(curveCoords == vec3(1.))
-    render = vec4(1.);
-  // if(vCurvePos.x <= .5 && vCurvePos.x >= 5.)
-  //   render = vec4(1.);
   gl_FragColor = render;
 }
