@@ -22,7 +22,7 @@ import { MeshToonMaterial } from "three";
 import { GPUComputationRenderer } from "three/examples/jsm/misc/GPUComputationRenderer";
 
 export class Leaves {
-  constructor(WIDTH = 16, BOUNDS = 25) {
+  constructor(WIDTH = 16, BOUNDS = 250) {
     this.BOUNDS = BOUNDS;
     this.BOUNDS_HALF = BOUNDS / 2;
 

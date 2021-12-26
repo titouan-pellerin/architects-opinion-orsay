@@ -14,7 +14,7 @@ import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
 import { CameraAnimation } from "./Path/CameraAnimation";
 import { ForestPathLine } from "./Path/ForestPathLine";
 import * as THREE from "three";
-import { Vector3 } from "three";
+import { RepeatWrapping, Vector3 } from "three";
 
 export class Environnement {
   constructor() {
@@ -28,12 +28,18 @@ export class Environnement {
       bigNoise: 50,
     };
 
-    this.forestPathLine = new ForestPathLine();
+    this.forestPathLine = new ForestPathLine(1024, 2);
     this.forestPathLine.scale.set(
       this.parameters.envScale,
       this.parameters.envScale,
       this.parameters.envScale
     );
+    const groundTexture1 = textureLoader.load("/assets/ground/curve1.png");
+    const groundTexture2 = textureLoader.load("/assets/ground/curve2.png");
+    const groundTexture3 = textureLoader.load("/assets/ground/curve3.png");
+    const groundTexture4 = textureLoader.load("/assets/ground/curve4.png");
+    const groundTexture5 = textureLoader.load("/assets/ground/curve5.png");
+
     this.cameraAnimation = new CameraAnimation(
       this.forestPathLine.spline,
       this.parameters.envScale
@@ -53,8 +59,7 @@ export class Environnement {
       this.groundMaskUniforms
     );
 
-    const groundTexture = textureLoader.load("/assets/ground/curve.png");
-    this.groundMaterial = new THREE.ShaderMaterial({
+    this.groundMaterial1 = new THREE.ShaderMaterial({
       vertexShader: groundVertexShader,
       fragmentShader: groundFragmentShader,
       transparent: true,
@@ -65,7 +70,7 @@ export class Environnement {
         uSmallNoise: { value: this.parameters.smallNoise },
         uBigNoise: { value: this.parameters.bigNoise },
         uColor: { value: this.parameters.groundColor },
-        uTexture: { value: groundTexture },
+        uTexture: { value: groundTexture1 },
       },
     });
 
@@ -84,22 +89,23 @@ export class Environnement {
     });
 
     this.groundGeometry = new THREE.PlaneGeometry(1, 1, 512, 512);
-    // this.groundGeometry.setAttribute(
-    //   "curvePos",
-    //   this.forestPathLine.geometry.getAttribute("position").clone()
-    // );
-    // const pathCoords = new Float32Array(this.groundGeometry.getAttribute("uv").count * 2);
-    // console.log(this.groundGeometry.getAttribute("uv"));
-    // this.groundGeometry.setAttribute("curveUv", new THREE.BufferAttribute(pathCoords, 2));
 
-    this.ground = new THREE.Mesh(this.groundGeometry, this.groundMaterial);
+    this.ground = new THREE.Mesh(this.groundGeometry, this.groundMaterial1);
     this.ground.rotation.x = -Math.PI * 0.5;
     this.ground.position.y = -3;
+
     this.ground.scale.set(
       this.parameters.envScale,
       this.parameters.envScale,
       this.parameters.envScale
     );
+
+    this.ground2 = this.ground.clone();
+    this.ground2.material = this.ground2.material.clone();
+    groundTexture2.flipY = false;
+    this.ground2.material.uniforms.uTexture.value = groundTexture2;
+    this.ground2.position.z -= this.parameters.envScale;
+    this.ground2.scale.y = -this.parameters.envScale;
 
     this.mask = new THREE.Mesh(this.groundGeometry, this.groundMaskMaterial);
     this.mask.rotation.x = -Math.PI * 0.5;
@@ -110,6 +116,10 @@ export class Environnement {
       this.parameters.envScale
     );
     this.mask.receiveShadow = true;
+
+    this.mask2 = this.mask.clone();
+    this.mask2.position.z -= this.parameters.envScale;
+    this.mask2.scale.y = -this.parameters.envScale;
 
     this.skyGeometry = new THREE.SphereGeometry(
       1,
@@ -144,22 +154,22 @@ export class Environnement {
       })
       .name("Color");
     groundFolder
-      .add(this.groundMaterial.uniforms.uStroke, "value")
+      .add(this.groundMaterial1.uniforms.uStroke, "value")
       .min(0)
       .max(10000)
       .name("StrokeQuantity");
     groundFolder
-      .add(this.groundMaterial.uniforms.uSmallNoise, "value")
+      .add(this.groundMaterial1.uniforms.uSmallNoise, "value")
       .min(250)
       .max(750)
       .name("SmallNoise");
     groundFolder
-      .add(this.groundMaterial.uniforms.uBigNoise, "value")
+      .add(this.groundMaterial1.uniforms.uBigNoise, "value")
       .min(0)
       .max(100)
       .name("BigNoise");
     groundFolder
-      .add(this.groundMaterial.uniforms.uSpeed, "value")
+      .add(this.groundMaterial1.uniforms.uSpeed, "value")
       .min(0)
       .max(2)
       .name("Speed");
@@ -193,7 +203,6 @@ export class Environnement {
   }
 
   update() {
-    // this.groundMaterial.uniforms.uTime.value = raf.elapsedTime;
     this.skyMaterial.uniforms.uTime.value = raf.elapsedTime;
     this.groundMaskUniforms.uTime.value = raf.elapsedTime;
   }

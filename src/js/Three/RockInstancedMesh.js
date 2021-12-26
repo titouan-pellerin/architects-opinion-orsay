@@ -10,7 +10,8 @@ import * as THREE from "three";
 import { DoubleSide } from "three";
 
 export class RockInstancedMesh {
-  constructor() {
+  constructor(pathLine) {
+    this.pathLine = pathLine;
     this.parameters = {
       rockQuantity: 20,
     };

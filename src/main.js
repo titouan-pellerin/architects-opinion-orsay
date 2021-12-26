@@ -9,15 +9,17 @@ function init() {
   const environnement = new Environnement();
   mainScene.add(
     environnement.ground,
+    environnement.ground2,
     environnement.mask,
+    environnement.mask2,
     environnement.forestPathLine,
     environnement.sky
   );
 
-  const grassInstancedMesh = new GrassInstancedMesh();
+  const grassInstancedMesh = new GrassInstancedMesh(environnement.forestPathLine);
   mainScene.add(grassInstancedMesh.group);
 
-  const rockInstancedMesh = new RockInstancedMesh();
+  const rockInstancedMesh = new RockInstancedMesh(environnement.forestPathLine);
   mainScene.add(rockInstancedMesh.group);
 
   const parameters = {

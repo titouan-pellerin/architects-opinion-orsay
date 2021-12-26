@@ -7,9 +7,11 @@ import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
 import * as THREE from "three";
+import { Vector3 } from "three";
 
 export class GrassInstancedMesh {
-  constructor() {
+  constructor(pathLine) {
+    this.pathLine = pathLine;
     this.parameters = {
       grassQuantity: 150,
     };
@@ -60,7 +62,6 @@ export class GrassInstancedMesh {
 
     for (let i = 0; i < instanceNumber; i++) {
       instance.position.set(Math.random() - 0.5, 0, Math.random() - 0.5);
-
       instance.scale.setScalar(Math.random());
 
       instance.updateMatrix();
@@ -70,13 +71,15 @@ export class GrassInstancedMesh {
     this.group = new THREE.Group();
 
     for (let i = 0; i < this.parameters.grassQuantity; i++) {
-      this.grass = this.grassPattern.clone();
-      this.grass.position.set(
+      const grass = this.grassPattern.clone();
+
+      grass.position.set(
         (Math.random() - 0.5) * 30,
         Math.random() / 2 - 3.2,
         (Math.random() - 0.5) * 30
       );
-      this.group.add(this.grass);
+
+      this.group.add(grass);
     }
 
     raf.subscribe("Grass", this.update.bind(this));

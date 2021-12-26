@@ -69,7 +69,7 @@ export class MainScene extends THREE.Scene {
     this.background = new THREE.Color(parameters.skyBgColor);
 
     this.add(this.camera);
-    this.camera.position.set(0, 1, 0);
+    this.camera.position.set(0, 1, 15);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 6, 45);
     this.fog = fog;
@@ -240,7 +240,6 @@ export class MainScene extends THREE.Scene {
     this.controls.update();
     this.composer.render();
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
-    // console.log(raf.elapsedTime);
   }
 }
 
