@@ -10,12 +10,12 @@ export default defineConfig({
   assetsInclude: ["**/*.gltf"],
   plugins: [glsl()],
 
-  // resolve: {
-  //   alias: [
-  //     { find: '@js', replacement: '/src/js' },
-  //     { find: '@styles', replacement: '/src/styles' },
-  //     { find: '@glsl', replacement: '/src/glsl' },
-  //     { find: '@assets', replacement: '/src/assets' },
-  //   ],
-  // },
+  resolve: {
+    alias: [
+      { find: "@js", replacement: "/src/js" },
+      { find: "@styles", replacement: "/src/styles" },
+      { find: "@glsl", replacement: "/src/glsl" },
+      { find: "@assets", replacement: "/src/assets" },
+    ],
+  },
 });

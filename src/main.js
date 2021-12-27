@@ -1,4 +1,4 @@
-import { Environnement } from "./js/Three/Environnement";
+import { Environnement } from "./js/Three/Environment/Environnement";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
 import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
@@ -7,14 +7,7 @@ import "./styles/style.scss";
 
 function init() {
   const environnement = new Environnement();
-  mainScene.add(
-    environnement.ground,
-    environnement.ground2,
-    environnement.mask,
-    environnement.mask2,
-    environnement.forestPathLine,
-    environnement.sky
-  );
+  mainScene.add(environnement.ground, environnement.forestPathLine, environnement.sky);
 
   const grassInstancedMesh = new GrassInstancedMesh(environnement.forestPathLine);
   mainScene.add(grassInstancedMesh.group);

@@ -39,8 +39,7 @@ void main() {
   // if(vUv.x >= .5 && vUv.x <= .6)
   //   render = vec4(1.);
   if(curveCoords.r >= .7 && curveCoords.g >= .7 && curveCoords.b >= .7)
-    render = vec4(curveCoords, 1.);
-  // if(vCurvePos.x <= .5 && vCurvePos.x >= 5.)
-  //   render = vec4(1.);
+    render = mix(vec4(curveCoords, 1.), render, 1. - curveCoords.r);
+
   gl_FragColor = render;
 }
