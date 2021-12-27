@@ -1,7 +1,7 @@
 import { guiFolders } from "../../utils/Debug";
 import skyFragmentShader from "@glsl/sky/fragment.glsl";
 import skyVertexShader from "@glsl/sky/vertex.glsl";
-import { Mesh } from "three";
+import { BackSide, Mesh } from "three";
 import { ShaderMaterial } from "three";
 import { SphereGeometry } from "three";
 
@@ -10,6 +10,7 @@ export class Sky extends Mesh {
     const skyMaterial = new ShaderMaterial({
       vertexShader: skyVertexShader,
       fragmentShader: skyFragmentShader,
+      side: BackSide,
       transparent: true,
       uniforms: {
         uTime: { value: 0 },
