@@ -119,7 +119,7 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(200, this.WIDTH);
+    const geometry = new LeavesGeometry(100, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {
@@ -145,7 +145,7 @@ export class Leaves {
       }
     );
 
-    this.leaveMesh = new Mesh(geometry, material);
+    this.leaveMesh = new Mesh(geometry, material.meshToonMaterial);
     this.leaveMesh.rotation.y = Math.PI / 2;
     this.leaveMesh.matrixAutoUpdate = false;
     this.leaveMesh.updateMatrix();
