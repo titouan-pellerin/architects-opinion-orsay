@@ -1,4 +1,4 @@
-import { textureLoader } from "./Loader";
+import { dataTextureLoader, textureLoader } from "./Loader";
 
 const texturesMap = new Map();
 
@@ -28,4 +28,6 @@ texturesMap.set("curveTextures", [
   curveTexture5,
 ]);
 
+// const treesPositionsTexture1 = textureLoader.load("/assets/positions/trees1.png");
+// texturesMap.set("treesPositionsTextures", [treesPositionsTexture1]);
 export { texturesMap };
