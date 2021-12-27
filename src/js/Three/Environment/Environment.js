@@ -6,7 +6,7 @@ import { Grounds } from "./Grounds";
 import { Sky } from "./Sky";
 import * as THREE from "three";
 
-export class Environnement {
+export class Environment {
   constructor() {
     this.parameters = {
       envScale: 100,
@@ -18,12 +18,7 @@ export class Environnement {
       bigNoise: 50,
     };
 
-    this.forestPathLine = new ForestPathLine(1024, 2);
-    this.forestPathLine.scale.set(
-      this.parameters.envScale,
-      this.parameters.envScale,
-      this.parameters.envScale
-    );
+    this.forestPathLine = new ForestPathLine(1024, 2, this.parameters);
 
     this.cameraAnimation = new CameraAnimation(
       this.forestPathLine.spline,
@@ -32,13 +27,12 @@ export class Environnement {
 
     this.sky = new Sky(this.parameters);
     this.grounds = new Grounds(5, this.parameters);
-    this.ground = this.grounds.currentGround;
 
     raf.subscribe("environment", this.update.bind(this));
   }
 
   update() {
     this.sky.material.uniforms.uTime.value = raf.elapsedTime;
-    this.ground.groundMaskUniforms.uTime.value = raf.elapsedTime;
+    this.grounds.currentGround.groundMaskUniforms.uTime.value = raf.elapsedTime;
   }
 }

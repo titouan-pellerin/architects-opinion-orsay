@@ -13,8 +13,9 @@ import { ShaderMaterial } from "three";
 import { Group } from "three";
 
 export class Ground extends Group {
-  constructor(firstTexture, parameters = {}) {
+  constructor(texture, parameters = {}) {
     super();
+    this.texture = texture;
 
     this.groundMaskUniforms = {
       uTime: { value: 0 },
@@ -41,7 +42,7 @@ export class Ground extends Group {
         uSmallNoise: { value: parameters.smallNoise },
         uBigNoise: { value: parameters.bigNoise },
         uColor: { value: parameters.groundColor },
-        uTexture: { value: firstTexture },
+        uTexture: { value: texture },
       },
     });
 

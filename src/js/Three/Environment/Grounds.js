@@ -3,8 +3,10 @@ import { texturesMap } from "../../utils/assets";
 import { Ground } from "./Ground";
 import { Group } from "three";
 
-export class Grounds {
+export class Grounds extends Group {
   constructor(groundAmount, parameters = {}) {
+    super();
+    this.parameters = parameters;
     this.firstTexture = texturesMap.get("firstCurveTexture")[0];
     this.lastTexture = texturesMap.get("lastCurveTexture")[0];
     this.textures = texturesMap.get("curveTextures");
@@ -12,8 +14,19 @@ export class Grounds {
     this.currentTexture = this.firstTexture;
 
     this.ground1 = new Ground(this.firstTexture, parameters);
-    this.ground2 = this.getClonedGround();
-    this.ground3 = this.getClonedGround();
+
+    this.ground2 = new Ground(this.getRandomTexture(), parameters);
+    this.ground2.texture.flipY = false;
+    this.ground2.position.z -= parameters.envScale;
+    this.ground2.scale.z = -1;
+
+    this.ground3 = new Ground(this.getRandomTexture(), parameters);
+    this.ground3.texture.flipY = false;
+    this.ground3.position.z -= this.parameters.envScale * 2;
+    this.ground3.scale.z = -1;
+
+    this.add(this.ground1, this.ground2, this.ground3);
+
     this.currentGround = this.ground1;
     this.currentIndex = 0;
     this.groundAmount = groundAmount - 1;
@@ -61,12 +74,17 @@ export class Grounds {
     return this.textures[Math.floor(Math.random() * this.textures.length)];
   }
 
-  getClonedGround(lastGround = false) {
-    const clonedGround = this.ground1.clone();
-    clonedGround.mask.material = clonedGround.mask.material.clone();
-    clonedGround.ground.material = clonedGround.ground.material.clone();
-    if (lastGround) clonedGround.ground.material.uniforms.uTexture = this.lastTexture;
-    else clonedGround.ground.material.uniforms.uTexture = this.getRandomTexture();
-    return clonedGround;
-  }
+  // getClonedGround(lastGround = false) {
+  //   const clonedGround = this.ground1.clone();
+  //   clonedGround.scale.y = -this.parameters.envScale;
+
+  //   const texture = lastGround ? this.lastTexture : this.getRandomTexture();
+  //   texture.flipY = false;
+
+  //   clonedGround.mask.material = clonedGround.mask.material.clone();
+  //   clonedGround.ground.material = clonedGround.ground.material.clone();
+  //   clonedGround.ground.material.uniforms.uTexture.value = texture;
+
+  //   return clonedGround;
+  // }
 }

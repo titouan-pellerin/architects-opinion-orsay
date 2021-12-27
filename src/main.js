@@ -1,4 +1,4 @@
-import { Environnement } from "./js/Three/Environment/Environnement";
+import { Environment } from "./js/Three/Environment/Environment";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
 import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
@@ -6,13 +6,13 @@ import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
 import "./styles/style.scss";
 
 function init() {
-  const environnement = new Environnement();
-  mainScene.add(environnement.ground, environnement.forestPathLine, environnement.sky);
+  const environment = new Environment();
+  mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
 
-  const grassInstancedMesh = new GrassInstancedMesh(environnement.forestPathLine);
+  const grassInstancedMesh = new GrassInstancedMesh(environment.forestPathLine);
   mainScene.add(grassInstancedMesh.group);
 
-  const rockInstancedMesh = new RockInstancedMesh(environnement.forestPathLine);
+  const rockInstancedMesh = new RockInstancedMesh(environment.forestPathLine);
   mainScene.add(rockInstancedMesh.group);
 
   const parameters = {
