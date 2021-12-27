@@ -37,7 +37,7 @@ export class Environnement {
       this.groundMaskUniforms,
       {
         side: THREE.BackSide,
-      }
+      },
     );
 
     this.groundMaterial = new THREE.ShaderMaterial({
@@ -66,7 +66,7 @@ export class Environnement {
     this.ground.scale.set(
       this.parameters.envScale,
       this.parameters.envScale,
-      this.parameters.envScale
+      this.parameters.envScale,
     );
 
     this.mask = new THREE.Mesh(this.groundGeometry, this.groundMaskMaterial);
@@ -75,7 +75,7 @@ export class Environnement {
     this.mask.scale.set(
       this.parameters.envScale,
       this.parameters.envScale,
-      this.parameters.envScale
+      this.parameters.envScale,
     );
     this.mask.receiveShadow = true;
 
@@ -86,23 +86,22 @@ export class Environnement {
       0,
       Math.PI * 2,
       0,
-      Math.PI * 0.5
+      Math.PI * 0.5,
     );
 
     this.sky = new THREE.Mesh(this.skyGeometry, this.skyMaterial);
     this.sky.scale.set(
       this.parameters.envScale,
       this.parameters.envScale,
-      this.parameters.envScale
+      this.parameters.envScale,
     );
-
 
     raf.subscribe("Environnement", this.update.bind(this));
 
     setTimeout(() => {
-      this.ground.matrixAutoUpdate = false
-      this.mask.matrixAutoUpdate = false
-      this.sky.matrixAutoUpdate = false
+      this.ground.matrixAutoUpdate = false;
+      this.mask.matrixAutoUpdate = false;
+      this.sky.matrixAutoUpdate = false;
     }, 1);
 
     const sceneFolder = guiFolders.get("scene");
@@ -164,7 +163,7 @@ export class Environnement {
   }
 
   update() {
-    // this.groundMaterial.uniforms.uTime.value = raf.elapsedTime;
+    // this.groundMaterial.uniforms.uTime.value = raf.elapsedTime * 0.5;
     this.skyMaterial.uniforms.uTime.value = raf.elapsedTime;
     this.groundMaskUniforms.uTime.value = raf.elapsedTime;
   }

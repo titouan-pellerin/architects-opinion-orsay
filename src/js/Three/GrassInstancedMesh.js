@@ -29,7 +29,7 @@ export class GrassInstancedMesh {
       null,
       projectVertexShader,
       this.grassUniforms,
-      {}
+      {},
     );
 
     const sceneFolder = guiFolders.get("scene");
@@ -43,7 +43,7 @@ export class GrassInstancedMesh {
       .name("DisplaceIntensity");
     folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
-    const instanceNumber = 500;
+    const instanceNumber = 200000;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
@@ -52,14 +52,13 @@ export class GrassInstancedMesh {
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
       this.material,
-      instanceNumber
+      instanceNumber,
     );
     this.grassPattern.scale.set(3, 3, 3);
     this.grassPattern.castShadow = true;
-    this.grassPattern.frustumCulled = false;
 
     for (let i = 0; i < instanceNumber; i++) {
-      instance.position.set(Math.random() - 0.5, 0, Math.random() - 0.5);
+      instance.position.set((Math.random() - 0.5) * 15, 0, (Math.random() - 0.5) * 9);
 
       instance.scale.setScalar(Math.random());
 
@@ -68,21 +67,24 @@ export class GrassInstancedMesh {
     }
 
     this.group = new THREE.Group();
+    this.group.position.y = -3;
+    this.group.add(this.grassPattern);
 
-    for (let i = 0; i < this.parameters.grassQuantity; i++) {
-      this.grass = this.grassPattern.clone();
+    // for (let i = 0; i < this.parameters.grassQuantity; i++) {
+    //   this.grass = this.grassPattern.clone();
+    //   this.grass.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
 
-      setTimeout(() => {
-        this.grass.matrixAutoUpdate = false
-      }, 1);
+    //   setTimeout(() => {
+    //     this.grass.matrixAutoUpdate = false;
+    //   }, 1);
 
-      this.grass.position.set(
-        (Math.random() - 0.5) * 30,
-        Math.random() / 2 - 3.2,
-        (Math.random() - 0.5) * 30
-      );
-      this.group.add(this.grass);
-    }
+    //   this.grass.position.set(
+    //     (Math.random() - 0.5) * 30,
+    //     Math.random() / 2 - 3.2,
+    //     (Math.random() - 0.5) * 30,
+    //   );
+    //   this.group.add(this.grass);
+    // }
 
     raf.subscribe("Grass", this.update.bind(this));
   }

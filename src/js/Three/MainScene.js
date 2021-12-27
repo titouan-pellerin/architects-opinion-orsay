@@ -37,7 +37,7 @@ export class MainScene extends THREE.Scene {
       45,
       this.sizes.width / this.sizes.height,
       0.1,
-      150
+      150,
     );
     this.camera.updateProjectionMatrix();
 
@@ -76,7 +76,7 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight = new THREE.DirectionalLight(
       parameters.lightColor,
-      parameters.lightIntensity
+      parameters.lightIntensity,
     );
     directionalLight.castShadow = true;
     directionalLight.shadow.bias = 0.0001;
@@ -86,7 +86,7 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight2 = new THREE.DirectionalLight(
       parameters.light2Color,
-      parameters.light2Intensity
+      parameters.light2Intensity,
     );
     directionalLight2.position.set(-10, 10, 10);
     this.add(directionalLight2);
@@ -239,6 +239,7 @@ export class MainScene extends THREE.Scene {
   update() {
     this.controls.update();
     this.composer.render();
+    // this.renderer.render(this, this.camera);
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
   }
 }
