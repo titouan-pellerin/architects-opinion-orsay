@@ -11,6 +11,7 @@ import { Mesh } from "three";
 import { Color } from "three";
 import { ShaderMaterial } from "three";
 import { Group } from "three";
+import { Vector3 } from "three";
 
 export class Ground extends Group {
   constructor(texture, parameters = {}) {
@@ -60,5 +61,13 @@ export class Ground extends Group {
     this.mask.receiveShadow = true;
 
     this.add(this.ground, this.mask);
+  }
+
+  getCenter() {
+    this.ground.geometry.computeBoundingBox();
+    const center = new Vector3();
+    this.ground.geometry.boundingBox.getCenter(center);
+    this.ground.localToWorld(center);
+    return center;
   }
 }

@@ -31,7 +31,9 @@ export class GrassInstancedMesh {
       null,
       projectVertexShader,
       this.grassUniforms,
-      {}
+      {
+        transparent: true,
+      }
     );
 
     const sceneFolder = guiFolders.get("scene");

@@ -1,10 +1,12 @@
 import { guiFolders } from "../../utils/Debug";
 import raf from "../../utils/Raf";
+import { mainScene } from "../MainScene";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { ForestPathLine } from "../Path/ForestPathLine";
 import { Grounds } from "./Grounds";
 import { Sky } from "./Sky";
 import * as THREE from "three";
+import { Vector3 } from "three";
 
 export class Environment {
   constructor() {
@@ -33,6 +35,6 @@ export class Environment {
 
   update() {
     this.sky.material.uniforms.uTime.value = raf.elapsedTime;
-    this.grounds.currentGround.groundMaskUniforms.uTime.value = raf.elapsedTime;
+    this.grounds.ground2.groundMaskUniforms.uTime.value = raf.elapsedTime;
   }
 }
