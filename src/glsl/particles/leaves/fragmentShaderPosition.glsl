@@ -10,8 +10,12 @@ void main() {
 
     float phase = tmpPos.w;
 
-    if(position.y <= -5.)
-        position.y = 10.;
+    if(position.y <= -3.)
+        position.y = 7.;
+    if(position.x >= 10. || position.x <= -10.)
+        position.x = 0.;
+    if(position.z >= 10. || position.z <= -10.)
+        position.z = 0.;
 
     phase = mod((phase + delta +
         length(velocity.xz) * delta * 3. +

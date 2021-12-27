@@ -7,12 +7,11 @@ import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
 import * as THREE from "three";
+import { Vector3 } from "three";
 
 export class GrassInstancedMesh {
-  constructor() {
-    this.parameters = {
-      grassQuantity: 150,
-    };
+  constructor(pathLine) {
+    this.pathLine = pathLine;
 
     this.grassUniforms = {
       uTime: { value: 0 },
@@ -29,7 +28,7 @@ export class GrassInstancedMesh {
       null,
       projectVertexShader,
       this.grassUniforms,
-      {},
+      {}
     );
 
     const sceneFolder = guiFolders.get("scene");
@@ -52,7 +51,7 @@ export class GrassInstancedMesh {
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
       this.material.meshToonMaterial,
-      instanceNumber,
+      instanceNumber
     );
     this.grassPattern.scale.set(3, 3, 3);
     this.grassPattern.castShadow = true;

@@ -27,14 +27,34 @@ export class WoodInstancedMesh {
       uColor2: { value: new THREE.Color("#979797") },
     };
 
-    this.material = new CustomMeshToonMaterial(
-      commonFragmentShader,
-      outputFragmentShader,
-      commonVertexShader,
-      beginVertexShader,
-      null,
-      this.woodUniforms,
-    );
+    // this.material = new CustomMeshToonMaterial(
+    //   commonFragmentShader,
+    //   outputFragmentShader,
+    //   commonVertexShader,
+    //   beginVertexShader,
+    //   null,
+    //   this.woodUniforms
+    // );
+    this.material = new THREE.MeshToonMaterial();
+    this.material.onBeforeCompile = (shader) => {
+      shader.uniforms = { ...shader.uniforms, ...this.woodUniforms };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        commonFragmentShader
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        outputFragmentShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        commonVertexShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <begin_vertex>",
+        beginVertexShader
+      );
+    };
 
     // this.innerMaterial = new CustomMeshToonMaterial(
     //   commonFragmentShader,
@@ -44,24 +64,24 @@ export class WoodInstancedMesh {
     //   null,
     //   this.woodInnerUniforms,
     // );
-    this.innerMaterial = new THREE.MeshToonMaterial({});
+    this.innerMaterial = new THREE.MeshToonMaterial();
     this.innerMaterial.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.woodInnerUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
-        commonFragmentShader,
+        commonFragmentShader
       );
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <output_fragment>",
-        outputFragmentShaderInner,
+        outputFragmentShaderInner
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <common>",
-        commonVertexShader,
+        commonVertexShader
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <begin_vertex>",
-        beginVertexShader,
+        beginVertexShader
       );
     };
     // console.log(outputFragmentShaderInner);
@@ -79,7 +99,7 @@ export class WoodInstancedMesh {
     this.group.position.y = -3;
 
     for (let i = 0; i < this.parameters.woodQuantity; i++) {
-      this.wood = new THREE.Mesh(this.geometry, this.material.meshToonMaterial);
+      this.wood = new THREE.Mesh(this.geometry, this.material);
       this.wood.scale.set(0.7, 0.7, 0.7);
 
       this.innerWood = new THREE.Mesh(this.innerGeometry, this.innerMaterial);
@@ -90,7 +110,7 @@ export class WoodInstancedMesh {
       this.woodGroup.position.set(
         (Math.random() - 0.5) * 30,
         Math.random() - 0.5,
-        (Math.random() - 0.5) * 30,
+        (Math.random() - 0.5) * 30
       );
       this.woodGroup.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
 
