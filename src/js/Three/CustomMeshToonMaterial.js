@@ -1,6 +1,6 @@
 import { MeshToonMaterial } from "three";
 
-export class CustomMeshToonMaterial extends MeshToonMaterial {
+export class CustomMeshToonMaterial {
   constructor(
     commonFrag,
     outputFrag,
@@ -10,8 +10,8 @@ export class CustomMeshToonMaterial extends MeshToonMaterial {
     customUniforms = {},
     parameters = {},
   ) {
-    super(parameters);
-    this.onBeforeCompile = (shader) => {
+    this.meshToonMaterial = new MeshToonMaterial(parameters);
+    this.meshToonMaterial.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...customUniforms };
       if (commonFrag)
         shader.fragmentShader = shader.fragmentShader.replace(

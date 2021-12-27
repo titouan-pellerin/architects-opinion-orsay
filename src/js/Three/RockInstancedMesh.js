@@ -40,7 +40,7 @@ export class RockInstancedMesh {
     this.group.position.y = -3;
 
     for (let i = 0; i < this.parameters.rockQuantity; i++) {
-      this.rock = new THREE.Mesh(this.geometry, this.material);
+      this.rock = new THREE.Mesh(this.geometry, this.material.meshToonMaterial);
       this.rock.position.set((Math.random() - 0.5) * 30, 0, (Math.random() - 0.5) * 30);
       this.rock.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
       this.rock.scale.set(

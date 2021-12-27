@@ -69,7 +69,10 @@ export class Environnement {
       this.parameters.envScale,
     );
 
-    this.mask = new THREE.Mesh(this.groundGeometry, this.groundMaskMaterial);
+    this.mask = new THREE.Mesh(
+      this.groundGeometry,
+      this.groundMaskMaterial.meshToonMaterial,
+    );
     this.mask.rotation.x = Math.PI * 0.5;
     this.mask.position.y = -3.01;
     this.mask.scale.set(

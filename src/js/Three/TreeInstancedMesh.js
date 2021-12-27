@@ -19,9 +19,9 @@ export class TreeInstancedMesh {
       speed: 1,
     };
 
-    this.material = new THREE.MeshToonMaterial({
-      transparent: true,
-    });
+    // this.material = new THREE.MeshToonMaterial({
+    //   transparent: true,
+    // });
 
     raf.subscribe("Grass", this.update.bind(this));
   }

@@ -18,8 +18,8 @@ function init() {
   const grassInstancedMesh = new GrassInstancedMesh();
   mainScene.add(grassInstancedMesh.group);
 
-  const rockInstancedMesh = new RockInstancedMesh();
-  mainScene.add(rockInstancedMesh.group);
+  // const rockInstancedMesh = new RockInstancedMesh();
+  // mainScene.add(rockInstancedMesh.group);
 
   const woodInstancedMesh = new WoodInstancedMesh();
   mainScene.add(woodInstancedMesh.group);

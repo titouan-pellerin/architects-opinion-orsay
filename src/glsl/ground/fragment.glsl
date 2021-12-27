@@ -1,5 +1,4 @@
 #include ../utils/noise2d;
-#include ../utils/smoothNoise;
 
 varying vec2 vUv;
 

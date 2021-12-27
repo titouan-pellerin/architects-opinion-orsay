@@ -51,7 +51,7 @@ export class GrassInstancedMesh {
 
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
-      this.material,
+      this.material.meshToonMaterial,
       instanceNumber,
     );
     this.grassPattern.scale.set(3, 3, 3);
