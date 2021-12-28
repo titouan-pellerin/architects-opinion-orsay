@@ -76,7 +76,7 @@ export class Grounds extends Group {
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
       const texture = this.getNextTexture();
       texture.flipY = !!(this.currentIndex % 2);
-      currentGround1.groundMaskUniforms.uTexture.value = texture;
+      currentGround1.groundUniforms.uTexture.value = texture;
 
       this.ground1 = currentGround2;
       this.ground2 = currentGround3;
