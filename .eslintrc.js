@@ -16,6 +16,7 @@ module.exports = {
     "no-multi-spaces": "error",
     "prefer-const": "error",
     "no-use-before-define": "error",
+    "no-extra-boolean-cast": "none",
     // "no-duplicate-imports": 1,
     indent: ["error", 2],
     quotes: ["error", "double"],
