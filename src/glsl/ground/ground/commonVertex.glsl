@@ -1,4 +1,4 @@
-#include ../utils/noise3d;
+#include ../../utils/noise3d;
 
 #include <common>
 

@@ -40,6 +40,5 @@ export class Environment {
 
   update() {
     this.sky.material.uniforms.uTime.value = raf.elapsedTime;
-    this.grounds.ground2.groundMaskUniforms.uTime.value = raf.elapsedTime;
   }
 }

@@ -35,38 +35,31 @@ export class Grounds extends Group {
      */
     const sceneFolder = guiFolders.get("scene");
 
-    const groundFolder = sceneFolder.addFolder("Ground");
+    const groundFolder = sceneFolder.addFolder("Mask");
+    groundFolder.addColor(this.ground2.groundMaskUniforms.uColor, "value").name("Color");
     groundFolder
-      .addColor(parameters, "groundColor")
-      // .onChange(() => {
-      //   this.ground1.ground.material.uniforms.uColor.value (parameters.groundColor);
-      // })
-      .name("Color");
-    groundFolder
-      .add(this.ground2.ground.material.uniforms.uStroke, "value")
+      .add(this.ground2.groundMaskUniforms.uStroke, "value")
       .min(0)
       .max(10000)
       .name("StrokeQuantity");
     groundFolder
-      .add(this.ground2.ground.material.uniforms.uSmallNoise, "value")
+      .add(this.ground2.groundMaskUniforms.uSmallNoise, "value")
       .min(250)
       .max(750)
       .name("SmallNoise");
     groundFolder
-      .add(this.ground2.ground.material.uniforms.uBigNoise, "value")
+      .add(this.ground2.groundMaskUniforms.uBigNoise, "value")
       .min(0)
       .max(100)
       .name("BigNoise");
     groundFolder
-      .add(this.ground2.ground.material.uniforms.uSpeed, "value")
+      .add(this.ground2.groundMaskUniforms.uSpeed, "value")
       .min(0)
       .max(2)
       .name("Speed");
 
-    const groundMaskFolder = sceneFolder.addFolder("GroundMask");
-    groundMaskFolder
-      .addColor(this.ground2.groundMaskUniforms.uColor, "value")
-      .name("Color");
+    const groundMaskFolder = sceneFolder.addFolder("Ground");
+    groundMaskFolder.addColor(this.ground2.groundUniforms.uColor, "value").name("Color");
   }
 
   getNextTexture() {
@@ -83,7 +76,7 @@ export class Grounds extends Group {
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
       const texture = this.getNextTexture();
       texture.flipY = !!(this.currentIndex % 2);
-      currentGround1.ground.material.uniforms.uTexture.value = texture;
+      currentGround1.groundMaskUniforms.uTexture.value = texture;
 
       this.ground1 = currentGround2;
       this.ground2 = currentGround3;
