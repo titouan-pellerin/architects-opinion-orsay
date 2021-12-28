@@ -22,6 +22,7 @@ export class Ground extends Group {
     this.groundUniforms = {
       uTime: { value: 0 },
       uColor: { value: new Color("#83ce72") },
+      uTexture: { value: texture },
     };
 
     this.groundMaskUniforms = {
@@ -31,7 +32,6 @@ export class Ground extends Group {
       uSmallNoise: { value: parameters.smallNoise },
       uBigNoise: { value: parameters.bigNoise },
       uColor: { value: parameters.groundColor },
-      uTexture: { value: texture },
     };
 
     const groundMaterial = new CustomMeshToonMaterial(

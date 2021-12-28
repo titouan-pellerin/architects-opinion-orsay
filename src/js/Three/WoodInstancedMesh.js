@@ -32,19 +32,19 @@ export class WoodInstancedMesh {
       shader.uniforms = { ...shader.uniforms, ...this.woodUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
-        commonFragmentShader,
+        commonFragmentShader
       );
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <output_fragment>",
-        outputFragmentShader,
+        outputFragmentShader
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <common>",
-        commonVertexShader,
+        commonVertexShader
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <begin_vertex>",
-        beginVertexShader,
+        beginVertexShader
       );
     };
 
@@ -61,19 +61,19 @@ export class WoodInstancedMesh {
       shader.uniforms = { ...shader.uniforms, ...this.woodInnerUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
-        commonFragmentShader,
+        commonFragmentShader
       );
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <output_fragment>",
-        outputFragmentShaderInner,
+        outputFragmentShaderInner
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <common>",
-        commonVertexShader,
+        commonVertexShader
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <begin_vertex>",
-        beginVertexShader,
+        beginVertexShader
       );
     };
     // console.log(outputFragmentShaderInner);
@@ -96,13 +96,14 @@ export class WoodInstancedMesh {
 
       this.innerWood = new THREE.Mesh(this.innerGeometry, this.innerMaterial);
       this.innerWood.scale.set(0.49, 0.5, 0.49);
+      this.innerWood.castShadow = true;
 
       this.woodGroup = new THREE.Group();
       this.woodGroup.add(this.wood, this.innerWood);
       this.woodGroup.position.set(
         (Math.random() - 0.5) * 30,
         Math.random() - 0.5,
-        (Math.random() - 0.5) * 30,
+        (Math.random() - 0.5) * 30
       );
       this.woodGroup.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
 
