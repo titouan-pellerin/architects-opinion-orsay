@@ -1,3 +1,5 @@
+import { positions } from "../../utils/positions";
+import { Cubes } from "./Elements/Cubes";
 import groundBeginVertexShader from "@glsl/ground/ground/beginVertex.glsl";
 import groundCommonFragmentShader from "@glsl/ground/ground/commonFragment.glsl";
 import groundCommonVertexShader from "@glsl/ground/ground/commonVertex.glsl";
@@ -9,9 +11,6 @@ import maskOutputFragmentShader from "@glsl/ground/mask/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
 import { PlaneGeometry } from "three";
 import { MeshToonMaterial } from "three";
-import { MeshBasicMaterial } from "three";
-import { Vector2 } from "three";
-import { BoxGeometry } from "three";
 import { Mesh } from "three";
 import { Color } from "three";
 import { Group } from "three";
@@ -81,35 +80,6 @@ export class Ground extends Group {
     this.mask.rotation.x = -Math.PI * 0.5;
     this.mask.position.y = -3;
     this.mask.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
-
-    const points = [
-      new Vector2(-7.71843645484869, -41.0645551904793),
-      new Vector2(4.96969063545119, -42.6270551904793),
-      new Vector2(5.60723244146855, -35.216346153851),
-      new Vector2(8.09469063544888, -7.80321204144019),
-      new Vector2(5.60723244146853, -26.7349498327803),
-      new Vector2(9.65719063544547, 1.5625),
-      new Vector2(6.53219063544835, -19.5443143812753),
-      new Vector2(-6.934573578593, -24.1220735786015),
-      new Vector2(-4.59343645484871, 10.2877715758269),
-      new Vector2(5.60723244146858, -47.1153846153896),
-      new Vector2(-7.71843645484866, -47.1153846153896),
-      new Vector2(5.60723244146857, 7.75501672239898),
-      new Vector2(-6.93457357859302, -17.9818143812753),
-      new Vector2(-10.8434364548486, 1.5625),
-      new Vector2(-7.71843645484864, -7.80321204144062),
-      new Vector2(-7.71843645484861, -32.091346153851),
-    ];
-    for (const point of points) {
-      console.log(point);
-      const cube = new Mesh(
-        new BoxGeometry(1, 1, 1),
-        new MeshBasicMaterial({ color: 0xff0000 })
-      );
-      cube.position.set(point.x, 1, point.y);
-      // cube.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
-      this.add(cube);
-    }
 
     this.add(this.ground, this.mask);
   }

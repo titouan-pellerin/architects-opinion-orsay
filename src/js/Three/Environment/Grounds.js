@@ -1,7 +1,9 @@
 import { guiFolders } from "../../utils/Debug";
 import raf from "../../utils/Raf";
 import { texturesMap } from "../../utils/assets";
+import { positions } from "../../utils/positions";
 import { mainScene } from "../MainScene";
+import { Cubes } from "./Elements/Cubes";
 import { Ground } from "./Ground";
 import { Group } from "three";
 
@@ -18,13 +20,21 @@ export class Grounds extends Group {
     this.ground1.texture.flipY = false;
     this.ground1.position.z += parameters.envScale;
     this.ground1.scale.z = -1;
+    const cubes3 = new Cubes(positions.get("cubesPositions3"));
+    cubes3.scale.z = -1;
+    this.ground1.add(cubes3);
 
     this.ground2 = new Ground(this.textures[0], parameters);
+    const cubes1 = new Cubes(positions.get("cubesPositions1"));
+    this.ground2.add(cubes1);
 
     this.ground3 = new Ground(this.textures[1], parameters);
     this.ground3.texture.flipY = false;
     this.ground3.position.z -= this.parameters.envScale;
     this.ground3.scale.z = -1;
+    const cubes2 = new Cubes(positions.get("cubesPositions2"));
+    cubes2.scale.z = -1;
+    this.ground3.add(cubes2);
 
     this.add(this.ground1, this.ground2, this.ground3);
 

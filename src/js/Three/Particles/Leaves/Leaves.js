@@ -32,7 +32,7 @@ export class Leaves {
     this.gpuCompute = new GPUComputationRenderer(
       this.WIDTH,
       this.WIDTH,
-      mainScene.renderer,
+      mainScene.renderer
     );
     if (isSafari()) {
       this.gpuCompute.setDataType(HalfFloatType);
@@ -46,12 +46,12 @@ export class Leaves {
     this.velocityVariable = this.gpuCompute.addVariable(
       "textureVelocity",
       fragmentShaderVelocity,
-      this.dtVelocity,
+      this.dtVelocity
     );
     this.positionVariable = this.gpuCompute.addVariable(
       "texturePosition",
       fragmentShaderPosition,
-      this.dtPosition,
+      this.dtPosition
     );
 
     this.gpuCompute.setVariableDependencies(this.velocityVariable, [
@@ -142,7 +142,7 @@ export class Leaves {
       this.leavesUniforms,
       {
         side: DoubleSide,
-      },
+      }
     );
 
     this.leaveMesh = new Mesh(geometry, material.meshToonMaterial);
@@ -163,10 +163,10 @@ export class Leaves {
     this.gpuCompute.compute();
 
     this.leavesUniforms["texturePosition"].value = this.gpuCompute.getCurrentRenderTarget(
-      this.positionVariable,
+      this.positionVariable
     ).texture;
     this.leavesUniforms["textureVelocity"].value = this.gpuCompute.getCurrentRenderTarget(
-      this.velocityVariable,
+      this.velocityVariable
     ).texture;
   }
 }
