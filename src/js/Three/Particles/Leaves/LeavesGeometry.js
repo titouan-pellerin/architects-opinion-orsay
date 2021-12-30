@@ -27,9 +27,10 @@ export class LeavesGeometry extends BufferGeometry {
 
     for (let f = 0; f < amount; f++) {
       const scaleRandom = Math.random();
-      verts_push(0, 0, -0.75, -1, 0, 0, 0, 0, 0.75);
-      verts_push(0, 0, 0.75, 1, 0, 0, 0, 0, -0.75);
+      // verts_push(0, 0, -0.75, -1, 0, 0, 0, 0, 0.75);
       // verts_push(0, 0, 0.75, 1, 0, 0, 0, 0, -0.75);
+      verts_push(0, 0, -1, -1, 0, 0, 0, 0, 1);
+      verts_push(0, 0, 1, 1, 0, 0, 0, 0, -1);
     }
 
     for (let v = 0; v < triangles * 3; v++) {
