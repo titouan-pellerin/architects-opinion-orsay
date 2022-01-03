@@ -21,12 +21,12 @@ export class MainScene extends THREE.Scene {
     super();
 
     const parameters = {
-      skyBgColor: new THREE.Color("#fdfbd3"),
-      noiseColor: new THREE.Color("#84b15a"),
+      skyBgColor: new THREE.Color("#c9b09a"),
+      tintColor: new THREE.Color("#ffc08a"),
       cornerColor: new THREE.Color("#000000"),
-      lightColor: new THREE.Color("#84b15a"),
+      lightColor: new THREE.Color("#c9b09a"),
       lightIntensity: 1,
-      light2Color: new THREE.Color("#84b15a"),
+      light2Color: new THREE.Color("#c9b09a"),
       light2Intensity: 0.5,
     };
 
@@ -74,7 +74,7 @@ export class MainScene extends THREE.Scene {
     this.add(this.camera);
     this.camera.position.set(0, 1, 15);
 
-    const fog = new THREE.Fog(parameters.skyBgColor, 6, 45);
+    const fog = new THREE.Fog(parameters.skyBgColor, -2, 30);
     this.fog = fog;
 
     const directionalLight = new THREE.DirectionalLight(
@@ -105,11 +105,10 @@ export class MainScene extends THREE.Scene {
       uniforms: {
         uTime: { value: 0 },
         tDiffuse: { value: null },
-        uNoiseColor: { value: parameters.noiseColor },
-        uNoiseIntensity: { value: 0.2 * Math.min(window.devicePixelRatio, 2) },
+        uTintColor: { value: parameters.tintColor },
         uCornerColor: { value: parameters.cornerColor },
-        uCornerIntensity: { value: 0.2 },
-        uCornerSize: { value: 2 },
+        uCornerIntensity: { value: 0.328 },
+        uCornerSize: { value: 0.9 },
         uBlurIntensity: { value: 0.5 },
         uNoiseTexture: { value: null },
         uBlurPos: {
@@ -125,15 +124,6 @@ export class MainScene extends THREE.Scene {
     this.composer.addPass(this.customPass);
     this.customPass.material.uniforms.uNoiseTexture.value =
       texturesMap.get("noiseTexture")[0];
-
-    let effectSobel = new ShaderPass(SobelOperatorShader);
-    effectSobel.uniforms["resolution"].value.x =
-      window.innerWidth * window.devicePixelRatio;
-    effectSobel.uniforms["resolution"].value.y =
-      window.innerHeight * window.devicePixelRatio;
-    this.composer.addPass(effectSobel);
-    console.log(effectSobel);
-    effectSobel.onBeforeCompile = (shader) => {};
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");
@@ -189,18 +179,13 @@ export class MainScene extends THREE.Scene {
     const postFolder = atmosphereFolder.addFolder("Postprocessing");
     postFolder.add(postGuiFunctions, "disablePost");
     postFolder.add(postGuiFunctions, "enablePost");
-    const noiseFolder = postFolder.addFolder("Noise");
-    noiseFolder
-      .addColor(parameters, "noiseColor")
+    const tintFolder = postFolder.addFolder("Tint");
+    tintFolder
+      .addColor(parameters, "tintColor")
       .onChange(() => {
-        this.customPass.uniforms.uNoiseColor.value.set(parameters.noiseColor);
+        this.customPass.uniforms.uTintColor.value.set(parameters.tintColor);
       })
       .name("Color");
-    noiseFolder
-      .add(this.customPass.uniforms.uNoiseIntensity, "value")
-      .min(0)
-      .max(1)
-      .name("Intensity");
 
     const cornerFolder = postFolder.addFolder("Corner");
     cornerFolder

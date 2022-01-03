@@ -3,9 +3,8 @@ varying vec2 vUv;
 uniform float uTime;
 uniform float uCornerIntensity;
 uniform float uCornerSize;
-uniform float uNoiseIntensity;
 uniform vec2 uRes;
-uniform vec3 uNoiseColor;
+uniform vec3 uTintColor;
 uniform vec3 uCornerColor;
 
 uniform vec2 uBlurPos;
@@ -20,18 +19,15 @@ float hash(vec2 p) {
 uniform sampler2D uNoiseTexture;
 
 void main() {
-    // Noise
-    float noise = hash(vUv + sin(uTime) * 20.);
-    vec4 noiseColor = vec4(uNoiseColor + (noise * uNoiseIntensity), 1.0);
-    // vec4 noiseColor = vec4(uNoiseColor + (noise * uNoiseIntensity), 1.0);
+    // Tint
+    vec4 TintColor = vec4(uTintColor, 1.0);
 
     // Corner
     float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
     vec4 cornerColor = vec4(corner + uCornerIntensity) + vec4(uCornerColor, 1.0);
 
-    // Part1, noise & corner
-    // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor;
-    vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * noiseColor;
+    // Part1, tint & corner
+    vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor;
 
     // Blur
     vec4 color = vec4(0.0);
@@ -67,8 +63,52 @@ void main() {
 
     vec4 final = mix(p2, p1, temp);
 
+    vec2 texel = vec2(1.0 / uRes.x, 1.0 / uRes.y) * 1.5;
+
+		// kernel definition (in glsl matrices are filled in column-major order)
+
+    const mat3 Gx = mat3(-1, -2, -1, 0, 0, 0, 1, 2, 1); // x direction kernel
+    const mat3 Gy = mat3(-1, 0, 1, -2, 0, 2, -1, 0, 1); // y direction kernel
+
+		// fetch the 3x3 neighbourhood of a fragment
+
+		// first column
+
+    float tx0y0 = texture2D(tDiffuse, vUv + texel * vec2(-1, -1)).r;
+    float tx0y1 = texture2D(tDiffuse, vUv + texel * vec2(-1, 0)).r;
+    float tx0y2 = texture2D(tDiffuse, vUv + texel * vec2(-1, 1)).r;
+
+		// second column
+
+    float tx1y0 = texture2D(tDiffuse, vUv + texel * vec2(0, -1)).r;
+    float tx1y1 = texture2D(tDiffuse, vUv + texel * vec2(0, 0)).r;
+    float tx1y2 = texture2D(tDiffuse, vUv + texel * vec2(0, 1)).r;
+
+		// third column
+
+    float tx2y0 = texture2D(tDiffuse, vUv + texel * vec2(1, -1)).r;
+    float tx2y1 = texture2D(tDiffuse, vUv + texel * vec2(1, 0)).r;
+    float tx2y2 = texture2D(tDiffuse, vUv + texel * vec2(1, 1)).r;
+
+		// gradient value in x direction
+
+    float valueGx = Gx[0][0] * tx0y0 + Gx[1][0] * tx1y0 + Gx[2][0] * tx2y0 +
+        Gx[0][1] * tx0y1 + Gx[1][1] * tx1y1 + Gx[2][1] * tx2y1 +
+        Gx[0][2] * tx0y2 + Gx[1][2] * tx1y2 + Gx[2][2] * tx2y2;
+
+		// gradient value in y direction
+
+    float valueGy = Gy[0][0] * tx0y0 + Gy[1][0] * tx1y0 + Gy[2][0] * tx2y0 +
+        Gy[0][1] * tx0y1 + Gy[1][1] * tx1y1 + Gy[2][1] * tx2y1 +
+        Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
+
+		// magnitute of the total gradient
+
+    float G = sqrt((valueGx * valueGx) + (valueGy * valueGy));
+    vec3 border = vec3(G * 0.35) * uTintColor;
+
     // gl_FragColor = render;
     gl_FragColor = texture2D(tDiffuse, vUv);
     gl_FragColor = final;
-    gl_FragColor = p1 + p2;
+    gl_FragColor = (p1 + p2) + vec4(border, 1.0);
 }

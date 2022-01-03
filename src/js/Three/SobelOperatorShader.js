@@ -74,7 +74,7 @@ const SobelOperatorShader = {
 
 		// magnitute of the total gradient
 
-			float G = sqrt( ( valueGx * valueGx ) + ( valueGy * valueGy ) );
+			float G = sqrt( ( valueGx * valueGx) + ( valueGy * valueGy ) );
 
 			gl_FragColor = vec4( 1.0 - (vec3( G )), 0 );
 

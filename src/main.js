@@ -12,7 +12,7 @@ import { Group } from "three";
 function init() {
   loadingManager.onLoad = () => {
     const environment = new Environment();
-    mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
+    mainScene.add(environment.grounds, environment.forestPathLine);
 
     const grassInstancedMesh = new GrassInstancedMesh(environment.forestPathLine);
     mainScene.add(grassInstancedMesh.group);

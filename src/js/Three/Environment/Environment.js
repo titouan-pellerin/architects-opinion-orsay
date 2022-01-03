@@ -24,7 +24,7 @@ export class Environment {
 
     this.cameraAnimation = new CameraAnimation(
       this.forestPathLine.spline,
-      this.parameters.envScale
+      this.parameters.envScale,
     );
 
     this.sky = new Sky(this.parameters);
