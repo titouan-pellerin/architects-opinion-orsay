@@ -33,10 +33,10 @@ export class CameraAnimation {
   }
 
   update() {
-    this.tick += raf.deltaTime * 0.001;
+    this.tick += raf.deltaTime * 0.01;
 
     const curvePoint = this.curve.getPointAt(this.tick);
-    const curvePoint2 = this.curve.getPointAt(this.tick + 0.001);
+    const curvePoint2 = this.curve.getPointAt(this.tick + 0.01);
 
     const camPos = new Vector3(
       curvePoint.x * this.envScale,

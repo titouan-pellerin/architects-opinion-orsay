@@ -22,9 +22,9 @@ function init() {
     const woodInstancedMesh = new WoodInstancedMesh();
     mainScene.add(woodInstancedMesh.group);
 
-    const parameters = {
-      treeQuantity: 20,
-    };
+    // const parameters = {
+    //   treeQuantity: 20,
+    // };
 
     // const treeInstancedMesh = new TreeInstancedMesh();
     // mainScene.add(treeInstancedMesh)

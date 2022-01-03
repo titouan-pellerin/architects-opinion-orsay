@@ -86,6 +86,6 @@ export class LeavesGeometry extends BufferGeometry {
       leafVertex.array[v] = v % 9;
     }
 
-    this.scale(0.5, 0.5, 0.5);
+    this.scale(0.3, 0.3, 0.3);
   }
 }

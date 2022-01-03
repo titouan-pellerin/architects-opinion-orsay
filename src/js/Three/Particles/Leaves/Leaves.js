@@ -93,10 +93,10 @@ export class Leaves {
     const theArray = texture.image.data;
 
     for (let k = 0, kl = theArray.length; k < kl; k += 4) {
-      const x = Math.random();
+      const x = Math.random() * 50 - 25;
       // const y = Math.random();
-      const y = Math.random() * 50;
-      const z = Math.random();
+      const y = Math.random() * 10;
+      const z = Math.random() * -50;
       // const x = 0;
       // const y = 0;
       // const z = 0;
@@ -124,7 +124,7 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(100, this.WIDTH);
+    const geometry = new LeavesGeometry(200, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {
@@ -156,6 +156,7 @@ export class Leaves {
     const material = new MeshToonMaterial({
       side: DoubleSide,
       transparent: true,
+      // wireframe: true,
     });
     material.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.leavesUniforms };
@@ -178,9 +179,11 @@ export class Leaves {
     };
 
     this.leaveMesh = new Mesh(geometry, material);
-    this.leaveMesh.rotation.y = -Math.PI / 2;
-    this.leaveMesh.matrixAutoUpdate = false;
-    this.leaveMesh.updateMatrix();
+    // this.leaveMesh.position.z = -10;
+    // this.leaveMesh.position.x = -10;
+    this.leaveMesh.rotation.y = Math.PI / 2;
+    // this.leaveMesh.matrixAutoUpdate = false;
+    // this.leaveMesh.updateMatrix();
   }
 
   update() {
@@ -204,5 +207,19 @@ export class Leaves {
     this.leavesUniforms["textureVelocity"].value = this.gpuCompute.getCurrentRenderTarget(
       this.velocityVariable
     ).texture;
+
+    this.leaveMesh.position.z = mainScene.camera.position.z - 10;
+
+    // this.leaveMesh.rotation.y -= mainScene.camera.rotation.y;
+    // this.leaveMesh.position.x =
+    //   mainScene.camera.position.x + Math.sign(-this.leaveMesh.position.x) * 5;
+
+    // this.leaveMesh.position.set(
+    //   mainScene.camera.position.x,
+    //   0,
+    //   mainScene.camera.position.z + 10
+    // );
+    // console.log("camera", mainScene.camera.position.z);
+    // console.log("leaves", this.leaveMesh.position.z);
   }
 }

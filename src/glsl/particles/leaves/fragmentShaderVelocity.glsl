@@ -7,7 +7,6 @@ const float width = resolution.x;
 const float height = resolution.y;
 
 const float PI = 3.141592653589793;
-const float PI_2 = PI * 2.0;
 
 float zoneRadius = 40.0;
 float zoneRadiusSquared = 1600.0;
@@ -50,10 +49,10 @@ void main() {
 
     }
 
-				// this make tends to fly around than down or up
-				// if (velocity.y > 0.) velocity.y *= (1. - 0.2 * delta);
+    // this make tends to fly around than down or up
+    // if (velocity.y > 0.) velocity.y *= (1. - 0.2 * delta);
 
-				// Speed Limits
+    // Speed Limits
     // if(length(velocity) > limit) {
     //     velocity = normalize(velocity) * limit;
     // }
