@@ -54,7 +54,7 @@ export class GrassInstancedMesh {
       instanceNumber
     );
     this.grassPattern.scale.set(3, 3, 3);
-    this.grassPattern.castShadow = true;
+    // this.grassPattern.castShadow = true;
 
     for (let i = 0; i < instanceNumber; i++) {
       instance.position.set((Math.random() - 0.5) * 15, 0, (Math.random() - 0.5) * 9);

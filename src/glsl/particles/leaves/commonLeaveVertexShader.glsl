@@ -1,3 +1,4 @@
+#include ../../utils/noise2d;
 #include <common>
 
 attribute vec2 reference;
@@ -9,6 +10,6 @@ uniform sampler2D texturePosition;
 uniform sampler2D textureVelocity;
 
 // varying vec4 vColor;
-// varying float z;
+varying vec2 vUv;
 
 uniform float time;

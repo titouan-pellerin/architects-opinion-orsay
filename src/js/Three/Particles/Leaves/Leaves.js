@@ -123,7 +123,8 @@ export class Leaves {
 
     // For Vertex and Fragment
     this.leavesUniforms = {
-      color: { value: new Color(0x00ff00) },
+      uColor: { value: new Color(0x85cf33) },
+      uColor2: { value: new Color(0x3f7836) },
       texturePosition: { value: null },
       textureVelocity: { value: null },
       time: { value: 1.0 },
@@ -131,7 +132,8 @@ export class Leaves {
     };
 
     const leavesFolder = guiFolders.get("atmosphere").addFolder("Leaves");
-    leavesFolder.addColor(this.leavesUniforms.color, "value").name("Leaves color");
+    leavesFolder.addColor(this.leavesUniforms.uColor, "value").name("Leaves color");
+    leavesFolder.addColor(this.leavesUniforms.uColor2, "value").name("Leaves color");
 
     const material = new CustomMeshToonMaterial(
       commonLeaveFragmentShader,
@@ -142,6 +144,8 @@ export class Leaves {
       this.leavesUniforms,
       {
         side: DoubleSide,
+        transparent: true,
+        // wireframe: true,
       }
     );
 
