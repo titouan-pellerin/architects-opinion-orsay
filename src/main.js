@@ -56,9 +56,6 @@ function init() {
 
     const leaves = new Leaves();
     mainScene.add(leaves.leaveMesh);
-
-    const box = new BoxHelper(leaves.leaveMesh, 0xffff00);
-    mainScene.add(box);
   };
 }
 

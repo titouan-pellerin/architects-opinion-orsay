@@ -42,7 +42,7 @@ export class GrassInstancedMesh {
       .name("DisplaceIntensity");
     folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
-    const instanceNumber = 170000;
+    const instanceNumber = 50000;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
@@ -57,7 +57,14 @@ export class GrassInstancedMesh {
     // this.grassPattern.castShadow = true;
 
     for (let i = 0; i < instanceNumber; i++) {
-      instance.position.set((Math.random() - 0.5) * 15, 0, (Math.random() - 0.5) * 9);
+      const instancePos = new Vector3();
+      do {
+        instancePos.x = (Math.random() - 0.5) * 5;
+        instancePos.y = 0;
+        instancePos.z = (Math.random() - 0.5) * 5;
+      } while (pathLine.isPositionInRange(instancePos));
+
+      instance.position.set(instancePos.x, instancePos.y, instancePos.z);
 
       instance.scale.setScalar(Math.random());
 

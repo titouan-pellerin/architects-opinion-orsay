@@ -20,7 +20,7 @@ export class Environment {
       bigNoise: 50,
     };
 
-    this.forestPathLine = new ForestPathLine(1024, 2, this.parameters);
+    this.forestPathLine = new ForestPathLine(1024, 0.1, this.parameters);
 
     this.cameraAnimation = new CameraAnimation(
       this.forestPathLine.spline,
