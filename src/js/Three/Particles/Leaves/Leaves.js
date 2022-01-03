@@ -73,7 +73,6 @@ export class Leaves {
     this.positionUniforms["camPos"] = { value: new Vector2(0, 0) };
     this.velocityUniforms["time"] = { value: 1.0 };
     this.velocityUniforms["delta"] = { value: 0.0 };
-    // this.velocityVariable.material.defines.BOUNDS = this.BOUNDS.toFixed(2);
 
     this.velocityVariable.wrapS = RepeatWrapping;
     this.velocityVariable.wrapT = RepeatWrapping;
@@ -94,12 +93,8 @@ export class Leaves {
 
     for (let k = 0, kl = theArray.length; k < kl; k += 4) {
       const x = Math.random() * 100 - 50;
-      // const y = Math.random();
       const y = Math.random() * 10;
       const z = Math.random() * -50;
-      // const x = 0;
-      // const y = 0;
-      // const z = 0;
 
       theArray[k + 0] = x;
       theArray[k + 1] = y;
@@ -140,25 +135,10 @@ export class Leaves {
     leavesFolder.addColor(this.leavesUniforms.uColor, "value").name("Leaves color");
     leavesFolder.addColor(this.leavesUniforms.uColor2, "value").name("Leaves color");
 
-    // const material = new CustomMeshToonMaterial(
-    //   commonLeaveFragmentShader,
-    //   outputLeaveFragmentShader,
-    //   commonLeaveVertexShader,
-    //   null,
-    //   projectLeaveVertexShader,
-    //   this.leavesUniforms,
-    //   {
-    //     side: DoubleSide,
-    //     transparent: true,
-    //     // wireframe: true,
-    //   }
-    // );
     const material = new MeshToonMaterial({
       side: DoubleSide,
       transparent: true,
-      // wireframe: true,
     });
-    material.depthWrite = 0;
     material.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.leavesUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -180,10 +160,7 @@ export class Leaves {
     };
 
     this.leaveMesh = new Mesh(geometry, material);
-    // this.leaveMesh.position.z = -10;
-    // this.leaveMesh.position.y = -3;
     this.leaveMesh.rotation.y = -Math.PI / 2;
-    // this.leaveMesh.renderOrder = 10;
     this.leaveMesh.matrixAutoUpdate = false;
     this.leaveMesh.frustumCulled = false;
     this.leaveMesh.updateMatrix();
@@ -210,21 +187,5 @@ export class Leaves {
     this.leavesUniforms["textureVelocity"].value = this.gpuCompute.getCurrentRenderTarget(
       this.velocityVariable
     ).texture;
-
-    // this.leaveMesh.updateMatrixWorld();
-
-    // this.leaveMesh.position.z = mainScene.camera.position.z - 10;
-
-    // this.leaveMesh.rotation.z = mainScene.camera.rotation.y;
-    // this.leaveMesh.position.x =
-    //   mainScene.camera.position.x + Math.sign(this.leaveMesh.position.x) * 10;
-
-    // this.leaveMesh.position.set(
-    //   mainScene.camera.position.x,
-    //   0,
-    //   mainScene.camera.position.z + 10
-    // );
-    // console.log("camera", mainScene.camera.position.z);
-    // console.log("leaves", this.leaveMesh.position.z);
   }
 }

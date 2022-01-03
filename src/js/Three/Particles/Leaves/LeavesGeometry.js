@@ -6,11 +6,11 @@ export class LeavesGeometry extends BufferGeometry {
   constructor(amount, textureWidth) {
     super();
 
-    const plane = new PlaneGeometry(1, 1);
-    console.log(plane.getAttribute("position"));
-    console.log(plane.getAttribute("uv"));
+    // const plane = new PlaneGeometry(1, 1);
+    // console.log(plane.getAttribute("position"));
+    // console.log(plane.getAttribute("uv"));
 
-    const trianglesPerLeaf = 3;
+    const trianglesPerLeaf = 2;
     const triangles = amount * trianglesPerLeaf;
     const points = triangles * 3;
 
@@ -27,25 +27,26 @@ export class LeavesGeometry extends BufferGeometry {
     for (let i = 0; i < amount; i++) {
       const i18 = i * 18;
       const i12 = i * 12;
+      const randomScale = Math.random() * (2 - 0.5) + 0.5;
 
       // First triangle
 
-      vertices.array[i18] = -0.5;
-      vertices.array[i18 + 1] = 0.5;
+      vertices.array[i18] = -randomScale;
+      vertices.array[i18 + 1] = randomScale;
       vertices.array[i18 + 2] = 0;
 
       uvs.array[i12] = 0;
       uvs.array[i12 + 1] = 1;
 
-      vertices.array[i18 + 3] = 0.5;
-      vertices.array[i18 + 4] = 0.5;
+      vertices.array[i18 + 3] = randomScale;
+      vertices.array[i18 + 4] = randomScale;
       vertices.array[i18 + 5] = 0;
 
       uvs.array[i12 + 2] = 1;
       uvs.array[i12 + 3] = 1;
 
-      vertices.array[i18 + 6] = -0.5;
-      vertices.array[i18 + 7] = -0.5;
+      vertices.array[i18 + 6] = -randomScale;
+      vertices.array[i18 + 7] = -randomScale;
       vertices.array[i18 + 8] = 0;
 
       uvs.array[i12 + 4] = 0;
@@ -53,22 +54,22 @@ export class LeavesGeometry extends BufferGeometry {
 
       // Second triangle
 
-      vertices.array[i18 + 9] = -0.5;
-      vertices.array[i18 + 10] = -0.5;
+      vertices.array[i18 + 9] = -randomScale;
+      vertices.array[i18 + 10] = -randomScale;
       vertices.array[i18 + 11] = 0;
 
       uvs.array[i12 + 6] = 0;
       uvs.array[i12 + 7] = 0;
 
-      vertices.array[i18 + 12] = 0.5;
-      vertices.array[i18 + 13] = 0.5;
+      vertices.array[i18 + 12] = randomScale;
+      vertices.array[i18 + 13] = randomScale;
       vertices.array[i18 + 14] = 0;
 
       uvs.array[i12 + 8] = 1;
       uvs.array[i12 + 9] = 1;
 
-      vertices.array[i18 + 15] = 0.5;
-      vertices.array[i18 + 16] = -0.5;
+      vertices.array[i18 + 15] = randomScale;
+      vertices.array[i18 + 16] = -randomScale;
       vertices.array[i18 + 17] = 0;
 
       uvs.array[i12 + 10] = 1;
@@ -86,6 +87,6 @@ export class LeavesGeometry extends BufferGeometry {
       leafVertex.array[v] = v % 9;
     }
 
-    this.scale(0.3, 0.3, 0.3);
+    this.scale(0.2, 0.2, 0.2);
   }
 }

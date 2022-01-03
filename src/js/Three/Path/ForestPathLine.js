@@ -27,7 +27,8 @@ export class ForestPathLine extends Line {
   isPositionInRange(position) {
     return this.points.some(
       (point) =>
-        point.x >= position.x - this.pathWidth && point.x <= position.x + this.pathWidth
+        point.x > position.x - this.pathWidth &&
+        point.x < position.x + this.pathWidth + 0.1
     );
   }
 }

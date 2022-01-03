@@ -2,6 +2,7 @@ import { Environment } from "./js/Three/Environment/Environment";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
 import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
+import { Ribbon } from "./js/Three/Ribbon";
 import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
 import { WoodInstancedMesh } from "./js/Three/WoodInstancedMesh";
 import { loadingManager } from "./js/utils/Loader";
@@ -12,7 +13,7 @@ import { BoxHelper } from "three";
 function init() {
   loadingManager.onLoad = () => {
     const environment = new Environment();
-    mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
+    mainScene.add(environment.grounds, environment.sky);
 
     const grassInstancedMesh = new GrassInstancedMesh(environment.forestPathLine);
     mainScene.add(grassInstancedMesh.group);
