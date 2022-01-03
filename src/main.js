@@ -7,6 +7,7 @@ import { WoodInstancedMesh } from "./js/Three/WoodInstancedMesh";
 import { loadingManager } from "./js/utils/Loader";
 import { texturesMap } from "./js/utils/assets";
 import "./styles/style.scss";
+import { BoxHelper } from "three";
 
 function init() {
   loadingManager.onLoad = () => {
@@ -55,6 +56,9 @@ function init() {
 
     const leaves = new Leaves();
     mainScene.add(leaves.leaveMesh);
+
+    const box = new BoxHelper(leaves.leaveMesh, 0xffff00);
+    mainScene.add(box);
   };
 }
 

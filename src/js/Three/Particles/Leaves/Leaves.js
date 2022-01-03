@@ -93,7 +93,7 @@ export class Leaves {
     const theArray = texture.image.data;
 
     for (let k = 0, kl = theArray.length; k < kl; k += 4) {
-      const x = Math.random() * 50 - 25;
+      const x = Math.random() * 100 - 50;
       // const y = Math.random();
       const y = Math.random() * 10;
       const z = Math.random() * -50;
@@ -158,6 +158,7 @@ export class Leaves {
       transparent: true,
       // wireframe: true,
     });
+    material.depthWrite = 0;
     material.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.leavesUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -180,10 +181,12 @@ export class Leaves {
 
     this.leaveMesh = new Mesh(geometry, material);
     // this.leaveMesh.position.z = -10;
-    // this.leaveMesh.position.x = -10;
-    this.leaveMesh.rotation.y = Math.PI / 2;
-    // this.leaveMesh.matrixAutoUpdate = false;
-    // this.leaveMesh.updateMatrix();
+    // this.leaveMesh.position.y = -3;
+    this.leaveMesh.rotation.y = -Math.PI / 2;
+    // this.leaveMesh.renderOrder = 10;
+    this.leaveMesh.matrixAutoUpdate = false;
+    this.leaveMesh.frustumCulled = false;
+    this.leaveMesh.updateMatrix();
   }
 
   update() {
@@ -208,11 +211,13 @@ export class Leaves {
       this.velocityVariable
     ).texture;
 
-    this.leaveMesh.position.z = mainScene.camera.position.z - 10;
+    // this.leaveMesh.updateMatrixWorld();
 
-    // this.leaveMesh.rotation.y -= mainScene.camera.rotation.y;
+    // this.leaveMesh.position.z = mainScene.camera.position.z - 10;
+
+    // this.leaveMesh.rotation.z = mainScene.camera.rotation.y;
     // this.leaveMesh.position.x =
-    //   mainScene.camera.position.x + Math.sign(-this.leaveMesh.position.x) * 5;
+    //   mainScene.camera.position.x + Math.sign(this.leaveMesh.position.x) * 10;
 
     // this.leaveMesh.position.set(
     //   mainScene.camera.position.x,
