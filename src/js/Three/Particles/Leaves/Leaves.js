@@ -19,6 +19,7 @@ import { ShaderMaterial } from "three";
 import { Mesh } from "three";
 import { MeshBasicMaterial } from "three";
 import { MeshToonMaterial } from "three";
+import { Vector2 } from "three";
 import { GPUComputationRenderer } from "three/examples/jsm/misc/GPUComputationRenderer";
 
 export class Leaves {
@@ -69,6 +70,7 @@ export class Leaves {
 
     this.positionUniforms["time"] = { value: 0.0 };
     this.positionUniforms["delta"] = { value: 0.0 };
+    this.positionUniforms["camPos"] = { value: new Vector2(0, 0) };
     this.velocityUniforms["time"] = { value: 1.0 };
     this.velocityUniforms["delta"] = { value: 0.0 };
     // this.velocityVariable.material.defines.BOUNDS = this.BOUNDS.toFixed(2);
@@ -122,7 +124,7 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(50, this.WIDTH);
+    const geometry = new LeavesGeometry(100, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {
@@ -184,6 +186,10 @@ export class Leaves {
   update() {
     this.positionUniforms["time"].value = raf.elapsedTime;
     this.positionUniforms["delta"].value = raf.deltaTime;
+    this.positionUniforms["camPos"].value = new Vector2(
+      mainScene.camera.position.x,
+      mainScene.camera.position.z
+    );
     this.velocityUniforms["time"].value = raf.elapsedTime;
     this.velocityUniforms["delta"].value = raf.deltaTime;
 

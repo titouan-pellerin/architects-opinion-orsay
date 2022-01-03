@@ -28,8 +28,6 @@ export class LeavesGeometry extends BufferGeometry {
       const i18 = i * 18;
       const i12 = i * 12;
 
-      // verts_push(0, 0, -0.75, -1, 0, 0, 0, 0, 0.75);
-      // verts_push(0, 0, 0.75, 1, 0, 0, 0, 0, -0.75);
       // First triangle
 
       vertices.array[i18] = -0.5;
@@ -54,10 +52,6 @@ export class LeavesGeometry extends BufferGeometry {
       uvs.array[i12 + 5] = 0;
 
       // Second triangle
-
-      // vertices.array[i18 + 9] = 0.5;
-      // vertices.array[i18 + 10] = -0.5;
-      // vertices.array[i18 + 11] = 0;
 
       vertices.array[i18 + 9] = -0.5;
       vertices.array[i18 + 10] = -0.5;
@@ -92,6 +86,6 @@ export class LeavesGeometry extends BufferGeometry {
       leafVertex.array[v] = v % 9;
     }
 
-    // this.scale(0.2, 0.2, 0.2);
+    this.scale(0.5, 0.5, 0.5);
   }
 }

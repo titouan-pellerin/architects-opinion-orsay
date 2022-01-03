@@ -69,7 +69,7 @@ export class MainScene extends THREE.Scene {
     this.background = new THREE.Color(parameters.skyBgColor);
 
     this.add(this.camera);
-    this.camera.position.set(0, 1, 15);
+    this.camera.position.set(0, -1, 0);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 6, 45);
     this.fog = fog;
