@@ -17,11 +17,11 @@ float x = sqrt(1. - velocity.y * velocity.y);
 
 float cosry = velocity.x / xz;
 // float sinry = (velocity.z / xz);
-float sinry = (velocity.z / xz) * (sin(time * 5. * reference.x));
+float sinry = (velocity.z / xz) * cnoise(vec2(time, reference.x));
 
 float cosrz = x / xyz;
 // float sinrz = (velocity.y / xyz);
-float sinrz = (velocity.y / xyz) * (sin(time * 2. * reference.y));
+float sinrz = (velocity.y / xyz) * cnoise(vec2(time, reference.y));
 
 mat3 maty = mat3(cosry, 0, - sinry, 0, 1, 0, sinry, 0, cosry);
 

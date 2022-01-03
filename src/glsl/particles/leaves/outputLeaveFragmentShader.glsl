@@ -42,5 +42,5 @@ vec4 lines = (centerLineFinal + rightLineFinal + leftLineFinal) * vec4(uColor2, 
 vec4 render = (shape + lines * noiseRender) * fade;
 
 gl_FragColor = render;
-// gl_FragColor = vec4(outgoingLight, diffuseColor.a) * render;
+// gl_FragColor = vec4(outgoingLight * render.xyz, diffuseColor.a * render.w);
 // gl_FragColor = vec4(vec3(vUv, .5), diffuseColor.a);

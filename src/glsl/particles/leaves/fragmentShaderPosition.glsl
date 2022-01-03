@@ -11,10 +11,10 @@ void main() {
     float phase = tmpPos.w;
 
     if(position.y <= -3.)
-        position.y = 7.;
-    if(position.x >= 10. || position.x <= -10.)
+        position.y = 5.;
+    if(position.x >= 3. || position.x <= -3.)
         position.x = 0.;
-    if(position.z >= 10. || position.z <= -10.)
+    if(position.z >= 3. || position.z <= -3.)
         position.z = 0.;
 
     phase = mod((phase + delta +

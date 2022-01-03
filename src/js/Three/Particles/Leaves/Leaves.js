@@ -91,10 +91,13 @@ export class Leaves {
     const theArray = texture.image.data;
 
     for (let k = 0, kl = theArray.length; k < kl; k += 4) {
-      const x = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
-      // const y = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
+      const x = Math.random();
+      // const y = Math.random();
       const y = Math.random() * 50;
-      const z = Math.random() * this.BOUNDS - this.BOUNDS_HALF;
+      const z = Math.random();
+      // const x = 0;
+      // const y = 0;
+      // const z = 0;
 
       theArray[k + 0] = x;
       theArray[k + 1] = y;
@@ -111,15 +114,15 @@ export class Leaves {
       const y = -1;
       const z = Math.random() - 0.5;
 
-      theArray[k + 0] = x * 10;
-      theArray[k + 1] = y * 10;
-      theArray[k + 2] = z * 10;
+      theArray[k + 0] = x;
+      theArray[k + 1] = y;
+      theArray[k + 2] = z;
       theArray[k + 3] = 1;
     }
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(500, this.WIDTH);
+    const geometry = new LeavesGeometry(50, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {
@@ -135,22 +138,45 @@ export class Leaves {
     leavesFolder.addColor(this.leavesUniforms.uColor, "value").name("Leaves color");
     leavesFolder.addColor(this.leavesUniforms.uColor2, "value").name("Leaves color");
 
-    const material = new CustomMeshToonMaterial(
-      commonLeaveFragmentShader,
-      outputLeaveFragmentShader,
-      commonLeaveVertexShader,
-      null,
-      projectLeaveVertexShader,
-      this.leavesUniforms,
-      {
-        side: DoubleSide,
-        transparent: true,
-        // wireframe: true,
-      }
-    );
+    // const material = new CustomMeshToonMaterial(
+    //   commonLeaveFragmentShader,
+    //   outputLeaveFragmentShader,
+    //   commonLeaveVertexShader,
+    //   null,
+    //   projectLeaveVertexShader,
+    //   this.leavesUniforms,
+    //   {
+    //     side: DoubleSide,
+    //     transparent: true,
+    //     // wireframe: true,
+    //   }
+    // );
+    const material = new MeshToonMaterial({
+      side: DoubleSide,
+      transparent: true,
+    });
+    material.onBeforeCompile = (shader) => {
+      shader.uniforms = { ...shader.uniforms, ...this.leavesUniforms };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        commonLeaveFragmentShader
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        outputLeaveFragmentShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        commonLeaveVertexShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <project_vertex>",
+        projectLeaveVertexShader
+      );
+    };
 
-    this.leaveMesh = new Mesh(geometry, material.meshToonMaterial);
-    this.leaveMesh.rotation.y = Math.PI / 2;
+    this.leaveMesh = new Mesh(geometry, material);
+    this.leaveMesh.rotation.y = -Math.PI / 2;
     this.leaveMesh.matrixAutoUpdate = false;
     this.leaveMesh.updateMatrix();
   }
