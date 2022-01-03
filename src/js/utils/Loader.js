@@ -6,12 +6,11 @@ const loadingManager = new LoadingManager();
 
 const textureLoader = new TextureLoader(loadingManager);
 const dataTextureLoader = new DataTextureLoader(loadingManager);
-const gltfLoader = new GLTFLoader(loadingManager);
 
-const dracoLoader = new DRACOLoader(loadingManager);
+const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("/libs/draco/");
 
-const glftLoader = new GLTFLoader(loadingManager);
-glftLoader.setDRACOLoader(dracoLoader);
+const gltfLoader = new GLTFLoader(loadingManager);
+gltfLoader.setDRACOLoader(dracoLoader);
 
 export { loadingManager, textureLoader, dataTextureLoader, gltfLoader };

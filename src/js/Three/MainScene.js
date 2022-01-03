@@ -103,7 +103,7 @@ export class MainScene extends THREE.Scene {
         uTime: { value: 0 },
         tDiffuse: { value: null },
         uNoiseColor: { value: parameters.noiseColor },
-        uNoiseIntensity: { value: 0.25 * Math.min(window.devicePixelRatio, 2) },
+        uNoiseIntensity: { value: 0.2 * Math.min(window.devicePixelRatio, 2) },
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0.2 },
         uCornerSize: { value: 2 },

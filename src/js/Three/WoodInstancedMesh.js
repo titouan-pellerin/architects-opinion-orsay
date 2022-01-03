@@ -87,26 +87,36 @@ export class WoodInstancedMesh {
     this.geometry = new THREE.CylinderGeometry(0.5, 0.5, 3, 32, 32, true);
     this.innerGeometry = new THREE.CylinderGeometry(0.5, 0.5, 3, 32, 32, false);
 
-    this.group = new THREE.Group();
-    this.group.position.y = -3;
+    const wood = new THREE.Mesh(this.geometry, this.material);
+    wood.scale.set(0.5, 0.5, 0.5);
+
+    const innerWood = new THREE.Mesh(this.innerGeometry, this.innerMaterial);
+    innerWood.scale.set(0.49, 0.5, 0.49);
+
+    const wood1 = new THREE.Group();
+    wood1.add(wood, innerWood);
+    const wood2 = wood1.clone();
+    wood2.position.x = 0.4;
+    const wood3 = wood1.clone();
+    wood3.position.x = -0.4;
+    wood1.position.z = 0.25;
+
+    const globalWood = new THREE.Group();
+    globalWood.add(wood1, wood2, wood3);
+    globalWood.position.y = -3;
 
     for (let i = 0; i < this.parameters.woodQuantity; i++) {
-      this.wood = new THREE.Mesh(this.geometry, this.material);
-      this.wood.scale.set(0.5, 0.5, 0.5);
-
-      this.innerWood = new THREE.Mesh(this.innerGeometry, this.innerMaterial);
-      this.innerWood.scale.set(0.49, 0.5, 0.49);
-
-      this.woodGroup = new THREE.Group();
-      this.woodGroup.add(this.wood, this.innerWood);
-      this.woodGroup.position.set(
+      this.instancedGlobalWood = globalWood.clone();
+      this.group = new THREE.Group();
+      this.group.add(this.instancedGlobalWood);
+      this.group.position.set(
         (Math.random() - 0.5) * 30,
         Math.random() - 0.5,
         (Math.random() - 0.5) * 30,
       );
-      this.woodGroup.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
+      this.group.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
 
-      this.group.add(this.woodGroup);
+      this.group.add(this.group);
     }
   }
 }
