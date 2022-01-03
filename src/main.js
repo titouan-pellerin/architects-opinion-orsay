@@ -3,6 +3,7 @@ import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
 import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
+import { Text3D } from "./js/Three/Text/Text3D";
 import { WoodInstancedMesh } from "./js/Three/WoodInstancedMesh";
 import { loadingManager } from "./js/utils/Loader";
 import { texturesMap } from "./js/utils/assets";
@@ -21,6 +22,9 @@ function init() {
 
     const woodInstancedMesh = new WoodInstancedMesh();
     mainScene.add(woodInstancedMesh.group);
+
+    const text3D = new Text3D();
+    text3D.createTimeline();
 
     const parameters = {
       treeQuantity: 20,

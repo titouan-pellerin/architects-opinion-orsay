@@ -44,3 +44,26 @@ body {
   cursor: pointer;
   border-radius: 50%;
 }
+
+.step1 {
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  width: 30px;
+  height: 30px;
+  background: #000;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.test {
+  position: absolute;
+  bottom: 11%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.char {
+  opacity: 0;
+}
