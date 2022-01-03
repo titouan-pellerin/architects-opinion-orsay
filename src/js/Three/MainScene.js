@@ -2,6 +2,8 @@ import fragmentShader from "../../glsl/post/fragment.glsl";
 import vertexShader from "../../glsl/post/vertex.glsl";
 import { gui, guiFolders } from "../utils/Debug";
 import raf from "../utils/Raf";
+import { texturesMap } from "../utils/assets";
+import { SobelOperatorShader } from "./SobelOperatorShader";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { AfterimagePass } from "three/examples/jsm/postprocessing/AfterimagePass.js";
@@ -17,6 +19,7 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 export class MainScene extends THREE.Scene {
   constructor() {
     super();
+
     const parameters = {
       skyBgColor: new THREE.Color("#fdfbd3"),
       noiseColor: new THREE.Color("#84b15a"),
@@ -28,8 +31,8 @@ export class MainScene extends THREE.Scene {
     };
 
     this.sizes = {
-      width: window.innerWidth / 1.5,
-      height: window.innerHeight / 1.5,
+      width: window.innerWidth,
+      height: window.innerHeight,
     };
 
     this.canvas = document.querySelector(".webgl");
@@ -108,6 +111,7 @@ export class MainScene extends THREE.Scene {
         uCornerIntensity: { value: 0.2 },
         uCornerSize: { value: 2 },
         uBlurIntensity: { value: 0.5 },
+        uNoiseTexture: { value: null },
         uBlurPos: {
           value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
         },
@@ -119,6 +123,17 @@ export class MainScene extends THREE.Scene {
 
     this.customPass = new ShaderPass(customShader);
     this.composer.addPass(this.customPass);
+    this.customPass.material.uniforms.uNoiseTexture.value =
+      texturesMap.get("noiseTexture")[0];
+
+    let effectSobel = new ShaderPass(SobelOperatorShader);
+    effectSobel.uniforms["resolution"].value.x =
+      window.innerWidth * window.devicePixelRatio;
+    effectSobel.uniforms["resolution"].value.y =
+      window.innerHeight * window.devicePixelRatio;
+    this.composer.addPass(effectSobel);
+    console.log(effectSobel);
+    effectSobel.onBeforeCompile = (shader) => {};
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");

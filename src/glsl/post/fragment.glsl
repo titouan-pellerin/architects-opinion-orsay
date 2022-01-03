@@ -17,6 +17,8 @@ float hash(vec2 p) {
     return fract(1e4 * sin(17.0 * p.x + p.y * 0.1) * (0.1 + abs(sin(p.y * 13.0 + p.x))));
 }
 
+uniform sampler2D uNoiseTexture;
+
 void main() {
     // Noise
     float noise = hash(vUv + sin(uTime) * 20.);
@@ -52,11 +54,21 @@ void main() {
     // Part2, adding some blur
     vec4 p2 = (color / total) * 0.4;
 
-	// float grassPattern = .8 - (smoothstep(0.8,1., abs(vUv.x - 0.5) + vUv.y * 1.5));
+    // Textures
+    float noiseTexture = texture2D(uNoiseTexture, 0.5 * (vUv + 1.0)).r;
+
+    // Transition
+    float temp = 0.8;
+    // uProgress
+    temp += ((10.0 * noiseTexture - 5.0) * 0.05) - .35;
+
+    float distanceFromCenter = length(vUv - 0.5);
+    temp = smoothstep(temp - 0.05, temp, distanceFromCenter);
+
+    vec4 final = mix(p2, p1, temp);
 
     // gl_FragColor = render;
+    gl_FragColor = texture2D(tDiffuse, vUv);
+    gl_FragColor = final;
     gl_FragColor = p1 + p2;
-    // gl_FragColor.rgb /= gl_FragColor.a;
-    // gl_FragColor = p1;
-    // gl_FragColor = vec4(grassPattern);
 }
