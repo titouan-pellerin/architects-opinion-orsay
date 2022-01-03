@@ -28,7 +28,7 @@ export class GrassInstancedMesh {
       null,
       projectVertexShader,
       this.grassUniforms,
-      {}
+      {},
     );
 
     const sceneFolder = guiFolders.get("scene");
@@ -51,10 +51,10 @@ export class GrassInstancedMesh {
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
       this.material.meshToonMaterial,
-      instanceNumber
+      instanceNumber,
     );
     this.grassPattern.scale.set(3, 3, 3);
-    this.grassPattern.castShadow = true;
+    // this.grassPattern.castShadow = true;
 
     for (let i = 0; i < instanceNumber; i++) {
       instance.position.set((Math.random() - 0.5) * 15, 0, (Math.random() - 0.5) * 9);
@@ -66,7 +66,7 @@ export class GrassInstancedMesh {
     }
 
     this.group = new THREE.Group();
-    this.group.position.y = -3;
+    this.group.position.y = -2.75;
     this.group.add(this.grassPattern);
 
     // for (let i = 0; i < this.parameters.grassQuantity; i++) {

@@ -20,11 +20,11 @@ function init() {
     const rockInstancedMesh = new RockInstancedMesh(environment.forestPathLine);
     mainScene.add(rockInstancedMesh.group);
 
-    // const woodInstancedMesh = new WoodInstancedMesh();
-    // mainScene.add(woodInstancedMesh.group);
+    const woodInstancedMesh = new WoodInstancedMesh();
+    mainScene.add(woodInstancedMesh.group);
 
     // const treeInstancedMesh = new TreeInstancedMesh();
-    // mainScene.add(treeInstancedMesh)
+    // mainScene.add(treeInstancedMesh);
 
     // const ribbon = new Ribbon();
     // mainScene.add(ribbon.mesh);
@@ -36,25 +36,25 @@ function init() {
 
 document.addEventListener("DOMContentLoaded", init);
 
-const parameters = {
-  treeQuantity: 20,
-};
-gltfLoader.load("/assets/models/tree.glb", (gltf) => {
-  const tree = gltf.scene;
-  tree.castShadow = true;
-  const treeGroup = new Group();
-  treeGroup.position.y = -3;
+// const parameters = {
+// treeQuantity: 20,
+// };
+// gltfLoader.load("/assets/models/tree.glb", (gltf) => {
+//   const tree = gltf.scene;
+//   tree.castShadow = true;
+//   const treeGroup = new Group();
+//   treeGroup.position.y = -3;
 
-  for (let i = 0; i < parameters.treeQuantity; i++) {
-    const treeMesh = tree.clone();
-    treeMesh.position.set(
-      (Math.random() - 0.5) * 25,
-      Math.random() - 0.5,
-      (Math.random() - 0.5) * 25,
-    );
-    treeMesh.rotation.set(0, Math.random(), 0);
+//   for (let i = 0; i < parameters.treeQuantity; i++) {
+//     const treeMesh = tree.clone();
+//     treeMesh.position.set(
+//       (Math.random() - 0.5) * 25,
+//       Math.random() - 0.5,
+//       (Math.random() - 0.5) * 25,
+//     );
+//     treeMesh.rotation.set(0, Math.random(), 0);
 
-    treeGroup.add(treeMesh);
-  }
-  mainScene.add(treeGroup);
-});
+//     treeGroup.add(treeMesh);
+//   }
+//   mainScene.add(treeGroup);
+// });
