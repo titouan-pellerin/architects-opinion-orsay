@@ -12,7 +12,7 @@ export class LeavesGeometry extends BufferGeometry {
 
     const trianglesPerLeaf = 3;
     const triangles = amount * trianglesPerLeaf;
-    const points = triangles * 2;
+    const points = triangles * 3;
 
     const vertices = new BufferAttribute(new Float32Array(points * 3), 3);
     const uvs = new BufferAttribute(new Float32Array(points * 2), 2);
@@ -26,7 +26,7 @@ export class LeavesGeometry extends BufferGeometry {
 
     for (let i = 0; i < amount; i++) {
       const i18 = i * 18;
-      const i8 = i * 8;
+      const i12 = i * 12;
 
       // verts_push(0, 0, -0.75, -1, 0, 0, 0, 0, 0.75);
       // verts_push(0, 0, 0.75, 1, 0, 0, 0, 0, -0.75);
@@ -36,44 +36,49 @@ export class LeavesGeometry extends BufferGeometry {
       vertices.array[i18 + 1] = 0.5;
       vertices.array[i18 + 2] = 0;
 
-      uvs.array[i8] = 0;
-      uvs.array[i8 + 1] = 1;
+      uvs.array[i12] = 0;
+      uvs.array[i12 + 1] = 1;
 
       vertices.array[i18 + 3] = 0.5;
       vertices.array[i18 + 4] = 0.5;
       vertices.array[i18 + 5] = 0;
 
-      uvs.array[i8 + 2] = 1;
-      uvs.array[i8 + 3] = 1;
+      uvs.array[i12 + 2] = 1;
+      uvs.array[i12 + 3] = 1;
 
       vertices.array[i18 + 6] = -0.5;
       vertices.array[i18 + 7] = -0.5;
       vertices.array[i18 + 8] = 0;
 
-      uvs.array[i8 + 4] = 0;
-      uvs.array[i8 + 5] = 0;
+      uvs.array[i12 + 4] = 0;
+      uvs.array[i12 + 5] = 0;
 
       // Second triangle
-      vertices.array[i18 + 9] = 0.5;
+
+      // vertices.array[i18 + 9] = 0.5;
+      // vertices.array[i18 + 10] = -0.5;
+      // vertices.array[i18 + 11] = 0;
+
+      vertices.array[i18 + 9] = -0.5;
       vertices.array[i18 + 10] = -0.5;
       vertices.array[i18 + 11] = 0;
 
-      uvs.array[i8 + 6] = 1;
-      uvs.array[i8 + 7] = 0;
+      uvs.array[i12 + 6] = 0;
+      uvs.array[i12 + 7] = 0;
 
-      // vertices.array[i12 + 12] = 1;
-      // vertices.array[i12 + 13] = 0;
-      // vertices.array[i12 + 14] = 0;
+      vertices.array[i18 + 12] = 0.5;
+      vertices.array[i18 + 13] = 0.5;
+      vertices.array[i18 + 14] = 0;
 
-      // uvs.array[i12 + 8] = 1;
-      // uvs.array[i12 + 9] = 0.5;
+      uvs.array[i12 + 8] = 1;
+      uvs.array[i12 + 9] = 1;
 
-      // vertices.array[i12 + 15] = 0;
-      // vertices.array[i12 + 16] = 0;
-      // vertices.array[i12 + 17] = -1;
+      vertices.array[i18 + 15] = 0.5;
+      vertices.array[i18 + 16] = -0.5;
+      vertices.array[i18 + 17] = 0;
 
-      // uvs.array[i12 + 10] = 0.5;
-      // uvs.array[i12 + 11] = 0;
+      uvs.array[i12 + 10] = 1;
+      uvs.array[i12 + 11] = 0;
     }
 
     for (let v = 0; v < triangles * 3; v++) {

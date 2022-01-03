@@ -22,7 +22,7 @@ import { MeshToonMaterial } from "three";
 import { GPUComputationRenderer } from "three/examples/jsm/misc/GPUComputationRenderer";
 
 export class Leaves {
-  constructor(WIDTH = 16, BOUNDS = 250) {
+  constructor(WIDTH = 16, BOUNDS = 10) {
     this.BOUNDS = BOUNDS;
     this.BOUNDS_HALF = BOUNDS / 2;
 
@@ -71,7 +71,7 @@ export class Leaves {
     this.positionUniforms["delta"] = { value: 0.0 };
     this.velocityUniforms["time"] = { value: 1.0 };
     this.velocityUniforms["delta"] = { value: 0.0 };
-    this.velocityVariable.material.defines.BOUNDS = this.BOUNDS.toFixed(2);
+    // this.velocityVariable.material.defines.BOUNDS = this.BOUNDS.toFixed(2);
 
     this.velocityVariable.wrapS = RepeatWrapping;
     this.velocityVariable.wrapT = RepeatWrapping;
@@ -119,7 +119,7 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(100, this.WIDTH);
+    const geometry = new LeavesGeometry(500, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {

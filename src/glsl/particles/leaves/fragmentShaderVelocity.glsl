@@ -15,7 +15,7 @@ float zoneRadiusSquared = 1600.0;
 float separationThresh = 0.45;
 float alignmentThresh = 0.65;
 
-const float SPEED = .05;
+const float SPEED = .03;
 
 void main() {
     vec2 uv = gl_FragCoord.xy / resolution.xy;
