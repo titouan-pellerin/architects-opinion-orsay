@@ -21,7 +21,7 @@ export class MainScene extends THREE.Scene {
     super();
 
     const parameters = {
-      skyBgColor: new THREE.Color("#c9b09a"),
+      skyBgColor: new THREE.Color("#ffc08a"),
       tintColor: new THREE.Color("#ffc08a"),
       cornerColor: new THREE.Color("#000000"),
       lightColor: new THREE.Color("#c9b09a"),
@@ -74,7 +74,7 @@ export class MainScene extends THREE.Scene {
     this.add(this.camera);
     this.camera.position.set(0, 1, 15);
 
-    const fog = new THREE.Fog(parameters.skyBgColor, -2, 30);
+    const fog = new THREE.Fog(parameters.skyBgColor, 12.3, 32.46);
     this.fog = fog;
 
     const directionalLight = new THREE.DirectionalLight(
