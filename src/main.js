@@ -1,10 +1,10 @@
 import { Environment } from "./js/Three/Environment/Environment";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
 import { mainScene } from "./js/Three/MainScene";
+import { Oeuvres } from "./js/Three/Oeuvres";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
 import { WoodInstancedMesh } from "./js/Three/WoodInstancedMesh";
-import { Oeuvres } from "./js/Three/Oeuvres";
 import { gltfLoader, loadingManager } from "./js/utils/Loader";
 import { texturesMap } from "./js/utils/assets";
 import "./styles/style.scss";
@@ -86,19 +86,17 @@ const parameters = {
 
 gltfLoader.load("/assets/models/tree_orsay4.glb", (gltf) => {
   const tree = gltf.scene;
-  tree.scale.set(0.05,0.05,0.05)
+  tree.scale.set(0.05, 0.05, 0.05);
   const treeGroup = new Group();
   treeGroup.position.y = -3.5;
 
-  tree.traverse( function ( node ) {
+  tree.traverse(function (node) {
+    if (node.isMesh) node.castShadow = true;
 
-      if ( node.isMesh ) node.castShadow = true;
-
-      setTimeout(() => {
-        tree.matrixAutoUpdate = false;
-      }, 1);
-
-  } );
+    setTimeout(() => {
+      tree.matrixAutoUpdate = false;
+    }, 1);
+  });
 
   // tree.traverse( function ( child ) {
 
@@ -110,15 +108,13 @@ gltfLoader.load("/assets/models/tree_orsay4.glb", (gltf) => {
 
   // } );
 
-
-
   for (let i = 0; i < parameters.treeQuantity; i++) {
     const treeMesh = tree.clone();
     treeMesh.castShadow = true;
     treeMesh.position.set(
       (Math.random() - 0.5) * 25,
       Math.random() - 0.5,
-      (Math.random() - 0.5) * 25,
+      (Math.random() - 0.5) * 25
     );
     treeMesh.rotation.set(0, Math.random(), 0);
 

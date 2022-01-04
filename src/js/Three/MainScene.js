@@ -9,7 +9,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { AfterimagePass } from "three/examples/jsm/postprocessing/AfterimagePass.js";
 import { CubeTexturePass } from "three/examples/jsm/postprocessing/CubeTexturePass.js";
 import { DotScreenPass } from "three/examples/jsm/postprocessing/DotScreenPass.js";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js"; 
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
@@ -43,7 +43,7 @@ export class MainScene extends THREE.Scene {
       45,
       this.sizes.width / this.sizes.height,
       0.1,
-      150,
+      150
     );
     this.camera.updateProjectionMatrix();
 
@@ -82,15 +82,15 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight = new THREE.DirectionalLight(
       parameters.lightColor,
-      parameters.lightIntensity,
+      parameters.lightIntensity
     );
     const shadowDist = 50;
     directionalLight.castShadow = true;
     directionalLight.shadow.bias = 0.0001;
-    directionalLight.shadow.camera.left = - shadowDist;
+    directionalLight.shadow.camera.left = -shadowDist;
     directionalLight.shadow.camera.right = shadowDist;
     directionalLight.shadow.camera.top = shadowDist;
-    directionalLight.shadow.camera.bottom = - shadowDist;
+    directionalLight.shadow.camera.bottom = -shadowDist;
     directionalLight.shadow.mapSize.set(2048, 2048);
     directionalLight.position.set(10, 10, -10);
     directionalLight.shadow.camera.near = 0.1;
@@ -99,7 +99,7 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight2 = new THREE.DirectionalLight(
       parameters.light2Color,
-      parameters.light2Intensity,
+      parameters.light2Intensity
     );
     directionalLight2.position.set(-10, 10, 10);
     this.add(directionalLight2);
@@ -119,7 +119,7 @@ export class MainScene extends THREE.Scene {
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0 },
         uCornerSize: { value: 2.5 },
-        uBlurIntensity: { value: 2},
+        uBlurIntensity: { value: 2 },
         uNoiseTexture: { value: null },
         uBlurPos: {
           value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
@@ -135,10 +135,12 @@ export class MainScene extends THREE.Scene {
     this.customPass.material.uniforms.uNoiseTexture.value =
       texturesMap.get("noiseTexture")[0];
 
-      const effectSobel = new ShaderPass( SobelOperatorShader );
-      effectSobel.uniforms[ 'resolution' ].value.x = window.innerWidth * window.devicePixelRatio * 2.;
-      effectSobel.uniforms[ 'resolution' ].value.y = window.innerHeight * window.devicePixelRatio * 2.;
-      // this.composer.addPass( effectSobel );
+    const effectSobel = new ShaderPass(SobelOperatorShader);
+    effectSobel.uniforms["resolution"].value.x =
+      window.innerWidth * window.devicePixelRatio * 2;
+    effectSobel.uniforms["resolution"].value.y =
+      window.innerHeight * window.devicePixelRatio * 2;
+    // this.composer.addPass( effectSobel );
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");
