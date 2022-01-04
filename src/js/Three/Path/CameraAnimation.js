@@ -74,9 +74,9 @@ export class CameraAnimation {
         x: positions.get("checkpoints")[0].x * this.envScale,
         z: positions.get("checkpoints")[0].y * this.envScale,
         ease: "powerOut",
-        onComplete: () => {
-          raf.unsubscribe("path");
-        },
+        // onComplete: () => {
+        //   raf.unsubscribe("path");
+        // },
       });
       // raf.unsubscribe("path");
     } else {
