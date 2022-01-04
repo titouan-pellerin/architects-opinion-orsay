@@ -4,4 +4,4 @@ node_modules
 dist
 dist-ssr
 *.local
-/public/assets/models/tree.glb
+# /public/assets/models/tree.glb

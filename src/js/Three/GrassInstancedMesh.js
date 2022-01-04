@@ -17,8 +17,8 @@ export class GrassInstancedMesh {
       uTime: { value: 0 },
       uColor: { value: new THREE.Color("#84b15a") },
       uColor2: { value: new THREE.Color("#236760") },
-      uDisplaceIntensity: { value: 0.135 },
-      uSpeed: { value: 1 },
+      uDisplaceIntensity: { value: 0.2 },
+      uSpeed: { value: 1.25 },
     };
 
     this.material = new CustomMeshToonMaterial(
@@ -42,11 +42,10 @@ export class GrassInstancedMesh {
       .name("DisplaceIntensity");
     folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
-    const instanceNumber = 50000;
+    const instanceNumber = 10000;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
-    // this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 64);
 
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
@@ -54,14 +53,13 @@ export class GrassInstancedMesh {
       instanceNumber
     );
     this.grassPattern.scale.set(3, 3, 3);
-    // this.grassPattern.castShadow = true;
 
     for (let i = 0; i < instanceNumber; i++) {
       const instancePos = new Vector3();
       do {
-        instancePos.x = (Math.random() - 0.5) * 5;
+        instancePos.x = (Math.random() - 0.5) * 8;
         instancePos.y = 0;
-        instancePos.z = (Math.random() - 0.5) * 5;
+        instancePos.z = (Math.random() - 0.5) * 10;
       } while (pathLine.isPositionInRange(instancePos));
 
       instance.position.set(instancePos.x, instancePos.y, instancePos.z);
@@ -73,7 +71,7 @@ export class GrassInstancedMesh {
     }
 
     this.group = new THREE.Group();
-    this.group.position.y = -3;
+    this.group.position.y = -2.75;
     this.group.add(this.grassPattern);
 
     // for (let i = 0; i < this.parameters.grassQuantity; i++) {

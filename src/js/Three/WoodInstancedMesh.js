@@ -18,13 +18,13 @@ export class WoodInstancedMesh {
     };
 
     this.woodUniforms = {
-      uColor: { value: new THREE.Color("#604d49") },
-      uColor2: { value: new THREE.Color("#979797") },
+      uColor: { value: new THREE.Color("#180c04") },
+      uColor2: { value: new THREE.Color("#f8c270") },
     };
 
     this.woodInnerUniforms = {
       uColor: { value: new THREE.Color("#f8c270") },
-      uColor2: { value: new THREE.Color("#979797") },
+      uColor2: { value: new THREE.Color("#180c04") },
     };
 
     this.material = new THREE.MeshToonMaterial();
@@ -48,14 +48,6 @@ export class WoodInstancedMesh {
       );
     };
 
-    // this.innerMaterial = new CustomMeshToonMaterial(
-    //   commonFragmentShader,
-    //   outputFragmentShaderInner,
-    //   commonVertexShader,
-    //   beginVertexShader,
-    //   null,
-    //   this.woodInnerUniforms,
-    // );
     this.innerMaterial = new THREE.MeshToonMaterial();
     this.innerMaterial.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.woodInnerUniforms };
@@ -76,7 +68,6 @@ export class WoodInstancedMesh {
         beginVertexShader
       );
     };
-    // console.log(outputFragmentShaderInner);
 
     const folder = guiFolders.get("scene").addFolder("wood");
     folder.addColor(this.woodUniforms.uColor, "value").name("Color");
@@ -91,23 +82,30 @@ export class WoodInstancedMesh {
     this.group.position.y = -3;
 
     for (let i = 0; i < this.parameters.woodQuantity; i++) {
-      this.wood = new THREE.Mesh(this.geometry, this.material);
-      this.wood.scale.set(0.5, 0.5, 0.5);
+      const wood = new THREE.Mesh(this.geometry, this.material);
+      wood.scale.set(0.5, 0.5, 0.5);
 
-      this.innerWood = new THREE.Mesh(this.innerGeometry, this.innerMaterial);
-      this.innerWood.scale.set(0.49, 0.5, 0.49);
-      this.innerWood.castShadow = true;
+      const innerWood = new THREE.Mesh(this.innerGeometry, this.innerMaterial);
+      innerWood.scale.set(0.49, 0.5, 0.49);
 
-      this.woodGroup = new THREE.Group();
-      this.woodGroup.add(this.wood, this.innerWood);
-      this.woodGroup.position.set(
+      const wood1 = new THREE.Group();
+      wood1.add(wood, innerWood);
+      const wood2 = wood1.clone();
+      wood2.position.x = 0.4;
+      const wood3 = wood1.clone();
+      wood3.position.x = -0.4;
+      wood1.position.z = 0.25;
+
+      const woodGroup = new THREE.Group();
+      woodGroup.add(wood1, wood2, wood3);
+      woodGroup.position.set(
         (Math.random() - 0.5) * 30,
         Math.random() - 0.5,
         (Math.random() - 0.5) * 30
       );
-      this.woodGroup.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
+      woodGroup.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
 
-      this.group.add(this.woodGroup);
+      this.group.add(woodGroup);
     }
   }
 }

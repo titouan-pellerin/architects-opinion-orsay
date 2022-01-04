@@ -14,17 +14,19 @@ export class Environment {
       envScale: 100,
       groundColor: new THREE.Color("#ffffff"),
       skyColor: new THREE.Color("#ffffff"),
-      speed: 0.75,
+      speed: 0.45,
       stroke: 5000,
       smallNoise: 500,
       bigNoise: 50,
+      smallNoiseSky: 357,
+      bigNoiseSky: 30,
     };
 
     this.forestPathLine = new ForestPathLine(1024, 0.1, this.parameters);
 
     this.cameraAnimation = new CameraAnimation(
       this.forestPathLine.spline,
-      this.parameters.envScale
+      this.parameters.envScale,
     );
 
     this.sky = new Sky(this.parameters);

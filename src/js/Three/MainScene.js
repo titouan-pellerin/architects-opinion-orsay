@@ -2,6 +2,8 @@ import fragmentShader from "../../glsl/post/fragment.glsl";
 import vertexShader from "../../glsl/post/vertex.glsl";
 import { gui, guiFolders } from "../utils/Debug";
 import raf from "../utils/Raf";
+import { texturesMap } from "../utils/assets";
+import { SobelOperatorShader } from "./SobelOperatorShader";
 import * as THREE from "three";
 import { Group } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -11,20 +13,24 @@ import { DotScreenPass } from "three/examples/jsm/postprocessing/DotScreenPass.j
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 
 export class MainScene extends THREE.Scene {
   constructor() {
     super();
+
     const parameters = {
-      skyBgColor: new THREE.Color("#fdfbd3"),
-      noiseColor: new THREE.Color("#84b15a"),
-      cornerColor: new THREE.Color("#000000"),
-      lightColor: new THREE.Color("#84b15a"),
+      skyBgColor: new THREE.Color("#e5ba43"),
+      // skyBgColor: new THREE.Color("#637da1"),
+      tintColor: new THREE.Color("#ffffff"),
+      // tintColor: new THREE.Color("#132540"),
+      cornerColor: new THREE.Color("#631eb8"),
+      lightColor: new THREE.Color("#9c6127"),
+      // lightColor: new THREE.Color("#d851e1"),
       lightIntensity: 1,
-      light2Color: new THREE.Color("#84b15a"),
+      light2Color: new THREE.Color("#d8923d"),
+      // light2Color: new THREE.Color("#de66ff"),
       light2Intensity: 0.5,
     };
 
@@ -44,12 +50,12 @@ export class MainScene extends THREE.Scene {
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
 
-    // this.controls = new OrbitControls(this.camera, this.canvas);
-    // this.controls.enableDamping = true;
-    // this.controls.dampingFactor = 0.05;
-    // this.controls.enableRotate = true;
-    // guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
-    // this.controls.update();
+    this.controls = new OrbitControls(this.camera, this.canvas);
+    this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.05;
+    this.controls.enableRotate = true;
+    guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
+    this.controls.update();
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
@@ -74,17 +80,24 @@ export class MainScene extends THREE.Scene {
     this.add(this.cameraContainer);
     this.camera.position.set(0, -1, 1.9);
 
-    const fog = new THREE.Fog(parameters.skyBgColor, 6, 45);
+    const fog = new THREE.Fog(parameters.skyBgColor, 10, 30);
     this.fog = fog;
 
     const directionalLight = new THREE.DirectionalLight(
       parameters.lightColor,
       parameters.lightIntensity
     );
+    const shadowDist = 50;
     directionalLight.castShadow = true;
     directionalLight.shadow.bias = 0.0001;
+    directionalLight.shadow.camera.left = -shadowDist;
+    directionalLight.shadow.camera.right = shadowDist;
+    directionalLight.shadow.camera.top = shadowDist;
+    directionalLight.shadow.camera.bottom = -shadowDist;
     directionalLight.shadow.mapSize.set(2048, 2048);
     directionalLight.position.set(10, 10, -10);
+    directionalLight.shadow.camera.near = 0.1;
+    directionalLight.shadow.camera.far = 150;
     this.add(directionalLight);
 
     const directionalLight2 = new THREE.DirectionalLight(
@@ -105,12 +118,12 @@ export class MainScene extends THREE.Scene {
       uniforms: {
         uTime: { value: 0 },
         tDiffuse: { value: null },
-        uNoiseColor: { value: parameters.noiseColor },
-        uNoiseIntensity: { value: 0.25 },
+        uTintColor: { value: parameters.tintColor },
         uCornerColor: { value: parameters.cornerColor },
-        uCornerIntensity: { value: 0.2 },
-        uCornerSize: { value: 2 },
-        uBlurIntensity: { value: 0.5 },
+        uCornerIntensity: { value: 0 },
+        uCornerSize: { value: 2.5 },
+        uBlurIntensity: { value: 2 },
+        uNoiseTexture: { value: null },
         uBlurPos: {
           value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
         },
@@ -122,6 +135,15 @@ export class MainScene extends THREE.Scene {
 
     this.customPass = new ShaderPass(customShader);
     this.composer.addPass(this.customPass);
+    this.customPass.material.uniforms.uNoiseTexture.value =
+      texturesMap.get("noiseTexture")[0];
+
+    const effectSobel = new ShaderPass(SobelOperatorShader);
+    effectSobel.uniforms["resolution"].value.x =
+      window.innerWidth * window.devicePixelRatio * 2;
+    effectSobel.uniforms["resolution"].value.y =
+      window.innerHeight * window.devicePixelRatio * 2;
+    // this.composer.addPass( effectSobel );
 
     const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");
@@ -177,18 +199,13 @@ export class MainScene extends THREE.Scene {
     const postFolder = atmosphereFolder.addFolder("Postprocessing");
     postFolder.add(postGuiFunctions, "disablePost");
     postFolder.add(postGuiFunctions, "enablePost");
-    const noiseFolder = postFolder.addFolder("Noise");
-    noiseFolder
-      .addColor(parameters, "noiseColor")
+    const tintFolder = postFolder.addFolder("Tint");
+    tintFolder
+      .addColor(parameters, "tintColor")
       .onChange(() => {
-        this.customPass.uniforms.uNoiseColor.value.set(parameters.noiseColor);
+        this.customPass.uniforms.uTintColor.value.set(parameters.tintColor);
       })
       .name("Color");
-    noiseFolder
-      .add(this.customPass.uniforms.uNoiseIntensity, "value")
-      .min(0)
-      .max(1)
-      .name("Intensity");
 
     const cornerFolder = postFolder.addFolder("Corner");
     cornerFolder
@@ -240,7 +257,7 @@ export class MainScene extends THREE.Scene {
   }
 
   update() {
-    // this.controls.update();
+    this.controls.update();
     this.composer.render();
     // this.renderer.render(this, this.camera);
     this.customPass.uniforms.uTime.value = raf.elapsedTime;

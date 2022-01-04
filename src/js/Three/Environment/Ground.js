@@ -84,6 +84,7 @@ export class Ground extends Group {
     this.mask.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
 
     this.add(this.ground, this.mask);
+    // this.add(this.ground);
   }
 
   getCenter() {

@@ -16,8 +16,8 @@ export class Sky extends Mesh {
         uTime: { value: 0 },
         uSpeed: { value: parameters.speed },
         uStroke: { value: parameters.stroke },
-        uSmallNoise: { value: parameters.smallNoise },
-        uBigNoise: { value: parameters.bigNoise },
+        uSmallNoise: { value: parameters.smallNoiseSky },
+        uBigNoise: { value: parameters.bigNoiseSky },
         uColor: { value: parameters.skyColor },
       },
     });

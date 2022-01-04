@@ -106,7 +106,6 @@ export class Grounds extends Group {
   update() {
     if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
       this.switchGrounds();
-      console.log("switch");
     }
   }
 }
