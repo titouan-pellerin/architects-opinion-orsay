@@ -14,10 +14,13 @@ void main() {
     if(position.y <= -4.)
         position.y = 5.;
 
-    // if(position.x >= camPos.x + 5.)
-    //     position.x = camPos.x + 2.5;
-    // else if(position.x <= camPos.x - 5.)
-    //     position.x = camPos.x - 2.5;
+    if(position.x >= camPos.x + 50.) {
+        position.y = 5.;
+        position.x = camPos.x;
+    } else if(position.x <= camPos.x - 50.) {
+        position.y = 5.;
+        position.x = camPos.x;
+    }
 
     if(position.z >= camPos.y) {
         position.z += camPos.y - 20.;

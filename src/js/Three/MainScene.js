@@ -3,6 +3,7 @@ import vertexShader from "../../glsl/post/vertex.glsl";
 import { gui, guiFolders } from "../utils/Debug";
 import raf from "../utils/Raf";
 import * as THREE from "three";
+import { Group } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { AfterimagePass } from "three/examples/jsm/postprocessing/AfterimagePass.js";
 import { CubeTexturePass } from "three/examples/jsm/postprocessing/CubeTexturePass.js";
@@ -40,6 +41,8 @@ export class MainScene extends THREE.Scene {
       150
     );
     this.camera.updateProjectionMatrix();
+    this.cameraContainer = new Group();
+    this.cameraContainer.add(this.camera);
 
     // this.controls = new OrbitControls(this.camera, this.canvas);
     // this.controls.enableDamping = true;
@@ -68,7 +71,7 @@ export class MainScene extends THREE.Scene {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.background = new THREE.Color(parameters.skyBgColor);
 
-    this.add(this.camera);
+    this.add(this.cameraContainer);
     this.camera.position.set(0, -1, 1.9);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 6, 45);

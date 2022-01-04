@@ -20,7 +20,8 @@ for (var i = 0; i < selection.length; i++) {
     var points = item.pathPoints;
 
     // iterate through each pathPoint of the item
-    for (var j = points.length - 1; j >= 0; j--) {
+    // for (var j = points.length - 1; j >= 0; j--) {
+    for (var j = 0; j < points.length; j++) {
 
       // the point in document coordinates, relative to the center of the whole document
       var documentPoint = points[j].anchor;

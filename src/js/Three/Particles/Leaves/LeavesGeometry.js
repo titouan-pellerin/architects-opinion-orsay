@@ -27,7 +27,7 @@ export class LeavesGeometry extends BufferGeometry {
     for (let i = 0; i < amount; i++) {
       const i18 = i * 18;
       const i12 = i * 12;
-      const randomScale = Math.random() * (2 - 0.5) + 0.5;
+      const randomScale = Math.random() * (2 - 0.2) + 0.2;
 
       // First triangle
 

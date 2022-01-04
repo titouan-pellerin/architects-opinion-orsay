@@ -21,6 +21,8 @@ export class Ground extends Group {
     super();
     this.texture = texture;
 
+    this.cubes = null;
+
     this.groundUniforms = {
       uTime: { value: 0 },
       uColor: { value: new Color("#83ce72") },

@@ -20,20 +20,22 @@ export class Grounds extends Group {
     this.ground1.texture.flipY = false;
     this.ground1.position.z += parameters.envScale;
     this.ground1.scale.z = -1;
-    const cubes3 = new Cubes(positions.get("cubesPositions3"));
-    cubes3.scale.z = -1;
-    this.ground1.add(cubes3);
+    // const cubes3 = new Cubes(positions.get("cubesPositions")[2]);
+    // cubes3.scale.z = -1;
+    // this.ground1.add(cubes3);
 
     this.ground2 = new Ground(this.textures[0], parameters);
-    const cubes1 = new Cubes(positions.get("cubesPositions1"));
+    const cubes1 = new Cubes(positions.get("cubesPositions")[0]);
+    this.ground2.cubes = cubes1;
     this.ground2.add(cubes1);
 
     this.ground3 = new Ground(this.textures[1], parameters);
     this.ground3.texture.flipY = false;
     this.ground3.position.z -= this.parameters.envScale;
     this.ground3.scale.z = -1;
-    const cubes2 = new Cubes(positions.get("cubesPositions2"));
+    const cubes2 = new Cubes(positions.get("cubesPositions")[1]);
     cubes2.scale.z = -1;
+    this.ground3.cubes = cubes2;
     this.ground3.add(cubes2);
 
     this.add(this.ground1, this.ground2, this.ground3);
@@ -83,10 +85,15 @@ export class Grounds extends Group {
       const currentGround3 = this.ground3;
 
       currentGround1.position.z -= this.parameters.envScale * 3;
-      currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
       const texture = this.getNextTexture();
       texture.flipY = !!(this.currentIndex % 2);
       currentGround1.groundUniforms.uTexture.value = texture;
+      currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+      const newCubes = new Cubes(positions.get("cubesPositions")[this.currentIndex + 1]);
+      newCubes.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+      currentGround1.remove(currentGround1.cubes);
+      currentGround1.add(newCubes);
+      currentGround1.cubes = newCubes;
 
       this.ground1 = currentGround2;
       this.ground2 = currentGround3;
@@ -97,7 +104,7 @@ export class Grounds extends Group {
   }
 
   update() {
-    if (mainScene.camera.position.z <= this.ground2.getCenter().z) {
+    if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
       this.switchGrounds();
       console.log("switch");
     }
