@@ -1,7 +1,5 @@
 #include <begin_vertex>
-vPosition = transformed;
+float bigNoise = cnoise(vec4(vec3(transformed * 50.), 0.5)) * 0.004;
+float smallNoise = cnoise(vec4(vec3(transformed * 200.), 0.5)) * 0.002;
 
-float bigNoise = cnoise(vec4(vec3(transformed * 50.), 0.5)) * 0.0045;
-
-// transformed.zy += bigNoise;
-transformed.z += bigNoise;
+transformed.z += bigNoise + smallNoise;

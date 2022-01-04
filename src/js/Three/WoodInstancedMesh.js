@@ -48,14 +48,6 @@ export class WoodInstancedMesh {
       );
     };
 
-    // this.innerMaterial = new CustomMeshToonMaterial(
-    //   commonFragmentShader,
-    //   outputFragmentShaderInner,
-    //   commonVertexShader,
-    //   beginVertexShader,
-    //   null,
-    //   this.woodInnerUniforms,
-    // );
     this.innerMaterial = new THREE.MeshToonMaterial();
     this.innerMaterial.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.woodInnerUniforms };
@@ -76,7 +68,6 @@ export class WoodInstancedMesh {
         beginVertexShader,
       );
     };
-    // console.log(outputFragmentShaderInner);
 
     const folder = guiFolders.get("scene").addFolder("wood");
     folder.addColor(this.woodUniforms.uColor, "value").name("Color");
@@ -89,16 +80,6 @@ export class WoodInstancedMesh {
 
     this.group = new THREE.Group();
     this.group.position.y = -3;
-
-    // const wood = new THREE.Mesh(this.geometry, this.material);
-    // wood.scale.set(0.5, 0.5, 0.5);
-
-    // const innerWood = new THREE.Mesh(this.innerGeometry, this.innerMaterial);
-    // innerWood.scale.set(0.49, 0.5, 0.49);
-
-    // const globalWood = new THREE.Group();
-    // globalWood.add(wood1, wood2, wood3);
-    // globalWood.position.y = -3;
 
     for (let i = 0; i < this.parameters.woodQuantity; i++) {
       const wood = new THREE.Mesh(this.geometry, this.material);

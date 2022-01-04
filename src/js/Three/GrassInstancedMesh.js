@@ -17,7 +17,7 @@ export class GrassInstancedMesh {
       uTime: { value: 0 },
       uColor: { value: new THREE.Color("#84b15a") },
       uColor2: { value: new THREE.Color("#236760") },
-      uDisplaceIntensity: { value: 0.135 },
+      uDisplaceIntensity: { value: 0.2 },
       uSpeed: { value: 1.25 },
     };
 
@@ -53,7 +53,6 @@ export class GrassInstancedMesh {
       instanceNumber,
     );
     this.grassPattern.scale.set(3, 3, 3);
-    // this.grassPattern.castShadow = true;
 
     for (let i = 0; i < instanceNumber; i++) {
       instance.position.set((Math.random() - 0.5) * 15, 0, (Math.random() - 0.5) * 9);

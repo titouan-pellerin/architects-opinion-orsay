@@ -48,7 +48,7 @@ void main() {
     }
 
     // Part2, adding some blur
-    vec4 p2 = (color / total) * 0.5;
+    vec4 p2 = ((color / total )) * 0.5;
 
     // Textures
     float noiseTexture = texture2D(uNoiseTexture, 0.5 * (vUv + 1.0)).r;
@@ -63,7 +63,7 @@ void main() {
 
     vec4 final = mix(p2, p1, temp);
 
-    vec2 texel = vec2(1.0 / uRes.x, 1.0 / uRes.y) * 2.0;
+    vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.5;
 
 		// kernel definition (in glsl matrices are filled in column-major order)
 
@@ -104,5 +104,6 @@ void main() {
     // gl_FragColor = render;
     gl_FragColor = texture2D(tDiffuse, vUv);
     gl_FragColor = final;
+    gl_FragColor = (p1 + p2);
     gl_FragColor = (p1 + p2) * vec4(border, 1.0);
 }

@@ -1,3 +1,4 @@
+import { sRGBEncoding } from "three";
 import { dataTextureLoader, textureLoader } from "./Loader";
 
 const texturesMap = new Map();
@@ -30,6 +31,10 @@ texturesMap.set("curveTextures", [
 
 const noise = textureLoader.load("/assets/noise.jpg");
 texturesMap.set("noiseTexture", [noise]);
+
+const oeuvre = textureLoader.load("/assets/oeuvres/1.jpeg");
+oeuvre.encoding = sRGBEncoding
+texturesMap.set("oeuvreTexture", [oeuvre]);
 
 // const treesPositionsTexture1 = textureLoader.load("/assets/positions/trees1.png");
 // texturesMap.set("treesPositionsTextures", [treesPositionsTexture1]);

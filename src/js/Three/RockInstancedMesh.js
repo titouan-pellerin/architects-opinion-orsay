@@ -44,7 +44,6 @@ export class RockInstancedMesh {
       this.material.meshToonMaterial,
       instanceNumber,
     );
-    // this.rockPattern.castShadow = true;
 
     for (let i = 0; i < instanceNumber; i++) {
       instance.position.set(Math.random() - 0.5, 0, Math.random() - 0.5);

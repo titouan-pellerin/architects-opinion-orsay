@@ -1,15 +1,14 @@
 #include <begin_vertex>
 
 vUv = uv;
-vNormal = normal;
-vPosition = transformed;
+
 vCurveCoords = texture2D(uTexture, vUv).xyz;
 // vCurveCoords = curveCoords;
 
-float bigNoise = cnoise(vec4(vec3(transformed * 50.), 0.5)) * 0.0045;
+float bigNoise = cnoise(vec4(vec3(transformed * 50.), 0.5)) * 0.004;
+float smallNoise = cnoise(vec4(vec3(transformed * 200.), 0.5)) * 0.002;
+
+transformed.z += bigNoise + smallNoise;
 
 // if(curveCoords != vec3(1.))
 // vPosition.zy += bigNoise;
-transformed.z += bigNoise;
-
-// gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vPosition, 1.0);
