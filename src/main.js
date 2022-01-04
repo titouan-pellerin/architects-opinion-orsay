@@ -1,5 +1,6 @@
 import { Environment } from "./js/Three/Environment/Environment";
 import { GrassInstancedMesh } from "./js/Three/GrassInstancedMesh";
+import { LoadingPage } from "./js/Three/Loading/LoadingPage";
 import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
@@ -10,7 +11,33 @@ import { texturesMap } from "./js/utils/assets";
 import "./styles/style.scss";
 
 function init() {
-  loadingManager.onLoad = () => {
+  const loadingPage = new LoadingPage();
+  mainScene.add(loadingPage.mesh);
+
+  const percent = document.querySelector(".percent");
+  const buttonLoader = document.querySelector(".buttonLoader");
+  const words = document.querySelectorAll(".words");
+
+  buttonLoader.addEventListener("click", () => {
+    buttonLoader.classList.add("hidden");
+    percent.classList.add("hidden");
+
+    loadingPage.update();
+
+    const text3D = new Text3D();
+
+    for (let i = 0; i < words.length; i++) {
+      words[i].classList.add("visible");
+    }
+
+    text3D.createTimeline();
+  });
+
+  loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
+    const percentCalcul = (itemsLoaded / itemsTotal) * 100;
+
+    percent.innerHTML = percentCalcul + "%";
+
     const environment = new Environment();
     mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
 
@@ -22,9 +49,6 @@ function init() {
 
     const woodInstancedMesh = new WoodInstancedMesh();
     mainScene.add(woodInstancedMesh.group);
-
-    const text3D = new Text3D();
-    text3D.createTimeline();
 
     const parameters = {
       treeQuantity: 20,
@@ -59,6 +83,10 @@ function init() {
 
     const leaves = new Leaves();
     mainScene.add(leaves.leaveMesh);
+  };
+
+  loadingManager.onLoad = () => {
+    buttonLoader.classList.add("visible");
   };
 }
 

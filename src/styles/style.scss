@@ -5,11 +5,14 @@
 html {
   box-sizing: border-box;
   margin: 0;
+  background-color: black;
+
   padding: 0;
 }
 
 body {
   overflow: hidden;
+  background-color: black;
 }
 
 #app {
@@ -19,8 +22,50 @@ body {
 }
 
 .hidden {
-  display: none;
+  opacity: 0;
 }
+
+.visibile {
+  opacity: 1;
+}
+
+/*==================
+ LOADER
+ ==================*/
+
+.percent {
+  position: absolute;
+  top: 35%;
+  left: 55%;
+  color: white;
+  font-size: 60px;
+}
+
+.percent.hidden {
+  opacity: 0;
+}
+
+.buttonLoader {
+  position: absolute;
+  top: 20%;
+  left: 55%;
+  color: white;
+  font-size: 20px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.buttonLoader.visible {
+  opacity: 1;
+}
+
+.buttonLoader.hidden {
+  opacity: 0;
+}
+
+/*==================
+ TIMELINE
+ ==================*/
 
 .timeline {
   position: absolute;
@@ -30,7 +75,6 @@ body {
   background: #000;
   transform: scaleX(0);
   transition: transform 0.5s;
-
   transform-origin: top left;
 }
 
@@ -45,23 +89,21 @@ body {
   border-radius: 50%;
 }
 
-.step1 {
-  position: absolute;
-  top: 10%;
-  left: 30%;
-  width: 30px;
-  height: 30px;
-  background: #000;
-  cursor: pointer;
-  border-radius: 50%;
-}
+/*==================
+SUBTITLES
+ ==================*/
 
-.test {
+.words {
   position: absolute;
   bottom: 11%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+  opacity: 0;
+}
+
+.words.visible {
+  opacity: 1;
 }
 
 .char {
