@@ -4,6 +4,7 @@ import skyVertexShader from "@glsl/sky/vertex.glsl";
 import { BackSide, Mesh } from "three";
 import { ShaderMaterial } from "three";
 import { SphereGeometry } from "three";
+import { CylinderGeometry } from "three";
 
 export class Sky extends Mesh {
   constructor(parameters = {}) {
@@ -22,6 +23,7 @@ export class Sky extends Mesh {
       },
     });
     const skyGeometry = new SphereGeometry(1, 16, 8, 0, Math.PI * 2, 0, Math.PI * 0.5);
+    // const skyGeometry = new CylinderGeometry(2, 2, 0.4, 4, 4, false, 0, Math.PI);
 
     super(skyGeometry, skyMaterial);
     this.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);

@@ -22,8 +22,8 @@ void main() {
         position.x = camPos.x;
     }
 
-    if(position.z >= camPos.y) {
-        position.z += camPos.y - 20.;
+    if(position.z >= camPos.y + 1.) {
+        position.z += camPos.y - 10.;
         // position.y = 5.;
     }
 

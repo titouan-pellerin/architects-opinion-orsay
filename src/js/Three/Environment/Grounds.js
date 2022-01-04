@@ -4,6 +4,7 @@ import { texturesMap } from "../../utils/assets";
 import { positions } from "../../utils/positions";
 import { mainScene } from "../MainScene";
 import { Cubes } from "./Elements/Cubes";
+import { Trees } from "./Elements/Trees";
 import { Ground } from "./Ground";
 import { Group } from "three";
 
@@ -16,19 +17,21 @@ export class Grounds extends Group {
 
     this.textures = texturesMap.get("curveTextures");
 
+    // Previous Ground
     this.ground1 = new Ground(this.textures[2], parameters);
     this.ground1.texture.flipY = false;
     this.ground1.position.z += parameters.envScale;
     this.ground1.scale.z = -1;
-    // const cubes3 = new Cubes(positions.get("cubesPositions")[2]);
-    // cubes3.scale.z = -1;
-    // this.ground1.add(cubes3);
 
+    // Current Ground
     this.ground2 = new Ground(this.textures[0], parameters);
-    const cubes1 = new Cubes(positions.get("cubesPositions")[0]);
-    this.ground2.cubes = cubes1;
-    this.ground2.add(cubes1);
+    // const cubes1 = new Cubes(positions.get("cubesPositions")[0]);
+    // this.ground2.cubes = cubes1;
+    const trees1 = new Trees(positions.get("treesPositions")[0]);
+    this.ground2.trees = trees1;
+    this.ground2.add(trees1);
 
+    // Next Ground
     this.ground3 = new Ground(this.textures[1], parameters);
     this.ground3.texture.flipY = false;
     this.ground3.position.z -= this.parameters.envScale;
@@ -72,6 +75,9 @@ export class Grounds extends Group {
 
     const groundMaskFolder = sceneFolder.addFolder("Ground");
     groundMaskFolder.addColor(this.ground2.groundUniforms.uColor, "value").name("Color");
+    groundMaskFolder
+      .addColor(this.ground2.groundUniforms.uPathColor, "value")
+      .name("Path Color");
   }
 
   getNextTexture() {

@@ -44,12 +44,12 @@ export class CameraAnimation {
 
     const camPos = new Vector3(
       curvePoint.x * this.envScale,
-      -1,
+      -0.5,
       curvePoint.y * this.envScale
     );
     const camPos2 = new Vector3(
       curvePoint2.x * this.envScale,
-      -1,
+      -0.5,
       curvePoint2.y * this.envScale
     );
 

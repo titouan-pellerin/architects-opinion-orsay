@@ -22,11 +22,11 @@ export class Environment {
       bigNoiseSky: 30,
     };
 
-    this.forestPathLine = new ForestPathLine(1024, 0.1, this.parameters);
+    this.forestPathLine = new ForestPathLine(1024, 1, this.parameters);
 
     this.cameraAnimation = new CameraAnimation(
       this.forestPathLine.spline,
-      this.parameters.envScale,
+      this.parameters.envScale
     );
 
     this.sky = new Sky(this.parameters);

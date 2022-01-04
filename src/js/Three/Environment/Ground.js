@@ -22,10 +22,12 @@ export class Ground extends Group {
     this.texture = texture;
 
     this.cubes = null;
+    this.trees = null;
 
     this.groundUniforms = {
       uTime: { value: 0 },
       uColor: { value: new Color("#83ce72") },
+      uPathColor: { value: new Color("#7c574b") },
       uTexture: { value: texture },
     };
 

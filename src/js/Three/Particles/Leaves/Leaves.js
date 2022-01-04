@@ -164,8 +164,8 @@ export class Leaves {
     this.positionUniforms["time"].value = raf.elapsedTime;
     this.positionUniforms["delta"].value = raf.deltaTime;
     this.positionUniforms["camPos"].value = new Vector2(
-      mainScene.camera.position.x,
-      mainScene.camera.position.z
+      mainScene.cameraContainer.position.x,
+      mainScene.cameraContainer.position.z
     );
     this.velocityUniforms["time"].value = raf.elapsedTime;
     this.velocityUniforms["delta"].value = raf.deltaTime;

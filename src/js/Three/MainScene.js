@@ -41,7 +41,7 @@ export class MainScene extends THREE.Scene {
 
     this.canvas = document.querySelector(".webgl");
     this.camera = new THREE.PerspectiveCamera(
-      45,
+      35,
       this.sizes.width / this.sizes.height,
       0.1,
       150
@@ -80,7 +80,7 @@ export class MainScene extends THREE.Scene {
     this.add(this.cameraContainer);
     this.camera.position.set(0, -1, 1.9);
 
-    const fog = new THREE.Fog(parameters.skyBgColor, 10, 30);
+    const fog = new THREE.Fog(parameters.skyBgColor, 15, 30);
     this.fog = fog;
 
     const directionalLight = new THREE.DirectionalLight(

@@ -1,7 +1,8 @@
-import { dataTextureLoader, textureLoader } from "./Loader";
+import { gltfLoader, textureLoader } from "./Loader";
 import { sRGBEncoding } from "three";
 
 const texturesMap = new Map();
+const modelsMap = new Map();
 
 // const groundDisplacement = textureLoader.load("/assets/ground/displacement.jpg");
 // texturesMap.set("groundDisplacement", groundDisplacement);
@@ -36,6 +37,13 @@ const oeuvre = textureLoader.load("/assets/oeuvres/1.jpeg");
 oeuvre.encoding = sRGBEncoding;
 texturesMap.set("oeuvreTexture", [oeuvre]);
 
+const trees = [];
+gltfLoader.load("/assets/models/tree_orsay4.glb", (gltf) => {
+  trees.push(gltf.scene);
+});
+
+modelsMap.set("trees", trees);
 // const treesPositionsTexture1 = textureLoader.load("/assets/positions/trees1.png");
 // texturesMap.set("treesPositionsTextures", [treesPositionsTexture1]);
-export { texturesMap };
+
+export { texturesMap, modelsMap };

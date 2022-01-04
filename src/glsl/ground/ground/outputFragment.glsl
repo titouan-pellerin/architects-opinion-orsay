@@ -7,6 +7,6 @@ vec3 render = mix(vec3(strength), uColor, 0.5);
 // gl_FragColor = vec4(vec3(strength), diffuseColor.a);
 
 // if(curveCoords.r >= .7 && curveCoords.g >= .7 && curveCoords.b >= .7) render = mix(curveCoords, render, 1. - curveCoords.r);
-render = mix(vec3(1.), render, 1. - curveCoords.r);
+render = mix(uPathColor, render, 1. - curveCoords.r);
 
 gl_FragColor = vec4(outgoingLight * render, diffuseColor.a);
