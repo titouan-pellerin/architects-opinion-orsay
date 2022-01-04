@@ -3,7 +3,7 @@ import skyFragmentShader from "@glsl/sky/fragment.glsl";
 import skyVertexShader from "@glsl/sky/vertex.glsl";
 import { BackSide, Mesh } from "three";
 import { ShaderMaterial } from "three";
-import { SphereGeometry } from "three";
+import { PlaneGeometry } from "three";
 
 export class Sky extends Mesh {
   constructor(parameters = {}) {
@@ -15,16 +15,18 @@ export class Sky extends Mesh {
       uniforms: {
         uTime: { value: 0 },
         uSpeed: { value: parameters.speed },
-        uStroke: { value: parameters.stroke },
+        uStroke: { value: parameters.strokeSky },
         uSmallNoise: { value: parameters.smallNoiseSky },
         uBigNoise: { value: parameters.bigNoiseSky },
         uColor: { value: parameters.skyColor },
       },
     });
-    const skyGeometry = new SphereGeometry(1, 16, 8, 0, Math.PI * 2, 0, Math.PI * 0.5);
+    const skyGeometry = new PlaneGeometry();
 
     super(skyGeometry, skyMaterial);
-    this.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
+    this.scale.set(parameters.envScale, parameters.envScale / 2, parameters.envScale);
+    this.rotation.x = -Math.PI * 0.6
+    this.position.y = 10
 
     /**
      * DEBUG

@@ -18,7 +18,7 @@ export class GrassInstancedMesh {
       uColor: { value: new THREE.Color("#84b15a") },
       uColor2: { value: new THREE.Color("#236760") },
       uDisplaceIntensity: { value: 0.2 },
-      uSpeed: { value: 1.25 },
+      uSpeed: { value: 1.1 },
     };
 
     this.material = new CustomMeshToonMaterial(
@@ -42,7 +42,7 @@ export class GrassInstancedMesh {
       .name("DisplaceIntensity");
     folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
-    const instanceNumber = 10000;
+    const instanceNumber = 50000;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
@@ -57,7 +57,7 @@ export class GrassInstancedMesh {
     for (let i = 0; i < instanceNumber; i++) {
       const instancePos = new Vector3();
       do {
-        instancePos.x = (Math.random() - 0.5) * 8;
+        instancePos.x = (Math.random() - 0.5) * 15;
         instancePos.y = 0;
         instancePos.z = (Math.random() - 0.5) * 10;
       } while (pathLine.isPositionInRange(instancePos));

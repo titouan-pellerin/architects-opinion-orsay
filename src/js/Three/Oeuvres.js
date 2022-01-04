@@ -31,9 +31,6 @@ export class Oeuvres {
     // );
     this.material = new THREE.MeshStandardMaterial({
     })
-    this.material2 = new THREE.MeshBasicMaterial({
-      map: texturesMap.get("oeuvreTexture")[0],
-    })
 
     const folder = guiFolders.get("scene").addFolder("Rock");
     folder.addColor(this.rockUniforms.uColor, "value").name("Color");
@@ -42,24 +39,53 @@ export class Oeuvres {
     this.geometry = new THREE.PlaneGeometry();
 
     const oeuvre1 = () => {
+      this.materialOeuvre = new THREE.MeshBasicMaterial({
+        map: texturesMap.get("oeuvreTexture")[0],
+      })
+
       this.outerMesh = new THREE.Mesh( this.geometry, this.material );
       this.outerMesh.scale.set(1 * 2.75, 1.0198 * 2.75, 1 * 2.75);
 
-      this.innerMesh = new THREE.Mesh( this.geometry, this.material2 );
+      this.innerMesh = new THREE.Mesh( this.geometry, this.materialOeuvre );
       this.innerMesh.scale.set(1 * 2.35, 1.0198 * 2.35, 1 * 2.35);
       this.innerMesh.position.z = 0.001    
 
-      this.group = new THREE.Group();
-      this.group.add(this.innerMesh, this.outerMesh)
-      this.group.scale.set(0.85, 0.85, 0.85)
-      this.group.position.y = -1.5;
+      this.oeuvre = new THREE.Group();
+      this.oeuvre.add(this.innerMesh, this.outerMesh)
+      this.oeuvre.scale.set(0.85, 0.85, 0.85)
+      this.oeuvre.position.y = -1.5;
 
       setTimeout(() => {
         this.outerMesh.matrixAutoUpdate = false;
         this.innerMesh.matrixAutoUpdate = false;
       }, 1);
     }
-
     oeuvre1()
+
+    const oeuvre2 = () => {
+      this.materialOeuvre = new THREE.MeshBasicMaterial({
+        map: texturesMap.get("oeuvre2Texture")[0],
+      })
+
+      this.outerMesh = new THREE.Mesh( this.geometry, this.material );
+      this.outerMesh.scale.set(1 * 2.75, 1.26 * 2.75, 1 * 2.75);
+
+      this.innerMesh = new THREE.Mesh( this.geometry, this.materialOeuvre );
+      this.innerMesh.scale.set(1 * 2.35, 1.26 * 2.35, 1 * 2.35);
+      this.innerMesh.position.z = 0.001    
+
+      this.oeuvre2 = new THREE.Group();
+      this.oeuvre2.add(this.innerMesh, this.outerMesh)
+      this.oeuvre2.scale.set(0.85, 0.85, 0.85)
+      this.oeuvre2.position.y = -1.5;
+      this.oeuvre2.position.x = 5;
+
+      setTimeout(() => {
+        this.outerMesh.matrixAutoUpdate = false;
+        this.innerMesh.matrixAutoUpdate = false;
+      }, 1);
+    }
+    oeuvre2()
+
   }
 }

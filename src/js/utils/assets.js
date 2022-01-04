@@ -36,6 +36,10 @@ const oeuvre = textureLoader.load("/assets/oeuvres/1.jpeg");
 oeuvre.encoding = sRGBEncoding;
 texturesMap.set("oeuvreTexture", [oeuvre]);
 
+const oeuvre2 = textureLoader.load("/assets/oeuvres/2.jpeg");
+oeuvre2.encoding = sRGBEncoding;
+texturesMap.set("oeuvre2Texture", [oeuvre2]);
+
 // const treesPositionsTexture1 = textureLoader.load("/assets/positions/trees1.png");
 // texturesMap.set("treesPositionsTextures", [treesPositionsTexture1]);
 export { texturesMap };

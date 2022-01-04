@@ -16,8 +16,8 @@ import { Group } from "three";
 function init() {
   loadingManager.onLoad = () => {
     const environment = new Environment();
-    // mainScene.add(environment.grounds, environment.forestPathLine);
-    mainScene.add(environment.grounds);
+    // mainScene.add(environment.grounds);
+    mainScene.add(environment.grounds, environment.sky);
 
     const grassInstancedMesh = new GrassInstancedMesh(environment.forestPathLine);
     mainScene.add(grassInstancedMesh.group);
@@ -29,7 +29,7 @@ function init() {
     mainScene.add(woodInstancedMesh.group);
 
     const oeuvres = new Oeuvres();
-    mainScene.add(oeuvres.group);
+    mainScene.add(oeuvres.oeuvre, oeuvres.oeuvre2);
 
     // const treeInstancedMesh = new TreeInstancedMesh();
     // mainScene.add(treeInstancedMesh);
@@ -107,11 +107,11 @@ gltfLoader.load("/assets/models/tree_orsay4.glb", (gltf) => {
 
   tree.traverse(function (node) {
     if (node.isMesh) node.castShadow = true;
-
-    setTimeout(() => {
-      tree.matrixAutoUpdate = false;
-    }, 1);
   });
+
+  setTimeout(() => {
+    tree.matrixAutoUpdate = false;
+  }, 1);
 
   // tree.traverse( function ( child ) {
 
