@@ -21,12 +21,16 @@ export class MainScene extends THREE.Scene {
     super();
 
     const parameters = {
-      skyBgColor: new THREE.Color("#ffc08a"),
-      tintColor: new THREE.Color("#ffc08a"),
-      cornerColor: new THREE.Color("#000000"),
-      lightColor: new THREE.Color("#c9b09a"),
+      skyBgColor: new THREE.Color("#e5ba43"),
+      // skyBgColor: new THREE.Color("#637da1"),
+      tintColor: new THREE.Color("#fff486"),
+      // tintColor: new THREE.Color("#132540"),
+      cornerColor: new THREE.Color("#631eb8"),
+      lightColor: new THREE.Color("#9c6127"),
+      // lightColor: new THREE.Color("#d851e1"),
       lightIntensity: 1,
-      light2Color: new THREE.Color("#c9b09a"),
+      light2Color: new THREE.Color("#d8923d"),
+      // light2Color: new THREE.Color("#de66ff"),
       light2Intensity: 0.5,
     };
 
@@ -74,7 +78,7 @@ export class MainScene extends THREE.Scene {
     this.add(this.camera);
     this.camera.position.set(0, 1, 15);
 
-    const fog = new THREE.Fog(parameters.skyBgColor, 12.3, 32.46);
+    const fog = new THREE.Fog(parameters.skyBgColor, 10, 30);
     this.fog = fog;
 
     const directionalLight = new THREE.DirectionalLight(
@@ -107,8 +111,8 @@ export class MainScene extends THREE.Scene {
         tDiffuse: { value: null },
         uTintColor: { value: parameters.tintColor },
         uCornerColor: { value: parameters.cornerColor },
-        uCornerIntensity: { value: 0.328 },
-        uCornerSize: { value: 0.9 },
+        uCornerIntensity: { value: 0 },
+        uCornerSize: { value: 5 },
         uBlurIntensity: { value: 0.5 },
         uNoiseTexture: { value: null },
         uBlurPos: {

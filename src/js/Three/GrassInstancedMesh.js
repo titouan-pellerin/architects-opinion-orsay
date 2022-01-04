@@ -18,7 +18,7 @@ export class GrassInstancedMesh {
       uColor: { value: new THREE.Color("#84b15a") },
       uColor2: { value: new THREE.Color("#236760") },
       uDisplaceIntensity: { value: 0.135 },
-      uSpeed: { value: 1 },
+      uSpeed: { value: 1.25 },
     };
 
     this.material = new CustomMeshToonMaterial(
@@ -46,7 +46,6 @@ export class GrassInstancedMesh {
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
-    // this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 64);
 
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,

@@ -37,7 +37,7 @@ function init() {
 document.addEventListener("DOMContentLoaded", init);
 
 // const parameters = {
-// treeQuantity: 20,
+//   treeQuantity: 20,
 // };
 // gltfLoader.load("/assets/models/tree.glb", (gltf) => {
 //   const tree = gltf.scene;

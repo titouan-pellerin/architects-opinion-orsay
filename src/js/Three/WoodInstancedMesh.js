@@ -18,13 +18,13 @@ export class WoodInstancedMesh {
     };
 
     this.woodUniforms = {
-      uColor: { value: new THREE.Color("#604d49") },
-      uColor2: { value: new THREE.Color("#979797") },
+      uColor: { value: new THREE.Color("#180c04") },
+      uColor2: { value: new THREE.Color("#f8c270") },
     };
 
     this.woodInnerUniforms = {
       uColor: { value: new THREE.Color("#f8c270") },
-      uColor2: { value: new THREE.Color("#979797") },
+      uColor2: { value: new THREE.Color("#180c04") },
     };
 
     this.material = new THREE.MeshToonMaterial();
