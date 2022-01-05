@@ -5,11 +5,14 @@
 html {
   box-sizing: border-box;
   margin: 0;
+  background-color: black;
+
   padding: 0;
 }
 
 body {
   overflow: hidden;
+  background-color: black;
 }
 
 #app {
@@ -19,8 +22,62 @@ body {
 }
 
 .hidden {
-  display: none;
+  opacity: 0;
 }
+
+.visibile {
+  opacity: 1;
+}
+
+/*==================
+ LOADER
+ ==================*/
+
+.loadingImage {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 300px;
+}
+
+.percent {
+  position: absolute;
+  top: 35%;
+  left: 55%;
+  color: white;
+  font-size: 60px;
+  font-family: "Leky Calgria";
+}
+
+.buttonLoader {
+  position: absolute;
+  top: 20%;
+  left: 55%;
+  color: white;
+  font-size: 20px;
+  opacity: 0;
+  font-family: "Leky Calgria";
+}
+
+.buttonLoader.visible {
+  opacity: 1;
+}
+
+.loadingImage,
+.percent ,
+.buttonLoader {
+  transition: opacity 0.9s ease-in-out;
+}
+
+.loadingImage.hidden,
+.percent.hidden,
+.buttonLoader.hidden {
+  opacity: 0;
+}
+
+/*==================
+ TIMELINE
+ ==================*/
 
 .timeline {
   position: absolute;
@@ -30,7 +87,6 @@ body {
   background: #000;
   transform: scaleX(0);
   transition: transform 0.5s;
-
   transform-origin: top left;
 }
 
@@ -43,4 +99,24 @@ body {
   background: #000;
   cursor: pointer;
   border-radius: 50%;
+}
+
+/*==================
+SUBTITLES
+ ==================*/
+
+.words {
+  position: absolute;
+  bottom: 11%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.words.visible {
+  opacity: 1;
+}
+
+.char {
+  opacity: 0;
 }
