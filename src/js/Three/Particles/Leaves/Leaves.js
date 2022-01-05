@@ -117,8 +117,8 @@ export class Leaves {
 
     // For Vertex and Fragment
     this.leavesUniforms = {
-      uColor: { value: new Color(0x85cf33) },
-      uColor2: { value: new Color(0x3f7836) },
+      uColor: { value: new Color(0x4a9e36) },
+      uColor2: { value: new Color(0xd1e997) },
       texturePosition: { value: null },
       textureVelocity: { value: null },
       time: { value: 1.0 },

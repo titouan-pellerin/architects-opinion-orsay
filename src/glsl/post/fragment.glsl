@@ -27,7 +27,8 @@ void main() {
   vec4 cornerColor = vec4(corner + uCornerIntensity) + vec4(uCornerColor, 1.0);
 
     // Part1, tint & corner
-  vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
+  // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
+  vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * 0.5;
 
     // Blur
   vec4 color = vec4(0.0);
@@ -102,8 +103,8 @@ void main() {
   vec3 border = vec3(G);
 
     // gl_FragColor = render;
-  gl_FragColor = texture2D(tDiffuse, vUv);
   gl_FragColor = final;
   gl_FragColor = (p1 + p2);
+  gl_FragColor = texture2D(tDiffuse, vUv);
   gl_FragColor = (p1 + p2) * vec4(border, 1.0);
 }

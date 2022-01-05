@@ -17,7 +17,7 @@ export class GrassInstancedMesh {
       uColor: { value: new THREE.Color("#84b15a") },
       uColor2: { value: new THREE.Color("#236760") },
       uDisplaceIntensity: { value: 0.2 },
-      uSpeed: { value: 1.25 },
+      uSpeed: { value: 1.1 },
     };
 
     this.material = new CustomMeshToonMaterial(

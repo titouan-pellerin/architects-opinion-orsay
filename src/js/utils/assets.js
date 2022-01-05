@@ -37,12 +37,21 @@ const oeuvre = textureLoader.load("/assets/oeuvres/1.jpeg");
 oeuvre.encoding = sRGBEncoding;
 texturesMap.set("oeuvreTexture", [oeuvre]);
 
+const oeuvre2 = textureLoader.load("/assets/oeuvres/2.jpeg");
+oeuvre2.encoding = sRGBEncoding;
+texturesMap.set("oeuvre2Texture", [oeuvre2]);
+
 const trees = [];
+gltfLoader.load("/assets/models/tree_orsay5.glb", (gltf) => {
+  trees.push(gltf.scene);
+});
+
 gltfLoader.load("/assets/models/tree_orsay6.glb", (gltf) => {
   trees.push(gltf.scene);
 });
 
 modelsMap.set("trees", trees);
+
 // const treesPositionsTexture1 = textureLoader.load("/assets/positions/trees1.png");
 // texturesMap.set("treesPositionsTextures", [treesPositionsTexture1]);
 
