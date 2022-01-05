@@ -8,7 +8,7 @@ float mixNoise = smoothstep(0.1, 0.9, cnoise(vec2(vUv * 50. + time)));
 float stroke = cos((vUv.x + vUv.y) * uStroke);
 stroke += (bigNoise * 2.0 - 1.0) + (smallNoise * 2.0 - 1.0);
 
-  // Render
+// Render
 // vec4 render = mix(vec4(mixNoise), vec4(uColor, 1.0) * vec4(stroke), uColor.z);
 vec4 render = vec4(uColor, 1.0) * vec4(stroke);
 

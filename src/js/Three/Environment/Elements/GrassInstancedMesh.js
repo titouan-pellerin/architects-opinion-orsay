@@ -1,5 +1,6 @@
 import { guiFolders } from "../../../utils/Debug";
 import raf from "../../../utils/Raf";
+import { texturesMap } from "../../../utils/assets";
 import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import commonVertexShader from "@glsl/grass/commonVertex.glsl";
@@ -43,7 +44,7 @@ export class GrassInstancedMesh {
       .name("DisplaceIntensity");
     folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
-    const instanceNumber = 300000;
+    const instanceNumber = 1000000;
     // const instanceNumber = 30;
     const instance = new THREE.Object3D();
 
@@ -57,17 +58,22 @@ export class GrassInstancedMesh {
     // this.grassPattern.scale.set(3, 3, 3);
 
     for (let i = 0; i < instanceNumber; i++) {
+      const randomScale = Math.random() * 3;
+      const instanceScale = new Vector3(randomScale, randomScale, randomScale);
       const instancePos = new Vector3();
-      do {
-        instancePos.x = (Math.random() - 0.5) * 95;
-        instancePos.y = 0;
-        instancePos.z = (Math.random() - 0.5) * 100;
-      } while (pathLine.isPositionInRange(new Vector2(instancePos.x, instancePos.z)));
-      // console.log(instancePos.z);
+
+      // do {
+      instancePos.x = (Math.random() - 0.5) * 95;
+      instancePos.y = 0;
+      // instancePos.z = (Math.random() - 0.5) * 100;
+      instancePos.z = (Math.random() - 0.5) * 450;
+
+      if (pathLine.isPositionInRange(new Vector2(instancePos.x, instancePos.z)))
+        instanceScale.y = Math.random() * 0.5;
 
       instance.position.set(instancePos.x, instancePos.y, instancePos.z);
 
-      instance.scale.setScalar(Math.random() * 3);
+      instance.scale.set(instanceScale.x, instanceScale.y, instanceScale.z);
 
       instance.updateMatrix();
       this.grassPattern.setMatrixAt(i, instance.matrix);

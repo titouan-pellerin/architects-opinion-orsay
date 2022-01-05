@@ -1,3 +1,4 @@
+import { texturesMap } from "../../utils/assets";
 import { positions } from "../../utils/positions";
 import { Line } from "three";
 import { LineBasicMaterial } from "three";
@@ -21,34 +22,31 @@ export class ForestPathLine extends Line {
     this.parameters = parameters;
     this.spline = spline;
     this.points = points;
+    this.spacedPoints = this.spline.getSpacedPoints(
+      parameters.envScale * texturesMap.get("curveTextures").length - 1
+    );
     this.pathWidth = pathWidth;
     this.splinePrecision = splinePrecision;
   }
 
   isPositionInRange(position) {
-    // const points = this.spline.getPoints(this.parameters.envScale * 5);
-    // const point = points[Math.floor(position.x) + this.parameters.envScale * 0.5];
-    const point =
-      this.points[
-        Math.floor(
-          ((position.x + this.parameters.envScale * 0.5) / this.parameters.envScale) *
-            this.splinePrecision
-        )
-      ];
-    // console.log(point);
-    // const inRange = this.points.some(
-    //   (point) =>
-    //     // point.x > position.x - this.pathWidth &&
-    //     // point.x < position.x + this.pathWidth &&
-    //     // point.z < position.y - this.pathWidth &&
-    //     // point.z > position.y + this.pathWidth
-    //     Math.abs(point.x - position.x) < this.pathWidth &&
-    //     Math.abs(point.y - position.y) > this.pathWidth
+    const pointOnSameLine = this.spacedPoints.filter(
+      (point) =>
+        position.y > point.y * this.parameters.envScale - 1 &&
+        position.y < point.y * this.parameters.envScale + 1
+    )[0];
+    // console.log(pointOnSameLine);
+    let inRange = false;
+    if (pointOnSameLine)
+      inRange =
+        pointOnSameLine.x * this.parameters.envScale >
+          position.x - 3.5 + Math.random() * 3 &&
+        pointOnSameLine.x * this.parameters.envScale <
+          position.x + 3.5 + Math.random() * 3;
+    // return (
+    //   Math.abs(point.x * this.parameters.envScale - position.x) < this.pathWidth &&
+    //   Math.abs(point.y * this.parameters.envScale - position.y) > this.pathWidth
     // );
-    // console.log(position.x);
-    return (
-      Math.abs(point.x * this.parameters.envScale - position.x) < this.pathWidth &&
-      Math.abs(point.y * this.parameters.envScale - position.y) > this.pathWidth
-    );
+    return inRange;
   }
 }

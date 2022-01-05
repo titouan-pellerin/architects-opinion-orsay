@@ -1,13 +1,14 @@
-import commonFragmentShader from "../../glsl/grass/commonFragment.glsl";
-import commonVertexShader from "../../glsl/grass/commonVertex.glsl";
-import outputFragmentShader from "../../glsl/rock/outputFragment.glsl";
-import projectVertexShader from "../../glsl/rock/projectVertex.glsl";
 import { guiFolders } from "../utils/Debug";
 import { textureLoader } from "../utils/Loader";
 import raf from "../utils/Raf";
 import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
+import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
+import commonVertexShader from "@glsl/grass/commonVertex.glsl";
+import outputFragmentShader from "@glsl/rock/outputFragment.glsl";
+import projectVertexShader from "@glsl/rock/projectVertex.glsl";
 import * as THREE from "three";
 import { DoubleSide } from "three";
+import { MeshToonMaterial } from "three";
 
 export class RockInstancedMesh {
   constructor() {
@@ -20,15 +21,35 @@ export class RockInstancedMesh {
       uColor2: { value: new THREE.Color("#236760") },
     };
 
-    this.material = new CustomMeshToonMaterial(
-      commonFragmentShader,
-      outputFragmentShader,
-      commonVertexShader,
-      null,
-      projectVertexShader,
-      this.rockUniforms,
-      { side: DoubleSide },
-    );
+    // this.material = new CustomMeshToonMaterial(
+    //   commonFragmentShader,
+    //   outputFragmentShader,
+    //   commonVertexShader,
+    //   null,
+    //   projectVertexShader,
+    //   this.rockUniforms,
+    //   { side: DoubleSide },
+    // );
+    this.material = new MeshToonMaterial({ side: DoubleSide });
+    this.material.onBeforeCompile = (shader) => {
+      shader.uniforms = { ...shader.uniforms, ...this.rockUniforms };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        commonFragmentShader
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        outputFragmentShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        commonVertexShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <project_vertex>",
+        projectVertexShader
+      );
+    };
 
     const folder = guiFolders.get("scene").addFolder("Rock");
     folder.addColor(this.rockUniforms.uColor, "value").name("Color");
@@ -41,8 +62,8 @@ export class RockInstancedMesh {
 
     this.rockPattern = new THREE.InstancedMesh(
       this.geometry,
-      this.material.meshToonMaterial,
-      instanceNumber,
+      this.material,
+      instanceNumber
     );
 
     for (let i = 0; i < instanceNumber; i++) {
