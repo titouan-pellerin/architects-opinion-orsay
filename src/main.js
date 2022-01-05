@@ -4,11 +4,12 @@ import { LoadingPage } from "./js/Three/Loading/LoadingPage";
 import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
-import { Text3D } from "./js/Three/Text/Text3D";
+import { Subtitles } from "./js/Three/Text/Subtitles";
 import { WoodInstancedMesh } from "./js/Three/WoodInstancedMesh";
 import { loadingManager } from "./js/utils/Loader";
 import { texturesMap } from "./js/utils/assets";
 import "./styles/style.scss";
+import gsap from "gsap";
 
 function init() {
   const loadingPage = new LoadingPage();
@@ -16,39 +17,45 @@ function init() {
 
   const percent = document.querySelector(".percent");
   const buttonLoader = document.querySelector(".buttonLoader");
+  const loadingImage = document.querySelector(".loadingImage");
   const words = document.querySelectorAll(".words");
+  const audio = document.querySelector(".audio");
 
   buttonLoader.addEventListener("click", () => {
     buttonLoader.classList.add("hidden");
+    // loadingImage.classList.add("hidden");
     percent.classList.add("hidden");
 
     loadingPage.update();
-
-    const text3D = new Text3D();
-
+    audio.play();
+    const subtitles = new Subtitles();
     for (let i = 0; i < words.length; i++) {
       words[i].classList.add("visible");
     }
-
-    text3D.createTimeline();
+    subtitles.createTimeline();
   });
 
   loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
     const percentCalcul = (itemsLoaded / itemsTotal) * 100;
 
-    percent.innerHTML = percentCalcul + "%";
+    //      gsap.fromTo('loadingImage', 5,
+    //     { y: 300, rotation: 25 },
+    //     { y: 80, rotation: 0, ease: Power3.easeOut }
+    // );
 
-    const environment = new Environment();
-    mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
+    percent.innerHTML = "Loading..." + percentCalcul + "%";
 
-    const grassInstancedMesh = new GrassInstancedMesh(environment.forestPathLine);
-    mainScene.add(grassInstancedMesh.group);
+    // const environment = new Environment();
+    // mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
 
-    const rockInstancedMesh = new RockInstancedMesh(environment.forestPathLine);
-    mainScene.add(rockInstancedMesh.group);
+    // const grassInstancedMesh = new GrassInstancedMesh(environment.forestPathLine);
+    // mainScene.add(grassInstancedMesh.group);
 
-    const woodInstancedMesh = new WoodInstancedMesh();
-    mainScene.add(woodInstancedMesh.group);
+    // const rockInstancedMesh = new RockInstancedMesh(environment.forestPathLine);
+    // mainScene.add(rockInstancedMesh.group);
+
+    // const woodInstancedMesh = new WoodInstancedMesh();
+    // mainScene.add(woodInstancedMesh.group);
 
     const parameters = {
       treeQuantity: 20,

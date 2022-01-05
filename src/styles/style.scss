@@ -33,16 +33,20 @@ body {
  LOADER
  ==================*/
 
+.loadingImage {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 300px;
+}
+
 .percent {
   position: absolute;
   top: 35%;
   left: 55%;
   color: white;
   font-size: 60px;
-}
-
-.percent.hidden {
-  opacity: 0;
+  font-family: "Leky Calgria";
 }
 
 .buttonLoader {
@@ -52,13 +56,21 @@ body {
   color: white;
   font-size: 20px;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  font-family: "Leky Calgria";
 }
 
 .buttonLoader.visible {
   opacity: 1;
 }
 
+.loadingImage,
+.percent ,
+.buttonLoader {
+  transition: opacity 0.9s ease-in-out;
+}
+
+.loadingImage.hidden,
+.percent.hidden,
 .buttonLoader.hidden {
   opacity: 0;
 }
@@ -99,7 +111,6 @@ SUBTITLES
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  opacity: 0;
 }
 
 .words.visible {
