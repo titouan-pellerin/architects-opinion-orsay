@@ -1,5 +1,6 @@
 import { guiFolders } from "../../utils/Debug";
 import raf from "../../utils/Raf";
+import { texturesMap } from "../../utils/assets";
 import { mainScene } from "../MainScene";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { ForestPathLine } from "../Path/ForestPathLine";
@@ -31,7 +32,7 @@ export class Environment {
     );
 
     this.sky = new Sky(this.parameters);
-    this.grounds = new Grounds(5, this.parameters);
+    this.grounds = new Grounds(texturesMap.get("curveTextures").length, this.parameters);
 
     // setTimeout(() => {
     //   this.grounds.matrixAutoUpdate = false;

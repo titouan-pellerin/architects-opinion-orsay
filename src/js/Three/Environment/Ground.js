@@ -48,7 +48,7 @@ export class Ground extends Group {
       groundCommonVertexShader,
       groundBeginVertexShader,
       null,
-      this.groundUniforms
+      this.groundUniforms,
     );
 
     const groundMaskMaterial = new MeshToonMaterial({
@@ -58,19 +58,19 @@ export class Ground extends Group {
       shader.uniforms = { ...shader.uniforms, ...this.groundMaskUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
-        maskCommonFragmentShader
+        maskCommonFragmentShader,
       );
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <output_fragment>",
-        maskOutputFragmentShader
+        maskOutputFragmentShader,
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <common>",
-        maskCommonVertexShader
+        maskCommonVertexShader,
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <begin_vertex>",
-        maskBeginVertexShader
+        maskBeginVertexShader,
       );
     };
 

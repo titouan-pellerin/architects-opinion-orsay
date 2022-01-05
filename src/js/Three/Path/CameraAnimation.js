@@ -70,27 +70,27 @@ export class CameraAnimation {
     mainScene.cameraContainer.rotation.y +=
       0.05 * (target.x - mainScene.cameraContainer.rotation.y);
 
-    if (
-      mainScene.cameraContainer.position.z <=
-        positions.get("checkpoints")[0].y * this.envScale + 10 &&
-      mainScene.cameraContainer.position.z >=
-        positions.get("checkpoints")[0].y * this.envScale
-    ) {
-      console.log("at checkpoint");
-      gsap.to(mainScene.cameraContainer.position, {
-        duration: 10,
-        x: positions.get("checkpoints")[0].x * this.envScale,
-        z: positions.get("checkpoints")[0].y * this.envScale,
-        ease: "powerOut",
-        // onComplete: () => {
-        //   raf.unsubscribe("path");
-        // },
-      });
-      // raf.unsubscribe("path");
-    } else {
-      mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
-      mainScene.camera.lookAt(camPos2.x, camPos2.y, camPos2.z);
-    }
+    // if (
+    //   mainScene.cameraContainer.position.z <=
+    //     positions.get("checkpoints")[0].y * this.envScale + 10 &&
+    //   mainScene.cameraContainer.position.z >=
+    //     positions.get("checkpoints")[0].y * this.envScale
+    // ) {
+    //   console.log("at checkpoint");
+    //   // gsap.to(mainScene.cameraContainer.position, {
+    //   //   duration: 10,
+    //   //   x: positions.get("checkpoints")[0].x * this.envScale,
+    //   //   z: positions.get("checkpoints")[0].y * this.envScale,
+    //   //   ease: "powerOut",
+    //   //   // onComplete: () => {
+    //   //   //   raf.unsubscribe("path");
+    //   //   // },
+    //   // });
+    //   // raf.unsubscribe("path");
+    // } else {
+    mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
+    mainScene.camera.lookAt(camPos2.x, camPos2.y, camPos2.z);
+    // }
     // OrbitControls debug
     // mainScene.controls.target = new Vector3(
     //   mainScene.camera.position.x,

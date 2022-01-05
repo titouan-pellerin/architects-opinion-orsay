@@ -52,10 +52,10 @@ export class MainScene extends THREE.Scene {
 
     this.canvas = document.querySelector(".webgl");
     this.camera = new THREE.PerspectiveCamera(
-      35,
+      30,
       this.sizes.width / this.sizes.height,
       0.1,
-      150
+      150,
     );
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
@@ -88,7 +88,7 @@ export class MainScene extends THREE.Scene {
     this.background = new THREE.Color(parameters.skyBgColor);
 
     this.add(this.cameraContainer);
-    this.camera.position.set(0, -1, 1.9);
+    this.camera.position.set(0, 0, 1.9);
     // this.camera.position.set(0, 1, 20);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 15, 30);
@@ -96,7 +96,7 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight = new THREE.DirectionalLight(
       parameters.lightColor,
-      parameters.lightIntensity
+      parameters.lightIntensity,
     );
     const shadowDist = 50;
     directionalLight.castShadow = true;
@@ -113,7 +113,7 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight2 = new THREE.DirectionalLight(
       parameters.light2Color,
-      parameters.light2Intensity
+      parameters.light2Intensity,
     );
     directionalLight2.position.set(-10, 10, 10);
     this.add(directionalLight2);

@@ -17,8 +17,8 @@ export class GrassInstancedMesh {
       uTime: { value: 0 },
       uColor: { value: new THREE.Color("#84b15a") },
       uColor2: { value: new THREE.Color("#236760") },
-      uDisplaceIntensity: { value: 0.2 },
-      uSpeed: { value: 1.1 },
+      uDisplaceIntensity: { value: 0.25 },
+      uSpeed: { value: 1.2 },
     };
 
     this.material = new CustomMeshToonMaterial(
@@ -30,7 +30,7 @@ export class GrassInstancedMesh {
       this.grassUniforms,
       {
         side: DoubleSide,
-      }
+      },
     );
 
     const sceneFolder = guiFolders.get("scene");
@@ -53,7 +53,7 @@ export class GrassInstancedMesh {
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
       this.material.meshToonMaterial,
-      instanceNumber
+      instanceNumber,
     );
     // this.grassPattern.scale.set(3, 3, 3);
 
