@@ -86,7 +86,7 @@ const cubesPositions5 = [
 ];
 
 const treesPositions1 = [
-  new Vector2(-5.17349498326211, -6.72139888383469),
+  new Vector2(-5.17349498325927, -8.59429057905172),
   new Vector2(21.5875836120404, -47.5908906031464),
   new Vector2(17.0585164977297, -47.5908906031464),
   new Vector2(13.4345558417862, -43.47509523962),
@@ -97,7 +97,7 @@ const treesPositions1 = [
   new Vector2(12.1938443901513, -19.5317905790489),
   new Vector2(9.33406342622337, -12.9938336120404),
   new Vector2(14.7313663231898, -5.82889014881115),
-  new Vector2(-7.92854659390795, -3.32999818928954),
+  new Vector2(-8.76498786757622, -4.26639014881118),
   new Vector2(13.4345558417862, -10.9061454849524),
   new Vector2(-7.66898075189314, -8.83152173913115),
   new Vector2(-6.10648075189317, -12.875218032002),
@@ -128,7 +128,7 @@ const treesPositions1 = [
   new Vector2(9.74497715366734, -45.03759523962),
   new Vector2(6.20906342619494, -41.91259523962),
   new Vector2(1.97533444816141, -39.3342391304344),
-  new Vector2(14.4324771536674, -0.20499818928954),
+  new Vector2(11.3074771536674, -0.20499818928954),
   new Vector2(-12.3564807518932, -4.26639014881115),
   new Vector2(-12.3564807518931, -8.83152173913115),
   new Vector2(-11.5680798743, -12.8752180320021),
@@ -145,8 +145,6 @@ const treesPositions1 = [
   new Vector2(10.0438663231898, -39.9969495475034),
   new Vector2(-2.71216555182721, -26.5463525052979),
   new Vector2(1.07650501673785, -31.2025307818146),
-  new Vector2(3.84530247554837, -32.6620343353369),
-  new Vector2(10.8965634262035, -37.4627619979947),
   new Vector2(9.33406342621765, -22.7842809364375),
   new Vector2(10.8965634261949, -25.9092809364375),
   new Vector2(37.5890797378531, -48.16259523962),
@@ -162,8 +160,8 @@ const treesPositions1 = [
   new Vector2(7.771563426212, -10.9061454849524),
   new Vector2(14.7313663231899, -15.2189680319992),
   new Vector2(-2.98148075189317, -14.437718032002),
-  new Vector2(7.50634439015121, -6.72139888383476),
-  new Vector2(14.4324771536674, -39.9969495475034),
+  new Vector2(7.50634439015082, -7.26902173913153),
+  new Vector2(2.63900501673786, -43.8282409317367),
 ];
 
 const treesPositions2 = [
@@ -331,6 +329,33 @@ const rocksPositions3 = [
   new Vector2(3.38296249392448, 34.6108325997591),
 ];
 
+const woodLogsPositions1 = [
+  new Vector2(-5.67920666269686, -10.2913043320825),
+  new Vector2(5.65040434575506, 2.61551129253952),
+  new Vector2(-2.55420666270822, -1.56245966448978),
+  new Vector2(2.16196432080547, -20.6101848127645),
+  new Vector2(-4.11670666269706, -21.2978517538888),
+  new Vector2(2.5254043457432, -3.32486117386323),
+];
+
+const woodLogsPositions2 = [
+  new Vector2(4.85578169527798, 31.8294411248303),
+  new Vector2(11.7611645620741, 31.8294411248303),
+  new Vector2(28.0303905240714, 40.379086904852),
+  new Vector2(23.8645245846158, 34.0796080659514),
+  new Vector2(17.5858536011104, 33.3919411248302),
+  new Vector2(28.0303905240714, 46.4909497350106),
+];
+
+const woodLogsPositions3 = [
+  new Vector2(-11.4134442667193, 21.0416878117484),
+  new Vector2(-6.48797213335974, 25.1863537608584),
+  new Vector2(10.1986645620741, 36.1733325997591),
+  new Vector2(6.03279862261843, 29.8738537608587),
+  new Vector2(0, 26.7488537608584),
+  new Vector2(3.38296249392448, 34.6108325997591),
+];
+
 positions.set("curvePoints", curvePoints);
 positions.set("checkpoints", checkpoints);
 positions.set("cubesPositions", [
@@ -343,6 +368,10 @@ positions.set("cubesPositions", [
 
 positions.set("treesPositions", [treesPositions1, treesPositions2, treesPositions3]);
 positions.set("rocksPositions", [rocksPositions1, rocksPositions2, rocksPositions3]);
-positions.set("woodLogsPositions", [treesPositions1, treesPositions2, treesPositions3]);
+positions.set("woodLogsPositions", [
+  woodLogsPositions1,
+  woodLogsPositions2,
+  woodLogsPositions3,
+]);
 
 export { positions };

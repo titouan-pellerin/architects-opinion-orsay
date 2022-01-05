@@ -55,18 +55,18 @@ export class MainScene extends THREE.Scene {
       30,
       this.sizes.width / this.sizes.height,
       0.1,
-      150,
+      150
     );
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
 
-    // this.controls = new OrbitControls(this.camera, this.canvas);
-    // this.controls.enableDamping = true;
-    // this.controls.dampingFactor = 0.05;
-    // this.controls.enableRotate = true;
-    // guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
-    // this.controls.update();
+    this.controls = new OrbitControls(this.camera, this.canvas);
+    this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.05;
+    this.controls.enableRotate = true;
+    guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
+    this.controls.update();
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
@@ -96,7 +96,7 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight = new THREE.DirectionalLight(
       parameters.lightColor,
-      parameters.lightIntensity,
+      parameters.lightIntensity
     );
     const shadowDist = 50;
     directionalLight.castShadow = true;
@@ -113,7 +113,7 @@ export class MainScene extends THREE.Scene {
 
     const directionalLight2 = new THREE.DirectionalLight(
       parameters.light2Color,
-      parameters.light2Intensity,
+      parameters.light2Intensity
     );
     directionalLight2.position.set(-10, 10, 10);
     this.add(directionalLight2);
@@ -269,7 +269,7 @@ export class MainScene extends THREE.Scene {
   }
 
   update() {
-    // this.controls.update();
+    this.controls.update();
     this.composer.render();
     // this.renderer.render(this, this.camera);
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
