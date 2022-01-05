@@ -10,10 +10,10 @@ if(curveCoords.r >= .7 && curveCoords.g >= .7 && curveCoords.b >= .7) elevation 
 // float bigNoise = cnoise(vec4(vec3(transformed * 50.), 0.5)) * 0.004;
 // float smallNoise = cnoise(vec4(vec3(transformed * 200.), 0.5)) * 0.002;
 float bigNoise = cnoise(vec2(transformed.xy * 50.)) * elevation;
-// float smallNoise = cnoise(vec2(transformed.xy * 200.)) * 0.002;
+float smallNoise = cnoise(vec2(transformed.xy * 200.)) * 0.001;
 
-// transformed.z += bigNoise + smallNoise;
-transformed.z += bigNoise;
+transformed.z += bigNoise + smallNoise;
+// transformed.z += bigNoise;
 
 // if(curveCoords != vec3(1.))
 // vPosition.zy += bigNoise;
