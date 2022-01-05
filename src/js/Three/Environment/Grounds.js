@@ -3,7 +3,6 @@ import raf from "../../utils/Raf";
 import { texturesMap } from "../../utils/assets";
 import { positions } from "../../utils/positions";
 import { mainScene } from "../MainScene";
-import { Cubes } from "./Elements/Cubes";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";

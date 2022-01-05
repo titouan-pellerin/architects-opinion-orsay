@@ -48,8 +48,8 @@ function init() {
 
     const environment = new Environment();
     // mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
-    // mainScene.add(environment.grounds);
-    mainScene.add(environment.grounds, environment.sky);
+    // mainScene.add(environment.grounds, environment.sky);
+    mainScene.add(environment.grounds);
 
     const grassInstancedMesh = new GrassInstancedMesh(environment.forestPathLine);
     mainScene.add(grassInstancedMesh.group);

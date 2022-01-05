@@ -30,7 +30,7 @@ export class GrassInstancedMesh {
       this.grassUniforms,
       {
         side: DoubleSide,
-      },
+      }
     );
 
     const sceneFolder = guiFolders.get("scene");
@@ -44,7 +44,7 @@ export class GrassInstancedMesh {
       .name("DisplaceIntensity");
     folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
-    const instanceNumber = 1000000;
+    const instanceNumber = 300000;
     // const instanceNumber = 30;
     const instance = new THREE.Object3D();
 
@@ -53,7 +53,7 @@ export class GrassInstancedMesh {
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
       this.material.meshToonMaterial,
-      instanceNumber,
+      instanceNumber
     );
     // this.grassPattern.scale.set(3, 3, 3);
 
