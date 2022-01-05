@@ -23,6 +23,8 @@ export class Ground extends Group {
 
     this.cubes = null;
     this.trees = null;
+    this.rocks = null;
+    this.woodLogs = null;
 
     this.groundUniforms = {
       uTime: { value: 0 },

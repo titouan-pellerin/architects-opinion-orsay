@@ -38,7 +38,7 @@ oeuvre.encoding = sRGBEncoding;
 texturesMap.set("oeuvreTexture", [oeuvre]);
 
 const trees = [];
-gltfLoader.load("/assets/models/tree_orsay4.glb", (gltf) => {
+gltfLoader.load("/assets/models/tree_orsay6.glb", (gltf) => {
   trees.push(gltf.scene);
 });
 

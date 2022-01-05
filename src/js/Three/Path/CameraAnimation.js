@@ -8,9 +8,9 @@ import { Vector3 } from "three";
 import { Vector2 } from "three";
 
 export class CameraAnimation {
-  constructor(curve, envScale) {
+  constructor(path, envScale) {
     this.envScale = envScale;
-    this.curve = curve;
+    this.path = path;
     this.tick = 0;
     this.timeline = document.querySelector(".timeline");
     this.step1 = document.querySelector(".step1");
@@ -23,9 +23,17 @@ export class CameraAnimation {
       unsubscribe: () => {
         raf.unsubscribe("path");
       },
+      addLine: () => {
+        mainScene.add(path);
+      },
+      removeLine: () => {
+        mainScene.remove(path);
+      },
     };
     guiFolders.get("camera").add(this.debugObject, "subscribe").name("Camera path on");
     guiFolders.get("camera").add(this.debugObject, "unsubscribe").name("Camera path off");
+    guiFolders.get("camera").add(this.debugObject, "addLine").name("Show line");
+    guiFolders.get("camera").add(this.debugObject, "removeLine").name("Remove line");
   }
 
   onClick() {
@@ -39,8 +47,8 @@ export class CameraAnimation {
     this.tick += raf.deltaTime * 0.005;
     // this.tick += raf.deltaTime * 0.05;
 
-    const curvePoint = this.curve.getPointAt(this.tick);
-    const curvePoint2 = this.curve.getPointAt(this.tick + 0.01);
+    const curvePoint = this.path.spline.getPointAt(this.tick);
+    const curvePoint2 = this.path.spline.getPointAt(this.tick + 0.02);
 
     const camPos = new Vector3(
       curvePoint.x * this.envScale,
@@ -91,7 +99,8 @@ export class CameraAnimation {
     // );
 
     this.percent =
-      mainScene.camera.position.z / this.curve.points[this.curve.points.length - 1].z;
+      mainScene.camera.position.z /
+      this.path.spline.points[this.path.spline.points.length - 1].z;
 
     this.timeline.style.transform = `scaleX(${this.percent})`;
   }

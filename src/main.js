@@ -4,9 +4,7 @@ import { LoadingPage } from "./js/Three/Loading/LoadingPage";
 import { mainScene } from "./js/Three/MainScene";
 import { Oeuvres } from "./js/Three/Oeuvres";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
-import { RockInstancedMesh } from "./js/Three/RockInstancedMesh";
 import { Subtitles } from "./js/Three/Text/Subtitles";
-import { WoodInstancedMesh } from "./js/Three/WoodInstancedMesh";
 import { loadingManager } from "./js/utils/Loader";
 import "./styles/style.scss";
 
@@ -55,11 +53,11 @@ function init() {
     const grassInstancedMesh = new GrassInstancedMesh(environment.forestPathLine);
     mainScene.add(grassInstancedMesh.group);
 
-    const rockInstancedMesh = new RockInstancedMesh(environment.forestPathLine);
-    mainScene.add(rockInstancedMesh.group);
+    // const rockInstancedMesh = new RockInstancedMesh(environment.forestPathLine);
+    // mainScene.add(rockInstancedMesh.group);
 
-    const woodInstancedMesh = new WoodInstancedMesh();
-    mainScene.add(woodInstancedMesh.group);
+    // const woodInstancedMesh = new WoodInstancedMesh();
+    // mainScene.add(woodInstancedMesh.group);
 
     const oeuvres = new Oeuvres();
     mainScene.add(oeuvres.group);

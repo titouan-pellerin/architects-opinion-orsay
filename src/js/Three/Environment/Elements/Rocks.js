@@ -1,24 +1,27 @@
-import { guiFolders } from "../utils/Debug";
-import { textureLoader } from "../utils/Loader";
-import raf from "../utils/Raf";
-import { CustomMeshToonMaterial } from "./CustomMeshToonMaterial";
+import { guiFolders } from "../../../utils/Debug";
+import { modelsMap } from "../../../utils/assets";
 import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import commonVertexShader from "@glsl/grass/commonVertex.glsl";
 import outputFragmentShader from "@glsl/rock/outputFragment.glsl";
 import projectVertexShader from "@glsl/rock/projectVertex.glsl";
-import * as THREE from "three";
-import { DoubleSide } from "three";
+import { DoubleSide, Group } from "three";
+import { Color } from "three";
 import { MeshToonMaterial } from "three";
+import { Object3D } from "three";
+import { TetrahedronGeometry } from "three";
+import { InstancedMesh } from "three";
 
-export class RockInstancedMesh {
-  constructor() {
+export class Rocks extends Group {
+  constructor(positions = []) {
+    super();
+
     this.parameters = {
       rockQuantity: 20,
     };
 
     this.rockUniforms = {
-      uColor: { value: new THREE.Color("#949c90") },
-      uColor2: { value: new THREE.Color("#236760") },
+      uColor: { value: new Color("#949c90") },
+      uColor2: { value: new Color("#236760") },
     };
 
     // this.material = new CustomMeshToonMaterial(
@@ -51,20 +54,15 @@ export class RockInstancedMesh {
       );
     };
 
-    const folder = guiFolders.get("scene").addFolder("Rock");
-    folder.addColor(this.rockUniforms.uColor, "value").name("Color");
-    folder.addColor(this.rockUniforms.uColor2, "value").name("Color2");
-
     const instanceNumber = 5;
-    const instance = new THREE.Object3D();
+    const instance = new Object3D();
 
-    this.geometry = new THREE.TetrahedronGeometry(1, 1);
+    this.geometry = new TetrahedronGeometry(1, 1);
 
-    this.rockPattern = new THREE.InstancedMesh(
-      this.geometry,
-      this.material,
-      instanceNumber
-    );
+    this.rockPattern = new InstancedMesh(this.geometry, this.material, instanceNumber);
+    this.rockPattern.matrixAutoUpdate = false;
+
+    this.position.y = -3;
 
     for (let i = 0; i < instanceNumber; i++) {
       instance.position.set(Math.random() - 0.5, 0, Math.random() - 0.5);
@@ -74,20 +72,21 @@ export class RockInstancedMesh {
       this.rockPattern.setMatrixAt(i, instance.matrix);
     }
 
-    this.group = new THREE.Group();
-    this.group.position.y = -3;
+    this.rockPattern.position.set(positions[0].x, 0, positions[0].y);
+    this.rockPattern.updateMatrix();
+    this.add(this.rockPattern);
 
-    for (let i = 0; i < this.parameters.rockQuantity; i++) {
-      this.rock = this.rockPattern.clone();
+    for (let i = 1; i < positions.length; i++) {
+      const newRock = this.rockPattern.clone();
+      newRock.position.set(positions[i].x, 0, positions[i].y);
+      newRock.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
 
-      setTimeout(() => {
-        this.rock.matrixAutoUpdate = false;
-      }, 1);
+      // const randomScale = Math.random() * (0.1 - 0.03) + 0.03;
+      // newRock.scale.set(randomScale, randomScale, randomScale);
+      newRock.scale.set(0.5, 0.5, 0.5);
 
-      this.rock.position.set((Math.random() - 0.5) * 30, 0, (Math.random() - 0.5) * 30);
-      this.rock.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
-      this.rock.scale.set(0.5, 0.5, 0.5);
-      this.group.add(this.rock);
+      newRock.updateMatrix();
+      this.add(newRock);
     }
   }
 }

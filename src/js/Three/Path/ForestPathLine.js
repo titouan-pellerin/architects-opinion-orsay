@@ -35,18 +35,13 @@ export class ForestPathLine extends Line {
         position.y > point.y * this.parameters.envScale - 1 &&
         position.y < point.y * this.parameters.envScale + 1
     )[0];
-    // console.log(pointOnSameLine);
     let inRange = false;
     if (pointOnSameLine)
       inRange =
         pointOnSameLine.x * this.parameters.envScale >
-          position.x - 3.5 + Math.random() * 3 &&
+          position.x - 6.5 + Math.random() * 3 &&
         pointOnSameLine.x * this.parameters.envScale <
           position.x + 3.5 + Math.random() * 3;
-    // return (
-    //   Math.abs(point.x * this.parameters.envScale - position.x) < this.pathWidth &&
-    //   Math.abs(point.y * this.parameters.envScale - position.y) > this.pathWidth
-    // );
     return inRange;
   }
 }

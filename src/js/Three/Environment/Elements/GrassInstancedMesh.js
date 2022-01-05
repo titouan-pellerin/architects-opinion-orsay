@@ -1,6 +1,5 @@
 import { guiFolders } from "../../../utils/Debug";
 import raf from "../../../utils/Raf";
-import { texturesMap } from "../../../utils/assets";
 import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import commonVertexShader from "@glsl/grass/commonVertex.glsl";
@@ -68,8 +67,11 @@ export class GrassInstancedMesh {
       // instancePos.z = (Math.random() - 0.5) * 100;
       instancePos.z = (Math.random() - 0.5) * 450;
 
-      if (pathLine.isPositionInRange(new Vector2(instancePos.x, instancePos.z)))
-        instanceScale.y = Math.random() * 0.5;
+      if (pathLine.isPositionInRange(new Vector2(instancePos.x, instancePos.z))) {
+        instanceScale.y = Math.random() * 0.8;
+        instancePos.y = Math.random() * -0.5;
+        // instanceScale.y = 0;
+      }
 
       instance.position.set(instancePos.x, instancePos.y, instancePos.z);
 

@@ -25,7 +25,7 @@ export class Environment {
     this.forestPathLine = new ForestPathLine(1024, 1, this.parameters);
 
     this.cameraAnimation = new CameraAnimation(
-      this.forestPathLine.spline,
+      this.forestPathLine,
       this.parameters.envScale
     );
 
