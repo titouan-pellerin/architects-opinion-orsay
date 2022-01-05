@@ -25,10 +25,15 @@ void main() {
   stroke += (bigNoise * 2.0 - 1.0) + (smallNoise * 2.0 - 1.0);
 
   // Fade
-  float fade = 1.0 - smoothstep(0.35, 1.0, length(vUv.y));
+  float fade = 1.0 - smoothstep(0.5, 1.0, length(vUv.y));
+  float fadeLeft = length(vUv.x);
+  float fadeRight = 1.0 - length(vUv.x);
+
 
   // Render
-  vec4 render = mix(vec4(mixNoise), vec4(uColor, 1.0) * vec4(stroke), 0.5) * vec4(fade);
+  vec4 render = mix(vec4(mixNoise), vec4(uColor, 1.0) * vec4(stroke), 0.5) * vec4(fade) * vec4(fadeLeft) * vec4(fadeRight);
 
+  gl_FragColor = vec4(fadeLeft);
+  gl_FragColor = vec4(fadeRight);
   gl_FragColor = render;
 }

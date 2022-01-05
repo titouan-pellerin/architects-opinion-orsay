@@ -21,16 +21,20 @@ export class MainScene extends THREE.Scene {
     super();
 
     const parameters = {
-      skyBgColor: new THREE.Color("#e5ba43"),
-      // skyBgColor: new THREE.Color("#637da1"),
-      tintColor: new THREE.Color("#fff486"),
-      // tintColor: new THREE.Color("#132540"),
-      cornerColor: new THREE.Color("#631eb8"),
-      lightColor: new THREE.Color("#9c6127"),
-      // lightColor: new THREE.Color("#d851e1"),
+      tintColor: new THREE.Color("#ffffff"),
+      // skyBgColor: new THREE.Color("#e5ba43"),
+      skyBgColor: new THREE.Color("#8ea1a9"),
+      // skyBgColor: new THREE.Color("#7ad5ff"),
+      // cornerColor: new THREE.Color("#631eb8"),
+      cornerColor: new THREE.Color("#feffe1"),
+      // cornerColor: new THREE.Color("#11051f"),
+      // lightColor: new THREE.Color("#9c6127"),
+      lightColor: new THREE.Color("#4e4313"),
+      // lightColor: new THREE.Color("#3e70c1"),
       lightIntensity: 1,
-      light2Color: new THREE.Color("#d8923d"),
-      // light2Color: new THREE.Color("#de66ff"),
+      // light2Color: new THREE.Color("#d8923d"),
+      light2Color: new THREE.Color("#bbbd84"),
+      // light2Color: new THREE.Color("#d69ee5"),
       light2Intensity: 0.5,
     };
 
@@ -60,7 +64,6 @@ export class MainScene extends THREE.Scene {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       powerPreference: "high-performance",
-      // antialias: true,
     });
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
@@ -122,11 +125,12 @@ export class MainScene extends THREE.Scene {
         uTintColor: { value: parameters.tintColor },
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0 },
+        // uCornerSize: { value: 10 },
         uCornerSize: { value: 2.5 },
-        uBlurIntensity: { value: 2 },
+        uBlurIntensity: { value: 2.5 },
         uNoiseTexture: { value: null },
         uBlurPos: {
-          value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
+          value: new THREE.Vector2(window.innerWidth * 0.55, window.innerHeight *  0.55),
         },
         uRes: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
       },
@@ -139,11 +143,11 @@ export class MainScene extends THREE.Scene {
     this.customPass.material.uniforms.uNoiseTexture.value =
       texturesMap.get("noiseTexture")[0];
 
-    const effectSobel = new ShaderPass(SobelOperatorShader);
-    effectSobel.uniforms["resolution"].value.x =
-      window.innerWidth * window.devicePixelRatio * 2;
-    effectSobel.uniforms["resolution"].value.y =
-      window.innerHeight * window.devicePixelRatio * 2;
+    // const effectSobel = new ShaderPass(SobelOperatorShader);
+    // effectSobel.uniforms["resolution"].value.x =
+    //   window.innerWidth * window.devicePixelRatio ;
+    // effectSobel.uniforms["resolution"].value.y =
+    //   window.innerHeight * window.devicePixelRatio ;
     // this.composer.addPass( effectSobel );
 
     const sceneFolder = guiFolders.get("scene");

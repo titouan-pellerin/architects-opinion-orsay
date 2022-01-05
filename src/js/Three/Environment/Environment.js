@@ -18,9 +18,9 @@ export class Environment {
       stroke: 5000,
       smallNoise: 500,
       bigNoise: 50,
-      strokeSky: 1750,
-      smallNoiseSky: 200,
-      bigNoiseSky: 20,
+      strokeSky: 1360,
+      smallNoiseSky: 318,
+      bigNoiseSky: 9.7,
     };
 
     this.forestPathLine = new ForestPathLine(1024, 0.1, this.parameters);
