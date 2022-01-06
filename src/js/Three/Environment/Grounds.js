@@ -10,8 +10,9 @@ import { Ground } from "./Ground";
 import { Group } from "three";
 
 export class Grounds extends Group {
-  constructor(groundAmount, parameters = {}) {
+  constructor(groundAmount, parameters = {}, forestPathLine) {
     super();
+    this.forestPathLine = forestPathLine;
     this.currentIndex = 1;
     this.groundAmount = groundAmount - 1;
     this.parameters = parameters;
@@ -32,7 +33,7 @@ export class Grounds extends Group {
     this.ground2.trees = trees1;
     this.ground2.add(trees1);
 
-    const rocks1 = new Rocks(positions.get("rocksPositions")[0]);
+    const rocks1 = new Rocks(positions.get("rocksPositions")[0], forestPathLine);
     this.ground2.rocks = rocks1;
     this.ground2.add(rocks1);
 
@@ -51,7 +52,7 @@ export class Grounds extends Group {
     this.ground3.trees = trees2;
     this.ground3.add(trees2);
 
-    const rocks2 = new Rocks(positions.get("rocksPositions")[1]);
+    const rocks2 = new Rocks(positions.get("rocksPositions")[1], forestPathLine);
     rocks2.scale.z = -1;
     this.ground3.rocks = rocks2;
     this.ground3.add(rocks2);
@@ -140,7 +141,10 @@ export class Grounds extends Group {
       currentGround1.add(newTrees);
       currentGround1.trees = newTrees;
 
-      const newRocks = new Rocks(positions.get("rocksPositions")[this.currentIndex + 1]);
+      const newRocks = new Rocks(
+        positions.get("rocksPositions")[this.currentIndex + 1],
+        this.forestPathLine
+      );
       newRocks.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
       currentGround1.remove(currentGround1.rocks);
       currentGround1.add(newRocks);

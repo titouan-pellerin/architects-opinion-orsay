@@ -10,9 +10,11 @@ import { MeshToonMaterial } from "three";
 import { Object3D } from "three";
 import { TetrahedronGeometry } from "three";
 import { InstancedMesh } from "three";
+import { Vector3 } from "three";
+import { Vector2 } from "three";
 
 export class Rocks extends Group {
-  constructor(positions = []) {
+  constructor(positions = [], pathLine) {
     super();
 
     this.parameters = {
@@ -71,8 +73,9 @@ export class Rocks extends Group {
       instance.updateMatrix();
       this.rockPattern.setMatrixAt(i, instance.matrix);
     }
-
     this.rockPattern.position.set(positions[0].x, 0, positions[0].y);
+    this.rockPattern.scale.set(0.5, 0.5, 0.5);
+
     this.rockPattern.updateMatrix();
     this.add(this.rockPattern);
 
@@ -81,9 +84,8 @@ export class Rocks extends Group {
       newRock.position.set(positions[i].x, 0, positions[i].y);
       newRock.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
 
-      // const randomScale = Math.random() * (0.1 - 0.03) + 0.03;
-      // newRock.scale.set(randomScale, randomScale, randomScale);
-      newRock.scale.set(0.5, 0.5, 0.5);
+      const randomScale = Math.random() * (0.5 - 0.1) + 0.1;
+      newRock.scale.set(randomScale, randomScale, randomScale);
 
       newRock.updateMatrix();
       this.add(newRock);

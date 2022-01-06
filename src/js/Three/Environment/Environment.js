@@ -32,7 +32,11 @@ export class Environment {
     );
 
     this.sky = new Sky(this.parameters);
-    this.grounds = new Grounds(texturesMap.get("curveTextures").length, this.parameters);
+    this.grounds = new Grounds(
+      texturesMap.get("curveTextures").length,
+      this.parameters,
+      this.forestPathLine
+    );
 
     // setTimeout(() => {
     //   this.grounds.matrixAutoUpdate = false;

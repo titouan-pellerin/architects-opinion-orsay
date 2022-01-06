@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { guiFolders } from "../../utils/Debug";
 import { mouse } from "../../utils/Mouse";
 import raf from "../../utils/Raf";
@@ -6,15 +7,17 @@ import { mainScene } from "../MainScene";
 import { Checkpoints } from "./Checkpoints";
 import gsap from "gsap";
 import { Vector3 } from "three";
-import { Vector2 } from "three";
 
 export class CameraAnimation {
   constructor(path, envScale) {
+    gsap.registerPlugin(CustomEase);
     this.isAtCheckpoint = false;
     this.isLeavingCheckpoint = false;
     this.envScale = envScale;
     this.path = path;
-    this.tick = 0;
+    this.tick = {
+      value: 0,
+    };
     this.tickSpeed = 0.01;
     this.originalTickSpeed = 0.01;
 
@@ -25,9 +28,71 @@ export class CameraAnimation {
     this.checkpoints = new Checkpoints(positions.get("checkpoints"), envScale);
 
     this.debugObject = {
-      subscribe: () => {
+      checkpoint1: () => {
         raf.subscribe("path", this.update.bind(this));
+        gsap.to(this.tick, {
+          duration: 25,
+          value: 0.2329,
+          ease: CustomEase.create(
+            "custom",
+            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
+            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
+          ),
+          onComplete: () => {
+            raf.unsubscribe("path");
+          },
+          // ease: "sine.inOut",
+        });
       },
+      checkpoint2: () => {
+        raf.subscribe("path", this.update.bind(this));
+        gsap.to(this.tick, {
+          duration: 25,
+          value: 0.4729,
+          ease: CustomEase.create(
+            "custom",
+            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
+            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
+          ),
+          onComplete: () => {
+            raf.unsubscribe("path");
+          },
+          // ease: "sine.inOut",
+        });
+      },
+      checkpoint3: () => {
+        raf.subscribe("path", this.update.bind(this));
+        gsap.to(this.tick, {
+          duration: 25,
+          value: 0.7329,
+          ease: CustomEase.create(
+            "custom",
+            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
+            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
+          ),
+          onComplete: () => {
+            raf.unsubscribe("path");
+          },
+          // ease: "sine.inOut",
+        });
+      },
+      end: () => {
+        raf.subscribe("path", this.update.bind(this));
+        gsap.to(this.tick, {
+          duration: 25,
+          value: 1,
+          ease: CustomEase.create(
+            "custom",
+            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
+            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
+          ),
+          onComplete: () => {
+            raf.unsubscribe("path");
+          },
+          // ease: "sine.inOut",
+        });
+      },
+
       unsubscribe: () => {
         raf.unsubscribe("path");
       },
@@ -38,7 +103,10 @@ export class CameraAnimation {
         mainScene.remove(path);
       },
     };
-    guiFolders.get("camera").add(this.debugObject, "subscribe").name("Camera path on");
+    guiFolders.get("camera").add(this.debugObject, "checkpoint1").name("Checkpoint 1");
+    guiFolders.get("camera").add(this.debugObject, "checkpoint2").name("Checkpoint 2");
+    guiFolders.get("camera").add(this.debugObject, "checkpoint3").name("Checkpoint 3");
+    guiFolders.get("camera").add(this.debugObject, "end").name("End");
     guiFolders.get("camera").add(this.debugObject, "unsubscribe").name("Camera path off");
     guiFolders.get("camera").add(this.debugObject, "addLine").name("Show line");
     guiFolders.get("camera").add(this.debugObject, "removeLine").name("Remove line");
@@ -51,24 +119,27 @@ export class CameraAnimation {
   //   });
   // }
 
+  // First checkpoint = 0.23290919491913448;
+
   update() {
-    if (this.isAtCheckpoint) {
-      this.tickSpeed *= 1.1;
-      console.log(this.tickSpeed);
-    } else if (!this.isAtCheckpoint && this.tickSpeed <= 0.0001) {
-      // console.log(this.tickSpeed);
-      raf.unsubscribe("path");
-      this.showButton();
-    }
+    // if (this.isAtCheckpoint) {
+    //   this.tickSpeed *= 1.1;
+    //   console.log(this.tickSpeed);
+    // } else if (!this.isAtCheckpoint && this.tickSpeed <= 0.0001) {
+    //   // console.log(this.tickSpeed);
+    //   raf.unsubscribe("path");
+    //   this.showButton();
+    // }
 
-    this.tick += raf.deltaTime * this.tickSpeed;
+    // this.tick += raf.deltaTime * this.tickSpeed;
     // this.tick += raf.deltaTime * 0.05;
+    // console.log(this.tick);
 
-    let nextTick = this.tick + 0.05;
+    let nextTick = this.tick.value + 0.04;
     if (nextTick > 1) nextTick = 1;
-    if (this.tick > 1) this.tick = 1;
+    if (this.tick.value > 1) this.tick.value = 1;
 
-    const curvePoint = this.path.spline.getPointAt(this.tick);
+    const curvePoint = this.path.spline.getPointAt(this.tick.value);
     const curvePoint2 = this.path.spline.getPointAt(nextTick);
 
     const camPos = new Vector3(
@@ -85,19 +156,19 @@ export class CameraAnimation {
     mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
     mainScene.camera.lookAt(camPos2.x, camPos2.y, camPos2.z);
 
-    if (
-      this.checkpoints.isArrivingAtCheckpoint() &&
-      !this.isAtCheckpoint &&
-      !this.isLeavingCheckpoint
-    ) {
-      this.tickSpeed *= 0.99;
-      console.log(this.tickSpeed);
-    } else if (this.tickSpeed >= this.originalTickSpeed) {
-      console.log("greater");
-      this.tickSpeed = this.originalTickSpeed;
-      this.isAtCheckpoint = false;
-      // this.isLeavingCheckpoint = true;
-    }
+    // if (
+    //   this.checkpoints.isArrivingAtCheckpoint() &&
+    //   !this.isAtCheckpoint &&
+    //   !this.isLeavingCheckpoint
+    // ) {
+    //   this.tickSpeed *= 0.99;
+    //   console.log(this.tickSpeed);
+    // } else if (this.tickSpeed >= this.originalTickSpeed) {
+    //   console.log("greater");
+    //   this.tickSpeed = this.originalTickSpeed;
+    //   this.isAtCheckpoint = false;
+    //   // this.isLeavingCheckpoint = true;
+    // }
 
     this.percent =
       mainScene.camera.position.z /

@@ -25,6 +25,7 @@ const checkpoints = [
   new Vector2(0.1729, -0.6616),
   new Vector2(-0.0214, -1.2682),
   new Vector2(-0.0957, -1.7837),
+  new Vector2(0.0897, -2.202),
 ];
 
 const treesPositions1 = [
