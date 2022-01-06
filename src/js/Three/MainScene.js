@@ -61,12 +61,12 @@ export class MainScene extends THREE.Scene {
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
 
-    this.controls = new OrbitControls(this.camera, this.canvas);
-    this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.05;
-    this.controls.enableRotate = true;
-    guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
-    this.controls.update();
+    // this.controls = new OrbitControls(this.camera, this.canvas);
+    // this.controls.enableDamping = true;
+    // this.controls.dampingFactor = 0.05;
+    // this.controls.enableRotate = true;
+    // guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
+    // this.controls.update();
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
@@ -134,7 +134,7 @@ export class MainScene extends THREE.Scene {
         uCornerIntensity: { value: 0 },
         // uCornerSize: { value: 10 },
         uCornerSize: { value: 2.5 },
-        uBlurIntensity: { value: 2.5 },
+        uBlurIntensity: { value: 2 },
         uNoiseTexture: { value: null },
         uBlurPos: {
           value: new THREE.Vector2(window.innerWidth * 0.55, window.innerHeight * 0.55),
@@ -269,7 +269,7 @@ export class MainScene extends THREE.Scene {
   }
 
   update() {
-    this.controls.update();
+    // this.controls.update();
     this.composer.render();
     // this.renderer.render(this, this.camera);
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
