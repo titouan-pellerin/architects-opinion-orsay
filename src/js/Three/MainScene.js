@@ -24,10 +24,10 @@ export class MainScene extends THREE.Scene {
       tintColor: new THREE.Color("#ffffff"),
 
       // Morning
-      // skyBgColor: new THREE.Color("#e5ba43"),
-      // cornerColor: new THREE.Color("#631eb8"),
-      // lightColor: new THREE.Color("#9c6127"),
-      // light2Color: new THREE.Color("#d8923d"),
+      skyBgColor: new THREE.Color("#e5ba43"),
+      cornerColor: new THREE.Color("#631eb8"),
+      lightColor: new THREE.Color("#9c6127"),
+      light2Color: new THREE.Color("#d8923d"),
 
       // Day
       // skyBgColor: new THREE.Color("#8ea1a9"),
@@ -36,10 +36,10 @@ export class MainScene extends THREE.Scene {
       // light2Color: new THREE.Color("#bbbd84"),
 
       // Night
-      skyBgColor: new THREE.Color("#7ad5ff"),
-      cornerColor: new THREE.Color("#11051f"),
-      lightColor: new THREE.Color("#3e70c1"),
-      light2Color: new THREE.Color("#d69ee5"),
+      // skyBgColor: new THREE.Color("#7ad5ff"),
+      // cornerColor: new THREE.Color("#11051f"),
+      // lightColor: new THREE.Color("#3e70c1"),
+      // light2Color: new THREE.Color("#d69ee5"),
 
       lightIntensity: 1,
       light2Intensity: 0.5,
@@ -135,7 +135,7 @@ export class MainScene extends THREE.Scene {
         uCornerIntensity: { value: 0 },
         // uCornerSize: { value: 10 },
         uCornerSize: { value: 2.5 },
-        uBlurIntensity: { value: 2 },
+        uBlurIntensity: { value: 2.5 },
         uNoiseTexture: { value: null },
         uBlurPos: {
           value: new THREE.Vector2(window.innerWidth * 0.55, window.innerHeight * 0.55),

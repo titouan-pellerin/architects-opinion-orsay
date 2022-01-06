@@ -18,7 +18,7 @@ vec4 centerLineFinal = vec4(centerLine);
 // Left lines
 vec2 lineLeftRotate = (1.0 - rotate(vUv, -PI * .9, vec2(0.)));
 
-float leftLine = mod((lineLeftRotate.y * 15.0 + (noise * .3)) * lineLeftRotate.x, 1.0);
+float leftLine = mod((lineLeftRotate.y * 10.0 + (noise * .3)) * lineLeftRotate.x, 1.0);
 leftLine = step(0.8, leftLine);
 
 float leftMask = step(0.5, abs(vUvRotate.x - .99));
@@ -28,7 +28,7 @@ vec4 leftLineFinal = (vec4(leftLine) * vec4(leftMask) * vec4(leftPattern));
 // Right lines
 vec2 lineRightRotate = rotate(vUv, PI * .9, vec2(1.));
 
-float rightLine = mod((lineRightRotate.y * 15. + (noise * .3)) * lineRightRotate.x, 1.0);
+float rightLine = mod((lineRightRotate.y * 10. + (noise * .3)) * lineRightRotate.x, 1.0);
 rightLine = step(0.8, rightLine);
 
 float rightMask = 1.0 - (step(0.5, abs(vUvRotate.x - 1.01)));
