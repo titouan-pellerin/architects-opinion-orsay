@@ -87,7 +87,7 @@ export class Leaves {
 
     for (let k = 0, kl = theArray.length; k < kl; k += 4) {
       const x = Math.random() * 100 - 50;
-      const y = Math.random() * 10;
+      const y = Math.random() * 7;
       const z = Math.random() * -50;
 
       theArray[k + 0] = x;
@@ -113,7 +113,7 @@ export class Leaves {
   }
 
   initLeaves() {
-    const geometry = new LeavesGeometry(200, this.WIDTH);
+    const geometry = new LeavesGeometry(2000, this.WIDTH);
 
     // For Vertex and Fragment
     this.leavesUniforms = {
@@ -168,7 +168,7 @@ export class Leaves {
       mainScene.cameraContainer.position.z
     );
     this.velocityUniforms["time"].value = raf.elapsedTime;
-    this.velocityUniforms["delta"].value = raf.deltaTime;
+    this.velocityUniforms["delta"].value = raf.deltaTime * Math.random();
 
     this.leavesUniforms["time"].value = raf.elapsedTime;
     this.leavesUniforms["delta"].value = raf.deltaTime;

@@ -5,12 +5,14 @@ import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { Subtitles } from "./js/Three/Text/Subtitles";
 import { loadingManager } from "./js/utils/Loader";
-import { Ray } from "./js/utils/raycaster";
 import "./styles/style.scss";
 
 function init() {
   const loadingPage = new LoadingPage();
   mainScene.add(loadingPage.mesh);
+
+  const leaves = new Leaves();
+  mainScene.add(leaves.leaveMesh);
 
   const percent = document.querySelector(".percent");
   const buttonLoader = document.querySelector(".buttonLoader");
@@ -44,9 +46,6 @@ function init() {
   loadingManager.onLoad = () => {
     buttonLoader.classList.add("visible");
 
-    const leaves = new Leaves();
-    mainScene.add(leaves.leaveMesh);
-
     const environment = new Environment();
     // mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
     // mainScene.add(environment.grounds, environment.sky);
@@ -65,12 +64,6 @@ function init() {
     //   oeuvres.oeuvre6
     // );
     // mainScene.add(box1);
-
-    const ray = new Ray(
-      environment.grounds.artwork1,
-      environment.grounds.artwork2,
-      environment.grounds.artwork3
-    );
   };
 }
 

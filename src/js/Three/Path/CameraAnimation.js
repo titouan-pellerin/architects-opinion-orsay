@@ -2,6 +2,7 @@
 import { guiFolders } from "../../utils/Debug";
 import { mouse } from "../../utils/Mouse";
 import raf from "../../utils/Raf";
+import { Ray } from "../../utils/Ray";
 import { positions } from "../../utils/positions";
 import { mainScene } from "../MainScene";
 import { Checkpoints } from "./Checkpoints";
@@ -9,7 +10,7 @@ import gsap from "gsap";
 import { Vector3 } from "three";
 
 export class CameraAnimation {
-  constructor(path, envScale) {
+  constructor(path, envScale, artworks) {
     gsap.registerPlugin(CustomEase);
     this.isAtCheckpoint = false;
     this.isLeavingCheckpoint = false;
@@ -21,11 +22,12 @@ export class CameraAnimation {
     this.tickSpeed = 0.01;
     this.originalTickSpeed = 0.01;
 
-    this.timeline = document.querySelector(".timeline");
-    this.step1 = document.querySelector(".step1");
+    // this.timeline = document.querySelector(".timeline");
+    // this.step1 = document.querySelector(".step1");
     // this.onClick();
 
     this.checkpoints = new Checkpoints(positions.get("checkpoints"), envScale);
+    this.ray = new Ray(artworks);
 
     this.debugObject = {
       checkpoint1: () => this.goToCheckpoint(0),
@@ -95,6 +97,8 @@ export class CameraAnimation {
 
     mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
     mainScene.camera.lookAt(camPos2.x, camPos2.y, camPos2.z);
+    mainScene.camera.userData.lookingAt = camPos2;
+    console.log(camPos2);
 
     // if (
     //   this.checkpoints.isArrivingAtCheckpoint() &&
@@ -110,11 +114,11 @@ export class CameraAnimation {
     //   // this.isLeavingCheckpoint = true;
     // }
 
-    this.percent =
-      mainScene.camera.position.z /
-      this.path.spline.points[this.path.spline.points.length - 1].z;
+    // this.percent =
+    //   mainScene.camera.position.z /
+    //   this.path.spline.points[this.path.spline.points.length - 1].z;
 
-    this.timeline.style.transform = `scaleX(${this.percent})`;
+    // this.timeline.style.transform = `scaleX(${this.percent})`;
   }
 
   goToCheckpoint(index) {
@@ -136,7 +140,7 @@ export class CameraAnimation {
     raf.subscribe("path", this.update.bind(this));
     gsap.to(this.tick, {
       delay: index === 0 ? 3 : 0,
-      duration: 25,
+      duration: 5,
       value: tickValue,
       ease: CustomEase.create(
         "custom",
@@ -145,6 +149,9 @@ export class CameraAnimation {
       ),
       onComplete: () => {
         raf.unsubscribe("path");
+        raf.subscribe("ray", this.ray.update.bind(this.ray));
+        // raf.unsubscribe("mouse");
+        console.log("uns path");
       },
       // ease: "sine.inOut",
     });

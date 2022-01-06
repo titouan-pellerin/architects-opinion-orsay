@@ -1,3 +1,5 @@
+#include ../../utils/noise2d;
+
 uniform float time;
 uniform float delta; // about 0.016
 uniform float separationDistance; // 20
@@ -14,7 +16,7 @@ float zoneRadiusSquared = 1600.0;
 float separationThresh = 0.45;
 float alignmentThresh = 0.65;
 
-const float SPEED = .04;
+const float SPEED = .055;
 
 void main() {
     vec2 uv = gl_FragCoord.xy / resolution.xy;

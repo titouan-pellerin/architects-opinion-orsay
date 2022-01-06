@@ -12,7 +12,7 @@ void main() {
     float phase = tmpPos.w;
 
     if(position.y <= -4.)
-        position.y = 5.;
+        position.y = 7.;
 
     if(position.x >= camPos.x + 50.) {
         position.y = 5.;

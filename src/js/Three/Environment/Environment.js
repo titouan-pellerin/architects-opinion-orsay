@@ -26,11 +26,6 @@ export class Environment {
 
     this.forestPathLine = new ForestPathLine(1024, 1, this.parameters);
 
-    this.cameraAnimation = new CameraAnimation(
-      this.forestPathLine,
-      this.parameters.envScale
-    );
-
     this.sky = new Sky(this.parameters);
     this.grounds = new Grounds(
       texturesMap.get("curveTextures").length,
@@ -38,6 +33,11 @@ export class Environment {
       this.forestPathLine
     );
 
+    this.cameraAnimation = new CameraAnimation(
+      this.forestPathLine,
+      this.parameters.envScale,
+      [this.grounds.artwork1, this.grounds.artwork2, this.grounds.artwork3]
+    );
     // setTimeout(() => {
     //   this.grounds.matrixAutoUpdate = false;
     //   this.sky.matrixAutoUpdate = false;
