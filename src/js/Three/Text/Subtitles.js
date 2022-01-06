@@ -1,4 +1,4 @@
-import subtitles from "../../../../public/assets/subtitles.json";
+import subtitles from "./subtitles.json";
 import gsap from "gsap";
 import TextPlugin from "gsap/TextPlugin";
 

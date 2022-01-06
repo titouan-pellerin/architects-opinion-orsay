@@ -11,7 +11,7 @@ import { Vector2 } from "three";
 export class CameraAnimation {
   constructor(path, envScale) {
     this.isAtCheckpoint = false;
-    // this.isLeavingCheckpoint = false;
+    this.isLeavingCheckpoint = false;
     this.envScale = envScale;
     this.path = path;
     this.tick = 0;
@@ -81,7 +81,11 @@ export class CameraAnimation {
     mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
     mainScene.camera.lookAt(camPos2.x, camPos2.y, camPos2.z);
 
-    if (this.checkpoints.isArrivingAtCheckpoint() && !this.isAtCheckpoint) {
+    if (
+      this.checkpoints.isArrivingAtCheckpoint() &&
+      !this.isAtCheckpoint &&
+      !this.isLeavingCheckpoint
+    ) {
       this.tickSpeed *= 0.99;
       console.log(this.tickSpeed);
     } else if (this.tickSpeed >= this.originalTickSpeed) {
@@ -106,6 +110,7 @@ export class CameraAnimation {
       const debugObject = {
         next: () => {
           raf.subscribe("path", this.update.bind(this));
+          this.isLeavingCheckpoint = true;
         },
       };
       guiFolders.get("camera").add(debugObject, "next").name("Next");
