@@ -104,7 +104,7 @@ export class MainScene extends THREE.Scene {
     directionalLight.position.set(10, 10, -10);
     // directionalLight.shadow.camera.near = 0.1;
     // directionalLight.shadow.camera.far = 150;
-    this.add(directionalLight);
+    // this.add(directionalLight);
 
     const directionalLight2 = new THREE.DirectionalLight(
       parameters.light2Color,
