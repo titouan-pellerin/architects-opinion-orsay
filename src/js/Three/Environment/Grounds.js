@@ -63,25 +63,25 @@ export class Grounds extends Group {
     this.ground3.woodLogs = woodLogs2;
     this.ground3.add(woodLogs2);
 
-    const artwork1 = new Artwork(
+    this.artwork1 = new Artwork(
       texturesMap.get("artworksTextures")[0],
       positions.get("artworksPositions")[0],
       parameters.envScale
     );
-    const artwork2 = new Artwork(
+    this.artwork2 = new Artwork(
       texturesMap.get("artworksTextures")[1],
       positions.get("artworksPositions")[1],
       parameters.envScale
     );
 
-    const artwork3 = new Artwork(
+    this.artwork3 = new Artwork(
       texturesMap.get("artworksTextures")[2],
       positions.get("artworksPositions")[2],
       parameters.envScale
     );
 
     this.add(this.ground1, this.ground2, this.ground3);
-    this.add(artwork1, artwork2, artwork3);
+    this.add(this.artwork1, this.artwork2, this.artwork3);
 
     raf.subscribe("grounds", this.update.bind(this));
 

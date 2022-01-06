@@ -5,6 +5,7 @@ import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { Subtitles } from "./js/Three/Text/Subtitles";
 import { loadingManager } from "./js/utils/Loader";
+import { Ray } from "./js/utils/raycaster";
 import "./styles/style.scss";
 
 function init() {
@@ -14,21 +15,18 @@ function init() {
   const percent = document.querySelector(".percent");
   const buttonLoader = document.querySelector(".buttonLoader");
   const loadingImage = document.querySelector(".loadingImage");
-  const words = document.querySelectorAll(".words");
   const audio = document.querySelector(".audio");
 
   buttonLoader.addEventListener("click", () => {
+    buttonLoader.classList.remove("visible");
     buttonLoader.classList.add("hidden");
+
     // loadingImage.classList.add("hidden");
     percent.classList.add("hidden");
-
     loadingPage.update();
     audio.play();
-    // const subtitles = new Subtitles();
-    // for (let i = 0; i < words.length; i++) {
-    //   words[i].classList.add("visible");
-    // }
-    // subtitles.createTimeline();
+    const subtitles = new Subtitles();
+    subtitles.createTimeline();
   });
 
   loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
@@ -38,11 +36,14 @@ function init() {
     //     { y: 300, rotation: 25 },
     //     { y: 80, rotation: 0, ease: Power3.easeOut }
     // );
+    const percentCalculRounded = Math.floor(percentCalcul);
 
-    percent.innerHTML = "Loading..." + percentCalcul + "%";
+    percent.innerHTML = percentCalculRounded + "%";
   };
 
   loadingManager.onLoad = () => {
+    buttonLoader.classList.add("visible");
+
     const leaves = new Leaves();
     mainScene.add(leaves.leaveMesh);
 
@@ -63,7 +64,13 @@ function init() {
     //   oeuvres.oeuvre5,
     //   oeuvres.oeuvre6
     // );
-    buttonLoader.classList.add("visible");
+    // mainScene.add(box1);
+
+    const ray = new Ray(
+      environment.grounds.artwork1,
+      environment.grounds.artwork2,
+      environment.grounds.artwork3
+    );
   };
 }
 
