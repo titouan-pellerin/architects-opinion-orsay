@@ -78,15 +78,17 @@ export class Ground extends Group {
     this.ground.rotation.x = -Math.PI * 0.5;
     this.ground.position.y = -3.01;
     this.ground.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
-    this.ground.receiveShadow = true;
-
     this.mask = new Mesh(groundGeometry, groundMaskMaterial);
     this.mask.rotation.x = -Math.PI * 0.5;
     this.mask.position.y = -3;
     this.mask.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
 
     this.add(this.ground, this.mask);
-    // this.add(this.ground);
+
+    this.ground.matrixAutoUpdate = false;
+    this.mask.matrixAutoUpdate = false;
+    this.ground.updateMatrix();
+    this.mask.updateMatrix();
   }
 
   getCenter() {

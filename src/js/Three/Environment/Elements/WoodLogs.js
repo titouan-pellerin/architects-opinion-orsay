@@ -89,6 +89,13 @@ export class WoodLogs extends Group {
     wood3.position.x = -0.4;
     wood1.position.z = 0.25;
 
+    wood1.matrixAutoUpdate = false;
+    wood2.matrixAutoUpdate = false;
+    wood3.matrixAutoUpdate = false;
+    wood1.updateMatrix();
+    wood2.updateMatrix();
+    wood3.updateMatrix();
+
     const woodGroup = new Group();
     woodGroup.add(wood1, wood2, wood3);
     woodGroup.position.set(positions[0].x, 0, positions[0].y);
