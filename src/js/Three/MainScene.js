@@ -50,12 +50,12 @@ export class MainScene extends THREE.Scene {
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
 
-    this.controls = new OrbitControls(this.camera, this.canvas);
-    this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.05;
-    this.controls.enableRotate = true;
-    guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
-    this.controls.update();
+    // this.controls = new OrbitControls(this.camera, this.canvas);
+    // this.controls.enableDamping = true;
+    // this.controls.dampingFactor = 0.05;
+    // this.controls.enableRotate = true;
+    // guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
+    // this.controls.update();
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
@@ -78,7 +78,7 @@ export class MainScene extends THREE.Scene {
     this.background = new THREE.Color(parameters.skyBgColor);
 
     this.add(this.cameraContainer);
-    this.camera.position.set(0, -1, 1.9);
+    this.camera.position.set(-4, -1, 8.9);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 15, 30);
     this.fog = fog;
@@ -257,7 +257,7 @@ export class MainScene extends THREE.Scene {
   }
 
   update() {
-    this.controls.update();
+    // this.controls.update();
     this.composer.render();
     // this.renderer.render(this, this.camera);
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
