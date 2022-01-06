@@ -38,6 +38,7 @@ export class Ground extends Group {
       uSmallNoise: { value: parameters.smallNoise },
       uBigNoise: { value: parameters.bigNoise },
       uColor: { value: parameters.groundColor },
+      uTexture: { value: texture },
     };
 
     const groundMaterial = new CustomMeshToonMaterial(

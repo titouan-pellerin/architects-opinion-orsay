@@ -28,71 +28,10 @@ export class CameraAnimation {
     this.checkpoints = new Checkpoints(positions.get("checkpoints"), envScale);
 
     this.debugObject = {
-      checkpoint1: () => {
-        raf.subscribe("path", this.update.bind(this));
-        gsap.to(this.tick, {
-          duration: 25,
-          value: 0.2329,
-          ease: CustomEase.create(
-            "custom",
-            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
-            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
-          ),
-          onComplete: () => {
-            raf.unsubscribe("path");
-          },
-          // ease: "sine.inOut",
-        });
-      },
-      checkpoint2: () => {
-        raf.subscribe("path", this.update.bind(this));
-        gsap.to(this.tick, {
-          duration: 25,
-          value: 0.4729,
-          ease: CustomEase.create(
-            "custom",
-            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
-            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
-          ),
-          onComplete: () => {
-            raf.unsubscribe("path");
-          },
-          // ease: "sine.inOut",
-        });
-      },
-      checkpoint3: () => {
-        raf.subscribe("path", this.update.bind(this));
-        gsap.to(this.tick, {
-          duration: 25,
-          value: 0.7329,
-          ease: CustomEase.create(
-            "custom",
-            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
-            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
-          ),
-          onComplete: () => {
-            raf.unsubscribe("path");
-          },
-          // ease: "sine.inOut",
-        });
-      },
-      end: () => {
-        raf.subscribe("path", this.update.bind(this));
-        gsap.to(this.tick, {
-          duration: 25,
-          value: 1,
-          ease: CustomEase.create(
-            "custom",
-            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
-            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
-          ),
-          onComplete: () => {
-            raf.unsubscribe("path");
-          },
-          // ease: "sine.inOut",
-        });
-      },
-
+      checkpoint1: () => this.goToCheckpoint(0),
+      checkpoint2: () => this.goToCheckpoint(1),
+      checkpoint3: () => this.goToCheckpoint(2),
+      end: () => this.goToCheckpoint(3),
       unsubscribe: () => {
         raf.unsubscribe("path");
       },
@@ -110,6 +49,7 @@ export class CameraAnimation {
     guiFolders.get("camera").add(this.debugObject, "unsubscribe").name("Camera path off");
     guiFolders.get("camera").add(this.debugObject, "addLine").name("Show line");
     guiFolders.get("camera").add(this.debugObject, "removeLine").name("Remove line");
+    this.goToCheckpoint(0);
   }
 
   // onClick() {
@@ -177,18 +117,36 @@ export class CameraAnimation {
     this.timeline.style.transform = `scaleX(${this.percent})`;
   }
 
-  showButton() {
-    this.isAtCheckpoint = true;
-    // this.isLeavingCheckpoint = false;
-    if (this.checkpoints.positions[this.checkpoints.currentCheckpoint]) {
-      this.currentCheckpoint++;
-      const debugObject = {
-        next: () => {
-          raf.subscribe("path", this.update.bind(this));
-          this.isLeavingCheckpoint = true;
-        },
-      };
-      guiFolders.get("camera").add(debugObject, "next").name("Next");
+  goToCheckpoint(index) {
+    let tickValue = 0;
+    switch (index) {
+      case 0:
+        tickValue = 0.2129;
+        break;
+      case 1:
+        tickValue = 0.5029;
+        break;
+      case 2:
+        tickValue = 0.7829;
+        break;
+      case 3:
+        tickValue = 1;
+        break;
     }
+    raf.subscribe("path", this.update.bind(this));
+    gsap.to(this.tick, {
+      delay: index === 0 ? 3 : 0,
+      duration: 25,
+      value: tickValue,
+      ease: CustomEase.create(
+        "custom",
+        `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
+            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
+      ),
+      onComplete: () => {
+        raf.unsubscribe("path");
+      },
+      // ease: "sine.inOut",
+    });
   }
 }

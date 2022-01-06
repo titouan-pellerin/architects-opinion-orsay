@@ -702,6 +702,12 @@ const woodLogsPositions3 = [
   new Vector2(23.3861528096669, 43.9341169362194),
 ];
 
+const artworksPositions = [
+  new Vector2(0.1739, -0.6917),
+  new Vector2(0, -1.2844),
+  new Vector2(-0.1206, -1.8018),
+];
+
 positions.set("curvePoints", curvePoints);
 positions.set("checkpoints", checkpoints);
 positions.set("treesPositions", [treesPositions1, treesPositions2, treesPositions3]);
@@ -711,5 +717,6 @@ positions.set("woodLogsPositions", [
   woodLogsPositions2,
   woodLogsPositions3,
 ]);
+positions.set("artworksPositions", artworksPositions);
 
 export { positions };

@@ -1,20 +1,13 @@
 import fragmentShader from "../../glsl/post/fragment.glsl";
 import vertexShader from "../../glsl/post/vertex.glsl";
-import { gui, guiFolders } from "../utils/Debug";
+import { guiFolders } from "../utils/Debug";
 import raf from "../utils/Raf";
 import { texturesMap } from "../utils/assets";
-import { SobelOperatorShader } from "./SobelOperatorShader";
 import * as THREE from "three";
 import { Group } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { AfterimagePass } from "three/examples/jsm/postprocessing/AfterimagePass.js";
-import { CubeTexturePass } from "three/examples/jsm/postprocessing/CubeTexturePass.js";
-import { DotScreenPass } from "three/examples/jsm/postprocessing/DotScreenPass.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 
 export class MainScene extends THREE.Scene {
   constructor() {
@@ -24,10 +17,10 @@ export class MainScene extends THREE.Scene {
       tintColor: new THREE.Color("#ffffff"),
 
       // Morning
-      // skyBgColor: new THREE.Color("#e5ba43"),
-      // cornerColor: new THREE.Color("#631eb8"),
-      // lightColor: new THREE.Color("#9c6127"),
-      // light2Color: new THREE.Color("#d8923d"),
+      skyBgColor: new THREE.Color("#e5ba43"),
+      cornerColor: new THREE.Color("#631eb8"),
+      lightColor: new THREE.Color("#9c6127"),
+      light2Color: new THREE.Color("#d8923d"),
 
       // Day
       // skyBgColor: new THREE.Color("#8ea1a9"),
@@ -36,10 +29,10 @@ export class MainScene extends THREE.Scene {
       // light2Color: new THREE.Color("#bbbd84"),
 
       // Night
-      skyBgColor: new THREE.Color("#7ad5ff"),
-      cornerColor: new THREE.Color("#11051f"),
-      lightColor: new THREE.Color("#3e70c1"),
-      light2Color: new THREE.Color("#d69ee5"),
+      // skyBgColor: new THREE.Color("#7ad5ff"),
+      // cornerColor: new THREE.Color("#11051f"),
+      // lightColor: new THREE.Color("#3e70c1"),
+      // light2Color: new THREE.Color("#d69ee5"),
 
       lightIntensity: 1,
       light2Intensity: 0.5,
@@ -60,6 +53,7 @@ export class MainScene extends THREE.Scene {
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
+    // this.add(this.camera);
 
     // this.controls = new OrbitControls(this.camera, this.canvas);
     // this.controls.enableDamping = true;
@@ -100,16 +94,16 @@ export class MainScene extends THREE.Scene {
       parameters.lightIntensity
     );
     const shadowDist = 50;
-    directionalLight.castShadow = true;
-    directionalLight.shadow.bias = 0.0001;
-    directionalLight.shadow.camera.left = -shadowDist;
-    directionalLight.shadow.camera.right = shadowDist;
-    directionalLight.shadow.camera.top = shadowDist;
-    directionalLight.shadow.camera.bottom = -shadowDist;
-    directionalLight.shadow.mapSize.set(2048, 2048);
+    // directionalLight.castShadow = true;
+    // directionalLight.shadow.bias = 0.0001;
+    // directionalLight.shadow.camera.left = -shadowDist;
+    // directionalLight.shadow.camera.right = shadowDist;
+    // directionalLight.shadow.camera.top = shadowDist;
+    // directionalLight.shadow.camera.bottom = -shadowDist;
+    // directionalLight.shadow.mapSize.set(2048, 2048);
     directionalLight.position.set(10, 10, -10);
-    directionalLight.shadow.camera.near = 0.1;
-    directionalLight.shadow.camera.far = 150;
+    // directionalLight.shadow.camera.near = 0.1;
+    // directionalLight.shadow.camera.far = 150;
     this.add(directionalLight);
 
     const directionalLight2 = new THREE.DirectionalLight(

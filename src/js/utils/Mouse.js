@@ -20,7 +20,8 @@ class Mouse {
 
   update() {
     const target = new Vector2();
-    target.x = this.normalizedMouseCoords.x * 1.5;
+    // target.x = this.normalizedMouseCoords.x * 1.5;
+    target.x = this.normalizedMouseCoords.x * 5.5;
     target.y = this.normalizedMouseCoords.y * 1.5 + 0.5;
 
     mainScene.camera.position.x += 0.015 * (target.x - mainScene.camera.position.x);

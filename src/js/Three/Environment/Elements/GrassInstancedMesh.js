@@ -72,8 +72,8 @@ export class GrassInstancedMesh {
         Math.random() * (-100 * texturesMap.get("curveTextures").length + 50);
 
       if (pathLine.isPositionInRange(new Vector2(instancePos.x, instancePos.z))) {
-        instanceScale.y = Math.random() * 0.8;
-        instancePos.y = Math.random() * -0.5;
+        instanceScale.y = Math.random() * 1.2;
+        instancePos.y = Math.random() * -0.8;
         // instanceScale.y = 0;
       }
 

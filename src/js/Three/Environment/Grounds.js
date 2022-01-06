@@ -3,6 +3,7 @@ import raf from "../../utils/Raf";
 import { texturesMap } from "../../utils/assets";
 import { positions } from "../../utils/positions";
 import { mainScene } from "../MainScene";
+import { Artwork } from "./Elements/Artwork";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
@@ -62,7 +63,25 @@ export class Grounds extends Group {
     this.ground3.woodLogs = woodLogs2;
     this.ground3.add(woodLogs2);
 
+    const artwork1 = new Artwork(
+      texturesMap.get("artworksTextures")[0],
+      positions.get("artworksPositions")[0],
+      parameters.envScale
+    );
+    const artwork2 = new Artwork(
+      texturesMap.get("artworksTextures")[1],
+      positions.get("artworksPositions")[1],
+      parameters.envScale
+    );
+
+    const artwork3 = new Artwork(
+      texturesMap.get("artworksTextures")[2],
+      positions.get("artworksPositions")[2],
+      parameters.envScale
+    );
+
     this.add(this.ground1, this.ground2, this.ground3);
+    this.add(artwork1, artwork2, artwork3);
 
     raf.subscribe("grounds", this.update.bind(this));
 
@@ -134,6 +153,8 @@ export class Grounds extends Group {
       texture.flipY = !!(this.currentIndex % 2);
       currentGround1.groundUniforms.uTexture.value = texture;
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+      currentGround1.ground.updateMatrix();
+      currentGround1.mask.updateMatrix();
 
       const newTrees = new Trees(positions.get("treesPositions")[this.currentIndex + 1]);
       newTrees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
