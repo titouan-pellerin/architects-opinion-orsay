@@ -64,7 +64,7 @@ void main() {
 
   vec4 final = mix(p2, p1, temp);
 
-  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.;
+  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.0;
 
 		// kernel definition (in glsl matrices are filled in column-major order)
 

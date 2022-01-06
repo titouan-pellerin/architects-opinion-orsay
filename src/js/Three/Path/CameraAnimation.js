@@ -98,7 +98,6 @@ export class CameraAnimation {
     mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
     mainScene.camera.lookAt(camPos2.x, camPos2.y, camPos2.z);
     mainScene.camera.userData.lookingAt = camPos2;
-    console.log(camPos2);
 
     // if (
     //   this.checkpoints.isArrivingAtCheckpoint() &&
