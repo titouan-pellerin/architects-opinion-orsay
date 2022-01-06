@@ -41,6 +41,22 @@ const oeuvre2 = textureLoader.load("/assets/oeuvres/2.jpeg");
 oeuvre2.encoding = sRGBEncoding;
 texturesMap.set("oeuvre2Texture", [oeuvre2]);
 
+const oeuvre3 = textureLoader.load("/assets/oeuvres/3.jpeg");
+oeuvre3.encoding = sRGBEncoding;
+texturesMap.set("oeuvre3Texture", [oeuvre3]);
+
+const oeuvre4 = textureLoader.load("/assets/oeuvres/4.jpeg");
+oeuvre4.encoding = sRGBEncoding;
+texturesMap.set("oeuvre4Texture", [oeuvre4]);
+
+const oeuvre5 = textureLoader.load("/assets/oeuvres/5.jpeg");
+oeuvre5.encoding = sRGBEncoding;
+texturesMap.set("oeuvre5Texture", [oeuvre5]);
+
+const oeuvre6 = textureLoader.load("/assets/oeuvres/6.jpeg");
+oeuvre6.encoding = sRGBEncoding;
+texturesMap.set("oeuvre6Texture", [oeuvre6]);
+
 const trees = [];
 gltfLoader.load("/assets/models/tree_orsay8.glb", (gltf) => {
   trees.push(gltf.scene);

@@ -55,7 +55,7 @@ function init() {
     mainScene.add(grassInstancedMesh.group);
 
     const oeuvres = new Oeuvres();
-    mainScene.add(oeuvres.oeuvre, oeuvres.oeuvre2);
+    mainScene.add(oeuvres.oeuvre, oeuvres.oeuvre2, oeuvres.oeuvre3, oeuvres.oeuvre4, oeuvres.oeuvre5, oeuvres.oeuvre6 );
 
     const leaves = new Leaves();
     mainScene.add(leaves.leaveMesh);

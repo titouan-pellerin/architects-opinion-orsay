@@ -4,23 +4,38 @@ import { Group } from "three";
 export class Trees extends Group {
   constructor(positions = []) {
     super();
+
+    this.woodUniforms = {
+      uColor: { value: new Color("#180c04") },
+      uColor2: { value: new Color("#f8c270") },
+    };
+
+    this.material = new MeshToonMaterial();
+    this.material.onBeforeCompile = (shader) => {
+      shader.uniforms = { ...shader.uniforms, ...this.woodUniforms };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        commonFragmentShader
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        outputFragmentShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        commonVertexShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <begin_vertex>",
+        beginVertexShader
+      );
+    };
+    
     const tree1 = modelsMap.get("trees")[0];
     const tree2 = modelsMap.get("trees")[1];
     tree1.scale.set(0.1, 0.1, 0.1);
     tree2.scale.set(0.1, 0.1, 0.1);
 
-    // tree1.traverse(function (node) {
-    //   if (node.isMesh) {
-    //     // console.log(node);
-    //     node.castShadow = true;
-    //   }
-    // });
-    // tree2.traverse(function (node) {
-    //   if (node.isMesh) {
-    //     // console.log(node);
-    //     node.castShadow = true;
-    //   }
-    // });
     tree1.matrixAutoUpdate = false;
     tree2.matrixAutoUpdate = false;
 

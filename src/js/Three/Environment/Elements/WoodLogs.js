@@ -89,6 +89,13 @@ export class WoodLogs extends Group {
     wood3.position.x = -0.4;
     wood1.position.z = 0.25;
 
+    wood1.matrixAutoUpdate = false;
+    wood2.matrixAutoUpdate = false;
+    wood3.matrixAutoUpdate = false;
+    wood1.updateMatrix();
+    wood2.updateMatrix();
+    wood3.updateMatrix();
+
     const woodGroup = new Group();
     const randomScale = Math.random() * (1.25 - 0.85) + 0.85;
     woodGroup.scale.set(randomScale, randomScale, randomScale);

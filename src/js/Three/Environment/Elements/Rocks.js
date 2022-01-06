@@ -26,15 +26,6 @@ export class Rocks extends Group {
       uColor2: { value: new Color("#236760") },
     };
 
-    // this.material = new CustomMeshToonMaterial(
-    //   commonFragmentShader,
-    //   outputFragmentShader,
-    //   commonVertexShader,
-    //   null,
-    //   projectVertexShader,
-    //   this.rockUniforms,
-    //   { side: DoubleSide },
-    // );
     this.material = new MeshToonMaterial({ side: DoubleSide });
     this.material.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.rockUniforms };
@@ -63,6 +54,7 @@ export class Rocks extends Group {
 
     this.rockPattern = new InstancedMesh(this.geometry, this.material, instanceNumber);
     this.rockPattern.matrixAutoUpdate = false;
+    this.rockPattern.updateMatrix();
 
     this.position.y = -3;
 

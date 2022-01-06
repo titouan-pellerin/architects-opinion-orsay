@@ -45,7 +45,6 @@ export class GrassInstancedMesh {
     folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
     const instanceNumber = 300000;
-    // const instanceNumber = 30;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
@@ -55,6 +54,9 @@ export class GrassInstancedMesh {
       this.material.meshToonMaterial,
       instanceNumber
     );
+
+    this.grassPattern.matrixAutoUpdate = false;
+    this.grassPattern.updateMatrix();
     // this.grassPattern.scale.set(3, 3, 3);
 
     for (let i = 0; i < instanceNumber; i++) {
