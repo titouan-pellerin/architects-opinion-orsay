@@ -64,8 +64,12 @@ export class CameraAnimation {
     this.tick += raf.deltaTime * this.tickSpeed;
     // this.tick += raf.deltaTime * 0.05;
 
+    let nextTick = this.tick + 0.05;
+    if (nextTick > 1) nextTick = 1;
+    if (this.tick > 1) this.tick = 1;
+
     const curvePoint = this.path.spline.getPointAt(this.tick);
-    const curvePoint2 = this.path.spline.getPointAt(this.tick + 0.05);
+    const curvePoint2 = this.path.spline.getPointAt(nextTick);
 
     const camPos = new Vector3(
       curvePoint.x * this.envScale,
