@@ -67,7 +67,7 @@ export class Grounds extends Group {
     const artwork1Pos = positions.get("artworksPositions")[0];
     this.artwork1 = new Artwork(
       texturesMap.get("artworksTextures")[0],
-      new Vector3(artwork1Pos.x, -1.5, artwork1Pos.y),
+      new Vector3(artwork1Pos.x, -1.38, artwork1Pos.y),
       parameters.envScale
     );
 
@@ -77,17 +77,25 @@ export class Grounds extends Group {
       new Vector3(artwork2Pos.x, -1, artwork2Pos.y),
       parameters.envScale
     );
+    this.artwork2.rotation.x *= -1;
 
     const artwork3Pos = positions.get("artworksPositions")[2];
     this.artwork3 = new Artwork(
       texturesMap.get("artworksTextures")[2],
-      new Vector3(artwork3Pos.x, -1.9, artwork3Pos.y),
+      new Vector3(artwork3Pos.x, -1.5, artwork3Pos.y),
+      parameters.envScale
+    );
+
+    const artwork4Pos = positions.get("artworksPositions")[3];
+    this.artwork4 = new Artwork(
+      texturesMap.get("artworksTextures")[3],
+      new Vector3(artwork4Pos.x, -0.6, artwork4Pos.y),
       parameters.envScale
     );
     // this.artwork3.rotation.y = -Math.PI * 0.09;
 
     this.add(this.ground1, this.ground2, this.ground3);
-    this.add(this.artwork1, this.artwork2, this.artwork3);
+    this.add(this.artwork1, this.artwork2, this.artwork3, this.artwork4);
 
     raf.subscribe("grounds", this.update.bind(this));
 

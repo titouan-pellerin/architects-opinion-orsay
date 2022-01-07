@@ -703,6 +703,8 @@ const artworksPositions = [
   new Vector2(0.1739, -0.6917),
   new Vector2(-0.0214, -1.314),
   new Vector2(-0.0957, -1.8269),
+  new Vector2(0.1291, -2.2294),
+  new Vector2(0.0444, -2.21),
 ];
 
 positions.set("curvePoints", curvePoints);

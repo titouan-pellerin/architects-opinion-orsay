@@ -27,7 +27,8 @@ function init() {
     buttonLoader.classList.add("hidden");
     percent.classList.add("hidden");
     loadingPage.update();
-    // audio.play();
+    audio.play();
+    audio.loop = true;
     const subtitles = new Subtitles();
     // subtitles.createTimeline();
     environment.cameraAnimation.goToCheckpoint();

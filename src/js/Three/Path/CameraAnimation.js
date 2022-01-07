@@ -138,9 +138,10 @@ export class CameraAnimation {
         tickValue = 0.7729;
         break;
       case 3:
-        tickValue = 0.96;
+        tickValue = 0.93;
         break;
     }
+
     raf.subscribe("path", this.update.bind(this));
     gsap.to(this.tick, {
       // delay: index === 0 ? 5 : 0,
@@ -156,7 +157,7 @@ export class CameraAnimation {
         raf.unsubscribe("path");
         raf.subscribe("ray", this.ray.update.bind(this.ray));
         // raf.unsubscribe("mouse");
-        console.log(mainScene.camera.userData.lookingAt);
+        // console.log(mainScene.camera.userData.lookingAt);
       },
       // ease: "sine.inOut",
     });

@@ -41,18 +41,18 @@ const artwork3 = textureLoader.load("/assets/artworks/3.jpeg");
 artwork3.encoding = sRGBEncoding;
 const artwork4 = textureLoader.load("/assets/artworks/4.jpeg");
 artwork4.encoding = sRGBEncoding;
-const artwork5 = textureLoader.load("/assets/artworks/5.jpeg");
-artwork5.encoding = sRGBEncoding;
-const artwork6 = textureLoader.load("/assets/artworks/6.jpeg");
-artwork6.encoding = sRGBEncoding;
+// const artwork5 = textureLoader.load("/assets/artworks/5.jpeg");
+// artwork5.encoding = sRGBEncoding;
+// const artwork6 = textureLoader.load("/assets/artworks/6.jpeg");
+// artwork6.encoding = sRGBEncoding;
 
 texturesMap.set("artworksTextures", [
   artwork1,
   artwork2,
   artwork3,
   artwork4,
-  artwork5,
-  artwork6,
+  // artwork5,
+  // artwork6,
 ]);
 
 const trees = [];

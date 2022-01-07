@@ -36,7 +36,12 @@ export class Environment {
     this.cameraAnimation = new CameraAnimation(
       this.forestPathLine,
       this.parameters.envScale,
-      [this.grounds.artwork1, this.grounds.artwork2, this.grounds.artwork3]
+      [
+        this.grounds.artwork1,
+        this.grounds.artwork2,
+        this.grounds.artwork3,
+        this.grounds.artwork4,
+      ]
     );
     // setTimeout(() => {
     //   this.grounds.matrixAutoUpdate = false;
