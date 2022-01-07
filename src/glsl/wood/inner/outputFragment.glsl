@@ -10,10 +10,7 @@ float sOut = 1.0 - smoothstep(0.5, 1.0, vUv.y);
 
 float strength = mod((vUv.x * vUv.y) * 2.5, 1.0);
 
-float strength2 = step(0.4, mod(vNoise.x * 20.0, 1.0));
-strength2 *= step(0.8, mod(vNoise.x * 20.0, 1.0));
-
-float mixNoise = mix(strength, strength2, strokeNoise);
+float mixNoise = mix(stroke, strength, strokeNoise);
 float mixStroke = mix(stroke, stroke2, mixNoise);
 
 // Render

@@ -13,7 +13,7 @@ export class Environment {
   constructor() {
     this.parameters = {
       envScale: 100,
-      groundColor: new THREE.Color("#ffffff"),
+      groundColor: new THREE.Color("#fbab32"),
       skyColor: new THREE.Color("#ffffff"),
       speed: 0.125,
       stroke: 5000,

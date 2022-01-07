@@ -92,7 +92,7 @@ export class Trees extends Group {
     tree2.position.set(positions[1].x, -3.5, positions[1].y);
     tree1.updateMatrix();
     tree2.updateMatrix();
-    this.add(tree2);
+    this.add(tree1, tree2);
 
     for (let i = 2; i < positions.length; i++) {
       const newTree = i % 2 === 0 ? tree1.clone() : tree2.clone();

@@ -1,17 +1,16 @@
 #include <output_fragment>
-// Stroke
-float stroke = 1. - (smoothstep(0.2, 1., sin((vNoise.x * vNoise.y) * 300.)));
+  // Noise
+float smallNoise = cnoise(vec2(vUv * 0.05));
+float bigNoise = cnoise(vec2(vUv * 0.2));
+float mixNoise = step(1.0, cnoise(vec2(vUv * 0.5)));
 
-// Smooth
-float sIn = smoothstep(0.0, 0.5, vUv.y);
-float sOut = 1.0 - smoothstep(0.5, 1.0, vUv.y);
+  // Stroke
+float stroke = sin(vUv.x + vUv.y);
+stroke *= (bigNoise * 10.0 - 5.0) + (smallNoise * 10.0 - 5.0);
 
-float strength = mod((vUv.x + vUv.y), 1.0);
-
-float strength2 = step(0.4, mod(vNoise.x * 100., 1.0));
-strength2 *= step(0.8, mod(vNoise.x * 100., 1.0));
+  // Render
+vec4 render = mix(vec4(mixNoise), vec4(uColor, 1.0) * vec4(stroke), smallNoise);
 
 // Render
-vec3 render = mix(uColor, uColor2, stroke - (sIn * sOut) * (strength + strength2));
-gl_FragColor = vec4(outgoingLight, diffuseColor.a) * vec4(strength);
-gl_FragColor = vec4(outgoingLight * vec3(render), diffuseColor.a);
+gl_FragColor = vec4(stroke);
+gl_FragColor = vec4(outgoingLight, diffuseColor.a) * render;

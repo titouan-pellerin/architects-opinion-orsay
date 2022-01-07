@@ -17,10 +17,10 @@ export class MainScene extends THREE.Scene {
       tintColor: new THREE.Color("#ffffff"),
 
       // Morning
-      skyBgColor: new THREE.Color("#e5ba43"),
-      cornerColor: new THREE.Color("#631eb8"),
-      lightColor: new THREE.Color("#9c6127"),
-      light2Color: new THREE.Color("#d8923d"),
+      skyBgColor: new THREE.Color("#bdbf36"),
+      lightColor: new THREE.Color("#47404f"),
+      light2Color: new THREE.Color("#c396e8"),
+      cornerColor: new THREE.Color("#601dc3"),
 
       // Morning backup for toto
       // skyBgColor: new THREE.Color("#e5ba43"),
@@ -54,7 +54,7 @@ export class MainScene extends THREE.Scene {
       30,
       this.sizes.width / this.sizes.height,
       0.1,
-      50
+      45
     );
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
@@ -92,24 +92,14 @@ export class MainScene extends THREE.Scene {
     // this.camera.lookAt(0, 0, -10);
     // this.camera.position.set(0, 1, 20);
 
-    const fog = new THREE.Fog(parameters.skyBgColor, 15, 30);
+    const fog = new THREE.Fog(parameters.skyBgColor, 20, 45);
     this.fog = fog;
 
     const directionalLight = new THREE.DirectionalLight(
       parameters.lightColor,
       parameters.lightIntensity
     );
-    const shadowDist = 50;
-    // directionalLight.castShadow = true;
-    // directionalLight.shadow.bias = 0.0001;
-    // directionalLight.shadow.camera.left = -shadowDist;
-    // directionalLight.shadow.camera.right = shadowDist;
-    // directionalLight.shadow.camera.top = shadowDist;
-    // directionalLight.shadow.camera.bottom = -shadowDist;
-    // directionalLight.shadow.mapSize.set(2048, 2048);
     directionalLight.position.set(10, 10, -10);
-    // directionalLight.shadow.camera.near = 0.1;
-    // directionalLight.shadow.camera.far = 150;
     // this.add(directionalLight);
 
     const directionalLight2 = new THREE.DirectionalLight(
@@ -134,8 +124,8 @@ export class MainScene extends THREE.Scene {
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0 },
         // uCornerSize: { value: 10 },
-        uCornerSize: { value: 2.5 },
-        uBlurIntensity: { value: 2.5 },
+        uCornerSize: { value: 2.44 },
+        uBlurIntensity: { value: 2 },
         uNoiseTexture: { value: null },
         uBlurPos: {
           value: new THREE.Vector2(window.innerWidth * 0.55, window.innerHeight * 0.55),

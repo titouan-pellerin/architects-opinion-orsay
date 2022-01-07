@@ -1,4 +1,6 @@
 #include <common>
+#include ../utils/noise2d;
+
 varying vec2 vUv;
 varying vec4 vNoise;
 uniform vec3 uColor;
