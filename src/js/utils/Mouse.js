@@ -6,6 +6,7 @@ class Mouse {
   constructor() {
     this.mouseCoords = new Vector2(0, 0);
     this.normalizedMouseCoords = new Vector2(0, 0);
+    this.isReduced = false;
     document.addEventListener("mousemove", this.mouseMove.bind(this));
     raf.subscribe("mouse", this.update.bind(this));
   }
@@ -20,12 +21,17 @@ class Mouse {
 
   update() {
     const target = new Vector2();
+    let xRange = 4.5,
+      yRange = 1;
+    if (this.isReduced) (xRange = 0.7), (yRange = 0.5);
     // target.x = this.normalizedMouseCoords.x * 1.5;
-    target.x = this.normalizedMouseCoords.x * 5.5;
-    target.y = this.normalizedMouseCoords.y * 1.5 + 0.5;
+    target.x = this.normalizedMouseCoords.x * xRange;
+    target.y = this.normalizedMouseCoords.y * yRange;
 
-    mainScene.camera.position.x += 0.015 * (target.x - mainScene.camera.position.x);
-    mainScene.camera.position.y += 0.015 * (target.y - mainScene.camera.position.y);
+    mainScene.cameraContainer.position.x +=
+      0.015 * (target.x - mainScene.cameraContainer.position.x);
+    mainScene.cameraContainer.position.y +=
+      0.015 * (target.y - mainScene.cameraContainer.position.y);
   }
 }
 

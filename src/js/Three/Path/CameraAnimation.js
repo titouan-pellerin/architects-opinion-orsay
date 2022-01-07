@@ -12,6 +12,9 @@ import { Vector3 } from "three";
 export class CameraAnimation {
   constructor(path, envScale, artworks) {
     gsap.registerPlugin(CustomEase);
+    gsap.ticker.lagSmoothing(1000, 16);
+
+    this.checkpointsIndex = 0;
     this.isAtCheckpoint = false;
     this.isLeavingCheckpoint = false;
     this.envScale = envScale;
@@ -27,7 +30,7 @@ export class CameraAnimation {
     // this.onClick();
 
     this.checkpoints = new Checkpoints(positions.get("checkpoints"), envScale);
-    this.ray = new Ray(artworks);
+    this.ray = new Ray(artworks, this);
 
     this.debugObject = {
       checkpoint1: () => this.goToCheckpoint(0),
@@ -51,7 +54,7 @@ export class CameraAnimation {
     guiFolders.get("camera").add(this.debugObject, "unsubscribe").name("Camera path off");
     guiFolders.get("camera").add(this.debugObject, "addLine").name("Show line");
     guiFolders.get("camera").add(this.debugObject, "removeLine").name("Remove line");
-    this.goToCheckpoint(0);
+    // this.goToCheckpoint(this.checkpointsIndex);
   }
 
   // onClick() {
@@ -77,9 +80,9 @@ export class CameraAnimation {
     // this.tick += raf.deltaTime * 0.05;
     // console.log(this.tick);
 
-    let nextTick = this.tick.value + 0.04;
-    if (nextTick > 1) nextTick = 1;
-    if (this.tick.value > 1) this.tick.value = 1;
+    const nextTick = this.tick.value + 0.04;
+    // if (nextTick > 1) nextTick = 1;
+    // if (this.tick.value > 1) this.tick.value = 1;
 
     const curvePoint = this.path.spline.getPointAt(this.tick.value);
     const curvePoint2 = this.path.spline.getPointAt(nextTick);
@@ -95,7 +98,8 @@ export class CameraAnimation {
       curvePoint2.y * this.envScale
     );
 
-    mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
+    // mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
+    mainScene.camera.position.set(camPos.x, camPos.y, camPos.z);
     mainScene.camera.lookAt(camPos2.x, camPos2.y, camPos2.z);
     mainScene.camera.userData.lookingAt = camPos2;
 
@@ -121,25 +125,26 @@ export class CameraAnimation {
   }
 
   goToCheckpoint(index) {
+    if (!index) index = this.checkpointsIndex;
     let tickValue = 0;
     switch (index) {
       case 0:
         tickValue = 0.2129;
         break;
       case 1:
-        tickValue = 0.5029;
+        tickValue = 0.4929;
         break;
       case 2:
-        tickValue = 0.7829;
+        tickValue = 0.7729;
         break;
       case 3:
-        tickValue = 1;
+        tickValue = 0.96;
         break;
     }
     raf.subscribe("path", this.update.bind(this));
     gsap.to(this.tick, {
-      delay: index === 0 ? 3 : 0,
-      duration: 5,
+      // delay: index === 0 ? 5 : 0,
+      duration: 3,
       value: tickValue,
       ease: CustomEase.create(
         "custom",
@@ -147,10 +152,11 @@ export class CameraAnimation {
             0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
       ),
       onComplete: () => {
+        this.checkpointsIndex++;
         raf.unsubscribe("path");
         raf.subscribe("ray", this.ray.update.bind(this.ray));
         // raf.unsubscribe("mouse");
-        console.log("uns path");
+        console.log(mainScene.camera.userData.lookingAt);
       },
       // ease: "sine.inOut",
     });

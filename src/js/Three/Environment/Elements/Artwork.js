@@ -32,7 +32,7 @@ export class Artwork extends Group {
 
     // this.add(this.innerMesh, this.outerMesh);
     // this.scale.set(0.85, 0.85, 0.85);
-    this.position.set(position.x * envScale, -1.5, position.y * envScale);
+    this.position.set(position.x * envScale, position.y, position.z * envScale);
     // this.position.set(0, -1.5, -10);
 
     this.outerMesh.matrixAutoUpdate = false;

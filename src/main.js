@@ -7,6 +7,8 @@ import { Subtitles } from "./js/Three/Text/Subtitles";
 import { loadingManager } from "./js/utils/Loader";
 import "./styles/style.scss";
 
+let environment;
+
 function init() {
   const loadingPage = new LoadingPage();
   mainScene.add(loadingPage.mesh);
@@ -29,6 +31,7 @@ function init() {
     audio.play();
     const subtitles = new Subtitles();
     subtitles.createTimeline();
+    environment.cameraAnimation.goToCheckpoint();
   });
 
   loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
@@ -40,13 +43,13 @@ function init() {
     // );
     const percentCalculRounded = Math.floor(percentCalcul);
 
-    percent.innerHTML = percentCalculRounded + "%";
+    percent.textContent = percentCalculRounded + "%";
   };
 
   loadingManager.onLoad = () => {
     buttonLoader.classList.add("visible");
 
-    const environment = new Environment();
+    environment = new Environment();
     // mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
     // mainScene.add(environment.grounds, environment.sky);
     mainScene.add(environment.grounds);

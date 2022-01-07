@@ -28,6 +28,7 @@ export class LoadingPage {
   `,
     });
     this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh.frustumCulled = false;
   }
 
   update() {

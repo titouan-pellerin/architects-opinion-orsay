@@ -73,7 +73,7 @@ export class WoodLogs extends Group {
     this.geometry = new CylinderGeometry(0.5, 0.5, 3, 32, 32, true);
     this.innerGeometry = new CylinderGeometry(0.5, 0.5, 3, 32, 32, false);
 
-    this.position.y = -3;
+    this.position.y = -2.85;
 
     const wood = new Mesh(this.geometry, this.material);
     wood.scale.set(0.5, 0.5, 0.5);

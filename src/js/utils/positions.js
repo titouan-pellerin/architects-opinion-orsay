@@ -704,8 +704,8 @@ const woodLogsPositions3 = [
 
 const artworksPositions = [
   new Vector2(0.1739, -0.6917),
-  new Vector2(0, -1.2844),
-  new Vector2(-0.1206, -1.8018),
+  new Vector2(-0.0214, -1.314),
+  new Vector2(-0.0957, -1.8269),
 ];
 
 positions.set("curvePoints", curvePoints);

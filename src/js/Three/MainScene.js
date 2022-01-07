@@ -22,6 +22,12 @@ export class MainScene extends THREE.Scene {
       lightColor: new THREE.Color("#9c6127"),
       light2Color: new THREE.Color("#d8923d"),
 
+      // Morning backup for toto
+      // skyBgColor: new THREE.Color("#e5ba43"),
+      // cornerColor: new THREE.Color("#631eb8"),
+      // lightColor: new THREE.Color("#9c6127"),
+      // light2Color: new THREE.Color("#d8923d"),
+
       // Day
       // skyBgColor: new THREE.Color("#8ea1a9"),
       // cornerColor: new THREE.Color("#feffe1"),
@@ -48,7 +54,7 @@ export class MainScene extends THREE.Scene {
       30,
       this.sizes.width / this.sizes.height,
       0.1,
-      150
+      50
     );
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
@@ -83,7 +89,7 @@ export class MainScene extends THREE.Scene {
 
     this.add(this.cameraContainer);
     this.camera.position.set(0, 0, 0);
-    this.camera.lookAt(0, 0, -10);
+    // this.camera.lookAt(0, 0, -10);
     // this.camera.position.set(0, 1, 20);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 15, 30);

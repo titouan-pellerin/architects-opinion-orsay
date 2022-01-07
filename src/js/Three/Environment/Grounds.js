@@ -9,6 +9,7 @@ import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
 import { Ground } from "./Ground";
 import { Group } from "three";
+import { Vector3 } from "three";
 
 export class Grounds extends Group {
   constructor(groundAmount, parameters = {}, forestPathLine) {
@@ -63,22 +64,27 @@ export class Grounds extends Group {
     this.ground3.woodLogs = woodLogs2;
     this.ground3.add(woodLogs2);
 
+    const artwork1Pos = positions.get("artworksPositions")[0];
     this.artwork1 = new Artwork(
       texturesMap.get("artworksTextures")[0],
-      positions.get("artworksPositions")[0],
-      parameters.envScale
-    );
-    this.artwork2 = new Artwork(
-      texturesMap.get("artworksTextures")[1],
-      positions.get("artworksPositions")[1],
+      new Vector3(artwork1Pos.x, -1.5, artwork1Pos.y),
       parameters.envScale
     );
 
-    this.artwork3 = new Artwork(
-      texturesMap.get("artworksTextures")[2],
-      positions.get("artworksPositions")[2],
+    const artwork2Pos = positions.get("artworksPositions")[1];
+    this.artwork2 = new Artwork(
+      texturesMap.get("artworksTextures")[1],
+      new Vector3(artwork2Pos.x, -1, artwork2Pos.y),
       parameters.envScale
     );
+
+    const artwork3Pos = positions.get("artworksPositions")[2];
+    this.artwork3 = new Artwork(
+      texturesMap.get("artworksTextures")[2],
+      new Vector3(artwork3Pos.x, -1.9, artwork3Pos.y),
+      parameters.envScale
+    );
+    // this.artwork3.rotation.y = -Math.PI * 0.09;
 
     this.add(this.ground1, this.ground2, this.ground3);
     this.add(this.artwork1, this.artwork2, this.artwork3);
