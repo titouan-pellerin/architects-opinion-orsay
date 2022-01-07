@@ -17,16 +17,16 @@ export class MainScene extends THREE.Scene {
       tintColor: new THREE.Color("#ffffff"),
 
       // Morning
-      skyBgColor: new THREE.Color("#bdbf36"),
-      lightColor: new THREE.Color("#47404f"),
-      light2Color: new THREE.Color("#c396e8"),
-      cornerColor: new THREE.Color("#601dc3"),
+      // skyBgColor: new THREE.Color("#bdbf36"),
+      // lightColor: new THREE.Color("#47404f"),
+      // light2Color: new THREE.Color("#c396e8"),
+      // cornerColor: new THREE.Color("#6600ff"),
 
       // Morning backup for toto
-      // skyBgColor: new THREE.Color("#e5ba43"),
-      // cornerColor: new THREE.Color("#631eb8"),
-      // lightColor: new THREE.Color("#9c6127"),
-      // light2Color: new THREE.Color("#d8923d"),
+      skyBgColor: new THREE.Color("#e5ba43"),
+      cornerColor: new THREE.Color("#631eb8"),
+      lightColor: new THREE.Color("#9c6127"),
+      light2Color: new THREE.Color("#d8923d"),
 
       // Day
       // skyBgColor: new THREE.Color("#8ea1a9"),
@@ -100,7 +100,7 @@ export class MainScene extends THREE.Scene {
       parameters.lightIntensity
     );
     directionalLight.position.set(10, 10, -10);
-    this.add(directionalLight);
+    // this.add(directionalLight);
 
     const directionalLight2 = new THREE.DirectionalLight(
       parameters.light2Color,
@@ -122,9 +122,9 @@ export class MainScene extends THREE.Scene {
         tDiffuse: { value: null },
         uTintColor: { value: parameters.tintColor },
         uCornerColor: { value: parameters.cornerColor },
-        uCornerIntensity: { value: 0 },
+        uCornerIntensity: { value: 0.79 },
         // uCornerSize: { value: 10 },
-        uCornerSize: { value: 1.6 },
+        uCornerSize: { value: 2.58 },
         uBlurIntensity: { value: 2 },
         uNoiseTexture: { value: null },
         uBlurPos: {
@@ -166,17 +166,17 @@ export class MainScene extends THREE.Scene {
     atmosphereFolder.add(fog, "near").min(-30).max(30).name("FogNear");
     atmosphereFolder.add(fog, "far").min(30).max(90).name("FogFar");
 
-    const lightFolder = atmosphereFolder.addFolder("Light");
-    lightFolder
-      .addColor(parameters, "lightColor")
-      .onChange(() => {
-        directionalLight.color.set(parameters.lightColor);
-      })
-      .name("Color");
-    lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
-    lightFolder.add(directionalLight.position, "x").min(-30).max(30).name("PosX");
-    lightFolder.add(directionalLight.position, "y").min(0).max(30).name("PosY");
-    lightFolder.add(directionalLight.position, "z").min(-30).max(30).name("PosZ");
+    // const lightFolder = atmosphereFolder.addFolder("Light");
+    // lightFolder
+    //   .addColor(parameters, "lightColor")
+    //   .onChange(() => {
+    //     directionalLight.color.set(parameters.lightColor);
+    //   })
+    //   .name("Color");
+    // lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
+    // lightFolder.add(directionalLight.position, "x").min(-30).max(30).name("PosX");
+    // lightFolder.add(directionalLight.position, "y").min(0).max(30).name("PosY");
+    // lightFolder.add(directionalLight.position, "z").min(-30).max(30).name("PosZ");
 
     const light2Folder = atmosphereFolder.addFolder("Light2");
     light2Folder

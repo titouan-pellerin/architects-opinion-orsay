@@ -40,7 +40,5 @@ export class LoadingPage {
         mainScene.remove(this.mesh);
       },
     });
-    this.percent.classList.add("hidden");
-    this.buttonLoader.classList.add("hidden");
   }
 }

@@ -28,6 +28,8 @@ export class Ray {
     if (this.currentIntersect) {
       this.clicked = true;
 
+      // raf.unsubscribe("mouse");
+
       gsap.to(this.previousLookAt, {
         duration: 2.5,
         x: this.lookAtTarget.x,
@@ -41,7 +43,11 @@ export class Ray {
 
           this.currentIntersect = null;
           document.querySelector("html,body").style.cursor = "default";
-          this.closeBtn.classList.add("visible");
+          gsap.to(this.closeBtn, {
+            duration: 0.75,
+            opacity: 1,
+            pointerEvents: "all",
+          });
         },
       });
       this.camLastPos.set(
@@ -93,6 +99,19 @@ export class Ray {
       ease: "power2.inOut",
     });
 
+    gsap.to(this.closeBtn, {
+      duration: 0.75,
+      opacity: 0,
+      pointerEvents: "none",
+      onComplete: () => {
+        gsap.to(this.nextBtn, {
+          duration: 0.75,
+          opacity: 1,
+          pointerEvents: "all",
+        });
+      },
+    });
+
     gsap.to(mainScene.camera.position, {
       duration: 2.5,
       // delay: 0.1,
@@ -133,6 +152,11 @@ export class Ray {
       onComplete: () => {
         raf.unsubscribe("ray");
         this.cameraAnimation.goToCheckpoint();
+        gsap.to(this.nextBtn, {
+          duration: 0.75,
+          opacity: 0,
+          pointerEvents: "none",
+        });
       },
     });
   }
