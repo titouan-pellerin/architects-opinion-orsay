@@ -28,9 +28,6 @@ export class Ray {
     if (this.currentIntersect) {
       this.clicked = true;
 
-      // raf.unsubscribe("mouse");
-      console.log(mainScene.camera.userData.lookingAt);
-
       gsap.to(this.previousLookAt, {
         duration: 2.5,
         x: this.lookAtTarget.x,
@@ -39,10 +36,8 @@ export class Ray {
         ease: "power2.inOut",
         onComplete: () => {
           this.clicked = false;
-          // mainScene.camera.userData.lookingAt = this.lookAtTarget;
           mouse.isReduced = true;
-          // raf.subscribe("mouse", mouse.update.bind(mouse));
-          raf.unsubscribe("ray");
+          // raf.unsubscribe("ray");
 
           this.currentIntersect = null;
           document.querySelector("html,body").style.cursor = "default";
@@ -72,23 +67,29 @@ export class Ray {
 
   close(e) {
     e.preventDefault();
-    raf.subscribe("ray", this.update.bind(this));
     this.clicked = true;
     this.closeBtn.classList.remove("visible");
-    const newTickPoint = this.cameraAnimation.path.spline.getPointAt(
-      this.cameraAnimation.tick.value + 0.04
+    // const newTickPoint = this.cameraAnimation.path.spline.getPointAt(
+    //   this.cameraAnimation.tick.value + 0.04
+    // );
+    // const camPos2 = new Vector3(
+    //   newTickPoint.x * this.cameraAnimation.envScale,
+    //   -0.5,
+    //   newTickPoint.y * this.cameraAnimation.envScale
+    // );
+    // mainScene.camera.userData.lookingAt = this.previousLookAt;
+    const newPreviousLookAt = new Vector3(
+      mainScene.camera.userData.lookingAt.x,
+      mainScene.camera.userData.lookingAt.y,
+      mainScene.camera.userData.lookingAt.z
     );
-    const camPos2 = new Vector3(
-      newTickPoint.x * this.cameraAnimation.envScale,
-      -0.5,
-      newTickPoint.y * this.cameraAnimation.envScale
-    );
+    // raf.subscribe("ray", this.update.bind(this));
     gsap.to(this.previousLookAt, {
       duration: 5,
       delay: 1,
-      y: camPos2.y,
-      x: camPos2.x,
-      z: camPos2.z,
+      y: newPreviousLookAt.y,
+      x: newPreviousLookAt.x,
+      z: newPreviousLookAt.z,
       ease: "power2.inOut",
     });
 
@@ -111,32 +112,54 @@ export class Ray {
   }
 
   next() {
-    raf.unsubscribe("ray");
-    this.cameraAnimation.goToCheckpoint();
+    // raf.unsubscribe("ray");
+    const newTickPoint = this.cameraAnimation.path.spline.getPointAt(
+      this.cameraAnimation.tick.value + 0.04
+    );
+    const camPos2 = new Vector3(
+      newTickPoint.x * this.cameraAnimation.envScale,
+      -0.5,
+      newTickPoint.y * this.cameraAnimation.envScale
+    );
+    gsap.to(this.previousLookAt, {
+      duration: 2.5,
+      x: camPos2.x,
+      y: camPos2.y,
+      z: camPos2.z,
+      ease: "power2.inOut",
+      // onUpdate: () => {
+      //   mainScene.camera.lookAt(this.previousLookAt);
+      // },
+      onComplete: () => {
+        raf.unsubscribe("ray");
+        this.cameraAnimation.goToCheckpoint();
+      },
+    });
   }
 
   update() {
-    // if (this.clicked)
     if (!this.clicked) {
       this.previousLookAt = mainScene.camera.userData.lookingAt;
-    }
+    } else mainScene.camera.userData.lookingAt = this.previousLookAt;
     mainScene.camera.lookAt(
       this.previousLookAt.x,
       this.previousLookAt.y,
       this.previousLookAt.z
     );
 
-    this.raycaster.setFromCamera(mouse.normalizedMouseCoords, mainScene.camera);
-    const intersects = this.raycaster.intersectObjects(this.objects, true);
+    if (!mouse.isReduced) {
+      this.raycaster.setFromCamera(mouse.normalizedMouseCoords, mainScene.camera);
+      const intersects = this.raycaster.intersectObjects(this.objects, true);
 
-    if (intersects.length) {
-      document.querySelector("html,body").style.cursor = "pointer";
-      this.currentIntersect = intersects[0].object;
-      this.lookAtTarget = this.currentIntersect.position.clone();
-      this.currentIntersect.localToWorld(this.lookAtTarget);
-    } else {
-      document.querySelector("html,body").style.cursor = "default";
-      this.currentIntersect = null;
+      if (intersects.length) {
+        document.querySelector("html,body").style.cursor = "pointer";
+        this.currentIntersect = intersects[0].object;
+        this.lookAtTarget = this.currentIntersect.position.clone();
+        this.currentIntersect.localToWorld(this.lookAtTarget);
+      } else {
+        document.querySelector("html,body").style.cursor = "default";
+        this.currentIntersect = null;
+      }
     }
   }
 }
