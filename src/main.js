@@ -11,6 +11,7 @@ let environment;
 
 function init() {
   const loadingPage = new LoadingPage();
+
   mainScene.add(loadingPage.mesh);
 
   const leaves = new Leaves();
@@ -24,23 +25,20 @@ function init() {
   buttonLoader.addEventListener("click", () => {
     buttonLoader.classList.remove("visible");
     buttonLoader.classList.add("hidden");
-
-    // loadingImage.classList.add("hidden");
     percent.classList.add("hidden");
     loadingPage.update();
     // audio.play();
     const subtitles = new Subtitles();
-    subtitles.createTimeline();
+    // subtitles.createTimeline();
     environment.cameraAnimation.goToCheckpoint();
+
+    setTimeout(() => {
+      subtitles.createTimeline();
+    }, 2500);
   });
 
   loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
     const percentCalcul = (itemsLoaded / itemsTotal) * 100;
-
-    //      gsap.fromTo('loadingImage', 5,
-    //     { y: 300, rotation: 25 },
-    //     { y: 80, rotation: 0, ease: Power3.easeOut }
-    // );
     const percentCalculRounded = Math.floor(percentCalcul);
 
     percent.textContent = percentCalculRounded + "%";

@@ -10,3 +10,16 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: "ParisMetro";
+  src: url("/assets/fonts/ParisRegular.eot");
+  src: url("/assets/fonts/ParisRegular.eot?#iefix") format("embedded-opentype"),
+    url("/assets/fonts/ParisRegular.woff2") format("woff2"),
+    url("ParisRegular.woff") format("woff"),
+    url("/assets/fonts/ParisRegular.ttf") format("truetype"),
+    url("/assets/fonts/ParisRegular.svg#ParisRegular") format("svg");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
