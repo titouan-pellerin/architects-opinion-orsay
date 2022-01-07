@@ -14,6 +14,7 @@ export class Ray {
     this.clicked = false;
     this.lookAtTarget = new Vector3();
     this.previousLookAt = new Vector3();
+    this.newLookAt = new Vector3();
     this.camLastPos = new Vector3();
     this.closeBtn = document.querySelector(".close");
     this.nextBtn = document.querySelector(".next");
@@ -27,9 +28,6 @@ export class Ray {
     e.preventDefault();
     if (this.currentIntersect) {
       this.clicked = true;
-
-      // raf.unsubscribe("mouse");
-      console.log(mainScene.camera.userData.lookingAt);
 
       gsap.to(this.previousLookAt, {
         duration: 5,
@@ -73,21 +71,17 @@ export class Ray {
   close(e) {
     e.preventDefault();
     raf.subscribe("ray", this.update.bind(this));
-    this.clicked = true;
     this.closeBtn.classList.remove("visible");
-    const newTickPoint = this.cameraAnimation.path.spline.getPointAt(
-      this.cameraAnimation.tick.value + 0.04
-    );
-    const camPos2 = new Vector3(
-      newTickPoint.x * this.cameraAnimation.envScale,
-      -0.5,
-      newTickPoint.y * this.cameraAnimation.envScale
+    this.newLookAt.set(
+      mainScene.camera.position.x,
+      mainScene.camera.position.y,
+      mainScene.camera.position.z
     );
     gsap.to(this.previousLookAt, {
       duration: 5,
-      y: camPos2.y,
-      x: camPos2.x,
-      z: camPos2.z,
+      y: this.newLookAt.y,
+      x: this.newLookAt.x,
+      z: this.newLookAt.z,
       ease: "power2.inOut",
     });
 
@@ -100,8 +94,9 @@ export class Ray {
       ease: "power2.inOut",
       onComplete: () => {
         // this.cameraAnimation.goToCheckpoint();
+        this.clicked = true;
         mouse.isReduced = false;
-        this.clicked = false;
+        // this.clicked = false;
         // raf.subscribe("mouse", mouse.update.bind(mouse));
         // mainScene.camera.userData.lookingAt = this.lookAtTarget;
         // raf.subscribe("mouse", mouse.update.bind(mouse));
