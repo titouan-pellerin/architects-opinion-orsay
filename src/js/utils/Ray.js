@@ -23,7 +23,8 @@ export class Ray {
     document.addEventListener("click", this.handleClick.bind(this));
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault();
     if (this.currentIntersect) {
       this.clicked = true;
 
@@ -69,7 +70,8 @@ export class Ray {
     }
   }
 
-  close() {
+  close(e) {
+    e.preventDefault();
     raf.subscribe("ray", this.update.bind(this));
     this.clicked = true;
     this.closeBtn.classList.remove("visible");
