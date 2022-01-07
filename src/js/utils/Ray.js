@@ -29,7 +29,6 @@ export class Ray {
       this.clicked = true;
 
       // raf.unsubscribe("mouse");
-      console.log(mainScene.camera.userData.lookingAt);
 
       gsap.to(this.previousLookAt, {
         duration: 2.5,
@@ -46,7 +45,11 @@ export class Ray {
 
           this.currentIntersect = null;
           document.querySelector("html,body").style.cursor = "default";
-          this.closeBtn.classList.add("visible");
+          gsap.to(this.closeBtn, {
+            duration: 0.75,
+            opacity: 1,
+            pointerEvents: "all",
+          });
         },
       });
       this.camLastPos.set(
@@ -74,7 +77,6 @@ export class Ray {
     e.preventDefault();
     raf.subscribe("ray", this.update.bind(this));
     this.clicked = true;
-    this.closeBtn.classList.remove("visible");
     const newTickPoint = this.cameraAnimation.path.spline.getPointAt(
       this.cameraAnimation.tick.value + 0.04
     );
@@ -90,6 +92,19 @@ export class Ray {
       x: camPos2.x,
       z: camPos2.z,
       ease: "power2.inOut",
+    });
+
+    gsap.to(this.closeBtn, {
+      duration: 0.75,
+      opacity: 0,
+      pointerEvents: "none",
+      onComplete: () => {
+        gsap.to(this.nextBtn, {
+          duration: 0.75,
+          opacity: 1,
+          pointerEvents: "all",
+        });
+      },
     });
 
     gsap.to(mainScene.camera.position, {
@@ -113,6 +128,11 @@ export class Ray {
   next() {
     raf.unsubscribe("ray");
     this.cameraAnimation.goToCheckpoint();
+    gsap.to(this.nextBtn, {
+      duration: 0.75,
+      opacity: 0,
+      pointerEvents: "none",
+    });
   }
 
   update() {

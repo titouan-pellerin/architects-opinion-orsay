@@ -33,6 +33,10 @@ body {
  LOADER
  ==================*/
 
+.webgl {
+  opacity: 0;
+}
+
 .loadingImage {
   position: absolute;
   top: 10%;
@@ -47,47 +51,27 @@ body {
   transform: translate(-50%, -50%);
   color: white;
   font-size: 60px;
-  font-family: "title";
+  font-family: "text";
   text-transform: uppercase;
   letter-spacing: 0.1rem;
+  display: none;
 }
 
 .buttonLoader {
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-size: 20px;
   border: none;
-  background-color: black;
-  padding: 10px 20px;
-  opacity: 0;
-  visibility: hidden;
+  outline: none;
+  background: none;
+  opacity: 1;
   font-family: "title";
   text-transform: uppercase;
   letter-spacing: 0.2rem;
   cursor: pointer;
-  font-size: 60px;
-}
-
-.buttonLoader.visible {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: visible;
-}
-
-.loadingImage,
-.percent ,
-.buttonLoader {
-  transition: opacity 0.9s ease-in-out;
-}
-
-.loadingImage.hidden,
-.percent.hidden,
-.buttonLoader.hidden {
-  opacity: 0;
-  visibility: hidden;
+  font-size: 0.8rem;
 }
 
 /*==================
@@ -138,7 +122,7 @@ SUBTITLES
   position: absolute;
   bottom: 5%;
   left: 50%;
-  width: 60%;
+  width: 40%;
   text-align: center;
   transform: translate(-50%, -50%);
   color: white;
@@ -173,46 +157,30 @@ TITLES
 CHECKPOINTS NAVIGATION
  ==================*/
 .close {
-  position: absolute;
-  border: #fff solid 2px;
-  border-radius: 50%;
-  right: 32px;
-  top: 32px;
-  width: 32px;
-  height: 32px;
+  position: fixed;
+  right: 4%;
+  top: 7%;
+  color: white;
   opacity: 0;
-  transition: opacity ease 0.35s;
+  font-family: "title";
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  cursor: pointer;
+  font-size: 0.8rem;
   pointer-events: none;
-}
-.close:hover {
-  opacity: 1;
-}
-.close:before,
-.close:after {
-  position: absolute;
-  left: 13px;
-  content: " ";
-  height: 30px;
-  width: 2px;
-  background-color: #fff;
-}
-.close:before {
-  transform: rotate(45deg);
-}
-.close:after {
-  transform: rotate(-45deg);
-}
-
-.close.visible {
-  opacity: 1;
-  pointer-events: all;
 }
 
 .next {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100px; /* Need a specific value to work */
+  position: fixed;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  color: white;
+  opacity: 0;
+  pointer-events: none;
+  font-family: "title";
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  cursor: pointer;
+  font-size: 0.8rem;
 }

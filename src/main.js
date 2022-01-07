@@ -6,13 +6,14 @@ import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { Subtitles } from "./js/Three/Text/Subtitles";
 import { loadingManager } from "./js/utils/Loader";
 import "./styles/style.scss";
+import { gsap } from "gsap";
 
 let environment;
 
 function init() {
-  const loadingPage = new LoadingPage();
+  // const loadingPage = new LoadingPage();
 
-  mainScene.add(loadingPage.mesh);
+  // mainScene.add(loadingPage.mesh);
 
   const leaves = new Leaves();
   mainScene.add(leaves.leaveMesh);
@@ -23,10 +24,10 @@ function init() {
   const audio = document.querySelector(".audio");
 
   buttonLoader.addEventListener("click", () => {
-    buttonLoader.classList.remove("visible");
-    buttonLoader.classList.add("hidden");
-    percent.classList.add("hidden");
-    loadingPage.update();
+    // percent.classList.add("hidden");
+    // loadingPage.update();
+    gsap.to(buttonLoader, { duration: 0.75, opacity: 0, pointerEvents: "none" });
+    gsap.to(".webgl", { duration: 5, opacity: 1 });
     audio.play();
     audio.loop = true;
     const subtitles = new Subtitles();
@@ -46,8 +47,6 @@ function init() {
   };
 
   loadingManager.onLoad = () => {
-    buttonLoader.classList.add("visible");
-
     environment = new Environment();
     // mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
     // mainScene.add(environment.grounds, environment.sky);
