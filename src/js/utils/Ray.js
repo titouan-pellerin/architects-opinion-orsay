@@ -31,7 +31,7 @@ export class Ray {
       console.log(mainScene.camera.userData.lookingAt);
 
       gsap.to(this.previousLookAt, {
-        duration: 5,
+        duration: 2.5,
         x: this.lookAtTarget.x,
         y: this.lookAtTarget.y,
         z: this.lookAtTarget.z - 8,
@@ -54,7 +54,7 @@ export class Ray {
         mainScene.camera.position.z
       );
       gsap.to(mainScene.camera.position, {
-        duration: 5,
+        duration: 2.5,
         // delay: 0.1,
         x: this.lookAtTarget.x,
         y: this.lookAtTarget.y,
@@ -82,7 +82,7 @@ export class Ray {
       newTickPoint.y * this.cameraAnimation.envScale
     );
     gsap.to(this.previousLookAt, {
-      duration: 5,
+      duration: 2.5,
       y: camPos2.y,
       x: camPos2.x,
       z: camPos2.z,
@@ -90,7 +90,7 @@ export class Ray {
     });
 
     gsap.to(mainScene.camera.position, {
-      duration: 5,
+      duration: 2.5,
       // delay: 0.1,
       x: this.camLastPos.x,
       y: this.camLastPos.y,
