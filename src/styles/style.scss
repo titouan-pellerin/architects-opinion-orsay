@@ -47,23 +47,22 @@ body {
   transform: translate(-50%, -50%);
   color: white;
   font-size: 60px;
-  font-family: "Leky Calgria";
+  font-family: "ParisMetro";
 }
 
 .buttonLoader {
   position: absolute;
-  top: 55%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
   font-size: 20px;
   border: none;
-
   background-color: black;
   padding: 10px 20px;
   opacity: 0;
   visibility: hidden;
-  font-family: "Leky Calgria";
+  font-family: "ParisMetro";
   cursor: pointer;
 }
 
@@ -134,7 +133,7 @@ SUBTITLES
   position: absolute;
   bottom: 5%;
   left: 50%;
-  width: 40%;
+  width: 60%;
   text-align: center;
   transform: translate(-50%, -50%);
   color: white;
