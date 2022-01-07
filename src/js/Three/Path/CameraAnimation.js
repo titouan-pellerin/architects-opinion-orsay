@@ -135,7 +135,7 @@ export class CameraAnimation {
         tickValue = 0.4929;
         break;
       case 2:
-        tickValue = 0.7729;
+        tickValue = 0.7629;
         break;
       case 3:
         tickValue = 0.93;
