@@ -106,5 +106,5 @@ void main() {
   gl_FragColor = final;
   gl_FragColor = (p1 + p2);
   gl_FragColor = texture2D(tDiffuse, vUv);
-  gl_FragColor = (p1 + p2) * vec4(border, 1.0);
+  gl_FragColor = ((p1 + p2) * .65) * vec4(border, 1.0);
 }

@@ -47,7 +47,9 @@ body {
   transform: translate(-50%, -50%);
   color: white;
   font-size: 60px;
-  font-family: "ParisMetro";
+  font-family: "title";
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
 }
 
 .buttonLoader {
@@ -62,8 +64,11 @@ body {
   padding: 10px 20px;
   opacity: 0;
   visibility: hidden;
-  font-family: "ParisMetro";
+  font-family: "title";
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
   cursor: pointer;
+  font-size: 60px;
 }
 
 .buttonLoader.visible {
@@ -137,6 +142,10 @@ SUBTITLES
   text-align: center;
   transform: translate(-50%, -50%);
   color: white;
+  font-family: "text";
+  // text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-size: 0.85rem;
 }
 
 .char {

@@ -23,8 +23,8 @@ export class Trees extends Group {
     };
 
     this.leafUniforms = {
-      uColor: { value: new Color("#180c04") },
-      uColor2: { value: new Color("#f8c270") },
+      uColor: { value: new Color("#d1e997") },
+      uColor2: { value: new Color("#4a9e36") },
     };
 
     const sceneFolder = guiFolders.get("scene");

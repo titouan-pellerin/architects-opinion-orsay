@@ -100,7 +100,7 @@ export class MainScene extends THREE.Scene {
       parameters.lightIntensity
     );
     directionalLight.position.set(10, 10, -10);
-    // this.add(directionalLight);
+    this.add(directionalLight);
 
     const directionalLight2 = new THREE.DirectionalLight(
       parameters.light2Color,
@@ -124,7 +124,7 @@ export class MainScene extends THREE.Scene {
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 0 },
         // uCornerSize: { value: 10 },
-        uCornerSize: { value: 2.44 },
+        uCornerSize: { value: 1.6 },
         uBlurIntensity: { value: 2 },
         uNoiseTexture: { value: null },
         uBlurPos: {

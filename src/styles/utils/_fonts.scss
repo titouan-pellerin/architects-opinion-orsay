@@ -1,13 +1,19 @@
 @font-face {
-  font-family: "Leky Calgria";
-  src: url("/assets/fonts/LekyCalgria-PersonalUse.eot");
-  src: url("/assets/fonts/LekyCalgria-PersonalUse.eot?#iefix") format("embedded-opentype"),
-    url("/assets/fonts/LekyCalgria-PersonalUse.woff2") format("woff2"),
-    url("/assets/fonts/LekyCalgria-PersonalUse.woff") format("woff"),
-    url("/assets/fonts/LekyCalgria-PersonalUse.ttf") format("truetype"),
-    url("/assets/fonts/LekyCalgria-PersonalUse.svg#LekyCalgria-PersonalUse") format("svg");
-  font-weight: normal;
-  font-style: normal;
+  font-family: "text";
+  src: url("/assets/fonts/text/iskry.eot"),
+    url("/assets/fonts/text/iskry.woff2") format("woff2"),
+    url("/assets/fonts/text/iskry.woff") format("woff"),
+    url("/assets/fonts/text/iskry.ttf") format("truetype");
+  font-weight: lighter;
+  font-style: lighter;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "title";
+  src: url("/assets/fonts/title/roxborough.ttf") format("truetype");
+  font-weight: lighter;
+  font-style: lighter;
   font-display: swap;
 }
 
