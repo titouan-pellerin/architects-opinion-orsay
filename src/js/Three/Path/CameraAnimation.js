@@ -51,7 +51,7 @@ export class CameraAnimation {
     guiFolders.get("camera").add(this.debugObject, "unsubscribe").name("Camera path off");
     guiFolders.get("camera").add(this.debugObject, "addLine").name("Show line");
     guiFolders.get("camera").add(this.debugObject, "removeLine").name("Remove line");
-    this.goToCheckpoint(0);
+    // this.goToCheckpoint(0);
   }
 
   // onClick() {
@@ -139,7 +139,7 @@ export class CameraAnimation {
     raf.subscribe("path", this.update.bind(this));
     gsap.to(this.tick, {
       delay: index === 0 ? 3 : 0,
-      duration: 5,
+      duration: 25,
       value: tickValue,
       ease: CustomEase.create(
         "custom",

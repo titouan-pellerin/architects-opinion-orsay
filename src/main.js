@@ -26,7 +26,7 @@ function init() {
     // loadingImage.classList.add("hidden");
     percent.classList.add("hidden");
     loadingPage.update();
-    audio.play();
+    // audio.play();
     const subtitles = new Subtitles();
     subtitles.createTimeline();
   });

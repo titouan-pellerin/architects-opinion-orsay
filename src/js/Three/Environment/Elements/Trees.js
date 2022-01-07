@@ -1,17 +1,17 @@
 import { modelsMap } from "../../../utils/assets";
-import { MeshToonMaterial } from "three";
-import { Group } from "three";
-import { guiFolders } from "@js/utils/Debug";
+import beginVertexShader from "@glsl/tree/beginVertex.glsl";
 import commonFragmentShader from "@glsl/tree/commonFragment.glsl";
 import commonVertexShader from "@glsl/tree/commonVertex.glsl";
-import beginVertexShader from "@glsl/tree/beginVertex.glsl";
-import outputFragmentShader from "@glsl/tree/outputFragment.glsl";
+import beginVertexShaderLeaf from "@glsl/tree/leaf/beginVertex.glsl";
 import commonFragmentShaderLeaf from "@glsl/tree/leaf/commonFragment.glsl";
 import commonVertexShaderLeaf from "@glsl/tree/leaf/commonVertex.glsl";
-import beginVertexShaderLeaf from "@glsl/tree/leaf/beginVertex.glsl";
 import outputFragmentShaderLeaf from "@glsl/tree/leaf/outputFragment.glsl";
+import outputFragmentShader from "@glsl/tree/outputFragment.glsl";
+import { guiFolders } from "@js/utils/Debug";
+import { MeshToonMaterial } from "three";
+import { Group } from "three";
 import { Color } from "three";
-import * as THREE from 'three'
+import * as THREE from "three";
 
 export class Trees extends Group {
   constructor(positions = []) {
@@ -32,7 +32,6 @@ export class Trees extends Group {
 
     treeFolder.addColor(this.leafUniforms.uColor, "value").name("Color1");
     treeFolder.addColor(this.leafUniforms.uColor2, "value").name("Color2");
-
 
     this.material = new MeshToonMaterial();
     this.material.onBeforeCompile = (shader) => {
@@ -93,7 +92,7 @@ export class Trees extends Group {
     tree2.position.set(positions[1].x, -3.5, positions[1].y);
     tree1.updateMatrix();
     tree2.updateMatrix();
-    this.add(tree2);
+    this.add(tree1, tree2);
 
     for (let i = 2; i < positions.length; i++) {
       const newTree = i % 2 === 0 ? tree1.clone() : tree2.clone();
