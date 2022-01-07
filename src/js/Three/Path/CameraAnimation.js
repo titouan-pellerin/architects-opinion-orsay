@@ -141,25 +141,26 @@ export class CameraAnimation {
         tickValue = 0.93;
         break;
     }
-
-    raf.subscribe("path", this.update.bind(this));
-    gsap.to(this.tick, {
-      // delay: index === 0 ? 5 : 0,
-      duration: 3,
-      value: tickValue,
-      ease: CustomEase.create(
-        "custom",
-        `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
-            0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
-      ),
-      onComplete: () => {
-        this.checkpointsIndex++;
-        raf.unsubscribe("path");
-        raf.subscribe("ray", this.ray.update.bind(this.ray));
-        // raf.unsubscribe("mouse");
-        // console.log(mainScene.camera.userData.lookingAt);
-      },
-      // ease: "sine.inOut",
-    });
+    if (index <= 3) {
+      raf.subscribe("path", this.update.bind(this));
+      gsap.to(this.tick, {
+        // delay: index === 0 ? 5 : 0,
+        duration: 3,
+        value: tickValue,
+        ease: CustomEase.create(
+          "custom",
+          `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378 
+              0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
+        ),
+        onComplete: () => {
+          this.checkpointsIndex++;
+          raf.unsubscribe("path");
+          raf.subscribe("ray", this.ray.update.bind(this.ray));
+          // raf.unsubscribe("mouse");
+          // console.log(mainScene.camera.userData.lookingAt);
+        },
+        // ease: "sine.inOut",
+      });
+    }
   }
 }

@@ -85,6 +85,7 @@ export class Ray {
     );
     gsap.to(this.previousLookAt, {
       duration: 5,
+      delay: 1,
       y: camPos2.y,
       x: camPos2.x,
       z: camPos2.z,
