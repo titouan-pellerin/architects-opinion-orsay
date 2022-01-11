@@ -1,5 +1,5 @@
-import { gltfLoader, textureLoader } from "./Loader";
 import { sRGBEncoding } from "three";
+import { gltfLoader, textureLoader } from "./Loader";
 
 const texturesMap = new Map();
 const modelsMap = new Map();
@@ -33,7 +33,7 @@ texturesMap.set("curveTextures", [
 const noise = textureLoader.load("/assets/noise.jpg");
 texturesMap.set("noiseTexture", [noise]);
 
-const artwork1 = textureLoader.load("/assets/artworks/1.jpeg");
+const artwork1 = textureLoader.load("/assets/artworks/1-1.jpg");
 artwork1.encoding = sRGBEncoding;
 const artwork2 = textureLoader.load("/assets/artworks/2.jpeg");
 artwork2.encoding = sRGBEncoding;
