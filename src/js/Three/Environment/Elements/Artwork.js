@@ -1,8 +1,11 @@
-import { DoubleSide, MeshBasicMaterial } from "three";
-import { MeshToonMaterial } from "three";
-import { PlaneGeometry } from "three";
-import { Mesh } from "three";
-import { Group } from "three";
+import {
+  DoubleSide,
+  Group,
+  Mesh,
+  MeshBasicMaterial,
+  MeshToonMaterial,
+  PlaneGeometry,
+} from "three";
 
 export class Artwork extends Group {
   constructor(texture, position, envScale) {

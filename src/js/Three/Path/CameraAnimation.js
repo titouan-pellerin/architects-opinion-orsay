@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import { guiFolders } from "../../utils/Debug";
-import { mouse } from "../../utils/Mouse";
 import raf from "../../utils/Raf";
 import { Ray } from "../../utils/Ray";
 import { positions } from "../../utils/positions";

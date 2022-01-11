@@ -2,8 +2,7 @@ import { mainScene } from "../Three/MainScene";
 import { mouse } from "./Mouse";
 import raf from "./Raf";
 import gsap from "gsap";
-import { Raycaster } from "three";
-import { Vector3 } from "three";
+import { Raycaster, Vector3 } from "three";
 
 export class Ray {
   constructor(objects, cameraAnimation) {

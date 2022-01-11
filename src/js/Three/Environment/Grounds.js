@@ -8,8 +8,7 @@ import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
 import { Ground } from "./Ground";
-import { Group } from "three";
-import { Vector3 } from "three";
+import { Group, Vector3 } from "three";
 
 export class Grounds extends Group {
   constructor(groundAmount, parameters = {}, forestPathLine) {
@@ -29,13 +28,11 @@ export class Grounds extends Group {
 
     // Current Ground
     this.ground2 = new Ground(this.textures[0], parameters);
-    // const cubes1 = new Cubes(positions.get("cubesPositions")[0]);
-    // this.ground2.cubes = cubes1;
     const trees1 = new Trees(positions.get("treesPositions")[0]);
     this.ground2.trees = trees1;
     this.ground2.add(trees1);
 
-    const rocks1 = new Rocks(positions.get("rocksPositions")[0], forestPathLine);
+    const rocks1 = new Rocks(positions.get("rocksPositions")[0]);
     this.ground2.rocks = rocks1;
     this.ground2.add(rocks1);
 
@@ -54,7 +51,7 @@ export class Grounds extends Group {
     this.ground3.trees = trees2;
     this.ground3.add(trees2);
 
-    const rocks2 = new Rocks(positions.get("rocksPositions")[1], forestPathLine);
+    const rocks2 = new Rocks(positions.get("rocksPositions")[1]);
     rocks2.scale.z = -1;
     this.ground3.rocks = rocks2;
     this.ground3.add(rocks2);

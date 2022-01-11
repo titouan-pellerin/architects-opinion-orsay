@@ -1,9 +1,7 @@
 import { guiFolders } from "../../utils/Debug";
 import skyFragmentShader from "@glsl/sky/fragment.glsl";
 import skyVertexShader from "@glsl/sky/vertex.glsl";
-import { BackSide, Mesh } from "three";
-import { ShaderMaterial } from "three";
-import { PlaneGeometry } from "three";
+import { BackSide, Mesh, PlaneGeometry, ShaderMaterial } from "three";
 
 export class Sky extends Mesh {
   constructor(parameters = {}) {

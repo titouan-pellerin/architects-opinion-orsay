@@ -7,12 +7,7 @@ import maskCommonFragmentShader from "@glsl/ground/mask/commonFragment.glsl";
 import maskCommonVertexShader from "@glsl/ground/mask/commonVertex.glsl";
 import maskOutputFragmentShader from "@glsl/ground/mask/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
-import { PlaneGeometry } from "three";
-import { MeshToonMaterial } from "three";
-import { Mesh } from "three";
-import { Color } from "three";
-import { Group } from "three";
-import { Vector3 } from "three";
+import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
 
 export class Ground extends Group {
   constructor(texture, parameters = {}) {

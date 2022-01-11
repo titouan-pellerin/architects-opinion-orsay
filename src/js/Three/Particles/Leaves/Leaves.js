@@ -9,11 +9,15 @@ import raf from "../../../utils/Raf";
 import { isSafari } from "../../../utils/misc.js";
 import { mainScene } from "../../MainScene.js";
 import { LeavesGeometry } from "./LeavesGeometry";
-import { DoubleSide, HalfFloatType, RepeatWrapping } from "three";
-import { Color } from "three";
-import { Mesh } from "three";
-import { MeshToonMaterial } from "three";
-import { Vector2 } from "three";
+import {
+  Color,
+  DoubleSide,
+  HalfFloatType,
+  Mesh,
+  MeshToonMaterial,
+  RepeatWrapping,
+  Vector2,
+} from "three";
 import { GPUComputationRenderer } from "three/examples/jsm/misc/GPUComputationRenderer";
 
 export class Leaves {

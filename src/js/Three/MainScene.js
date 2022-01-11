@@ -148,7 +148,6 @@ export class MainScene extends THREE.Scene {
     //   window.innerHeight * window.devicePixelRatio ;
     // this.composer.addPass( effectSobel );
 
-    const sceneFolder = guiFolders.get("scene");
     const atmosphereFolder = guiFolders.get("atmosphere");
     // atmosphereFolder
     //   .add(() => {

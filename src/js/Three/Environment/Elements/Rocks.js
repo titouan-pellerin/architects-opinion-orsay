@@ -1,20 +1,19 @@
-import { guiFolders } from "../../../utils/Debug";
-import { modelsMap } from "../../../utils/assets";
 import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import commonVertexShader from "@glsl/grass/commonVertex.glsl";
 import outputFragmentShader from "@glsl/rock/outputFragment.glsl";
 import projectVertexShader from "@glsl/rock/projectVertex.glsl";
-import { DoubleSide, Group } from "three";
-import { Color } from "three";
-import { MeshToonMaterial } from "three";
-import { Object3D } from "three";
-import { TetrahedronGeometry } from "three";
-import { InstancedMesh } from "three";
-import { Vector3 } from "three";
-import { Vector2 } from "three";
+import {
+  Color,
+  DoubleSide,
+  Group,
+  InstancedMesh,
+  MeshToonMaterial,
+  Object3D,
+  TetrahedronGeometry,
+} from "three";
 
 export class Rocks extends Group {
-  constructor(positions = [], pathLine) {
+  constructor(positions = []) {
     super();
 
     this.parameters = {

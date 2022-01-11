@@ -8,10 +8,7 @@ import commonVertexShaderLeaf from "@glsl/tree/leaf/commonVertex.glsl";
 import outputFragmentShaderLeaf from "@glsl/tree/leaf/outputFragment.glsl";
 import outputFragmentShader from "@glsl/tree/outputFragment.glsl";
 import { guiFolders } from "@js/utils/Debug";
-import { MeshToonMaterial } from "three";
-import { Group } from "three";
-import { Color } from "three";
-import * as THREE from "three";
+import { Color, Group, MeshToonMaterial } from "three";
 
 export class Trees extends Group {
   constructor(positions = []) {

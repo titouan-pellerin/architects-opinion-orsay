@@ -1,7 +1,4 @@
-import { guiFolders } from "../../utils/Debug";
-import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
-import gsap from "gsap";
 
 export class Checkpoints {
   constructor(positions = [], envScale) {

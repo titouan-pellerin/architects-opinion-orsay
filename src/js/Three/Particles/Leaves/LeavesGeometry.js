@@ -1,6 +1,4 @@
-import { PlaneGeometry } from "three";
-import { BufferAttribute } from "three";
-import { BufferGeometry } from "three";
+import { BufferAttribute, BufferGeometry } from "three";
 
 export class LeavesGeometry extends BufferGeometry {
   constructor(amount, textureWidth) {

@@ -1,6 +1,5 @@
 import { GrassInstancedMesh } from "./js/Three/Environment/Elements/GrassInstancedMesh";
 import { Environment } from "./js/Three/Environment/Environment";
-import { LoadingPage } from "./js/Three/Loading/LoadingPage";
 import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { Subtitles } from "./js/Three/Text/Subtitles";
@@ -20,7 +19,7 @@ function init() {
 
   const percent = document.querySelector(".percent");
   const buttonLoader = document.querySelector(".buttonLoader");
-  const loadingImage = document.querySelector(".loadingImage");
+  // const loadingImage = document.querySelector(".loadingImage");
   const audio = document.querySelector(".audio");
 
   buttonLoader.addEventListener("click", () => {

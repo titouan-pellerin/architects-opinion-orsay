@@ -1,18 +1,9 @@
-import { guiFolders } from "../../../utils/Debug";
-import { modelsMap } from "../../../utils/assets";
 import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import commonVertexShader from "@glsl/grass/commonVertex.glsl";
 import beginVertexShader from "@glsl/wood/beginVertex.glsl";
 import outputFragmentShaderInner from "@glsl/wood/inner/outputFragment.glsl";
 import outputFragmentShader from "@glsl/wood/outputFragment.glsl";
-import { DoubleSide, Group } from "three";
-import { Color } from "three";
-import { MeshToonMaterial } from "three";
-import { Object3D } from "three";
-import { TetrahedronGeometry } from "three";
-import { InstancedMesh } from "three";
-import { CylinderGeometry } from "three";
-import { Mesh } from "three";
+import { Color, CylinderGeometry, Group, Mesh, MeshToonMaterial } from "three";
 
 export class WoodLogs extends Group {
   constructor(positions = []) {

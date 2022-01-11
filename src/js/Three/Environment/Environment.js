@@ -1,13 +1,10 @@
-import { guiFolders } from "../../utils/Debug";
 import raf from "../../utils/Raf";
 import { texturesMap } from "../../utils/assets";
-import { mainScene } from "../MainScene";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { ForestPathLine } from "../Path/ForestPathLine";
 import { Grounds } from "./Grounds";
 import { Sky } from "./Sky";
 import * as THREE from "three";
-import { Vector3 } from "three";
 
 export class Environment {
   constructor() {

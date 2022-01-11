@@ -18,7 +18,7 @@ module.exports = {
     "no-use-before-define": "error",
     "no-extra-boolean-cast": 0,
     // "no-duplicate-imports": 1,
-    indent: ["error", 2],
+    indent: ["error", 2, { SwitchCase: 1 }],
     quotes: ["error", "double"],
     // "prettier/prettier": ["error", {}, { usePrettierrc: true }],
     semi: ["error", "always"],
