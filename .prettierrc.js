@@ -6,7 +6,4 @@ module.exports = {
   indentStyle: "space",
   indentSize: 2,
   endOfLine: "auto",
-  importOrderSeparation: true,
-  importOrderSortSpecifiers: true,
-  importOrder: ["^(.*)$", "^[./]"],
 };
