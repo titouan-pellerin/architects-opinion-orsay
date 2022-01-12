@@ -1,8 +1,8 @@
+import gsap from "gsap";
+import { Raycaster, Vector3 } from "three";
 import { mainScene } from "../Three/MainScene";
 import { mouse } from "./Mouse";
 import raf from "./Raf";
-import gsap from "gsap";
-import { Raycaster, Vector3 } from "three";
 
 export class Ray {
   constructor(objects, cameraAnimation) {
@@ -14,8 +14,8 @@ export class Ray {
     this.lookAtTarget = new Vector3();
     this.previousLookAt = new Vector3();
     this.camLastPos = new Vector3();
-    this.closeBtn = document.querySelector(".close");
-    this.nextBtn = document.querySelector(".next");
+    this.closeBtn = document.querySelector(".close-artwork");
+    this.nextBtn = document.querySelector(".next-checkpoint");
     this.closeBtn.addEventListener("click", this.close.bind(this));
     this.nextBtn.addEventListener("click", this.next.bind(this));
     // this.cameraAnimation = cameraAnimation;
@@ -23,8 +23,8 @@ export class Ray {
   }
 
   handleClick(e) {
-    e.preventDefault();
     if (this.currentIntersect) {
+      e.preventDefault();
       this.clicked = true;
 
       // raf.unsubscribe("mouse");

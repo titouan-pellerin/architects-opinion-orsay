@@ -1,6 +1,6 @@
 {
-  "name": "vite-js-sass-starter",
-  "version": "0.0.0",
+  "name": "orsay",
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

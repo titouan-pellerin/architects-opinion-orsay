@@ -22,4 +22,4 @@ const atmosphereFolder = gui.addFolder("Atmosphere");
 atmosphereFolder.close();
 guiFolders.set("atmosphere", atmosphereFolder);
 
-export { gui, guiFolders, stats };
+export { guiFolders, stats };

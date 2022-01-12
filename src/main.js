@@ -2,12 +2,8 @@ import { GrassInstancedMesh } from "./js/Three/Environment/Elements/GrassInstanc
 import { Environment } from "./js/Three/Environment/Environment";
 import { mainScene } from "./js/Three/MainScene";
 import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
-import { Subtitles } from "./js/Three/Text/Subtitles";
 import { loadingManager } from "./js/utils/Loader";
 import "./styles/style.scss";
-import { gsap } from "gsap";
-
-let environment;
 
 function init() {
   // const loadingPage = new LoadingPage();
@@ -17,36 +13,36 @@ function init() {
   const leaves = new Leaves();
   mainScene.add(leaves.leaveMesh);
 
-  const percent = document.querySelector(".percent");
-  const buttonLoader = document.querySelector(".buttonLoader");
+  // const percent = document.querySelector(".percent");
+  // const buttonLoader = document.querySelector(".buttonLoader");
   // const loadingImage = document.querySelector(".loadingImage");
   const audio = document.querySelector(".audio");
 
-  buttonLoader.addEventListener("click", () => {
-    // percent.classList.add("hidden");
-    // loadingPage.update();
-    gsap.to(buttonLoader, { duration: 0.75, opacity: 0, pointerEvents: "none" });
-    gsap.to(".webgl", { duration: 5, opacity: 1 });
-    audio.play();
-    audio.loop = true;
-    const subtitles = new Subtitles();
-    // subtitles.createTimeline();
-    environment.cameraAnimation.goToCheckpoint();
+  // buttonLoader.addEventListener("click", () => {
+  //   // percent.classList.add("hidden");
+  //   // loadingPage.update();
+  //   gsap.to(buttonLoader, { duration: 0.75, opacity: 0, pointerEvents: "none" });
+  //   gsap.to(".webgl", { duration: 5, opacity: 1 });
+  //   audio.play();
+  //   audio.loop = true;
+  //   const subtitles = new Subtitles();
+  //   // subtitles.createTimeline();
+  //   environment.cameraAnimation.goToCheckpoint();
 
-    setTimeout(() => {
-      subtitles.createTimeline();
-    }, 2500);
-  });
+  //   setTimeout(() => {
+  //     subtitles.createTimeline();
+  //   }, 2500);
+  // });
 
-  loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
-    const percentCalcul = (itemsLoaded / itemsTotal) * 100;
-    const percentCalculRounded = Math.floor(percentCalcul);
+  // loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
+  //   const percentCalcul = (itemsLoaded / itemsTotal) * 100;
+  //   const percentCalculRounded = Math.floor(percentCalcul);
 
-    percent.textContent = percentCalculRounded + "%";
-  };
+  //   percent.textContent = percentCalculRounded + "%";
+  // };
 
   loadingManager.onLoad = () => {
-    environment = new Environment();
+    const environment = new Environment();
     // mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
     // mainScene.add(environment.grounds, environment.sky);
     mainScene.add(environment.grounds);

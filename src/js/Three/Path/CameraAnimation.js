@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
-import { guiFolders } from "../../utils/Debug";
-import raf from "../../utils/Raf";
-import { Ray } from "../../utils/Ray";
-import { positions } from "../../utils/positions";
-import { mainScene } from "../MainScene";
-import { Checkpoints } from "./Checkpoints";
 import gsap from "gsap";
 import { Vector3 } from "three";
+import { guiFolders } from "../../utils/Debug";
+import { positions } from "../../utils/positions";
+import raf from "../../utils/Raf";
+import { Ray } from "../../utils/Ray";
+import { mainScene } from "../MainScene";
+import { Checkpoints } from "./Checkpoints";
 
 export class CameraAnimation {
   constructor(path, envScale, artworks) {
