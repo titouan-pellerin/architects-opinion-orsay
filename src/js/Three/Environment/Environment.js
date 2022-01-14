@@ -1,10 +1,10 @@
-import raf from "../../utils/Raf";
+import * as THREE from "three";
 import { texturesMap } from "../../utils/assets";
+import raf from "../../utils/Raf";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { ForestPathLine } from "../Path/ForestPathLine";
 import { Grounds } from "./Grounds";
 import { Sky } from "./Sky";
-import * as THREE from "three";
 
 export class Environment {
   constructor() {

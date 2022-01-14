@@ -1,13 +1,13 @@
-import { guiFolders } from "../../../utils/Debug";
-import raf from "../../../utils/Raf";
-import { texturesMap } from "../../../utils/assets";
-import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import commonVertexShader from "@glsl/grass/commonVertex.glsl";
 import outputFragmentShader from "@glsl/grass/outputFragment.glsl";
 import projectVertexShader from "@glsl/grass/projectVertex.glsl";
 import * as THREE from "three";
 import { DoubleSide, Vector2, Vector3 } from "three";
+import { texturesMap } from "../../../utils/assets";
+import { guiFolders } from "../../../utils/Debug";
+import raf from "../../../utils/Raf";
+import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 
 export class GrassInstancedMesh {
   constructor(pathLine) {

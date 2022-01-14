@@ -1,14 +1,14 @@
-import { guiFolders } from "../../utils/Debug";
-import raf from "../../utils/Raf";
+import { Group, Vector3 } from "three";
 import { texturesMap } from "../../utils/assets";
+import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
+import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
 import { Artwork } from "./Elements/Artwork";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
 import { Ground } from "./Ground";
-import { Group, Vector3 } from "three";
 
 export class Grounds extends Group {
   constructor(groundAmount, parameters = {}, forestPathLine) {
