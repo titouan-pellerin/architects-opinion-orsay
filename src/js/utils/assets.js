@@ -33,26 +33,91 @@ texturesMap.set("curveTextures", [
 const noise = textureLoader.load("/assets/noise.jpg");
 texturesMap.set("noiseTexture", [noise]);
 
-const artwork1 = textureLoader.load("/assets/artworks/1.jpeg");
+const artwork1 = textureLoader.load("/assets/artworks/la-main-emile-galle.jpeg");
 artwork1.encoding = sRGBEncoding;
-const artwork2 = textureLoader.load("/assets/artworks/2.jpeg");
+
+const artwork2 = textureLoader.load("/assets/artworks/presentoir-eugene-rousseau.jpeg");
 artwork2.encoding = sRGBEncoding;
-const artwork3 = textureLoader.load("/assets/artworks/3.jpeg");
+
+const artwork3 = textureLoader.load(
+  "/assets/artworks/la-reine-isabeau-de-baviere-henry-cros.jpeg"
+);
 artwork3.encoding = sRGBEncoding;
-const artwork4 = textureLoader.load("/assets/artworks/4.jpeg");
+
+const artwork4 = textureLoader.load("/assets/artworks/vase-albert-dammouse.jpeg");
 artwork4.encoding = sRGBEncoding;
-// const artwork5 = textureLoader.load("/assets/artworks/5.jpeg");
-// artwork5.encoding = sRGBEncoding;
-// const artwork6 = textureLoader.load("/assets/artworks/6.jpeg");
-// artwork6.encoding = sRGBEncoding;
+
+const artwork5 = textureLoader.load(
+  "/assets/artworks/the-peacock-garden-walter-crane.jpeg"
+);
+artwork5.encoding = sRGBEncoding;
+
+const artwork6 = textureLoader.load(
+  "/assets/artworks/holland-park-carpet-william-morris.jpeg"
+);
+artwork6.encoding = sRGBEncoding;
+
+const artwork7 = textureLoader.load("/assets/artworks/maison-horta-victor-horta.jpeg");
+artwork7.encoding = sRGBEncoding;
+
+const artwork8 = textureLoader.load(
+  "/assets/artworks/banquette-de-fumoir-hector-guimard.jpeg"
+);
+artwork8.encoding = sRGBEncoding;
+
+const artwork9 = textureLoader.load(
+  "/assets/artworks/castel-beranger-hector-guimard.jpeg"
+);
+artwork9.encoding = sRGBEncoding;
+
+const artwork10 = textureLoader.load(
+  "/assets/artworks/la-libellule-de-la-station-dauphine.jpeg"
+);
+artwork10.encoding = sRGBEncoding;
+
+const artwork11 = textureLoader.load("/assets/artworks/hotel-tassel-victor-horta-1.jpeg");
+artwork11.encoding = sRGBEncoding;
+
+const artwork12 = textureLoader.load("/assets/artworks/hotel-tassel-victor-horta-2.jpeg");
+artwork12.encoding = sRGBEncoding;
+
+const artwork13 = textureLoader.load("/assets/artworks/pendentif-rene-lalique.jpeg");
+artwork13.encoding = sRGBEncoding;
+
+const artwork14 = textureLoader.load("/assets/artworks/pavot-rene-lalique.jpeg");
+artwork14.encoding = sRGBEncoding;
+
+const artwork15 = textureLoader.load(
+  "/assets/artworks/ecritoire-henry-van-de-velde.jpeg"
+);
+artwork15.encoding = sRGBEncoding;
+
+const artwork16 = textureLoader.load("/assets/artworks/fauteuil-louis-majorelle.jpeg");
+artwork16.encoding = sRGBEncoding;
+
+const artwork17 = textureLoader.load(
+  "/assets/artworks/vol-de-mouettes-jacques-gruber.jpeg"
+);
+artwork17.encoding = sRGBEncoding;
 
 texturesMap.set("artworksTextures", [
   artwork1,
   artwork2,
   artwork3,
   artwork4,
-  // artwork5,
-  // artwork6,
+  artwork5,
+  artwork6,
+  artwork7,
+  artwork8,
+  artwork9,
+  artwork10,
+  artwork11,
+  artwork12,
+  artwork13,
+  artwork14,
+  artwork15,
+  artwork16,
+  artwork17,
 ]);
 
 const trees = [];

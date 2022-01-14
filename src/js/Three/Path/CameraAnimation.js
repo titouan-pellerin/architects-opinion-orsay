@@ -144,7 +144,7 @@ export class CameraAnimation {
       raf.subscribe("path", this.update.bind(this));
       gsap.to(this.tick, {
         delay: index === 0 ? 3 : 0,
-        duration: 30,
+        duration: 3,
         value: tickValue,
         ease: CustomEase.create(
           "custom",

@@ -1,4 +1,3 @@
-import { modelsMap } from "../../../utils/assets";
 import beginVertexShader from "@glsl/tree/beginVertex.glsl";
 import commonFragmentShader from "@glsl/tree/commonFragment.glsl";
 import commonVertexShader from "@glsl/tree/commonVertex.glsl";
@@ -9,6 +8,7 @@ import outputFragmentShaderLeaf from "@glsl/tree/leaf/outputFragment.glsl";
 import outputFragmentShader from "@glsl/tree/outputFragment.glsl";
 import { guiFolders } from "@js/utils/Debug";
 import { Color, Group, MeshToonMaterial } from "three";
+import { modelsMap } from "../../../utils/assets";
 
 export class Trees extends Group {
   constructor(positions = []) {

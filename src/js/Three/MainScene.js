@@ -1,13 +1,13 @@
-import fragmentShader from "../../glsl/post/fragment.glsl";
-import vertexShader from "../../glsl/post/vertex.glsl";
-import { guiFolders } from "../utils/Debug";
-import raf from "../utils/Raf";
-import { texturesMap } from "../utils/assets";
 import * as THREE from "three";
 import { Group } from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+import fragmentShader from "../../glsl/post/fragment.glsl";
+import vertexShader from "../../glsl/post/vertex.glsl";
+import { texturesMap } from "../utils/assets";
+import { guiFolders } from "../utils/Debug";
+import raf from "../utils/Raf";
 
 export class MainScene extends THREE.Scene {
   constructor() {
