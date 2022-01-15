@@ -46,10 +46,10 @@ export class Grounds extends Group {
     this.ground3.position.z -= this.parameters.envScale;
     this.ground3.scale.z = -1;
 
-    const trees2 = new Trees(positions.get("treesPositions")[1]);
-    trees2.scale.z = -1;
-    this.ground3.trees = trees2;
-    this.ground3.add(trees2);
+    // const trees2 = new Trees(positions.get("treesPositions")[1]);
+    // trees2.scale.z = -1;
+    // this.ground3.trees = trees2;
+    // this.ground3.add(trees2);
 
     const rocks2 = new Rocks(positions.get("rocksPositions")[1]);
     rocks2.scale.z = -1;
@@ -167,11 +167,11 @@ export class Grounds extends Group {
       currentGround1.ground.updateMatrix();
       currentGround1.mask.updateMatrix();
 
-      const newTrees = new Trees(positions.get("treesPositions")[this.currentIndex + 1]);
-      newTrees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      currentGround1.remove(currentGround1.trees);
-      currentGround1.add(newTrees);
-      currentGround1.trees = newTrees;
+      // const newTrees = new Trees(positions.get("treesPositions")[this.currentIndex + 1]);
+      // newTrees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+      // currentGround1.remove(currentGround1.trees);
+      // currentGround1.add(newTrees);
+      // currentGround1.trees = newTrees;
 
       const newRocks = new Rocks(
         positions.get("rocksPositions")[this.currentIndex + 1],

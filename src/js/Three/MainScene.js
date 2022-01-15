@@ -100,7 +100,7 @@ export class MainScene extends THREE.Scene {
       parameters.lightIntensity
     );
     directionalLight.position.set(10, 10, -10);
-    // this.add(directionalLight);
+    this.add(directionalLight);
 
     const directionalLight2 = new THREE.DirectionalLight(
       parameters.light2Color,
@@ -165,17 +165,17 @@ export class MainScene extends THREE.Scene {
     atmosphereFolder.add(fog, "near").min(-30).max(30).name("FogNear");
     atmosphereFolder.add(fog, "far").min(30).max(90).name("FogFar");
 
-    // const lightFolder = atmosphereFolder.addFolder("Light");
-    // lightFolder
-    //   .addColor(parameters, "lightColor")
-    //   .onChange(() => {
-    //     directionalLight.color.set(parameters.lightColor);
-    //   })
-    //   .name("Color");
-    // lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
-    // lightFolder.add(directionalLight.position, "x").min(-30).max(30).name("PosX");
-    // lightFolder.add(directionalLight.position, "y").min(0).max(30).name("PosY");
-    // lightFolder.add(directionalLight.position, "z").min(-30).max(30).name("PosZ");
+    const lightFolder = atmosphereFolder.addFolder("Light");
+    lightFolder
+      .addColor(parameters, "lightColor")
+      .onChange(() => {
+        directionalLight.color.set(parameters.lightColor);
+      })
+      .name("Color");
+    lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
+    lightFolder.add(directionalLight.position, "x").min(-30).max(30).name("PosX");
+    lightFolder.add(directionalLight.position, "y").min(0).max(30).name("PosY");
+    lightFolder.add(directionalLight.position, "z").min(-30).max(30).name("PosZ");
 
     const light2Folder = atmosphereFolder.addFolder("Light2");
     light2Folder

@@ -8,7 +8,7 @@ import commonFragmentShader from "@glsl/tree/trunk/commonFragment.glsl";
 import outputFragmentShader from "@glsl/tree/trunk/outputFragment.glsl";
 
 import commonVertexShaderLeaf from "@glsl/tree/leaf/commonVertex.glsl";
-import beginVertexShaderLeaf from "@glsl/tree/leaf/beginVertex.glsl";
+import projectVertexShaderLeaf from "@glsl/tree/leaf/projectVertex.glsl";
 import commonFragmentShaderLeaf from "@glsl/tree/leaf/commonFragment.glsl";
 import outputFragmentShaderLeaf from "@glsl/tree/leaf/outputFragment.glsl";
 import { mainScene } from "../../MainScene";
@@ -24,8 +24,11 @@ export class Trees extends THREE.Group {
     };
 
     this.leafUniforms = {
+      uTime: { value: 0 },
       uColor: { value: new THREE.Color("#d1e997") },
       uColor2: { value: new THREE.Color("#4a9e36") },
+      uDisplaceIntensity: { value: 0.25 },
+      uSpeed: { value: 1.2 },
     };
 
     const sceneFolder = guiFolders.get("scene");
@@ -58,7 +61,9 @@ export class Trees extends THREE.Group {
       );
     };
 
-    this.materialLeaf = new THREE.MeshToonMaterial();
+    this.materialLeaf = new THREE.MeshToonMaterial({
+      side: THREE.DoubleSide,
+    });
     this.materialLeaf.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.leafUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -74,20 +79,20 @@ export class Trees extends THREE.Group {
         commonVertexShaderLeaf
       );
       shader.vertexShader = shader.vertexShader.replace(
-        "#include <begin_vertex>",
-        beginVertexShaderLeaf
+        "#include <project_vertex>",
+        projectVertexShaderLeaf
       );
     };
 
     // initializing a new simplex instance
     // do this only once as it is relatively expensive
     let simplex = new SimplexNoise();
-    let value3d;
+    let noise2D;
 
-    const instanceNumber = 50000;
+    const instanceNumber = 10000;
     const instance = new THREE.Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(0.5, 0.5, 1, 4);
+    this.geometry = new THREE.PlaneGeometry(0.25, 0.25, 1, 4);
 
     this.grassPattern = new THREE.InstancedMesh(
       this.geometry,
@@ -98,12 +103,54 @@ export class Trees extends THREE.Group {
     this.grassPattern.matrixAutoUpdate = false;
     this.grassPattern.updateMatrix();
 
-    for (let i = 0; i < instanceNumber; i++) {
-      value3d = simplex.noise3D(Math.random * 5, Math.random * 5, Math.random * 5);
+    const radius = 3;
 
-      instance.position.set(Math.random() * 10, Math.random() * 10, Math.random() * 10);
-      instance.rotation.set(Math.random() * 10, Math.random() * 10, Math.random() * 10);
-      // instance.rotation.set(Math.random(), Math.random(), Math.random());
+    for (let i = 0; i < instanceNumber; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const angleHeight = noise2D * Math.PI;
+      noise2D = simplex.noise2D(angleHeight, Math.random());
+
+      instance.position.set(
+        radius *
+          Math.cos(angle * noise2D * 50) *
+          noise2D *
+          2 *
+          Math.sin(angleHeight) *
+          Math.cos(noise2D),
+        radius *
+          Math.sin(angle * noise2D * 50) *
+          noise2D *
+          2 *
+          Math.sin(angleHeight) *
+          Math.cos(noise2D),
+        radius * Math.cos(angleHeight) * noise2D * 1.5 * Math.sin(angleHeight * 50)
+      );
+      instance.rotation.set(
+        radius *
+          Math.cos(angle * noise2D * 50) *
+          noise2D *
+          2 *
+          Math.sin(angleHeight) *
+          Math.cos(noise2D),
+        radius *
+          Math.sin(angle * noise2D * 50) *
+          noise2D *
+          2 *
+          Math.sin(angleHeight) *
+          Math.cos(noise2D),
+        radius * Math.cos(angleHeight) * noise2D * 1.5 * Math.sin(angleHeight * 50)
+      );
+
+      // instance.position.set(
+      //   Math.cos(noise2D * 50) * Math.sin(yPos * 3.15) * 2,
+      //   Math.cos(noise2D * 50) * Math.cos(yPos * 3.15) * 2,
+      //   yPos
+      // );
+      // instance.rotation.set(
+      //   Math.sin(noise2D * 50) * noise2D * 2 * Math.random() * 2,
+      //   Math.abs(((noise2D * 50) / Math.random()) * 0.5 - 0.35) * 0.025,
+      //   Math.cos(noise2D * 50) * noise2D * 2 * Math.random() * 2
+      // );
 
       instance.updateMatrix();
       this.grassPattern.setMatrixAt(i, instance.matrix);
@@ -111,9 +158,13 @@ export class Trees extends THREE.Group {
 
     this.group = new THREE.Group();
     this.group.position.z = -20;
+    this.group.position.x = 0;
+    this.group.position.y = 0;
     this.group.add(this.grassPattern);
 
     mainScene.add(this.group);
+
+    console.log(this.group);
 
     const tree1 = modelsMap.get("trees")[0];
     const tree2 = modelsMap.get("trees")[1];
@@ -148,5 +199,11 @@ export class Trees extends THREE.Group {
       newTree.updateMatrix();
       this.add(newTree);
     }
+    raf.subscribe("Tree", this.update.bind(this));
+  }
+
+  update() {
+    this.leafUniforms.uTime.value = raf.elapsedTime;
+    this.group.rotation.x = raf.elapsedTime * 0.5;
   }
 }

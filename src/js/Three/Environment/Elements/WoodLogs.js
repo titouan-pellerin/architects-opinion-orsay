@@ -1,5 +1,5 @@
-import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
-import commonVertexShader from "@glsl/grass/commonVertex.glsl";
+import commonFragmentShader from "@glsl/wood/commonFragment.glsl";
+import commonVertexShader from "@glsl/wood/commonVertex.glsl";
 import beginVertexShader from "@glsl/wood/beginVertex.glsl";
 import outputFragmentShaderInner from "@glsl/wood/inner/outputFragment.glsl";
 import outputFragmentShader from "@glsl/wood/outputFragment.glsl";
