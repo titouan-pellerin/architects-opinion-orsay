@@ -56,12 +56,12 @@ texturesMap.set("artworksTextures", [
 ]);
 
 const trees = [];
-gltfLoader.load("/assets/models/trunk.glb", (gltf) => {
-  trees.push(gltf.scene);
+gltfLoader.load("/assets/models/trunk2.glb", (gltf) => {
+  trees[0] = gltf.scene;
 });
 
-gltfLoader.load("/assets/models/trunk.glb", (gltf) => {
-  trees.push(gltf.scene);
+gltfLoader.load("/assets/models/trunk1.glb", (gltf) => {
+  trees[1] = gltf.scene;
 });
 
 modelsMap.set("trees", trees);

@@ -89,19 +89,19 @@ export class Trees extends THREE.Group {
     let simplex = new SimplexNoise();
     let noise2D;
 
-    const instanceNumber = 10000;
+    const instanceNumber = 1000;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.25, 0.25, 1, 4);
 
-    this.grassPattern = new THREE.InstancedMesh(
+    this.leafsPattern = new THREE.InstancedMesh(
       this.geometry,
       this.materialLeaf,
       instanceNumber
     );
 
-    this.grassPattern.matrixAutoUpdate = false;
-    this.grassPattern.updateMatrix();
+    this.leafsPattern.matrixAutoUpdate = false;
+    this.leafsPattern.updateMatrix();
 
     const radius = 3;
 
@@ -114,75 +114,81 @@ export class Trees extends THREE.Group {
         radius *
           Math.cos(angle * noise2D * 50) *
           noise2D *
-          2 *
+          1 *
           Math.sin(angleHeight) *
           Math.cos(noise2D),
         radius *
           Math.sin(angle * noise2D * 50) *
           noise2D *
-          2 *
+          1 *
           Math.sin(angleHeight) *
           Math.cos(noise2D),
-        radius * Math.cos(angleHeight) * noise2D * 1.5 * Math.sin(angleHeight * 50)
+        radius * Math.cos(angleHeight) * noise2D * 1 * Math.sin(angleHeight * 50)
       );
       instance.rotation.set(
         radius *
           Math.cos(angle * noise2D * 50) *
           noise2D *
-          2 *
+          1 *
           Math.sin(angleHeight) *
           Math.cos(noise2D),
         radius *
           Math.sin(angle * noise2D * 50) *
           noise2D *
-          2 *
+          1 *
           Math.sin(angleHeight) *
           Math.cos(noise2D),
-        radius * Math.cos(angleHeight) * noise2D * 1.5 * Math.sin(angleHeight * 50)
+        radius * Math.cos(angleHeight) * noise2D * 1 * Math.sin(angleHeight * 50)
       );
-
-      // instance.position.set(
-      //   Math.cos(noise2D * 50) * Math.sin(yPos * 3.15) * 2,
-      //   Math.cos(noise2D * 50) * Math.cos(yPos * 3.15) * 2,
-      //   yPos
-      // );
-      // instance.rotation.set(
-      //   Math.sin(noise2D * 50) * noise2D * 2 * Math.random() * 2,
-      //   Math.abs(((noise2D * 50) / Math.random()) * 0.5 - 0.35) * 0.025,
-      //   Math.cos(noise2D * 50) * noise2D * 2 * Math.random() * 2
-      // );
-
       instance.updateMatrix();
-      this.grassPattern.setMatrixAt(i, instance.matrix);
+      this.leafsPattern.setMatrixAt(i, instance.matrix);
     }
 
-    this.group = new THREE.Group();
-    this.group.position.z = -20;
-    this.group.position.x = 0;
-    this.group.position.y = 0;
-    this.group.add(this.grassPattern);
+    const leafs = new THREE.Group();
+    leafs.add(this.leafsPattern);
 
-    mainScene.add(this.group);
+    leafs.scale.set(8, 8, 8);
+    leafs.position.set(13.883822441101074, 75, -26.477598190307617);
 
-    console.log(this.group);
+    const leafs2 = leafs.clone();
+    leafs2.position.set(6.021400451660156, 56.60111999511719, 9.720206260681152);
+    const leafs3 = leafs.clone();
+    leafs3.position.set(-13.538918495178223, 56.0611457824707, 18.083316802978516);
+    const leafs4 = leafs.clone();
+    leafs4.position.set(-28.79485511779785, 57.274925231933594, 4.6373291015625);
+    const leafs5 = leafs.clone();
+    leafs5.position.set(29.977325439453125, 51.851558685302734, -34.322364807128906);
+    const leafs6 = leafs.clone();
+    leafs6.position.set(-11.098029136657715, 62.07094955444336, 5.341279029846191);
+    const leafs7 = leafs.clone();
+    leafs7.position.set(-6.821478843688965, 61.90618896484375, -2.9381091594696045);
+    const leafs8 = leafs.clone();
+    leafs8.position.set(8.947877883911133, 55.19361877441406, 15.726387023925781);
+    const leafs9 = leafs.clone();
+    leafs9.position.set(13.598841667175293, 45.93263626098633, -12.688941955566406);
 
-    const tree1 = modelsMap.get("trees")[0];
-    const tree2 = modelsMap.get("trees")[1];
-    tree1.scale.set(0.2, 0.2, 0.2);
-    tree2.scale.set(0.2, 0.2, 0.2);
+    const trunk1 = modelsMap.get("trees")[0].clone();
+    trunk1.children[0].material = this.material;
 
-    tree1.children[0].material = this.material;
-    // tree1.children[1].material = this.materialLeaf;
-    tree2.children[0].material = this.material;
-    // tree2.children[1].material = this.materialLeaf;
+    const trunk2 = modelsMap.get("trees")[1].clone();
+    trunk2.children[0].material = this.material;
 
-    tree1.matrixAutoUpdate = false;
-    tree2.matrixAutoUpdate = false;
+    console.log(trunk2.children[0].name);
 
+    const tree1 = new THREE.Group();
+    tree1.add(trunk1, leafs, leafs2, leafs3, leafs4, leafs5, leafs6);
     tree1.position.set(positions[0].x, -3.5, positions[0].y);
-    tree2.position.set(positions[1].x, -3.5, positions[1].y);
+    tree1.scale.set(0.2, 0.2, 0.2);
+    tree1.matrixAutoUpdate = false;
     tree1.updateMatrix();
+
+    const tree2 = new THREE.Group();
+    tree2.add(trunk2, leafs7, leafs8, leafs9);
+    tree2.position.set(positions[1].x, -3.5, positions[1].y);
+    tree2.scale.set(0.2, 0.2, 0.2);
+    tree2.matrixAutoUpdate = false;
     tree2.updateMatrix();
+
     this.add(tree1, tree2);
 
     for (let i = 2; i < positions.length; i++) {
@@ -204,6 +210,6 @@ export class Trees extends THREE.Group {
 
   update() {
     this.leafUniforms.uTime.value = raf.elapsedTime;
-    this.group.rotation.x = raf.elapsedTime * 0.5;
+    // this.group.rotation.x = raf.elapsedTime * 0.5;
   }
 }

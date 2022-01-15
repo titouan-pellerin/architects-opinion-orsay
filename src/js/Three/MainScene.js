@@ -40,7 +40,7 @@ export class MainScene extends THREE.Scene {
       // lightColor: new THREE.Color("#3e70c1"),
       // light2Color: new THREE.Color("#d69ee5"),
 
-      lightIntensity: 1,
+      lightIntensity: 0.5,
       light2Intensity: 0.5,
     };
 
@@ -76,7 +76,6 @@ export class MainScene extends THREE.Scene {
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.physicallyCorrectLights = true;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
-    this.renderer.gammaFactor = 2.2;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1;
     this.renderer.stencil = false;
