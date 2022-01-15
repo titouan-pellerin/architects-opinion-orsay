@@ -1,5 +1,5 @@
 #include <common>
-#include ../utils/noise2d;
+// #include ../../utils/noise2d;
 
 varying vec2 vUv;
 varying vec4 vNoise;

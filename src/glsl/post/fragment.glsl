@@ -39,14 +39,19 @@ void main() {
 
   float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
 
+  float percent;
+  float weight;
+  vec4 blur;
+
   for(float t = 0.0; t <= 40.0; t++) {
-    float percent = (t + offset) / 80.0;
-    float weight = 4.0 * (percent - percent * percent);
-    vec4 blur = texture2D(tDiffuse, vUv + toCenter * percent * uBlurIntensity / uRes);
+    percent = (t + offset) / 80.0;
+    weight = 4.0 * (percent - percent * percent);
+    blur = texture2D(tDiffuse, vUv + toCenter * percent * uBlurIntensity / uRes);
+    // vec4 blur = vec4(1.);
     blur.rgb *= blur.a;
     color += blur * weight;
     total += weight;
-  }
+  } 
 
     // Part2, adding some blur
   vec4 p2 = ((color / total)) * 0.5;
@@ -104,7 +109,7 @@ void main() {
 
     // gl_FragColor = render;
   gl_FragColor = final;
-  gl_FragColor = (p1 + p2);
   gl_FragColor = texture2D(tDiffuse, vUv);
-  gl_FragColor = ((p1 + p2) * .65) * vec4(border, 1.0);
+  gl_FragColor = p2;
+  gl_FragColor = (p1 + p2) * vec4(vec3(border), 1.0);
 }

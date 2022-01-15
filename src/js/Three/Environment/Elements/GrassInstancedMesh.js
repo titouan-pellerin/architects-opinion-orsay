@@ -1,13 +1,12 @@
+import * as THREE from "three";
+import { texturesMap } from "../../../utils/assets";
 import { guiFolders } from "../../../utils/Debug";
 import raf from "../../../utils/Raf";
-import { texturesMap } from "../../../utils/assets";
 import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import commonVertexShader from "@glsl/grass/commonVertex.glsl";
 import outputFragmentShader from "@glsl/grass/outputFragment.glsl";
 import projectVertexShader from "@glsl/grass/projectVertex.glsl";
-import * as THREE from "three";
-import { DoubleSide, Vector2, Vector3 } from "three";
 
 export class GrassInstancedMesh {
   constructor(pathLine) {
@@ -29,7 +28,7 @@ export class GrassInstancedMesh {
       projectVertexShader,
       this.grassUniforms,
       {
-        side: DoubleSide,
+        side: THREE.DoubleSide,
       }
     );
 
@@ -61,8 +60,8 @@ export class GrassInstancedMesh {
 
     for (let i = 0; i < instanceNumber; i++) {
       const randomScale = Math.random() * 3;
-      const instanceScale = new Vector3(randomScale, randomScale, randomScale);
-      const instancePos = new Vector3();
+      const instanceScale = new THREE.Vector3(randomScale, randomScale, randomScale);
+      const instancePos = new THREE.Vector3();
 
       // do {
       instancePos.x = (Math.random() - 0.5) * 95;
@@ -71,7 +70,7 @@ export class GrassInstancedMesh {
       instancePos.z =
         Math.random() * (-100 * texturesMap.get("curveTextures").length + 50);
 
-      if (pathLine.isPositionInRange(new Vector2(instancePos.x, instancePos.z))) {
+      if (pathLine.isPositionInRange(new THREE.Vector2(instancePos.x, instancePos.z))) {
         instanceScale.y = Math.random() * 1.2;
         instancePos.y = Math.random() * -0.8;
         // instanceScale.y = 0;
@@ -88,22 +87,6 @@ export class GrassInstancedMesh {
     this.group = new THREE.Group();
     this.group.position.y = -2.75;
     this.group.add(this.grassPattern);
-
-    // for (let i = 0; i < this.parameters.grassQuantity; i++) {
-    //   this.grass = this.grassPattern.clone();
-    //   this.grass.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
-
-    //   setTimeout(() => {
-    //     this.grass.matrixAutoUpdate = false;
-    //   }, 1);
-
-    //   this.grass.position.set(
-    //     (Math.random() - 0.5) * 30,
-    //     Math.random() / 2 - 3.2,
-    //     (Math.random() - 0.5) * 30,
-    //   );
-    //   this.group.add(this.grass);
-    // }
 
     raf.subscribe("Grass", this.update.bind(this));
   }

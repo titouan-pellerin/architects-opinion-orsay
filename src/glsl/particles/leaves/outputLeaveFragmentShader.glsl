@@ -39,11 +39,11 @@ vec4 rightLineFinal = (vec4(rightLine) * vec4(rightMask) * vec4(rightPattern));
 vec4 lines = (centerLineFinal + rightLineFinal + leftLineFinal) * vec4(uColor2, 1.0);
 
 // Global render
-vec4 render = (shape + lines * (1.0 - noiseRender)) * vec4(vec3(fade), 1.0);
+vec4 render = (shape + lines * (1.0 - noiseRender)) * vec4(fade);
 
 // gl_FragColor = render;
 gl_FragColor = vec4(render.xyz, diffuseColor.a * render.a);
 
-if(render.a < 1.0) {
-discard;
-}
+// if(render.a < 1.0) {
+// discard;
+// }

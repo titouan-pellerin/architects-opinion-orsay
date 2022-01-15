@@ -56,11 +56,11 @@ texturesMap.set("artworksTextures", [
 ]);
 
 const trees = [];
-gltfLoader.load("/assets/models/arbre.glb", (gltf) => {
+gltfLoader.load("/assets/models/trunk.glb", (gltf) => {
   trees.push(gltf.scene);
 });
 
-gltfLoader.load("/assets/models/tree_orsay7.glb", (gltf) => {
+gltfLoader.load("/assets/models/trunk.glb", (gltf) => {
   trees.push(gltf.scene);
 });
 
