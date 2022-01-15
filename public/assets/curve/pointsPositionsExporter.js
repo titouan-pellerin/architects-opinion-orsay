@@ -1200,9 +1200,9 @@
 			// paths.push(`new Vector2(${center[0]},${center[1]}),`);
 			paths.push(
         "new Vector2(" +
-          (polygon.polygonCentroid(points)[0] / 32 * 100 - 50) +
+          (polygon.polygonCentroid(points)[0] / 32 * 100 * .5 - 25) +
           "," +
-          (polygon.polygonCentroid(points)[1] / 32 * 100 - 50) +
+          (polygon.polygonCentroid(points)[1] / 32 * 100 * .5 - 25) +
           "),"
       );
 	    }

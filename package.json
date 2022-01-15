@@ -19,6 +19,7 @@
   "dependencies": {
     "gsap": "^3.8.0",
     "lil-gui": "^0.15.0",
+    "simplex-noise": "^3.0.1",
     "splitting": "^1.0.6",
     "stats.js": "^0.17.0",
     "three": "^0.135.0"

@@ -113,7 +113,7 @@ export class MainScene extends THREE.Scene {
     this.background = new THREE.Color(parameters.skyBgColor);
 
     this.add(this.cameraContainer);
-    this.camera.position.set(0, 0, 0);
+    this.camera.position.set(0, 0, 23);
 
     // this.camera.lookAt(0, 0, -10);
     // this.camera.position.set(0, 1, 20);

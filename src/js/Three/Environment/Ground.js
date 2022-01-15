@@ -7,7 +7,18 @@ import maskCommonFragmentShader from "@glsl/ground/mask/commonFragment.glsl";
 import maskCommonVertexShader from "@glsl/ground/mask/commonVertex.glsl";
 import maskOutputFragmentShader from "@glsl/ground/mask/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
-import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
+import { GrassInstancedMesh } from "@js/Three/Environment/Elements/GrassInstancedMesh";
+import SimplexNoise from "simplex-noise";
+import {
+  Color,
+  DoubleSide,
+  Group,
+  Mesh,
+  MeshToonMaterial,
+  PlaneGeometry,
+  Vector3,
+} from "three";
+import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 
 export class Ground extends Group {
   constructor(texture, parameters = {}) {
@@ -43,7 +54,10 @@ export class Ground extends Group {
       groundCommonVertexShader,
       groundBeginVertexShader,
       null,
-      this.groundUniforms
+      this.groundUniforms,
+      {
+        side: DoubleSide,
+      }
     );
 
     const groundMaskMaterial = new MeshToonMaterial({
@@ -75,8 +89,15 @@ export class Ground extends Group {
       256,
       256
     );
-
+    const vertices = groundGeometry.getAttribute("position").array;
+    const simplex = new SimplexNoise("toto-titou");
+    for (let i = 0; i < vertices.length / 3; i++) {
+      const i3 = i * 3;
+      const noise = simplex.noise2D(vertices[i3] * 30, vertices[i3 + 1] * 30);
+      vertices[i3 + 2] += noise * 0.004;
+    }
     this.ground = new Mesh(groundGeometry, groundMaterial.meshToonMaterial);
+
     this.ground.rotation.x = -Math.PI * 0.5;
     this.ground.position.y = -3.01;
     this.ground.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
@@ -91,6 +112,14 @@ export class Ground extends Group {
     this.mask.matrixAutoUpdate = false;
     this.ground.updateMatrix();
     this.mask.updateMatrix();
+
+    const sampler = new MeshSurfaceSampler(this.ground).build();
+    this.grass = new GrassInstancedMesh(
+      parameters.envScale,
+      parameters.groundSize,
+      sampler
+    );
+    this.add(this.grass.group);
   }
 
   getCenter() {

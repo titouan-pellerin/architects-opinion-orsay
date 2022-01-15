@@ -1,10 +1,9 @@
-import { Group, Vector3 } from "three";
+import { Group } from "three";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
-import { Artwork } from "./Elements/Artwork";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
@@ -22,7 +21,7 @@ export class Grounds extends Group {
 
     // Previous Ground
     this.ground1 = new Ground(this.textures[2], parameters);
-    this.ground1.texture.flipY = false;
+    // this.ground1.texture.flipY = false;
     this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
 
@@ -31,6 +30,7 @@ export class Grounds extends Group {
     const trees1 = new Trees(positions.get("treesPositions")[0]);
     this.ground2.trees = trees1;
     this.ground2.add(trees1);
+    console.log(trees1.children.length);
 
     const rocks1 = new Rocks(positions.get("rocksPositions")[0]);
     this.ground2.rocks = rocks1;
@@ -43,13 +43,14 @@ export class Grounds extends Group {
     // Next Ground
     this.ground3 = new Ground(this.textures[1], parameters);
     this.ground3.texture.flipY = false;
-    this.ground3.position.z -= this.parameters.envScale * this.parameters.groundSize;
+    this.ground3.position.z -= parameters.envScale * parameters.groundSize;
     this.ground3.scale.z = -1;
 
     const trees2 = new Trees(positions.get("treesPositions")[1]);
     trees2.scale.z = -1;
     this.ground3.trees = trees2;
     this.ground3.add(trees2);
+    console.log(trees2.children.length);
 
     const rocks2 = new Rocks(positions.get("rocksPositions")[1]);
     rocks2.scale.z = -1;
@@ -61,38 +62,38 @@ export class Grounds extends Group {
     this.ground3.woodLogs = woodLogs2;
     this.ground3.add(woodLogs2);
 
-    const artwork1Pos = positions.get("artworksPositions")[0];
-    this.artwork1 = new Artwork(
-      texturesMap.get("artworksTextures")[0],
-      new Vector3(artwork1Pos.x, -1.38, artwork1Pos.y),
-      parameters.envScale
-    );
+    // const artwork1Pos = positions.get("artworksPositions")[0];
+    // this.artwork1 = new Artwork(
+    //   texturesMap.get("artworksTextures")[0],
+    //   new Vector3(artwork1Pos.x, -1.38, artwork1Pos.y),
+    //   parameters.envScale
+    // );
 
-    const artwork2Pos = positions.get("artworksPositions")[1];
-    this.artwork2 = new Artwork(
-      texturesMap.get("artworksTextures")[1],
-      new Vector3(artwork2Pos.x, -1, artwork2Pos.y),
-      parameters.envScale
-    );
-    this.artwork2.rotation.x *= -1;
+    // const artwork2Pos = positions.get("artworksPositions")[1];
+    // this.artwork2 = new Artwork(
+    //   texturesMap.get("artworksTextures")[1],
+    //   new Vector3(artwork2Pos.x, -1, artwork2Pos.y),
+    //   parameters.envScale
+    // );
+    // this.artwork2.rotation.x *= -1;
 
-    const artwork3Pos = positions.get("artworksPositions")[2];
-    this.artwork3 = new Artwork(
-      texturesMap.get("artworksTextures")[2],
-      new Vector3(artwork3Pos.x, -1.5, artwork3Pos.y),
-      parameters.envScale
-    );
+    // const artwork3Pos = positions.get("artworksPositions")[2];
+    // this.artwork3 = new Artwork(
+    //   texturesMap.get("artworksTextures")[2],
+    //   new Vector3(artwork3Pos.x, -1.5, artwork3Pos.y),
+    //   parameters.envScale
+    // );
 
-    const artwork4Pos = positions.get("artworksPositions")[3];
-    this.artwork4 = new Artwork(
-      texturesMap.get("artworksTextures")[3],
-      new Vector3(artwork4Pos.x, -0.6, artwork4Pos.y),
-      parameters.envScale
-    );
+    // const artwork4Pos = positions.get("artworksPositions")[3];
+    // this.artwork4 = new Artwork(
+    //   texturesMap.get("artworksTextures")[3],
+    //   new Vector3(artwork4Pos.x, -0.6, artwork4Pos.y),
+    //   parameters.envScale
+    // );
     // this.artwork3.rotation.y = -Math.PI * 0.09;
 
     this.add(this.ground1, this.ground2, this.ground3);
-    this.add(this.artwork1, this.artwork2, this.artwork3, this.artwork4);
+    // this.add(this.artwork1, this.artwork2, this.artwork3, this.artwork4);
 
     raf.subscribe("grounds", this.update.bind(this));
 
@@ -149,10 +150,6 @@ export class Grounds extends Group {
       .name("InnerColor2");
   }
 
-  getNextTexture() {
-    return this.textures[this.currentIndex + 1];
-  }
-
   switchGrounds() {
     if (this.currentIndex < this.groundAmount) {
       const currentGround1 = this.ground1;
@@ -161,7 +158,7 @@ export class Grounds extends Group {
 
       currentGround1.position.z -=
         this.parameters.envScale * this.parameters.groundSize * 3;
-      const texture = this.getNextTexture();
+      const texture = this.textures[this.currentIndex + 1];
       texture.flipY = !!(this.currentIndex % 2);
       currentGround1.groundUniforms.uTexture.value = texture;
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;

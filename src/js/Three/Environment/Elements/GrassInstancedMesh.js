@@ -3,15 +3,14 @@ import commonVertexShader from "@glsl/grass/commonVertex.glsl";
 import outputFragmentShader from "@glsl/grass/outputFragment.glsl";
 import projectVertexShader from "@glsl/grass/projectVertex.glsl";
 import * as THREE from "three";
-import { DoubleSide, Vector2, Vector3 } from "three";
-import { texturesMap } from "../../../utils/assets";
+import { DoubleSide, Vector3 } from "three";
 import { guiFolders } from "../../../utils/Debug";
 import raf from "../../../utils/Raf";
 import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 
 export class GrassInstancedMesh {
-  constructor(pathLine) {
-    this.pathLine = pathLine;
+  constructor(envScale, groundSize, sampler) {
+    // this.pathLine = pathLine;
 
     this.grassUniforms = {
       uTime: { value: 0 },
@@ -44,7 +43,7 @@ export class GrassInstancedMesh {
       .name("DisplaceIntensity");
     folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
-    const instanceNumber = 500000;
+    const instanceNumber = 80000;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
@@ -56,7 +55,6 @@ export class GrassInstancedMesh {
     );
 
     this.grassPattern.matrixAutoUpdate = false;
-    this.grassPattern.updateMatrix();
     // this.grassPattern.scale.set(3, 3, 3);
 
     for (let i = 0; i < instanceNumber; i++) {
@@ -64,29 +62,41 @@ export class GrassInstancedMesh {
       const instanceScale = new Vector3(randomScale, randomScale, randomScale);
       const instancePos = new Vector3();
 
-      // do {
-      instancePos.x = (Math.random() - 0.5) * 95;
-      instancePos.y = 0;
-      // instancePos.z = (Math.random() - 0.5) * 100;
-      instancePos.z =
-        Math.random() * (-100 * texturesMap.get("curveTextures").length + 50);
+      sampler.sample(instancePos);
+      instancePos.x *= envScale;
+      instancePos.y *= -envScale;
+      instancePos.z *= envScale;
+      // console.log(instancePos);
 
-      if (pathLine.isPositionInRange(new Vector2(instancePos.x, instancePos.z))) {
-        instanceScale.y = Math.random() * 1.2;
-        instancePos.y = Math.random() * -0.8;
-        // instanceScale.y = 0;
-      }
+      // instanceMatrix.makeTranslation(instancePos.x, instancePos.y, instancePos.z);
 
-      instance.position.set(instancePos.x, instancePos.y, instancePos.z);
+      // // do {
+      // instancePos.x =
+      //   Math.random() * (envScale * groundSize * 0.5 + envScale * groundSize * 0.5) -
+      //   envScale * groundSize * 0.5;
+      // instancePos.y = 0;
+      // // instancePos.z = (Math.random() - 0.5) * 100;
+      // instancePos.z =
+      //   Math.random() * (envScale * groundSize * 0.5 + envScale * groundSize * 0.5) -
+      //   envScale * groundSize * 0.5;
 
-      instance.scale.set(instanceScale.x, instanceScale.y, instanceScale.z);
+      // if (pathLine.isPositionInRange(new Vector2(instancePos.x, instancePos.z))) {
+      //   instanceScale.y = Math.random() * 1.2;
+      //   instancePos.y = Math.random() * -0.8;
+      //   // instanceScale.y = 0;
+      // }
+
+      instance.position.set(instancePos.x, instancePos.z - 2.85, instancePos.y);
+
+      // instance.scale.set(instanceScale.x, instanceScale.y, instanceScale.z);
 
       instance.updateMatrix();
       this.grassPattern.setMatrixAt(i, instance.matrix);
     }
+    this.grassPattern.updateMatrix();
 
     this.group = new THREE.Group();
-    this.group.position.y = -2.75;
+    // this.group.position.y = -3;
     this.group.add(this.grassPattern);
 
     // for (let i = 0; i < this.parameters.grassQuantity; i++) {
