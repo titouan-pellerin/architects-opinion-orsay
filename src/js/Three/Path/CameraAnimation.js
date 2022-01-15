@@ -86,16 +86,8 @@ export class CameraAnimation {
     const curvePoint = this.path.spline.getPointAt(this.tick.value);
     const curvePoint2 = this.path.spline.getPointAt(nextTick);
 
-    const camPos = new Vector3(
-      curvePoint.x * this.envScale,
-      -0.5,
-      curvePoint.y * this.envScale
-    );
-    const camPos2 = new Vector3(
-      curvePoint2.x * this.envScale,
-      -0.5,
-      curvePoint2.y * this.envScale
-    );
+    const camPos = new Vector3(curvePoint.x, -0.5, curvePoint.y);
+    const camPos2 = new Vector3(curvePoint2.x, -0.5, curvePoint2.y);
 
     // mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
     mainScene.camera.position.set(camPos.x, camPos.y, camPos.z);

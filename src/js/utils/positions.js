@@ -3,22 +3,22 @@ import { Vector2 } from "three";
 const positions = new Map();
 
 const curvePoints = [
-  new Vector2(0, 0),
-  new Vector2(0.0061, -0.1362),
-  new Vector2(0.0406, -0.2747),
-  new Vector2(0.2249, -0.461),
-  new Vector2(0.1575, -0.6614),
-  new Vector2(-0.0487, -0.8167),
-  new Vector2(-0.1745, -0.9769),
-  new Vector2(-0.1422, -1.1461),
-  new Vector2(0, -1.2844),
-  new Vector2(0.1859, -1.4058),
-  new Vector2(0.1923, -1.608),
-  new Vector2(0.0503, -1.6992),
-  new Vector2(-0.1206, -1.8018),
-  new Vector2(-0.176, -1.9734),
-  new Vector2(-0.0597, -2.1258),
-  new Vector2(0.0897, -2.202),
+  new Vector2(0, 23.3893),
+  new Vector2(0.3348, 9.7719),
+  new Vector2(2.5467, -4.0787),
+  new Vector2(14.3599, -22.7045),
+  new Vector2(10.0392, -42.7492),
+  new Vector2(-3.1731, -58.2771),
+  new Vector2(-11.2415, -74.2938),
+  new Vector2(-9.1713, -91.218),
+  new Vector2(-0.0538, -105.0417),
+  new Vector2(11.8615, -117.1856),
+  new Vector2(12.2739, -137.4088),
+  new Vector2(3.1733, -146.5269),
+  new Vector2(-7.7857, -156.7835),
+  new Vector2(-11.3338, -173.944),
+  new Vector2(-3.8828, -189.1838),
+  new Vector2(5.6971, -196.8021),
 ];
 
 const checkpoints = [

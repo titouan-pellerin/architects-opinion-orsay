@@ -23,7 +23,7 @@ export class Grounds extends Group {
     // Previous Ground
     this.ground1 = new Ground(this.textures[2], parameters);
     this.ground1.texture.flipY = false;
-    this.ground1.position.z += parameters.envScale;
+    this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
 
     // Current Ground
@@ -43,7 +43,7 @@ export class Grounds extends Group {
     // Next Ground
     this.ground3 = new Ground(this.textures[1], parameters);
     this.ground3.texture.flipY = false;
-    this.ground3.position.z -= this.parameters.envScale;
+    this.ground3.position.z -= this.parameters.envScale * this.parameters.groundSize;
     this.ground3.scale.z = -1;
 
     const trees2 = new Trees(positions.get("treesPositions")[1]);
@@ -159,7 +159,8 @@ export class Grounds extends Group {
       const currentGround2 = this.ground2;
       const currentGround3 = this.ground3;
 
-      currentGround1.position.z -= this.parameters.envScale * 3;
+      currentGround1.position.z -=
+        this.parameters.envScale * this.parameters.groundSize * 3;
       const texture = this.getNextTexture();
       texture.flipY = !!(this.currentIndex % 2);
       currentGround1.groundUniforms.uTexture.value = texture;
@@ -167,28 +168,28 @@ export class Grounds extends Group {
       currentGround1.ground.updateMatrix();
       currentGround1.mask.updateMatrix();
 
-      const newTrees = new Trees(positions.get("treesPositions")[this.currentIndex + 1]);
-      newTrees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      currentGround1.remove(currentGround1.trees);
-      currentGround1.add(newTrees);
-      currentGround1.trees = newTrees;
+      // const newTrees = new Trees(positions.get("treesPositions")[this.currentIndex + 1]);
+      // newTrees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+      // currentGround1.remove(currentGround1.trees);
+      // currentGround1.add(newTrees);
+      // currentGround1.trees = newTrees;
 
-      const newRocks = new Rocks(
-        positions.get("rocksPositions")[this.currentIndex + 1],
-        this.forestPathLine
-      );
-      newRocks.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      currentGround1.remove(currentGround1.rocks);
-      currentGround1.add(newRocks);
-      currentGround1.rocks = newRocks;
+      // const newRocks = new Rocks(
+      //   positions.get("rocksPositions")[this.currentIndex + 1],
+      //   this.forestPathLine
+      // );
+      // newRocks.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+      // currentGround1.remove(currentGround1.rocks);
+      // currentGround1.add(newRocks);
+      // currentGround1.rocks = newRocks;
 
-      const newWoodLogs = new WoodLogs(
-        positions.get("woodLogsPositions")[this.currentIndex + 1]
-      );
-      newWoodLogs.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      currentGround1.remove(currentGround1.woodLogs);
-      currentGround1.add(newWoodLogs);
-      currentGround1.woodLogs = newWoodLogs;
+      // const newWoodLogs = new WoodLogs(
+      //   positions.get("woodLogsPositions")[this.currentIndex + 1]
+      // );
+      // newWoodLogs.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+      // currentGround1.remove(currentGround1.woodLogs);
+      // currentGround1.add(newWoodLogs);
+      // currentGround1.woodLogs = newWoodLogs;
 
       // const newCubes = new Cubes(positions.get("cubesPositions")[this.currentIndex + 1]);
       // newCubes.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
@@ -205,7 +206,8 @@ export class Grounds extends Group {
   }
 
   update() {
-    if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
+    // if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
+    if (mainScene.camera.position.z <= this.ground2.getCenter().z) {
       this.switchGrounds();
       console.log("switch");
     }

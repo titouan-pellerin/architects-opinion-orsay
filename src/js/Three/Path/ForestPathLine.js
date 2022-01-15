@@ -1,6 +1,6 @@
+import { BufferGeometry, Line, LineBasicMaterial, SplineCurve } from "three";
 import { texturesMap } from "../../utils/assets";
 import { positions } from "../../utils/positions";
-import { BufferGeometry, Line, LineBasicMaterial, SplineCurve } from "three";
 
 export class ForestPathLine extends Line {
   constructor(splinePrecision = 1024, pathWidth, parameters) {
@@ -14,7 +14,11 @@ export class ForestPathLine extends Line {
     });
     super(geometry, material);
     this.position.y = -1;
-    this.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
+    // this.scale.set(
+    //   parameters.envScale * parameters.groundSize,
+    //   parameters.envScale * parameters.groundSize,
+    //   parameters.envScale * parameters.groundSize
+    // );
     this.parameters = parameters;
     this.spline = spline;
     this.points = points;

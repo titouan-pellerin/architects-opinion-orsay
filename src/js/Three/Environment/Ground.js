@@ -12,9 +12,10 @@ import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "th
 export class Ground extends Group {
   constructor(texture, parameters = {}) {
     super();
+
     this.texture = texture;
 
-    this.cubes = null;
+    // Used to switch elements on a ground
     this.trees = null;
     this.rocks = null;
     this.woodLogs = null;
@@ -68,7 +69,12 @@ export class Ground extends Group {
       );
     };
 
-    const groundGeometry = new PlaneGeometry(1, 1, 512, 512);
+    const groundGeometry = new PlaneGeometry(
+      parameters.groundSize,
+      parameters.groundSize,
+      256,
+      256
+    );
 
     this.ground = new Mesh(groundGeometry, groundMaterial.meshToonMaterial);
     this.ground.rotation.x = -Math.PI * 0.5;

@@ -91,19 +91,19 @@ export class Trees extends Group {
     tree2.updateMatrix();
     this.add(tree1, tree2);
 
-    for (let i = 2; i < positions.length; i++) {
-      const newTree = i % 2 === 0 ? tree1.clone() : tree2.clone();
+    // for (let i = 2; i < positions.length; i++) {
+    //   const newTree = i % 2 === 0 ? tree1.clone() : tree2.clone();
 
-      newTree.position.set(positions[i].x, -4, positions[i].y);
-      newTree.rotation.set(
-        (Math.random() - 0.5) * 0.2 * Math.PI,
-        Math.random() * Math.PI,
-        (Math.random() - 0.5) * 0.2 * Math.PI
-      );
-      const randomScale = Math.random() * (0.1 - 0.03) + 0.03;
-      newTree.scale.set(randomScale, randomScale, randomScale);
-      newTree.updateMatrix();
-      this.add(newTree);
-    }
+    //   newTree.position.set(positions[i].x, -4, positions[i].y);
+    //   newTree.rotation.set(
+    //     (Math.random() - 0.5) * 0.2 * Math.PI,
+    //     Math.random() * Math.PI,
+    //     (Math.random() - 0.5) * 0.2 * Math.PI
+    //   );
+    //   const randomScale = Math.random() * (0.1 - 0.03) + 0.03;
+    //   newTree.scale.set(randomScale, randomScale, randomScale);
+    //   newTree.updateMatrix();
+    //   this.add(newTree);
+    // }
   }
 }
