@@ -34,6 +34,8 @@ export class Grounds extends Group {
       forestPathLine,
       parameters
     );
+    Ground.grass.removeInPath(3, this.ground1.grass);
+
     // this.ground1.texture.flipY = false;
     this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
@@ -45,6 +47,8 @@ export class Grounds extends Group {
       forestPathLine,
       parameters
     );
+    Ground.grass.removeInPath(0, this.ground2.grass);
+
     const trees1 = new Trees(positions.get("treesPositions")[0]);
     this.ground2.trees = trees1;
     this.ground2.add(trees1);
@@ -64,6 +68,8 @@ export class Grounds extends Group {
       forestPathLine,
       parameters
     );
+    Ground.grass.removeInPath(1, this.ground3.grass);
+
     this.ground3.texture.flipY = false;
     this.ground3.position.z -= parameters.envScale * parameters.groundSize;
     this.ground3.scale.z = -1;
@@ -193,7 +199,7 @@ export class Grounds extends Group {
       texture.flipY = !!(this.currentIndex % 2);
       currentGround1.groundUniforms.uTexture.value = texture;
       currentGround1.groundMaskUniforms.uTexture.value = texture;
-      Ground.grass.removeInPath(texture, currentGround1.grass, !!(this.currentIndex % 2));
+      // Ground.grass.removeInPath(texture, currentGround1.grass, !!(this.currentIndex % 2));
 
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
       currentGround1.ground.updateMatrix();

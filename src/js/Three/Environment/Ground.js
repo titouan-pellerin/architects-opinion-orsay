@@ -66,6 +66,7 @@ export class Ground extends Group {
       groundBeginVertexShader,
       null,
       this.groundUniforms
+      // { side: DoubleSide }
     );
 
     const groundMaskMaterial = new MeshToonMaterial({
@@ -121,7 +122,6 @@ export class Ground extends Group {
       // this.grass = Ground.grass;
       this.grass = Ground.grass.instancedGrassMesh.clone();
     }
-    Ground.grass.removeInPath(this.texture, this.grass);
     this.add(this.grass);
   }
 

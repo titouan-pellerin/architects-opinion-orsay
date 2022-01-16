@@ -1,10 +1,12 @@
 #include <begin_vertex>
 vUv = uv;
 
-float elevation = 1.;
+// float elevation = 1.;
 vec3 curveCoords = texture2D(uTexture, vUv).xyz;
 
-if(curveCoords.r >= .7) elevation = 0.01;
+// if(curveCoords.r >= .7) elevation = 0.01;
+// render = mix(1., .01, 1. - curveCoords.r);
+float elevation = mix(1., .01, curveCoords.r);
 
 // float bigNoise = cnoise(vec4(vec3(transformed * 50.), 0.5)) * 0.004;
 // float smallNoise = cnoise(vec4(vec3(transformed * 200.), 0.5)) * 0.002;
