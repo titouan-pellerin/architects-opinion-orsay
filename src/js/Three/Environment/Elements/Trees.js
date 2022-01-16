@@ -94,14 +94,14 @@ export class Trees extends THREE.Group {
 
     this.geometry = new THREE.PlaneGeometry(0.25, 0.25, 1, 4);
 
-    this.leafsPattern = new THREE.InstancedMesh(
+    this.leavesPattern = new THREE.InstancedMesh(
       this.geometry,
       this.materialLeaf,
       instanceNumber
     );
 
-    this.leafsPattern.matrixAutoUpdate = false;
-    this.leafsPattern.updateMatrix();
+    this.leavesPattern.matrixAutoUpdate = false;
+    this.leavesPattern.updateMatrix();
 
     const radius = 3;
 
@@ -141,31 +141,36 @@ export class Trees extends THREE.Group {
         radius * Math.cos(angleHeight) * noise2D * 1 * Math.sin(angleHeight * 50)
       );
       instance.updateMatrix();
-      this.leafsPattern.setMatrixAt(i, instance.matrix);
+      this.leavesPattern.setMatrixAt(i, instance.matrix);
     }
 
-    const leafs = new THREE.Group();
-    leafs.add(this.leafsPattern);
+    const leaves = new THREE.Group();
+    leaves.add(this.leavesPattern);
 
-    leafs.scale.set(8, 8, 8);
-    leafs.position.set(13.883822441101074, 75, -26.477598190307617);
+    leaves.scale.set(8, 8, 8);
+    leaves.position.set(-3.85, 46.53, 9.81);
 
-    const leafs2 = leafs.clone();
-    leafs2.position.set(6.021400451660156, 56.60111999511719, 9.720206260681152);
-    const leafs3 = leafs.clone();
-    leafs3.position.set(-13.538918495178223, 56.0611457824707, 18.083316802978516);
-    const leafs4 = leafs.clone();
-    leafs4.position.set(-28.79485511779785, 57.274925231933594, 4.6373291015625);
-    const leafs5 = leafs.clone();
-    leafs5.position.set(29.977325439453125, 51.851558685302734, -34.322364807128906);
-    const leafs6 = leafs.clone();
-    leafs6.position.set(-11.098029136657715, 62.07094955444336, 5.341279029846191);
-    const leafs7 = leafs.clone();
-    leafs7.position.set(-6.821478843688965, 61.90618896484375, -2.9381091594696045);
-    const leafs8 = leafs.clone();
-    leafs8.position.set(8.947877883911133, 55.19361877441406, 15.726387023925781);
-    const leafs9 = leafs.clone();
-    leafs9.position.set(13.598841667175293, 45.93263626098633, -12.688941955566406);
+    const leaves2 = leaves.clone();
+    leaves2.position.set(-3.014, 63.6, -0.32);
+    const leaves3 = leaves.clone();
+    leaves3.position.set(4.61, 48.24, -13.37);
+    const leaves4 = leaves.clone();
+    leaves4.position.set(28.92, 51.7, -11.41);
+    const leaves5 = leaves.clone();
+    leaves5.position.set(9.59, 68.83, -4.69);
+
+    const leaves6 = leaves.clone();
+    leaves6.position.set(13.89, 73.02, -23.35);
+    const leaves7 = leaves.clone();
+    leaves7.position.set(7.96, 55.73, 14.13);
+    const leaves8 = leaves.clone();
+    leaves8.position.set(-28.89, 56.82, 7.39);
+    const leaves9 = leaves.clone();
+    leaves9.position.set(30.26, 51.28, -30.93);
+    const leaves10 = leaves.clone();
+    leaves10.position.set(-10.41, 61.12, 8.93);
+    const leaves11 = leaves.clone();
+    leaves11.position.set(-11.83, 55.96, 21.94);
 
     const trunk1 = modelsMap.get("trees")[0].clone();
     trunk1.children[0].material = this.material;
@@ -173,19 +178,19 @@ export class Trees extends THREE.Group {
     const trunk2 = modelsMap.get("trees")[1].clone();
     trunk2.children[0].material = this.material;
 
-    console.log(trunk2.children[0].name);
-
     const tree1 = new THREE.Group();
-    tree1.add(trunk1, leafs, leafs2, leafs3, leafs4, leafs5, leafs6);
-    tree1.position.set(positions[0].x, -3.5, positions[0].y);
-    tree1.scale.set(0.2, 0.2, 0.2);
+    tree1.add(trunk1, leaves, leaves2, leaves3, leaves4, leaves5);
+    // tree1.position.set(positions[0].x, -3.5, positions[0].y);
+    tree1.position.set(-5, -3.5, positions[0].y);
+    tree1.scale.set(0.15, 0.15, 0.15);
     tree1.matrixAutoUpdate = false;
     tree1.updateMatrix();
 
     const tree2 = new THREE.Group();
-    tree2.add(trunk2, leafs7, leafs8, leafs9);
-    tree2.position.set(positions[1].x, -3.5, positions[1].y);
-    tree2.scale.set(0.2, 0.2, 0.2);
+    tree2.add(trunk2, leaves6, leaves7, leaves8, leaves9, leaves10, leaves11);
+    // tree2.position.set(positions[1].x, -3.5, positions[1].y);
+    tree2.position.set(5, -3.5, positions[1].y);
+    tree2.scale.set(0.15, 0.15, 0.15);
     tree2.matrixAutoUpdate = false;
     tree2.updateMatrix();
 
