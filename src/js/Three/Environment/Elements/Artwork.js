@@ -13,10 +13,14 @@ export class Artwork extends Group {
 
     this.artworkBasicMaterial = new MeshToonMaterial({
       side: DoubleSide,
+      transparent: true,
+      opacity: 0.9,
     });
     this.artworkMaterial = new MeshBasicMaterial({
       map: texture,
       side: DoubleSide,
+      transparent: true,
+      opacity: 0.9,
     });
     this.artworkGeometry = new PlaneGeometry();
 

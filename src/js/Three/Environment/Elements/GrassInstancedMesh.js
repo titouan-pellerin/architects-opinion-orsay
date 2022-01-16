@@ -1,24 +1,22 @@
-import * as THREE from "three";
-import { texturesMap } from "../../../utils/assets";
-import { guiFolders } from "../../../utils/Debug";
-import raf from "../../../utils/Raf";
-import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import commonVertexShader from "@glsl/grass/commonVertex.glsl";
 import outputFragmentShader from "@glsl/grass/outputFragment.glsl";
 import projectVertexShader from "@glsl/grass/projectVertex.glsl";
+import * as THREE from "three";
+import { Vector3 } from "three";
+import { texturesMap } from "../../../utils/assets";
+import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 
 export class GrassInstancedMesh {
-  constructor(pathLine) {
+  constructor(uniforms, envScale, sampler, pathLine) {
     this.pathLine = pathLine;
 
-    this.grassUniforms = {
-      uTime: { value: 0 },
-      uColor: { value: new THREE.Color("#84b15a") },
-      uColor2: { value: new THREE.Color("#236760") },
-      uDisplaceIntensity: { value: 0.25 },
-      uSpeed: { value: 1.2 },
-    };
+    this.defaultPositions = [];
+    this.curveTexturesData = [];
+    this.curveTexturesMatrices = new Map();
+    this.textureSize = Math.floor(texturesMap.get("curveTextures")[0].image.width * 0.25);
+
+    this.generateTexturesData();
 
     this.material = new CustomMeshToonMaterial(
       commonFragmentShader,
@@ -26,72 +24,78 @@ export class GrassInstancedMesh {
       commonVertexShader,
       null,
       projectVertexShader,
-      this.grassUniforms,
+      uniforms,
       {
         side: THREE.DoubleSide,
       }
     );
 
-    const sceneFolder = guiFolders.get("scene");
-    const folder = sceneFolder.addFolder("Grass");
-    folder.addColor(this.grassUniforms.uColor, "value").name("Color");
-    folder.addColor(this.grassUniforms.uColor2, "value").name("Color2");
-    folder
-      .add(this.grassUniforms.uDisplaceIntensity, "value")
-      .min(0)
-      .max(1)
-      .name("DisplaceIntensity");
-    folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
-
-    const instanceNumber = 500000;
+    this.instanceNumber = 100000;
     const instance = new THREE.Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(0.01, 0.4, 1, 4);
+    this.geometry = new THREE.PlaneGeometry(0.01, 0.6, 1, 8);
 
-    this.grassPattern = new THREE.InstancedMesh(
+    this.instancedGrassMesh = new THREE.InstancedMesh(
       this.geometry,
       this.material.meshToonMaterial,
-      instanceNumber
+      this.instanceNumber
     );
 
-    this.grassPattern.matrixAutoUpdate = false;
-    this.grassPattern.updateMatrix();
-    // this.grassPattern.scale.set(3, 3, 3);
+    this.instancedGrassMesh.matrixAutoUpdate = false;
 
-    for (let i = 0; i < instanceNumber; i++) {
-      const randomScale = Math.random() * 3;
-      const instanceScale = new THREE.Vector3(randomScale, randomScale, randomScale);
-      const instancePos = new THREE.Vector3();
+    for (let i = 0; i < this.instanceNumber; i++) {
+      const instancePos = new Vector3();
 
-      // do {
-      instancePos.x = (Math.random() - 0.5) * 95;
-      instancePos.y = 0;
-      // instancePos.z = (Math.random() - 0.5) * 100;
-      instancePos.z =
-        Math.random() * (-100 * texturesMap.get("curveTextures").length + 50);
+      sampler.sample(instancePos);
+      instancePos.x *= envScale;
+      instancePos.y *= -envScale;
+      instancePos.z *= envScale;
+      instance.position.set(instancePos.x, instancePos.z - 2.85, instancePos.y);
 
-      if (pathLine.isPositionInRange(new THREE.Vector2(instancePos.x, instancePos.z))) {
-        instanceScale.y = Math.random() * 1.2;
-        instancePos.y = Math.random() * -0.8;
-        // instanceScale.y = 0;
+      for (let i = 0; i < this.curveTexturesData.length; i++) {
+        const textureInstancePosX = Math.floor(
+          ((instance.position.x + 25) * this.textureSize) / 50
+        );
+        const textureInstancePosY = Math.floor(
+          ((instance.position.z + 25) * this.textureSize) / 50
+        );
+        const red =
+          this.curveTexturesData[i][
+            textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4 + 2
+          ];
+
+        instance.position.y = instance.position.y * (1 - red / 255) + (-2.95 * red) / 255;
+        instance.scale.y = 1 * (1 - red / 255) + (0.5 * red) / 255;
+        instance.updateMatrix();
+
+        if (!this.curveTexturesMatrices.get(i))
+          this.curveTexturesMatrices.set(i, [instance.matrix.clone()]);
+        else this.curveTexturesMatrices.get(i).push(instance.matrix.clone());
       }
-
-      instance.position.set(instancePos.x, instancePos.y, instancePos.z);
-
-      instance.scale.set(instanceScale.x, instanceScale.y, instanceScale.z);
-
-      instance.updateMatrix();
-      this.grassPattern.setMatrixAt(i, instance.matrix);
     }
-
-    this.group = new THREE.Group();
-    this.group.position.y = -2.75;
-    this.group.add(this.grassPattern);
-
-    raf.subscribe("Grass", this.update.bind(this));
   }
 
-  update() {
-    this.grassUniforms.uTime.value = raf.elapsedTime;
+  generateTexturesData() {
+    const textures = texturesMap.get("curveTextures");
+    const canvas = document.createElement("canvas");
+    canvas.width = this.textureSize;
+    canvas.height = this.textureSize;
+    const context = canvas.getContext("2d");
+    for (const texture of textures) {
+      context.drawImage(texture.image, 0, 0, this.textureSize, this.textureSize);
+      const imageData = context.getImageData(0, 0, this.textureSize, this.textureSize);
+      this.curveTexturesData.push(imageData.data);
+      context.clearRect(0, 0, this.textureSize, this.textureSize);
+    }
+    canvas.remove();
+  }
+
+  removeInPath(groundIndex, instancedMesh, flipY = false) {
+    for (let i = 0; i < this.instanceNumber; i++) {
+      const newInstanceMatrix = this.curveTexturesMatrices.get(groundIndex)[i];
+      instancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+    }
+    instancedMesh.instanceMatrix.needsUpdate = true;
+    instancedMesh.updateMatrix();
   }
 }

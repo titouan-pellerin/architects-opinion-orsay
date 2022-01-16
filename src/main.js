@@ -1,7 +1,5 @@
-import { GrassInstancedMesh } from "./js/Three/Environment/Elements/GrassInstancedMesh";
 import { Environment } from "./js/Three/Environment/Environment";
 import { mainScene } from "./js/Three/MainScene";
-import { Leaves } from "./js/Three/Particles/Leaves/Leaves";
 import { loadingManager } from "./js/utils/Loader";
 import "./styles/style.scss";
 
@@ -10,13 +8,10 @@ function init() {
 
   // mainScene.add(loadingPage.mesh);
 
-  const leaves = new Leaves();
-  mainScene.add(leaves.leaveMesh);
-
   // const percent = document.querySelector(".percent");
   // const buttonLoader = document.querySelector(".buttonLoader");
   // const loadingImage = document.querySelector(".loadingImage");
-  const audio = document.querySelector(".audio");
+  // const audio = document.querySelector(".audio");
 
   // buttonLoader.addEventListener("click", () => {
   //   // percent.classList.add("hidden");
@@ -42,13 +37,13 @@ function init() {
   // };
 
   loadingManager.onLoad = () => {
+    //  const leaves = new Leaves();
+    //  mainScene.add(leaves.leaveMesh);
+
     const environment = new Environment();
     // mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
     // mainScene.add(environment.grounds, environment.sky);
     mainScene.add(environment.grounds);
-
-    const grassInstancedMesh = new GrassInstancedMesh(environment.forestPathLine);
-    mainScene.add(grassInstancedMesh.group);
 
     // const oeuvres = new Oeuvres();
     // mainScene.add(

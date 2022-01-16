@@ -1,14 +1,3 @@
-import commonLeaveFragmentShader from "../../../../glsl/particles/leaves/commonLeaveFragmentShader.glsl";
-import commonLeaveVertexShader from "../../../../glsl/particles/leaves/commonLeaveVertexShader.glsl";
-import fragmentShaderPosition from "../../../../glsl/particles/leaves/fragmentShaderPosition.glsl";
-import fragmentShaderVelocity from "../../../../glsl/particles/leaves/fragmentShaderVelocity.glsl";
-import outputLeaveFragmentShader from "../../../../glsl/particles/leaves/outputLeaveFragmentShader.glsl";
-import projectLeaveVertexShader from "../../../../glsl/particles/leaves/projectLeaveVertexShader.glsl";
-import { guiFolders } from "../../../utils/Debug";
-import raf from "../../../utils/Raf";
-import { isSafari } from "../../../utils/misc.js";
-import { mainScene } from "../../MainScene.js";
-import { LeavesGeometry } from "./LeavesGeometry";
 import {
   Color,
   DoubleSide,
@@ -19,6 +8,17 @@ import {
   Vector2,
 } from "three";
 import { GPUComputationRenderer } from "three/examples/jsm/misc/GPUComputationRenderer";
+import commonLeaveFragmentShader from "../../../../glsl/particles/leaves/commonLeaveFragmentShader.glsl";
+import commonLeaveVertexShader from "../../../../glsl/particles/leaves/commonLeaveVertexShader.glsl";
+import fragmentShaderPosition from "../../../../glsl/particles/leaves/fragmentShaderPosition.glsl";
+import fragmentShaderVelocity from "../../../../glsl/particles/leaves/fragmentShaderVelocity.glsl";
+import outputLeaveFragmentShader from "../../../../glsl/particles/leaves/outputLeaveFragmentShader.glsl";
+import projectLeaveVertexShader from "../../../../glsl/particles/leaves/projectLeaveVertexShader.glsl";
+import { guiFolders } from "../../../utils/Debug";
+import { isSafari } from "../../../utils/misc.js";
+import raf from "../../../utils/Raf";
+import { mainScene } from "../../MainScene.js";
+import { LeavesGeometry } from "./LeavesGeometry";
 
 export class Leaves {
   constructor(WIDTH = 16, BOUNDS = 10) {

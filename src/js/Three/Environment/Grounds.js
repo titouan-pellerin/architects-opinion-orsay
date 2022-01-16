@@ -1,14 +1,13 @@
-import { guiFolders } from "../../utils/Debug";
-import raf from "../../utils/Raf";
+import { Color, Group } from "three";
 import { texturesMap } from "../../utils/assets";
+import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
+import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
-import { Artwork } from "./Elements/Artwork";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
 import { Ground } from "./Ground";
-import { Group, Vector3 } from "three";
 
 export class Grounds extends Group {
   constructor(groundAmount, parameters = {}, forestPathLine) {
@@ -20,14 +19,36 @@ export class Grounds extends Group {
 
     this.textures = texturesMap.get("curveTextures");
 
+    this.grassUniforms = {
+      uTime: { value: 0 },
+      uColor: { value: new Color("#84b15a") },
+      uColor2: { value: new Color("#236760") },
+      uDisplaceIntensity: { value: 0.25 },
+      uSpeed: { value: 1.2 },
+    };
+
     // Previous Ground
-    this.ground1 = new Ground(this.textures[2], parameters);
-    this.ground1.texture.flipY = false;
-    this.ground1.position.z += parameters.envScale;
+    this.ground1 = new Ground(
+      this.textures[2],
+      this.grassUniforms,
+      forestPathLine,
+      parameters
+    );
+    Ground.grass.removeInPath(3, this.ground1.grass);
+
+    // this.ground1.texture.flipY = false;
+    this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
 
     // Current Ground
-    this.ground2 = new Ground(this.textures[0], parameters);
+    this.ground2 = new Ground(
+      this.textures[0],
+      this.grassUniforms,
+      forestPathLine,
+      parameters
+    );
+    Ground.grass.removeInPath(0, this.ground2.grass);
+
     const trees1 = new Trees(positions.get("treesPositions")[0]);
     this.ground2.trees = trees1;
     this.ground2.add(trees1);
@@ -41,9 +62,16 @@ export class Grounds extends Group {
     this.ground2.add(woodLogs1);
 
     // Next Ground
-    this.ground3 = new Ground(this.textures[1], parameters);
+    this.ground3 = new Ground(
+      this.textures[1],
+      this.grassUniforms,
+      forestPathLine,
+      parameters
+    );
+    Ground.grass.removeInPath(1, this.ground3.grass);
+
     this.ground3.texture.flipY = false;
-    this.ground3.position.z -= this.parameters.envScale;
+    this.ground3.position.z -= parameters.envScale * parameters.groundSize;
     this.ground3.scale.z = -1;
 
     // const trees2 = new Trees(positions.get("treesPositions")[1]);
@@ -61,38 +89,38 @@ export class Grounds extends Group {
     this.ground3.woodLogs = woodLogs2;
     this.ground3.add(woodLogs2);
 
-    const artwork1Pos = positions.get("artworksPositions")[0];
-    this.artwork1 = new Artwork(
-      texturesMap.get("artworksTextures")[0],
-      new Vector3(artwork1Pos.x, -1.38, artwork1Pos.y),
-      parameters.envScale
-    );
+    // const artwork1Pos = positions.get("artworksPositions")[0];
+    // this.artwork1 = new Artwork(
+    //   texturesMap.get("artworksTextures")[0],
+    //   new Vector3(artwork1Pos.x, -1.38, artwork1Pos.y),
+    //   parameters.envScale
+    // );
 
-    const artwork2Pos = positions.get("artworksPositions")[1];
-    this.artwork2 = new Artwork(
-      texturesMap.get("artworksTextures")[1],
-      new Vector3(artwork2Pos.x, -1, artwork2Pos.y),
-      parameters.envScale
-    );
-    this.artwork2.rotation.x *= -1;
+    // const artwork2Pos = positions.get("artworksPositions")[1];
+    // this.artwork2 = new Artwork(
+    //   texturesMap.get("artworksTextures")[1],
+    //   new Vector3(artwork2Pos.x, -1, artwork2Pos.y),
+    //   parameters.envScale
+    // );
+    // this.artwork2.rotation.x *= -1;
 
-    const artwork3Pos = positions.get("artworksPositions")[2];
-    this.artwork3 = new Artwork(
-      texturesMap.get("artworksTextures")[2],
-      new Vector3(artwork3Pos.x, -1.5, artwork3Pos.y),
-      parameters.envScale
-    );
+    // const artwork3Pos = positions.get("artworksPositions")[2];
+    // this.artwork3 = new Artwork(
+    //   texturesMap.get("artworksTextures")[2],
+    //   new Vector3(artwork3Pos.x, -1.5, artwork3Pos.y),
+    //   parameters.envScale
+    // );
 
-    const artwork4Pos = positions.get("artworksPositions")[3];
-    this.artwork4 = new Artwork(
-      texturesMap.get("artworksTextures")[3],
-      new Vector3(artwork4Pos.x, -0.6, artwork4Pos.y),
-      parameters.envScale
-    );
+    // const artwork4Pos = positions.get("artworksPositions")[3];
+    // this.artwork4 = new Artwork(
+    //   texturesMap.get("artworksTextures")[3],
+    //   new Vector3(artwork4Pos.x, -0.6, artwork4Pos.y),
+    //   parameters.envScale
+    // );
     // this.artwork3.rotation.y = -Math.PI * 0.09;
 
     this.add(this.ground1, this.ground2, this.ground3);
-    this.add(this.artwork1, this.artwork2, this.artwork3, this.artwork4);
+    // this.add(this.artwork1, this.artwork2, this.artwork3, this.artwork4);
 
     raf.subscribe("grounds", this.update.bind(this));
 
@@ -147,10 +175,16 @@ export class Grounds extends Group {
     woodLogsFolder
       .addColor(this.ground2.woodLogs.woodInnerUniforms.uColor2, "value")
       .name("InnerColor2");
-  }
 
-  getNextTexture() {
-    return this.textures[this.currentIndex + 1];
+    const folder = sceneFolder.addFolder("Grass");
+    folder.addColor(this.grassUniforms.uColor, "value").name("Color");
+    folder.addColor(this.grassUniforms.uColor2, "value").name("Color2");
+    folder
+      .add(this.grassUniforms.uDisplaceIntensity, "value")
+      .min(0)
+      .max(1)
+      .name("DisplaceIntensity");
+    folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
   }
 
   switchGrounds() {
@@ -159,10 +193,14 @@ export class Grounds extends Group {
       const currentGround2 = this.ground2;
       const currentGround3 = this.ground3;
 
-      currentGround1.position.z -= this.parameters.envScale * 3;
-      const texture = this.getNextTexture();
+      currentGround1.position.z -=
+        this.parameters.envScale * this.parameters.groundSize * 3;
+      const texture = this.textures[this.currentIndex + 1];
       texture.flipY = !!(this.currentIndex % 2);
       currentGround1.groundUniforms.uTexture.value = texture;
+      currentGround1.groundMaskUniforms.uTexture.value = texture;
+      // Ground.grass.removeInPath(texture, currentGround1.grass, !!(this.currentIndex % 2));
+
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
       currentGround1.ground.updateMatrix();
       currentGround1.mask.updateMatrix();
@@ -173,22 +211,22 @@ export class Grounds extends Group {
       // currentGround1.add(newTrees);
       // currentGround1.trees = newTrees;
 
-      const newRocks = new Rocks(
-        positions.get("rocksPositions")[this.currentIndex + 1],
-        this.forestPathLine
-      );
-      newRocks.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      currentGround1.remove(currentGround1.rocks);
-      currentGround1.add(newRocks);
-      currentGround1.rocks = newRocks;
+      // const newRocks = new Rocks(
+      //   positions.get("rocksPositions")[this.currentIndex + 1],
+      //   this.forestPathLine
+      // );
+      // newRocks.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+      // currentGround1.remove(currentGround1.rocks);
+      // currentGround1.add(newRocks);
+      // currentGround1.rocks = newRocks;
 
-      const newWoodLogs = new WoodLogs(
-        positions.get("woodLogsPositions")[this.currentIndex + 1]
-      );
-      newWoodLogs.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      currentGround1.remove(currentGround1.woodLogs);
-      currentGround1.add(newWoodLogs);
-      currentGround1.woodLogs = newWoodLogs;
+      // const newWoodLogs = new WoodLogs(
+      //   positions.get("woodLogsPositions")[this.currentIndex + 1]
+      // );
+      // newWoodLogs.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+      // currentGround1.remove(currentGround1.woodLogs);
+      // currentGround1.add(newWoodLogs);
+      // currentGround1.woodLogs = newWoodLogs;
 
       // const newCubes = new Cubes(positions.get("cubesPositions")[this.currentIndex + 1]);
       // newCubes.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
@@ -205,8 +243,10 @@ export class Grounds extends Group {
   }
 
   update() {
-    if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
+    // if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
+    if (mainScene.camera.position.z <= this.ground2.getCenter().z) {
       this.switchGrounds();
     }
+    this.grassUniforms.uTime.value = raf.elapsedTime;
   }
 }

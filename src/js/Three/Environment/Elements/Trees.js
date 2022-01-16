@@ -1,18 +1,16 @@
-import * as THREE from "three";
-import { guiFolders } from "@js/utils/Debug";
-import { modelsMap } from "../../../utils/assets";
-import raf from "../../../utils/Raf";
-import commonVertexShader from "@glsl/tree/trunk/commonVertex.glsl";
+import commonFragmentShaderLeaf from "@glsl/tree/leaf/commonFragment.glsl";
+import commonVertexShaderLeaf from "@glsl/tree/leaf/commonVertex.glsl";
+import outputFragmentShaderLeaf from "@glsl/tree/leaf/outputFragment.glsl";
+import projectVertexShaderLeaf from "@glsl/tree/leaf/projectVertex.glsl";
 import beginVertexShader from "@glsl/tree/trunk/beginVertex.glsl";
 import commonFragmentShader from "@glsl/tree/trunk/commonFragment.glsl";
+import commonVertexShader from "@glsl/tree/trunk/commonVertex.glsl";
 import outputFragmentShader from "@glsl/tree/trunk/outputFragment.glsl";
-
-import commonVertexShaderLeaf from "@glsl/tree/leaf/commonVertex.glsl";
-import projectVertexShaderLeaf from "@glsl/tree/leaf/projectVertex.glsl";
-import commonFragmentShaderLeaf from "@glsl/tree/leaf/commonFragment.glsl";
-import outputFragmentShaderLeaf from "@glsl/tree/leaf/outputFragment.glsl";
-import { mainScene } from "../../MainScene";
+import { guiFolders } from "@js/utils/Debug";
 import SimplexNoise from "simplex-noise";
+import * as THREE from "three";
+import { modelsMap } from "../../../utils/assets";
+import raf from "../../../utils/Raf";
 
 export class Trees extends THREE.Group {
   constructor(positions = []) {
@@ -86,7 +84,7 @@ export class Trees extends THREE.Group {
 
     // initializing a new simplex instance
     // do this only once as it is relatively expensive
-    let simplex = new SimplexNoise();
+    const simplex = new SimplexNoise();
     let noise2D;
 
     const instanceNumber = 1000;
@@ -180,23 +178,18 @@ export class Trees extends THREE.Group {
 
     const tree1 = new THREE.Group();
     tree1.add(trunk1, leaves, leaves2, leaves3, leaves4, leaves5);
-    // tree1.position.set(positions[0].x, -3.5, positions[0].y);
-    tree1.position.set(-5, -3.5, positions[0].y);
     tree1.scale.set(0.15, 0.15, 0.15);
     tree1.matrixAutoUpdate = false;
     tree1.updateMatrix();
 
     const tree2 = new THREE.Group();
     tree2.add(trunk2, leaves6, leaves7, leaves8, leaves9, leaves10, leaves11);
-    // tree2.position.set(positions[1].x, -3.5, positions[1].y);
-    tree2.position.set(5, -3.5, positions[1].y);
+
     tree2.scale.set(0.15, 0.15, 0.15);
     tree2.matrixAutoUpdate = false;
     tree2.updateMatrix();
 
-    this.add(tree1, tree2);
-
-    for (let i = 2; i < positions.length; i++) {
+    for (let i = 0; i < positions.length; i++) {
       const newTree = i % 2 === 0 ? tree1.clone() : tree2.clone();
 
       newTree.position.set(positions[i].x, -3.5, positions[i].y);

@@ -1,5 +1,5 @@
-import { stats } from "./Debug";
 import { Clock } from "three";
+import { stats } from "./Debug";
 
 class Raf {
   constructor() {

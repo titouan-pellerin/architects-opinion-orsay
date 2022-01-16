@@ -1,13 +1,15 @@
-import fragmentShader from "../../glsl/post/fragment.glsl";
-import vertexShader from "../../glsl/post/vertex.glsl";
-import { guiFolders } from "../utils/Debug";
-import raf from "../utils/Raf";
-import { texturesMap } from "../utils/assets";
 import * as THREE from "three";
 import { Group } from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+import fragmentShader from "../../glsl/post/fragment.glsl";
+import vertexShader from "../../glsl/post/vertex.glsl";
+import { texturesMap } from "../utils/assets";
+import { guiFolders } from "../utils/Debug";
+import { mouse } from "../utils/Mouse";
+import raf from "../utils/Raf";
 
 export class MainScene extends THREE.Scene {
   constructor() {
@@ -59,14 +61,37 @@ export class MainScene extends THREE.Scene {
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
-    // this.add(this.camera);
 
-    // this.controls = new OrbitControls(this.camera, this.canvas);
-    // this.controls.enableDamping = true;
-    // this.controls.dampingFactor = 0.05;
-    // this.controls.enableRotate = true;
-    // guiFolders.get("camera").add(this.controls, "enabled").name("OrbitControls");
-    // this.controls.update();
+    const orbitDebug = {
+      enabled: false,
+    };
+
+    guiFolders
+      .get("camera")
+      .add(orbitDebug, "enabled")
+      .name("OrbitControls")
+      .onChange(() => {
+        if (orbitDebug.enabled) {
+          raf.unsubscribe("mouse");
+          // this.cameraContainer.remove(this.camera);
+          this.add(this.camera);
+          this.remove(this.cameraContainer);
+          this.controls = new OrbitControls(this.camera, this.canvas);
+          this.controls.target = this.camera.position.clone();
+          this.controls.enableDamping = true;
+          this.controls.dampingFactor = 0.05;
+          this.controls.enableRotate = true;
+          this.controls.enabled = true;
+          this.camera.position.z += 1;
+          this.controls.update();
+        } else {
+          this.controls.dispose();
+          this.controls = null;
+          raf.subscribe("mouse", mouse.update.bind(mouse));
+          this.remove(this.camera);
+          this.cameraContainer.add(this.camera);
+        }
+      });
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
@@ -87,9 +112,7 @@ export class MainScene extends THREE.Scene {
     this.background = new THREE.Color(parameters.skyBgColor);
 
     this.add(this.cameraContainer);
-    this.camera.position.set(0, 0, 0);
-    // this.camera.lookAt(0, 0, -10);
-    // this.camera.position.set(0, 1, 20);
+    this.camera.position.set(0, 0, 23);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 20, 45);
     this.fog = fog;
@@ -127,9 +150,14 @@ export class MainScene extends THREE.Scene {
         uBlurIntensity: { value: 2 },
         uNoiseTexture: { value: null },
         uBlurPos: {
-          value: new THREE.Vector2(window.innerWidth * 0.55, window.innerHeight * 0.55),
+          value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
         },
-        uRes: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+        uRes: {
+          value: new THREE.Vector2(
+            window.innerWidth - window.innerWidth * 0.3,
+            window.innerHeight - window.innerHeight * 0.35
+          ),
+        },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -258,7 +286,8 @@ export class MainScene extends THREE.Scene {
   }
 
   update() {
-    // this.controls.update();
+    if (this.controls) this.controls.update();
+
     this.composer.render();
     // this.renderer.render(this, this.camera);
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
