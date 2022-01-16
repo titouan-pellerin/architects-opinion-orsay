@@ -23,8 +23,8 @@ export class Ground extends Group {
       Ground.groundGeometry = new PlaneGeometry(
         parameters.groundSize,
         parameters.groundSize,
-        128,
-        128
+        256,
+        256
       ).toNonIndexed();
       const vertices = Ground.groundGeometry.getAttribute("position").array;
       const simplex = new SimplexNoise("toto-titou");
@@ -121,7 +121,7 @@ export class Ground extends Group {
       // this.grass = Ground.grass;
       this.grass = Ground.grass.instancedGrassMesh.clone();
     }
-    Ground.grass.removeInPath(this.grass);
+    Ground.grass.removeInPath(this.texture, this.grass);
     this.add(this.grass);
   }
 

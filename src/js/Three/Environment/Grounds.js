@@ -192,6 +192,9 @@ export class Grounds extends Group {
       const texture = this.textures[this.currentIndex + 1];
       texture.flipY = !!(this.currentIndex % 2);
       currentGround1.groundUniforms.uTexture.value = texture;
+      currentGround1.groundMaskUniforms.uTexture.value = texture;
+      Ground.grass.removeInPath(texture, currentGround1.grass, !!(this.currentIndex % 2));
+
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
       currentGround1.ground.updateMatrix();
       currentGround1.mask.updateMatrix();

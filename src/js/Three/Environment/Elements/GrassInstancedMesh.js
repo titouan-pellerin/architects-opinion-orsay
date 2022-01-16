@@ -3,7 +3,7 @@ import commonVertexShader from "@glsl/grass/commonVertex.glsl";
 import outputFragmentShader from "@glsl/grass/outputFragment.glsl";
 import projectVertexShader from "@glsl/grass/projectVertex.glsl";
 import * as THREE from "three";
-import { DoubleSide, Object3D, Vector2, Vector3 } from "three";
+import { DoubleSide, Object3D, Vector3 } from "three";
 import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 
 export class GrassInstancedMesh {
@@ -99,30 +99,67 @@ export class GrassInstancedMesh {
     // }
   }
 
-  removeInPath(instancedMesh) {
-    console.log(this.defaultPositions);
-    const instance = new Object3D();
-    for (let i = 0; i < this.instanceNumber; i++) {
-      const instanceDefaultPosition = this.defaultPositions[i];
-      const instanceWorldPosition = instanceDefaultPosition.clone();
-      instance.position.set(
-        instanceDefaultPosition.x,
-        instanceDefaultPosition.y,
-        instanceDefaultPosition.z
-      );
-      instance.localToWorld(instanceWorldPosition);
-      if (
-        this.pathLine.isPositionInRange(
-          new Vector2(instanceWorldPosition.x, instanceWorldPosition.z)
-        )
-      ) {
-        // console.log("in range");
-        instance.scale.setScalar(0);
-      }
-      instance.updateMatrix();
+  removeInPath(texture, instancedMesh, flipY = false) {
+    // console.log(this.defaultPositions);
+    // const instance = new Object3D();
+    // for (let i = 0; i < this.instanceNumber; i++) {
+    //   const instanceDefaultPosition = this.defaultPositions[i];
+    //   const instanceWorldPosition = instanceDefaultPosition.clone();
+    //   instance.position.set(
+    //     instanceDefaultPosition.x,
+    //     instanceDefaultPosition.y,
+    //     instanceDefaultPosition.z
+    //   );
+    //   instance.localToWorld(instanceWorldPosition);
+    //   if (
+    //     this.pathLine.isPositionInRange(
+    //       new Vector2(instanceWorldPosition.x, instanceWorldPosition.z)
+    //     )
+    //   ) {
+    //     // console.log("in range");
+    //     instance.scale.setScalar(0);
+    //   }
+    //   instance.updateMatrix();
 
+    //   instancedMesh.setMatrixAt(i, instance.matrix);
+    // }
+    // console.log(instancedMesh);
+    const canvas = document.createElement("canvas");
+    const textureSize = texture.image.width / 10;
+    canvas.width = textureSize;
+    canvas.height = textureSize;
+    const context = canvas.getContext("2d");
+
+    context.drawImage(texture.image, 0, 0, textureSize, textureSize);
+    // const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+    // const curvePosTexture = new DataTexture(
+    //   imageData.data,
+    //   canvas.width,
+    //   canvas.height,
+    //   RGBAFormat
+    // );
+    // console.log(imageData.data);
+    const instance = new Object3D();
+    console.log(this.defaultPositions);
+    for (let i = 0; i < this.instanceNumber; i++) {
+      // const randomScale = Math.random() * 3;
+      const newInstancePos = this.defaultPositions[i].clone();
+
+      const textureInstancePosX = Math.floor(
+        ((newInstancePos.x + 25) * textureSize) / 50
+      );
+      const textureInstancePosY = Math.floor(
+        ((newInstancePos.z + 25) * textureSize) / 50
+      );
+      const pixel = context.getImageData(textureInstancePosX, textureInstancePosY, 1, 1);
+      if (pixel.data[1] >= 178.5) newInstancePos.y = newInstancePos.y * 0.1 - 2.75;
+      // console.log(pixel.data[0] >= 178.5);
+      instance.position.set(newInstancePos.x, newInstancePos.y, newInstancePos.z);
+      instance.updateMatrix();
       instancedMesh.setMatrixAt(i, instance.matrix);
     }
-    console.log(instancedMesh);
+    instancedMesh.updateMatrix();
+    canvas.remove();
   }
 }

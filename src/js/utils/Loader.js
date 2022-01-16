@@ -1,4 +1,4 @@
-import { LoadingManager, TextureLoader } from "three";
+import { ImageLoader, LoadingManager, TextureLoader } from "three";
 import { BasisTextureLoader } from "three/examples/jsm/loaders/BasisTextureLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -15,5 +15,8 @@ gltfLoader.setDRACOLoader(dracoLoader);
 
 const basisLoader = new BasisTextureLoader();
 basisLoader.setTranscoderPath("/libs/basis/");
+
+const imageLoader = new ImageLoader(loadingManager);
+
 // basisLoader.detectSupport(mainScene.renderer);
-export { loadingManager, textureLoader, BasisTextureLoader, gltfLoader };
+export { loadingManager, textureLoader, basisLoader, imageLoader, gltfLoader };
