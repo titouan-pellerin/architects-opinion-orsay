@@ -11,7 +11,7 @@ function init() {
   // const percent = document.querySelector(".percent");
   // const buttonLoader = document.querySelector(".buttonLoader");
   // const loadingImage = document.querySelector(".loadingImage");
-  const audio = document.querySelector(".audio");
+  // const audio = document.querySelector(".audio");
 
   // buttonLoader.addEventListener("click", () => {
   //   // percent.classList.add("hidden");

@@ -14,11 +14,7 @@ export class ForestPathLine extends Line {
     });
     super(geometry, material);
     this.position.y = -1;
-    // this.scale.set(
-    //   parameters.envScale * parameters.groundSize,
-    //   parameters.envScale * parameters.groundSize,
-    //   parameters.envScale * parameters.groundSize
-    // );
+    this.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
     this.parameters = parameters;
     this.spline = spline;
     this.points = points;

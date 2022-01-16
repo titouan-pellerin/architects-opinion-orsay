@@ -9,20 +9,31 @@ import maskOutputFragmentShader from "@glsl/ground/mask/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
 import { GrassInstancedMesh } from "@js/Three/Environment/Elements/GrassInstancedMesh";
 import SimplexNoise from "simplex-noise";
-import {
-  Color,
-  DoubleSide,
-  Group,
-  Mesh,
-  MeshToonMaterial,
-  PlaneGeometry,
-  Vector3,
-} from "three";
+import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 
 export class Ground extends Group {
-  constructor(texture, parameters = {}) {
+  static groundGeometry;
+  static grass;
+  constructor(texture, grassUniforms, pathLine, parameters = {}) {
     super();
+
+    // Static attribute to create only one geometry (because no-indexed geometry requires a bit more time)
+    if (!Ground.groundGeometry) {
+      Ground.groundGeometry = new PlaneGeometry(
+        parameters.groundSize,
+        parameters.groundSize,
+        128,
+        128
+      ).toNonIndexed();
+      const vertices = Ground.groundGeometry.getAttribute("position").array;
+      const simplex = new SimplexNoise("toto-titou");
+      for (let i = 0; i < vertices.length / 3; i++) {
+        const i3 = i * 3;
+        const noise = simplex.noise2D(vertices[i3] * 30, vertices[i3 + 1] * 30);
+        vertices[i3 + 2] += noise * 0.004;
+      }
+    }
 
     this.texture = texture;
 
@@ -54,10 +65,7 @@ export class Ground extends Group {
       groundCommonVertexShader,
       groundBeginVertexShader,
       null,
-      this.groundUniforms,
-      {
-        side: DoubleSide,
-      }
+      this.groundUniforms
     );
 
     const groundMaskMaterial = new MeshToonMaterial({
@@ -83,25 +91,12 @@ export class Ground extends Group {
       );
     };
 
-    const groundGeometry = new PlaneGeometry(
-      parameters.groundSize,
-      parameters.groundSize,
-      256,
-      256
-    );
-    const vertices = groundGeometry.getAttribute("position").array;
-    const simplex = new SimplexNoise("toto-titou");
-    for (let i = 0; i < vertices.length / 3; i++) {
-      const i3 = i * 3;
-      const noise = simplex.noise2D(vertices[i3] * 30, vertices[i3 + 1] * 30);
-      vertices[i3 + 2] += noise * 0.004;
-    }
-    this.ground = new Mesh(groundGeometry, groundMaterial.meshToonMaterial);
+    this.ground = new Mesh(Ground.groundGeometry, groundMaterial.meshToonMaterial);
 
     this.ground.rotation.x = -Math.PI * 0.5;
     this.ground.position.y = -3.01;
     this.ground.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
-    this.mask = new Mesh(groundGeometry, groundMaskMaterial);
+    this.mask = new Mesh(Ground.groundGeometry, groundMaskMaterial);
     this.mask.rotation.x = -Math.PI * 0.5;
     this.mask.position.y = -3;
     this.mask.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
@@ -114,12 +109,20 @@ export class Ground extends Group {
     this.mask.updateMatrix();
 
     const sampler = new MeshSurfaceSampler(this.ground).build();
-    this.grass = new GrassInstancedMesh(
-      parameters.envScale,
-      parameters.groundSize,
-      sampler
-    );
-    this.add(this.grass.group);
+    if (!Ground.grass) {
+      Ground.grass = new GrassInstancedMesh(
+        grassUniforms,
+        parameters.envScale,
+        sampler,
+        pathLine
+      );
+      this.grass = Ground.grass.instancedGrassMesh;
+    } else {
+      // this.grass = Ground.grass;
+      this.grass = Ground.grass.instancedGrassMesh.clone();
+    }
+    Ground.grass.removeInPath(this.grass);
+    this.add(this.grass);
   }
 
   getCenter() {
