@@ -33,7 +33,7 @@ export class GrassInstancedMesh {
     this.instanceNumber = 100000;
     const instance = new THREE.Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(0.01, 0.6, 1, 8);
+    this.geometry = new THREE.PlaneGeometry(0.01, 1, 1, 8);
 
     this.instancedGrassMesh = new THREE.InstancedMesh(
       this.geometry,
