@@ -34,7 +34,7 @@ export class Grounds extends Group {
       forestPathLine,
       parameters
     );
-    Ground.grass.removeInPath(3, this.ground1.grass);
+    // Ground.grass.removeInPath(3, this.ground1.grass);
 
     // this.ground1.texture.flipY = false;
     this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
@@ -199,7 +199,7 @@ export class Grounds extends Group {
       texture.flipY = !!(this.currentIndex % 2);
       currentGround1.groundUniforms.uTexture.value = texture;
       currentGround1.groundMaskUniforms.uTexture.value = texture;
-      // Ground.grass.removeInPath(texture, currentGround1.grass, !!(this.currentIndex % 2));
+      Ground.grass.removeInPath(this.currentIndex + 1, currentGround1.grass);
 
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
       currentGround1.ground.updateMatrix();
@@ -246,6 +246,7 @@ export class Grounds extends Group {
     // if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
     if (mainScene.camera.position.z <= this.ground2.getCenter().z) {
       this.switchGrounds();
+      console.log("Switch");
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
   }

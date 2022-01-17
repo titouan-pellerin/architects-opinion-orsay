@@ -33,7 +33,7 @@ export class GrassInstancedMesh {
     this.instanceNumber = 100000;
     const instance = new THREE.Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(0.01, 1, 1, 8);
+    this.geometry = new THREE.PlaneGeometry(0.01, 0.7, 1, 8);
 
     this.instancedGrassMesh = new THREE.InstancedMesh(
       this.geometry,
@@ -50,27 +50,30 @@ export class GrassInstancedMesh {
       instancePos.x *= envScale;
       instancePos.y *= -envScale;
       instancePos.z *= envScale;
-      instance.position.set(instancePos.x, instancePos.z - 2.85, instancePos.y);
 
-      for (let i = 0; i < this.curveTexturesData.length; i++) {
+      instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
+      const posY = instance.position.y;
+
+      for (let j = 0; j < this.curveTexturesData.length; j++) {
+        const flipY = j % 2 == 0 ? 1 : -1;
         const textureInstancePosX = Math.floor(
           ((instance.position.x + 25) * this.textureSize) / 50
         );
         const textureInstancePosY = Math.floor(
-          ((instance.position.z + 25) * this.textureSize) / 50
+          ((flipY * instance.position.z + 25) * this.textureSize) / 50
         );
         const red =
-          this.curveTexturesData[i][
+          this.curveTexturesData[j][
             textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4 + 2
           ];
 
-        instance.position.y = instance.position.y * (1 - red / 255) + (-2.95 * red) / 255;
-        instance.scale.y = 1 * (1 - red / 255) + (0.5 * red) / 255;
+        instance.position.y = posY * (1 - red / 255) + (-2.9 * red) / 255;
+        instance.scale.y = 1 * (1 - red / 255) + (0.4 * red) / 255;
         instance.updateMatrix();
 
-        if (!this.curveTexturesMatrices.get(i))
-          this.curveTexturesMatrices.set(i, [instance.matrix.clone()]);
-        else this.curveTexturesMatrices.get(i).push(instance.matrix.clone());
+        if (!this.curveTexturesMatrices.get(j))
+          this.curveTexturesMatrices.set(j, [instance.matrix.clone()]);
+        else this.curveTexturesMatrices.get(j).push(instance.matrix.clone());
       }
     }
   }
@@ -91,6 +94,7 @@ export class GrassInstancedMesh {
   }
 
   removeInPath(groundIndex, instancedMesh, flipY = false) {
+    console.log(instancedMesh.instanceMatrix);
     for (let i = 0; i < this.instanceNumber; i++) {
       const newInstanceMatrix = this.curveTexturesMatrices.get(groundIndex)[i];
       instancedMesh.setMatrixAt(i, newInstanceMatrix.clone());

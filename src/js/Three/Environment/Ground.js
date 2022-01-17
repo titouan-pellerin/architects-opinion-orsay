@@ -66,7 +66,6 @@ export class Ground extends Group {
       groundBeginVertexShader,
       null,
       this.groundUniforms
-      // { side: DoubleSide }
     );
 
     const groundMaskMaterial = new MeshToonMaterial({
@@ -95,7 +94,7 @@ export class Ground extends Group {
     this.ground = new Mesh(Ground.groundGeometry, groundMaterial.meshToonMaterial);
 
     this.ground.rotation.x = -Math.PI * 0.5;
-    this.ground.position.y = -3.01;
+    this.ground.position.y = -3.001;
     this.ground.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
     this.mask = new Mesh(Ground.groundGeometry, groundMaskMaterial);
     this.mask.rotation.x = -Math.PI * 0.5;

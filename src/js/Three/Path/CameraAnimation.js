@@ -4,7 +4,6 @@ import { Vector3 } from "three";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
-import { Ray } from "../../utils/Ray";
 import { mainScene } from "../MainScene";
 import { Checkpoints } from "./Checkpoints";
 
@@ -29,7 +28,7 @@ export class CameraAnimation {
     // this.onClick();
 
     this.checkpoints = new Checkpoints(positions.get("checkpoints"), envScale);
-    this.ray = new Ray(artworks, this);
+    // this.ray = new Ray(artworks, this);
 
     this.debugObject = {
       checkpoint1: () => this.goToCheckpoint(0),
@@ -79,7 +78,7 @@ export class CameraAnimation {
     // this.tick += raf.deltaTime * 0.05;
     // console.log(this.tick);
 
-    const nextTick = this.tick.value + 0.04;
+    const nextTick = this.tick.value + 0.01;
     // if (nextTick > 1) nextTick = 1;
     // if (this.tick.value > 1) this.tick.value = 1;
 
@@ -129,14 +128,14 @@ export class CameraAnimation {
         tickValue = 0.7629;
         break;
       case 3:
-        tickValue = 0.93;
+        tickValue = 0.99;
         break;
     }
     if (index <= 3) {
       raf.subscribe("path", this.update.bind(this));
       gsap.to(this.tick, {
         delay: index === 0 ? 3 : 0,
-        duration: 10,
+        duration: 100,
         value: tickValue,
         ease: CustomEase.create(
           "custom",
@@ -146,7 +145,7 @@ export class CameraAnimation {
         onComplete: () => {
           this.checkpointsIndex++;
           raf.unsubscribe("path");
-          raf.subscribe("ray", this.ray.update.bind(this.ray));
+          // raf.subscribe("ray", this.ray.update.bind(this.ray));
           // raf.unsubscribe("mouse");
           // console.log(mainScene.camera.userData.lookingAt);
         },
