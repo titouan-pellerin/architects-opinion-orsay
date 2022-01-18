@@ -1,6 +1,6 @@
+import { Vector2 } from "three";
 import { mainScene } from "../Three/MainScene";
 import raf from "./Raf";
-import { Vector2 } from "three";
 
 class Mouse {
   constructor() {
@@ -24,7 +24,6 @@ class Mouse {
     let xRange = 4.5,
       yRange = 1;
     if (this.isReduced) (xRange = 0.7), (yRange = 0.5);
-    // target.x = this.normalizedMouseCoords.x * 1.5;
     target.x = -this.normalizedMouseCoords.x * xRange;
     target.y = -this.normalizedMouseCoords.y * yRange;
 

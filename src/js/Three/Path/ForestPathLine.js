@@ -13,8 +13,7 @@ export class ForestPathLine extends Line {
       color: 0xff0000,
     });
     super(geometry, material);
-    this.position.y = -1;
-    // this.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
+    this.position.y = -2;
     this.parameters = parameters;
     this.spline = spline;
     this.points = points;
@@ -24,20 +23,4 @@ export class ForestPathLine extends Line {
     this.pathWidth = pathWidth;
     this.splinePrecision = splinePrecision;
   }
-
-  // isPositionInRange(position) {
-  //   const pointOnSameLine = this.spacedPoints.filter(
-  //     (point) =>
-  //       position.y > point.y * this.parameters.envScale - 1 &&
-  //       position.y < point.y * this.parameters.envScale + 1
-  //   )[0];
-  //   let inRange = false;
-  //   if (pointOnSameLine)
-  //     inRange =
-  //       pointOnSameLine.x * this.parameters.envScale >
-  //         position.x - 6.5 + Math.random() * 3 &&
-  //       pointOnSameLine.x * this.parameters.envScale <
-  //         position.x + 3.5 + Math.random() * 3;
-  //   return inRange;
-  // }
 }

@@ -7,9 +7,9 @@ import commonFragmentShader from "@glsl/tree/trunk/commonFragment.glsl";
 import commonVertexShader from "@glsl/tree/trunk/commonVertex.glsl";
 import outputFragmentShader from "@glsl/tree/trunk/outputFragment.glsl";
 import { guiFolders } from "@js/utils/Debug";
-import SimplexNoise from "simplex-noise";
 import * as THREE from "three";
 import { modelsMap } from "../../../utils/assets";
+import { simplex } from "../../../utils/misc";
 import raf from "../../../utils/Raf";
 
 export class Trees extends THREE.Group {
@@ -82,9 +82,6 @@ export class Trees extends THREE.Group {
       );
     };
 
-    // initializing a new simplex instance
-    // do this only once as it is relatively expensive
-    const simplex = new SimplexNoise();
     let noise2D;
 
     const instanceNumber = 1000;

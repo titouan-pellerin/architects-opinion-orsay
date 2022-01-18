@@ -8,9 +8,9 @@ import maskCommonVertexShader from "@glsl/ground/mask/commonVertex.glsl";
 import maskOutputFragmentShader from "@glsl/ground/mask/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
 import { GrassInstancedMesh } from "@js/Three/Environment/Elements/GrassInstancedMesh";
-import SimplexNoise from "simplex-noise";
 import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
+import { simplex } from "../../utils/misc";
 
 export class Ground extends Group {
   static groundGeometry;
@@ -27,7 +27,6 @@ export class Ground extends Group {
         256
       ).toNonIndexed();
       const vertices = Ground.groundGeometry.getAttribute("position").array;
-      const simplex = new SimplexNoise("toto-titou");
       for (let i = 0; i < vertices.length / 3; i++) {
         const i3 = i * 3;
         const noise = simplex.noise2D(vertices[i3] * 30, vertices[i3 + 1] * 30);
@@ -118,7 +117,6 @@ export class Ground extends Group {
       );
       this.grass = Ground.grass.instancedGrassMesh;
     } else {
-      // this.grass = Ground.grass;
       this.grass = Ground.grass.instancedGrassMesh.clone();
     }
     this.add(this.grass);

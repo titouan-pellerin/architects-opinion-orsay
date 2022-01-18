@@ -22,7 +22,6 @@ export class Environment {
 
     this.forestPathLine = new ForestPathLine(1024, 1, this.parameters);
 
-    // this.sky = new Sky(this.parameters);
     this.grounds = new Grounds(
       texturesMap.get("curveTextures").length,
       this.parameters,
@@ -39,15 +38,5 @@ export class Environment {
         this.grounds.artwork4,
       ]
     );
-    // setTimeout(() => {
-    //   this.grounds.matrixAutoUpdate = false;
-    //   this.sky.matrixAutoUpdate = false;
-    // }, 1);
-
-    // raf.subscribe("environment", this.update.bind(this));
   }
-
-  // update() {
-  //   this.sky.material.uniforms.uTime.value = raf.elapsedTime;
-  // }
 }

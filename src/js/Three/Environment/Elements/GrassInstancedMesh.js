@@ -93,8 +93,7 @@ export class GrassInstancedMesh {
     canvas.remove();
   }
 
-  removeInPath(groundIndex, instancedMesh, flipY = false) {
-    console.log(instancedMesh.instanceMatrix);
+  setInstanceMatrices(groundIndex, instancedMesh) {
     for (let i = 0; i < this.instanceNumber; i++) {
       const newInstanceMatrix = this.curveTexturesMatrices.get(groundIndex)[i];
       instancedMesh.setMatrixAt(i, newInstanceMatrix.clone());

@@ -37,12 +37,7 @@ function init() {
   // };
 
   loadingManager.onLoad = () => {
-    //  const leaves = new Leaves();
-    //  mainScene.add(leaves.leaveMesh);
-
     const environment = new Environment();
-    // mainScene.add(environment.grounds, environment.forestPathLine, environment.sky);
-    // mainScene.add(environment.grounds, environment.sky);
     mainScene.add(environment.grounds);
 
     // const oeuvres = new Oeuvres();
