@@ -13,20 +13,13 @@ import { simplex } from "../../../utils/misc";
 import raf from "../../../utils/Raf";
 
 export class Trees extends THREE.Group {
-  constructor(positions = []) {
+  constructor(positions = [], leafUniforms) {
     super();
+    this.leafUniforms = leafUniforms;
 
     this.trunkUniforms = {
       uColor: { value: new THREE.Color("#180c04") },
       uColor2: { value: new THREE.Color("#f8c270") },
-    };
-
-    this.leafUniforms = {
-      uTime: { value: 0 },
-      uColor: { value: new THREE.Color("#d1e997") },
-      uColor2: { value: new THREE.Color("#4a9e36") },
-      uDisplaceIntensity: { value: 0.25 },
-      uSpeed: { value: 1.2 },
     };
 
     const sceneFolder = guiFolders.get("scene");
@@ -82,6 +75,8 @@ export class Trees extends THREE.Group {
       );
     };
 
+    // initializing a new simplex instance
+    // do this only once as it is relatively expensive
     let noise2D;
 
     const instanceNumber = 1000;
@@ -186,9 +181,9 @@ export class Trees extends THREE.Group {
 
       newTree.position.set(positions[i].x, -3.5, positions[i].y);
       newTree.rotation.set(
-        (Math.random() - 0.5) * 0.2 * Math.PI,
+        (Math.random() - 0.5) * 0.1 * Math.PI,
         Math.random() * Math.PI,
-        (Math.random() - 0.5) * 0.2 * Math.PI
+        (Math.random() - 0.5) * 0.1 * Math.PI
       );
       const randomScale = Math.random() * (0.2 - 0.08) + 0.08;
       newTree.scale.set(randomScale, randomScale, randomScale);

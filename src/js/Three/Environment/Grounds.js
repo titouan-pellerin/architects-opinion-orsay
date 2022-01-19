@@ -27,6 +27,14 @@ export class Grounds extends Group {
       uSpeed: { value: 1.2 },
     };
 
+    this.leafUniforms = {
+      uTime: { value: 0 },
+      uColor: { value: new Color("#d1e997") },
+      uColor2: { value: new Color("#4a9e36") },
+      uDisplaceIntensity: { value: 0.25 },
+      uSpeed: { value: 1.2 },
+    };
+
     // Previous Ground
     this.ground1 = new Ground(
       this.textures[2],
@@ -47,7 +55,7 @@ export class Grounds extends Group {
     );
     Ground.grass.setInstanceMatrices(0, this.ground2.grass);
 
-    const trees1 = new Trees(positions.get("treesPositions")[0]);
+    const trees1 = new Trees(positions.get("treesPositions")[0], this.leafUniforms);
     this.ground2.trees = trees1;
     this.ground2.add(trees1);
 
@@ -72,7 +80,7 @@ export class Grounds extends Group {
     this.ground3.position.z -= parameters.envScale * parameters.groundSize;
     this.ground3.scale.z = -1;
 
-    const trees2 = new Trees(positions.get("treesPositions")[1]);
+    const trees2 = new Trees(positions.get("treesPositions")[1], this.leafUniforms);
     trees2.scale.z = -1;
     this.ground3.trees = trees2;
     this.ground3.add(trees2);
