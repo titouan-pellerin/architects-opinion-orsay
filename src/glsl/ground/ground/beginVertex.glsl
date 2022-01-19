@@ -15,5 +15,5 @@ float smallNoise = cnoise(vec2(transformed.xy * 200.)) * 0.0008;
 
 // transformed.z += bigNoise;
 // transformed.z += bigNoise + smallNoise;
-transformed.z *= elevation;
 transformed.z += smallNoise;
+transformed.z *= elevation;

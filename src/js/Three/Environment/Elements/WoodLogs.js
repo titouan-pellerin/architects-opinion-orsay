@@ -1,6 +1,6 @@
+import beginVertexShader from "@glsl/wood/beginVertex.glsl";
 import commonFragmentShader from "@glsl/wood/commonFragment.glsl";
 import commonVertexShader from "@glsl/wood/commonVertex.glsl";
-import beginVertexShader from "@glsl/wood/beginVertex.glsl";
 import outputFragmentShaderInner from "@glsl/wood/inner/outputFragment.glsl";
 import outputFragmentShader from "@glsl/wood/outputFragment.glsl";
 import { Color, CylinderGeometry, Group, Mesh, MeshToonMaterial } from "three";
@@ -102,8 +102,8 @@ export class WoodLogs extends Group {
       newWoodGroup.position.set(positions[i].x, 0, positions[i].y);
       newWoodGroup.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
 
-      const randomScale = Math.random() * (1.25 - 0.85) + 0.85;
-      newWoodGroup.scale.set(randomScale, randomScale, randomScale);
+      // const randomScale = Math.random() * (1.25 - 0.85) + 0.85;
+      // newWoodGroup.scale.set(randomScale, randomScale, randomScale);
       // newWoodGroup.scale.set(0.5, 0.5, 0.5);
 
       newWoodGroup.updateMatrix();

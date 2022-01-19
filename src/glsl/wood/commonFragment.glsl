@@ -1,6 +1,7 @@
 #include <common>
 varying vec2 vUv;
-varying vec4 vNoise;
+// varying vec4 vNoise;
+varying float vNoise;
 uniform vec3 uColor;
 uniform vec3 uColor2;
 

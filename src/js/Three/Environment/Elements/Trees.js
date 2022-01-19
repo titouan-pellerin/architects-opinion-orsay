@@ -175,16 +175,11 @@ export class Trees extends THREE.Group {
 
     const tree1 = new THREE.Group();
     tree1.add(trunk1, leaves, leaves2, leaves3, leaves4, leaves5);
-    tree1.scale.set(0.5, 0.5, 0.5);
     tree1.matrixAutoUpdate = false;
-    tree1.updateMatrix();
 
     const tree2 = new THREE.Group();
     tree2.add(trunk2, leaves6, leaves7, leaves8, leaves9, leaves10, leaves11);
-
-    tree2.scale.set(0.5, 0.5, 0.5);
     tree2.matrixAutoUpdate = false;
-    tree2.updateMatrix();
 
     for (let i = 0; i < positions.length; i++) {
       const newTree = i % 2 === 0 ? tree1.clone() : tree2.clone();
@@ -195,7 +190,7 @@ export class Trees extends THREE.Group {
         Math.random() * Math.PI,
         (Math.random() - 0.5) * 0.2 * Math.PI
       );
-      const randomScale = Math.random() * (0.2 - 0.06) + 0.06;
+      const randomScale = Math.random() * (0.2 - 0.08) + 0.08;
       newTree.scale.set(randomScale, randomScale, randomScale);
       newTree.updateMatrix();
       this.add(newTree);

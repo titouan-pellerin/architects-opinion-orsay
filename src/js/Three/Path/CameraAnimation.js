@@ -30,7 +30,8 @@ export class CameraAnimation {
       checkpoint1: () => this.goToCheckpoint(0),
       checkpoint2: () => this.goToCheckpoint(1),
       checkpoint3: () => this.goToCheckpoint(2),
-      end: () => this.goToCheckpoint(3),
+      checkpoint4: () => this.goToCheckpoint(3),
+      end: () => this.goToCheckpoint(4),
       unsubscribe: () => {
         raf.unsubscribe("path");
       },
@@ -44,6 +45,7 @@ export class CameraAnimation {
     guiFolders.get("camera").add(this.debugObject, "checkpoint1").name("Checkpoint 1");
     guiFolders.get("camera").add(this.debugObject, "checkpoint2").name("Checkpoint 2");
     guiFolders.get("camera").add(this.debugObject, "checkpoint3").name("Checkpoint 3");
+    guiFolders.get("camera").add(this.debugObject, "checkpoint4").name("Checkpoint 4");
     guiFolders.get("camera").add(this.debugObject, "end").name("End");
     guiFolders.get("camera").add(this.debugObject, "unsubscribe").name("Camera path off");
     guiFolders.get("camera").add(this.debugObject, "addLine").name("Show line");
@@ -70,30 +72,35 @@ export class CameraAnimation {
     let tickValue = 0;
     switch (index) {
       case 0:
-        tickValue = 0.08;
+        tickValue = 0.155;
         break;
       case 1:
-        tickValue = 0.4929;
+        tickValue = 0.345;
         break;
       case 2:
-        tickValue = 0.7629;
+        tickValue = 0.545;
         break;
       case 3:
+        tickValue = 0.745;
+        break;
+      case 4:
         tickValue = 0.99;
         break;
     }
-    if (index <= 3) {
+    if (index <= 4) {
       raf.subscribe("path", this.update.bind(this));
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
-        duration: 150,
+        duration: 30,
         value: tickValue,
-        // ease: CustomEase.create(
-        //   "custom",
-        //   `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378
-        //       0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
-        // ),
-        ease: "linear",
+        ease: CustomEase.create(
+          "custom",
+          `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378
+              0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
+        ),
+        onUpdate: () => {
+          console.log(this.tick);
+        },
         onComplete: () => {
           this.checkpointsIndex++;
           raf.unsubscribe("path");

@@ -1,6 +1,6 @@
 #include <output_fragment>
 // Stroke
-float strokeNoise = 1.0 - (smoothstep(0.2, 0.8, sin((vNoise.x * vNoise.y) * 500.)));
+float strokeNoise = 1.0 - (smoothstep(0.2, 0.8, sin((vNoise * vNoise) * 500.)));
 float stroke = step(0.75, abs(mod((distance(vUv, vec2(0.5)) - 0.25) * 10., 1.0)));
 float stroke2 = step(0.5, abs(mod((distance(vUv, vec2(0.5)) - 0.25) * 20., 1.0)));
 
