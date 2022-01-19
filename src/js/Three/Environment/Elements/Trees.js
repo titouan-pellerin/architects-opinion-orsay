@@ -175,14 +175,14 @@ export class Trees extends THREE.Group {
 
     const tree1 = new THREE.Group();
     tree1.add(trunk1, leaves, leaves2, leaves3, leaves4, leaves5);
-    tree1.scale.set(0.15, 0.15, 0.15);
+    tree1.scale.set(0.5, 0.5, 0.5);
     tree1.matrixAutoUpdate = false;
     tree1.updateMatrix();
 
     const tree2 = new THREE.Group();
     tree2.add(trunk2, leaves6, leaves7, leaves8, leaves9, leaves10, leaves11);
 
-    tree2.scale.set(0.15, 0.15, 0.15);
+    tree2.scale.set(0.5, 0.5, 0.5);
     tree2.matrixAutoUpdate = false;
     tree2.updateMatrix();
 

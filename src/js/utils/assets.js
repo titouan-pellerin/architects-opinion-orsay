@@ -9,14 +9,6 @@ const curveTexture2 = textureLoader.load("/assets/curve/texture2.png");
 const curveTexture3 = textureLoader.load("/assets/curve/texture3.png");
 const curveTexture4 = textureLoader.load("/assets/curve/texture4.png");
 const curveTexture5 = textureLoader.load("/assets/curve/texture5.png");
-const curveTexture6 = textureLoader.load("/assets/curve/texture6.png");
-const curveTexture7 = textureLoader.load("/assets/curve/texture7.png");
-const curveTexture8 = textureLoader.load("/assets/curve/texture8.png");
-const curveTexture9 = textureLoader.load("/assets/curve/texture9.png");
-const curveTexture10 = textureLoader.load("/assets/curve/texture10.png");
-const curveTexture11 = textureLoader.load("/assets/curve/texture11.png");
-const curveTexture12 = textureLoader.load("/assets/curve/texture12.png");
-const curveTexture13 = textureLoader.load("/assets/curve/texture13.png");
 
 texturesMap.set("curveTextures", [
   curveTexture1,
@@ -24,14 +16,6 @@ texturesMap.set("curveTextures", [
   curveTexture3,
   curveTexture4,
   curveTexture5,
-  curveTexture6,
-  curveTexture7,
-  curveTexture8,
-  curveTexture9,
-  curveTexture10,
-  curveTexture11,
-  curveTexture12,
-  curveTexture13,
 ]);
 
 const noise = textureLoader.load("/assets/noise.jpg");
