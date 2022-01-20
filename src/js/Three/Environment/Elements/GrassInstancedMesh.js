@@ -70,12 +70,22 @@ export class GrassInstancedMesh {
         const textureInstancePosY = Math.floor(
           ((flipY * instance.position.z + 25) * this.textureSize) / 50
         );
+        // Red is the main path
         const red =
           this.curveTexturesData[j][
-            textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4 + 2
+            textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4
+          ];
+        // Green is the river path
+        const green =
+          this.curveTexturesData[j][
+            textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4 + 1
           ];
         instance.position.y = posY * (1 - red / 255) + (-2.9 * red) / 255;
         instance.scale.y = 1 * (1 - red / 255) + (0.4 * red) / 255;
+        if (green >= 1) {
+          instance.position.y = -100;
+          instance.scale.y = 0;
+        }
 
         instance.updateMatrix();
 

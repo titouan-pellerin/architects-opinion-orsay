@@ -43,7 +43,7 @@ export class Ground extends Group {
 
     this.groundUniforms = {
       uTime: { value: 0 },
-      uColor: { value: new Color("#83ce72") },
+      uColor: { value: new Color("#4a7740") },
       uPathColor: { value: new Color("#7c574b") },
       uTexture: { value: texture },
     };

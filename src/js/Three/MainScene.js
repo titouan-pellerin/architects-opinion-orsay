@@ -63,8 +63,20 @@ export class MainScene extends THREE.Scene {
     this.cameraContainer.add(this.camera);
 
     const orbitDebug = {
-      enabled: false,
+      enabled: true,
     };
+    raf.unsubscribe("mouse");
+    // this.cameraContainer.remove(this.camera);
+    this.add(this.camera);
+    this.remove(this.cameraContainer);
+    this.controls = new OrbitControls(this.camera, this.canvas);
+    this.controls.target = this.camera.position.clone();
+    this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.05;
+    this.controls.enableRotate = true;
+    this.controls.enabled = true;
+    this.camera.position.z += 3;
+    this.controls.update();
 
     guiFolders
       .get("camera")

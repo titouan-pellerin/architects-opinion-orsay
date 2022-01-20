@@ -2,18 +2,18 @@
 vUv = uv;
 
 // float elevation = 1.;
-vec3 curveCoords = texture2D(uTexture, vUv).xyz;
+vec3 curveCoords = texture2D(uTexture, vUv).rgb;
 
-// if(curveCoords.r >= .7) elevation = 0.01;
-// render = mix(1., .01, 1. - curveCoords.r);
 float elevation = mix(1., .01, curveCoords.r);
 
-// float bigNoise = cnoise(vec4(vec3(transformed * 50.), 0.5)) * 0.004;
-// float smallNoise = cnoise(vec4(vec3(transformed * 200.), 0.5)) * 0.002;
-// float bigNoise = cnoise(vec2(transformed.xy * 50.)) * elevation;
+float riverOffset = mix(0., .006, curveCoords.g);
+riverOffset *= mix(2., .5, (curveCoords.r + curveCoords.g) * .5);
+// riverOffset = mix(1., riverOffset, mix(curveCoords.r, curveCoords.g, .5));
+
+float riverElevation = mix(1., 0.1, curveCoords.g);
+
 float smallNoise = cnoise(vec2(transformed.xy * 200.)) * 0.0008;
 
-// transformed.z += bigNoise;
-// transformed.z += bigNoise + smallNoise;
-transformed.z += smallNoise;
-transformed.z *= elevation;
+transformed.z *= elevation * riverElevation;
+transformed.z += smallNoise - riverOffset;
+// transformed.z -= riverOffset;
