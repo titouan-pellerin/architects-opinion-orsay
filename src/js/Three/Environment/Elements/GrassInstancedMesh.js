@@ -45,13 +45,21 @@ export class GrassInstancedMesh {
 
     for (let i = 0; i < this.instanceNumber; i++) {
       const instancePos = new Vector3();
+      const instanceNormal = new Vector3();
 
-      sampler.sample(instancePos);
+      sampler.sample(instancePos, instanceNormal);
       instancePos.x *= envScale;
       instancePos.y *= -envScale;
       instancePos.z *= envScale;
 
+      instanceNormal.x *= -envScale;
+      instanceNormal.y *= -envScale;
+      instanceNormal.z *= -envScale;
+
+      // instancePos.add(instanceNormal);
+
       instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
+      instance.lookAt(instanceNormal);
       const posY = instance.position.y;
 
       for (let j = 0; j < this.curveTexturesData.length; j++) {
@@ -66,9 +74,9 @@ export class GrassInstancedMesh {
           this.curveTexturesData[j][
             textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4 + 2
           ];
-
         instance.position.y = posY * (1 - red / 255) + (-2.9 * red) / 255;
         instance.scale.y = 1 * (1 - red / 255) + (0.4 * red) / 255;
+
         instance.updateMatrix();
 
         if (!this.curveTexturesMatrices.get(j))

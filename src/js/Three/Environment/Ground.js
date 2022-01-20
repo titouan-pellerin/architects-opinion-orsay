@@ -107,7 +107,7 @@ export class Ground extends Group {
     this.ground.updateMatrix();
     this.mask.updateMatrix();
 
-    const sampler = new MeshSurfaceSampler(this.ground).build();
+    const sampler = new MeshSurfaceSampler(this.ground).setWeightAttribute("uv").build();
     if (!Ground.grass) {
       Ground.grass = new GrassInstancedMesh(
         grassUniforms,
