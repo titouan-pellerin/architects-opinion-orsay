@@ -1,3 +1,7 @@
+import beginVertexShader from "@glsl/artworks/beginVertex.glsl";
+import commonFragmentShader from "@glsl/artworks/commonFragment.glsl";
+import commonVertexShader from "@glsl/artworks/commonVertex.glsl";
+import outputFragmentShader from "@glsl/artworks/outputFragment.glsl";
 import {
   DoubleSide,
   Group,
@@ -5,47 +9,71 @@ import {
   MeshBasicMaterial,
   MeshToonMaterial,
   PlaneGeometry,
+  BoxGeometry,
+  Color,
 } from "three";
+import { mainScene } from "../../MainScene";
 
 export class Artwork extends Group {
   constructor(texture, position, envScale) {
     super();
 
-    this.artworkBasicMaterial = new MeshToonMaterial({
+    this.trunkUniforms = {
+      uColor: { value: new Color("#180c04") },
+      uColor2: { value: new Color("#f8c270") },
+    };
+
+    this.artworkMaterialOuter = new MeshToonMaterial({
       side: DoubleSide,
       transparent: true,
-      opacity: 0.9,
     });
-    this.artworkMaterial = new MeshBasicMaterial({
+
+    this.artworkMaterialOuter.onBeforeCompile = (shader) => {
+      shader.uniforms = { ...shader.uniforms, ...this.trunkUniforms };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        commonFragmentShader
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        outputFragmentShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        commonVertexShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <begin_vertex>",
+        beginVertexShader
+      );
+    };
+
+    this.artworkMaterialInner = new MeshBasicMaterial({
       map: texture,
       side: DoubleSide,
-      transparent: true,
-      opacity: 0.9,
     });
-    this.artworkGeometry = new PlaneGeometry();
+    this.artworkGeometryOuter = new BoxGeometry();
+    this.artworkGeometryInner = new PlaneGeometry();
 
-    this.outerMesh = new Mesh(this.artworkGeometry, this.artworkBasicMaterial);
-    // this.outerMesh.scale.set(1 * 2.75, 1.0198 * 2.75, 1 * 2.75);
+    this.outerMesh = new Mesh(this.artworkGeometryOuter, this.artworkMaterialOuter);
     this.outerMesh.scale.set(
       3.3,
       (texture.image.height * 3.3) / texture.image.width,
-      3.3
+      0.5
     );
 
-    this.innerMesh = new Mesh(this.artworkGeometry, this.artworkMaterial);
-    this.innerMesh.scale.set(3, (texture.image.height * 3) / texture.image.width, 2);
-    // this.innerMesh.scale.set(1 * 2.35, 1.0198 * 2.35, 1 * 2.35);
-    this.innerMesh.position.z = 0.001;
+    this.innerMesh = new Mesh(this.artworkGeometryInner, this.artworkMaterialInner);
+    this.innerMesh.scale.set(3, (texture.image.height * 3) / texture.image.width, 3);
+    this.innerMesh.position.z = 0;
 
-    // this.add(this.innerMesh, this.outerMesh);
-    // this.scale.set(0.85, 0.85, 0.85);
     this.position.set(position.x * envScale, position.y, position.z * envScale);
-    // this.position.set(0, -1.5, -10);
 
     this.outerMesh.matrixAutoUpdate = false;
     this.innerMesh.matrixAutoUpdate = false;
     this.outerMesh.updateMatrix();
     this.innerMesh.updateMatrix();
-    this.add(this.innerMesh, this.outerMesh);
+    // this.add(this.innerMesh, this.outerMesh);
+    mainScene.add(this.innerMesh, this.outerMesh);
+    console.log(mainScene);
   }
 }

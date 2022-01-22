@@ -153,10 +153,7 @@ export class MainScene extends THREE.Scene {
           value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
         },
         uRes: {
-          value: new THREE.Vector2(
-            window.innerWidth - window.innerWidth * 0.3,
-            window.innerHeight - window.innerHeight * 0.35
-          ),
+          value: new THREE.Vector2(window.innerWidth, window.innerHeight),
         },
       },
       vertexShader: vertexShader,

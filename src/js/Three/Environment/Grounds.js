@@ -8,6 +8,8 @@ import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
 import { Ground } from "./Ground";
+import { Artwork } from "./Elements/Artwork";
+import * as THREE from "three";
 
 export class Grounds extends Group {
   constructor(groundAmount, parameters = {}, forestPathLine) {
@@ -95,17 +97,16 @@ export class Grounds extends Group {
     this.ground3.woodLogs = woodLogs2;
     this.ground3.add(woodLogs2);
 
-    // const artwork1Pos = positions.get("artworksPositions")[0];
-    // this.artwork1 = new Artwork(
-    //   texturesMap.get("artworksTextures")[0],
-    //   new Vector3(artwork1Pos.x, -1.38, artwork1Pos.y),
-    //   parameters.envScale
-    // );
+    const artwork1Pos = positions.get("artworksPositions")[0];
+    this.artwork1 = new Artwork(
+      texturesMap.get("artworksTextures")[6],
+      parameters.envScale
+    );
 
     // const artwork2Pos = positions.get("artworksPositions")[1];
     // this.artwork2 = new Artwork(
     //   texturesMap.get("artworksTextures")[1],
-    //   new Vector3(artwork2Pos.x, -1, artwork2Pos.y),
+    //   new THREE.Vector3(artwork2Pos.x, -1, artwork2Pos.y),
     //   parameters.envScale
     // );
     // this.artwork2.rotation.x *= -1;
