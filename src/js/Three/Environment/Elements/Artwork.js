@@ -18,7 +18,7 @@ export class Artwork extends Group {
   constructor(texture, position, envScale) {
     super();
 
-    this.trunkUniforms = {
+    this.artworkUniforms = {
       uColor: { value: new Color("#180c04") },
       uColor2: { value: new Color("#f8c270") },
     };
@@ -29,7 +29,7 @@ export class Artwork extends Group {
     });
 
     this.artworkMaterialOuter.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.trunkUniforms };
+      shader.uniforms = { ...shader.uniforms, ...this.artworkUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader
@@ -50,17 +50,12 @@ export class Artwork extends Group {
 
     this.artworkMaterialInner = new MeshBasicMaterial({
       map: texture,
-      side: DoubleSide,
     });
     this.artworkGeometryOuter = new BoxGeometry();
     this.artworkGeometryInner = new PlaneGeometry();
 
     this.outerMesh = new Mesh(this.artworkGeometryOuter, this.artworkMaterialOuter);
-    this.outerMesh.scale.set(
-      3.3,
-      (texture.image.height * 3.3) / texture.image.width,
-      0.5
-    );
+    this.outerMesh.scale.set(3.3, (texture.image.height * 3.3) / texture.image.width, 1);
 
     this.innerMesh = new Mesh(this.artworkGeometryInner, this.artworkMaterialInner);
     this.innerMesh.scale.set(3, (texture.image.height * 3) / texture.image.width, 3);
