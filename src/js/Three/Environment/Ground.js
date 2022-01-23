@@ -27,7 +27,7 @@ export class Ground extends Group {
         256
       ).toNonIndexed();
       const vertices = Ground.groundGeometry.getAttribute("position").array;
-      for (let i = 0; i < vertices.length / 3; i++) {
+      for (let i = 0; i <= vertices.length / 3; i++) {
         const i3 = i * 3;
         const noise = simplex.noise2D(vertices[i3] * 30, vertices[i3 + 1] * 30);
         vertices[i3 + 2] += noise * 0.004;
@@ -64,7 +64,10 @@ export class Ground extends Group {
       groundCommonVertexShader,
       groundBeginVertexShader,
       null,
-      this.groundUniforms
+      this.groundUniforms,
+      {
+        // wireframe: true,
+      }
     );
 
     const groundMaskMaterial = new MeshToonMaterial({

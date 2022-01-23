@@ -208,6 +208,7 @@ export class Grounds extends Group {
       Ground.grass.setInstanceMatrices(this.currentIndex + 1, currentGround1.grass);
 
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+
       currentGround1.ground.updateMatrix();
       currentGround1.mask.updateMatrix();
 

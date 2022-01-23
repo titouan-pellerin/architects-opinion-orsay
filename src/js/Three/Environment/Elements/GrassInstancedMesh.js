@@ -56,8 +56,6 @@ export class GrassInstancedMesh {
       instanceNormal.y *= -envScale;
       instanceNormal.z *= -envScale;
 
-      // instancePos.add(instanceNormal);
-
       instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
       instance.lookAt(instanceNormal);
       const posY = instance.position.y;
@@ -70,11 +68,13 @@ export class GrassInstancedMesh {
         const textureInstancePosY = Math.floor(
           ((flipY * instance.position.z + 25) * this.textureSize) / 50
         );
+
         // Red is the main path
         const red =
           this.curveTexturesData[j][
             textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4
           ];
+
         // Green is the river path
         const green =
           this.curveTexturesData[j][
@@ -83,6 +83,7 @@ export class GrassInstancedMesh {
         instance.position.y = posY * (1 - red / 255) + (-2.9 * red) / 255;
         instance.scale.y = 1 * (1 - red / 255) + (0.4 * red) / 255;
         if (green >= 1) {
+          // Setting the vector scale to 0 doesn't work... all instances get black ?
           instance.position.y = -100;
           instance.scale.y = 0;
         }
