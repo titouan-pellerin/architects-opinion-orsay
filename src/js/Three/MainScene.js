@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Group } from "three";
+import { Group, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
@@ -66,18 +66,6 @@ export class MainScene extends THREE.Scene {
       enabled: false,
     };
 
-    // raf.unsubscribe("mouse");
-    // this.add(this.camera);
-    // this.remove(this.cameraContainer);
-    // this.controls = new OrbitControls(this.camera, this.canvas);
-    // this.controls.target = new Vector3(-0.08, 0, 0);
-
-    // this.controls.enableDamping = true;
-    // this.controls.dampingFactor = 0.05;
-    // this.controls.enableRotate = true;
-    // this.controls.enabled = true;
-    // this.controls.update();
-
     guiFolders
       .get("camera")
       .add(orbitDebug, "enabled")
@@ -85,15 +73,23 @@ export class MainScene extends THREE.Scene {
       .onChange(() => {
         if (orbitDebug.enabled) {
           raf.unsubscribe("mouse");
-          this.add(this.camera);
-          this.remove(this.cameraContainer);
           this.controls = new OrbitControls(this.camera, this.canvas);
-          this.controls.target = this.camera.position.clone();
+          this.controls.target = new Vector3(
+            this.cameraContainer.position.x,
+            this.cameraContainer.position.y,
+            this.cameraContainer.position.z - 0.01
+          );
+          this.add(this.camera);
+          this.camera.position.copy(this.cameraContainer.position);
+          this.remove(this.cameraContainer);
           this.controls.enableDamping = true;
           this.controls.dampingFactor = 0.05;
           this.controls.enableRotate = true;
+          this.controls.enablePan = false;
+          this.controls.enableZoom = false;
+          this.controls.rotateSpeed = -0.1;
           this.controls.enabled = true;
-          this.camera.position.z += 3;
+          // this.camera.position.z += 3;
           this.controls.update();
         } else {
           this.controls.dispose();
