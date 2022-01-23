@@ -75,14 +75,11 @@ export class CameraAnimation {
           mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
           mainScene.cameraContainer.rotateX(Math.PI);
           mainScene.cameraContainer.rotateZ(Math.PI);
-
-          console.log(mainScene.cameraContainer.rotation);
         },
         onComplete: () => {
           this.checkpointsIndex++;
           // raf.subscribe("ray", this.ray.update.bind(this.ray));
           // raf.unsubscribe("mouse");
-          // console.log(mainScene.camera.userData.lookingAt);
         },
       });
     }
