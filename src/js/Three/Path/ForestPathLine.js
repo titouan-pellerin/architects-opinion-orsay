@@ -22,7 +22,5 @@ export class ForestPathLine extends Line {
     );
     this.pathWidth = pathWidth;
     this.splinePrecision = splinePrecision;
-
-    console.log(this.spline.getPointAt(0.1));
   }
 }

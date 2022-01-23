@@ -63,20 +63,20 @@ export class MainScene extends THREE.Scene {
     this.cameraContainer.add(this.camera);
 
     const orbitDebug = {
-      enabled: true,
+      enabled: false,
     };
-    raf.unsubscribe("mouse");
-    // this.cameraContainer.remove(this.camera);
-    this.add(this.camera);
-    this.remove(this.cameraContainer);
-    this.controls = new OrbitControls(this.camera, this.canvas);
-    this.controls.target = this.camera.position.clone();
-    this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.05;
-    this.controls.enableRotate = true;
-    this.controls.enabled = true;
-    this.camera.position.z += 3;
-    this.controls.update();
+
+    // raf.unsubscribe("mouse");
+    // this.add(this.camera);
+    // this.remove(this.cameraContainer);
+    // this.controls = new OrbitControls(this.camera, this.canvas);
+    // this.controls.target = new Vector3(-0.08, 0, 0);
+
+    // this.controls.enableDamping = true;
+    // this.controls.dampingFactor = 0.05;
+    // this.controls.enableRotate = true;
+    // this.controls.enabled = true;
+    // this.controls.update();
 
     guiFolders
       .get("camera")
@@ -85,7 +85,6 @@ export class MainScene extends THREE.Scene {
       .onChange(() => {
         if (orbitDebug.enabled) {
           raf.unsubscribe("mouse");
-          // this.cameraContainer.remove(this.camera);
           this.add(this.camera);
           this.remove(this.cameraContainer);
           this.controls = new OrbitControls(this.camera, this.canvas);
@@ -123,8 +122,9 @@ export class MainScene extends THREE.Scene {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.background = new THREE.Color(parameters.skyBgColor);
 
+    this.cameraContainer.position.set(0, -0.5, 25);
     this.add(this.cameraContainer);
-    this.camera.position.set(0, 0, 25);
+    // this.camera.lookAt(-0.08, 0, 22);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 20, 45);
     this.fog = fog;

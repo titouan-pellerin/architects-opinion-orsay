@@ -63,7 +63,7 @@ export class CameraAnimation {
               0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
         ),
         onUpdate: () => {
-          const nextTick = this.tick.value + 0.01;
+          const nextTick = this.tick.value + 0.007;
 
           const curvePoint = this.path.spline.getPointAt(this.tick.value);
           const curvePoint2 = this.path.spline.getPointAt(nextTick);
@@ -71,9 +71,12 @@ export class CameraAnimation {
           const camPos = new Vector3(curvePoint.x, -0.5, curvePoint.y);
           const camPos2 = new Vector3(curvePoint2.x, -0.5, curvePoint2.y);
 
-          mainScene.camera.position.set(camPos.x, camPos.y, camPos.z);
-          mainScene.camera.lookAt(camPos2.x, camPos2.y, camPos2.z);
-          mainScene.camera.userData.lookingAt = camPos2;
+          mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
+          mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
+          mainScene.cameraContainer.rotateX(Math.PI);
+          mainScene.cameraContainer.rotateZ(Math.PI);
+
+          console.log(mainScene.cameraContainer.rotation);
         },
         onComplete: () => {
           this.checkpointsIndex++;
@@ -81,7 +84,6 @@ export class CameraAnimation {
           // raf.unsubscribe("mouse");
           // console.log(mainScene.camera.userData.lookingAt);
         },
-        // ease: "sine.inOut",
       });
     }
   }
