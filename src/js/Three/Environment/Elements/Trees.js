@@ -188,7 +188,7 @@ export class Trees extends THREE.Group {
       const randomScale = Math.random() * (0.2 - 0.08) + 0.08;
       newTree.scale.set(randomScale, randomScale, randomScale);
       newTree.updateMatrix();
-      // this.add(newTree);
+      this.add(newTree);
     }
     raf.subscribe("Tree", this.update.bind(this));
   }
