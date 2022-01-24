@@ -8,15 +8,7 @@ import maskCommonVertexShader from "@glsl/ground/mask/commonVertex.glsl";
 import maskOutputFragmentShader from "@glsl/ground/mask/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
 import { GrassInstancedMesh } from "@js/Three/Environment/Elements/GrassInstancedMesh";
-import {
-  Color,
-  Group,
-  LinearFilter,
-  Mesh,
-  MeshToonMaterial,
-  PlaneGeometry,
-  Vector3,
-} from "three";
+import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 import { simplex } from "../../utils/misc";
 
@@ -35,7 +27,8 @@ export class Ground extends Group {
         256
       ).toNonIndexed();
       const vertices = Ground.groundGeometry.getAttribute("position").array;
-      for (let i = 0; i <= vertices.length / 3; i++) {
+
+      for (let i = 0; i < vertices.length / 3; i++) {
         const i3 = i * 3;
         const noise = simplex.noise2D(vertices[i3] * 30, vertices[i3 + 1] * 30);
         vertices[i3 + 2] += noise * 0.004;
@@ -43,11 +36,6 @@ export class Ground extends Group {
     }
 
     this.texture = texture;
-    // texture.wrapS = MirroredRepeatWrapping;
-    // texture.wrapT = MirroredRepeatWrapping;
-    texture.minFilter = texture.magFilter = LinearFilter;
-    texture.needsUpdate = true;
-    // Used to switch elements on a ground
     this.trees = null;
     this.rocks = null;
     this.woodLogs = null;
@@ -78,6 +66,7 @@ export class Ground extends Group {
       this.groundUniforms,
       {
         // wireframe: true,
+        precision: "highp",
       }
     );
 
