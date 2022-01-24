@@ -209,6 +209,7 @@ export class Grounds extends Group {
       Ground.grass.setInstanceMatrices(this.currentIndex + 1, currentGround1.grass);
 
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+
       currentGround1.ground.updateMatrix();
       currentGround1.mask.updateMatrix();
 
@@ -251,7 +252,7 @@ export class Grounds extends Group {
 
   update() {
     // if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
-    if (mainScene.camera.position.z <= this.ground2.getCenter().z) {
+    if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
       this.switchGrounds();
       console.log("Switch");
     }

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Group } from "three";
+import { Group, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
@@ -73,16 +73,23 @@ export class MainScene extends THREE.Scene {
       .onChange(() => {
         if (orbitDebug.enabled) {
           raf.unsubscribe("mouse");
-          // this.cameraContainer.remove(this.camera);
-          this.add(this.camera);
-          this.remove(this.cameraContainer);
           this.controls = new OrbitControls(this.camera, this.canvas);
-          this.controls.target = this.camera.position.clone();
+          this.controls.target = new Vector3(
+            this.cameraContainer.position.x,
+            this.cameraContainer.position.y,
+            this.cameraContainer.position.z - 0.01
+          );
+          this.add(this.camera);
+          this.camera.position.copy(this.cameraContainer.position);
+          this.remove(this.cameraContainer);
           this.controls.enableDamping = true;
           this.controls.dampingFactor = 0.05;
           this.controls.enableRotate = true;
-          this.controls.enabled = true;
+          // this.controls.enablePan = false;
+          // this.controls.enableZoom = false;
+          // this.controls.rotateSpeed = -0.1;
           this.camera.position.z += 3;
+          this.controls.enabled = true;
           this.controls.update();
         } else {
           this.controls.dispose();
@@ -111,8 +118,9 @@ export class MainScene extends THREE.Scene {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.background = new THREE.Color(parameters.skyBgColor);
 
+    this.cameraContainer.position.set(0, -0.5, 25);
     this.add(this.cameraContainer);
-    this.camera.position.set(0, 0, 23);
+    // this.camera.lookAt(-0.08, 0, 22);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 20, 45);
     this.fog = fog;
