@@ -8,7 +8,15 @@ import maskCommonVertexShader from "@glsl/ground/mask/commonVertex.glsl";
 import maskOutputFragmentShader from "@glsl/ground/mask/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
 import { GrassInstancedMesh } from "@js/Three/Environment/Elements/GrassInstancedMesh";
-import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
+import {
+  Color,
+  Group,
+  LinearFilter,
+  Mesh,
+  MeshToonMaterial,
+  PlaneGeometry,
+  Vector3,
+} from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 import { simplex } from "../../utils/misc";
 
@@ -35,7 +43,10 @@ export class Ground extends Group {
     }
 
     this.texture = texture;
-
+    // texture.wrapS = MirroredRepeatWrapping;
+    // texture.wrapT = MirroredRepeatWrapping;
+    texture.minFilter = texture.magFilter = LinearFilter;
+    texture.needsUpdate = true;
     // Used to switch elements on a ground
     this.trees = null;
     this.rocks = null;

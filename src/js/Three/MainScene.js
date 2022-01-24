@@ -85,11 +85,11 @@ export class MainScene extends THREE.Scene {
           this.controls.enableDamping = true;
           this.controls.dampingFactor = 0.05;
           this.controls.enableRotate = true;
-          this.controls.enablePan = false;
-          this.controls.enableZoom = false;
-          this.controls.rotateSpeed = -0.1;
+          // this.controls.enablePan = false;
+          // this.controls.enableZoom = false;
+          // this.controls.rotateSpeed = -0.1;
+          this.camera.position.z += 3;
           this.controls.enabled = true;
-          // this.camera.position.z += 3;
           this.controls.update();
         } else {
           this.controls.dispose();
