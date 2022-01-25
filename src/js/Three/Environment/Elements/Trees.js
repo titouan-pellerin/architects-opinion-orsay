@@ -51,7 +51,6 @@ export class Trees extends THREE.Group {
         beginVertexShader
       );
     };
-
     this.materialLeaf = new THREE.MeshToonMaterial({
       side: THREE.DoubleSide,
     });

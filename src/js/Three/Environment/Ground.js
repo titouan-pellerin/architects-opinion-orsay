@@ -8,7 +8,15 @@ import maskCommonVertexShader from "@glsl/ground/mask/commonVertex.glsl";
 import maskOutputFragmentShader from "@glsl/ground/mask/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
 import { GrassInstancedMesh } from "@js/Three/Environment/Elements/GrassInstancedMesh";
-import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
+import {
+  Color,
+  Group,
+  Mesh,
+  MeshBasicMaterial,
+  MeshToonMaterial,
+  PlaneGeometry,
+  Vector3,
+} from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 import { simplex } from "../../utils/misc";
 
@@ -30,7 +38,7 @@ export class Ground extends Group {
 
       for (let i = 0; i < vertices.length / 3; i++) {
         const i3 = i * 3;
-        const noise = simplex.noise2D(vertices[i3] * 30, vertices[i3 + 1] * 30);
+        const noise = simplex.noise2D(vertices[i3] * 30, vertices[i3 + 1] * 30) + 1 * 0.7;
         vertices[i3 + 2] += noise * 0.004;
       }
     }
@@ -66,7 +74,6 @@ export class Ground extends Group {
       this.groundUniforms,
       {
         // wireframe: true,
-        precision: "highp",
       }
     );
 
@@ -103,14 +110,27 @@ export class Ground extends Group {
     this.mask.position.y = -3;
     this.mask.scale.set(parameters.envScale, parameters.envScale, parameters.envScale);
 
-    this.add(this.ground, this.mask);
+    this.riverPlane = new Mesh(
+      new PlaneGeometry(0.5, 0.5, 256, 256),
+      new MeshBasicMaterial({ color: "#ff0000" })
+    );
+    this.riverPlane.rotation.x = -Math.PI * 0.5;
+    this.riverPlane.position.y = -3.2;
+    this.riverPlane.scale.set(
+      parameters.envScale,
+      parameters.envScale,
+      parameters.envScale
+    );
+
+    // this.add(this.ground, this.mask);
+    this.add(this.ground, this.mask, this.riverPlane);
 
     this.ground.matrixAutoUpdate = false;
     this.mask.matrixAutoUpdate = false;
     this.ground.updateMatrix();
     this.mask.updateMatrix();
 
-    const sampler = new MeshSurfaceSampler(this.ground).setWeightAttribute("uv").build();
+    const sampler = new MeshSurfaceSampler(this.ground).build();
     if (!Ground.grass) {
       Ground.grass = new GrassInstancedMesh(
         grassUniforms,
