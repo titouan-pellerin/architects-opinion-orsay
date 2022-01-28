@@ -18,4 +18,5 @@ export default defineConfig({
       { find: "@assets", replacement: "/src/assets" },
     ],
   },
+  rollupOptions: {},
 });

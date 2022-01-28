@@ -3,14 +3,14 @@ import commonFragmentShader from "@glsl/artworks/commonFragment.glsl";
 import commonVertexShader from "@glsl/artworks/commonVertex.glsl";
 import outputFragmentShader from "@glsl/artworks/outputFragment.glsl";
 import {
+  BoxGeometry,
+  Color,
   DoubleSide,
   Group,
   Mesh,
   MeshBasicMaterial,
   MeshToonMaterial,
   PlaneGeometry,
-  BoxGeometry,
-  Color,
 } from "three";
 import { mainScene } from "../../MainScene";
 
@@ -73,6 +73,5 @@ export class Artwork extends Group {
     this.innerMesh.updateMatrix();
     // this.add(this.innerMesh, this.outerMesh);
     mainScene.add(this.innerMesh, this.outerMesh);
-    console.log(mainScene);
   }
 }
