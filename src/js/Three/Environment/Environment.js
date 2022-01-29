@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { Color } from "three";
 import { texturesMap } from "../../utils/assets";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { ForestPathLine } from "../Path/ForestPathLine";
@@ -9,8 +9,8 @@ export class Environment {
     this.parameters = {
       envScale: 100,
       groundSize: 0.5,
-      groundColor: new THREE.Color("#fbab32"),
-      skyColor: new THREE.Color("#ffffff"),
+      groundColor: new Color("#fbab32"),
+      skyColor: new Color("#ffffff"),
       speed: 0.125,
       stroke: 5000,
       smallNoise: 500,
@@ -33,9 +33,9 @@ export class Environment {
       this.parameters.envScale,
       [
         this.grounds.artwork1,
-        this.grounds.artwork2,
-        this.grounds.artwork3,
-        this.grounds.artwork4,
+        // this.grounds.artwork2,
+        // this.grounds.artwork3,
+        // this.grounds.artwork4,
       ]
     );
   }

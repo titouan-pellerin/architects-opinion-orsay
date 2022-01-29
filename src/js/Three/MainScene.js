@@ -118,7 +118,7 @@ export class MainScene extends THREE.Scene {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.background = new THREE.Color(parameters.skyBgColor);
 
-    this.cameraContainer.position.set(0, -0.5, 25);
+    this.cameraContainer.position.set(0, -0.8, 25);
     this.add(this.cameraContainer);
     // this.camera.lookAt(-0.08, 0, 22);
 

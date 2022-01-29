@@ -4,12 +4,11 @@ import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
+import { Artwork } from "./Elements/Artwork";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
 import { Ground } from "./Ground";
-import { Artwork } from "./Elements/Artwork";
-import * as THREE from "three";
 
 export class Grounds extends Group {
   constructor(groundAmount, parameters = {}, forestPathLine) {
@@ -97,11 +96,14 @@ export class Grounds extends Group {
     this.ground3.woodLogs = woodLogs2;
     this.ground3.add(woodLogs2);
 
-    const artwork1Pos = positions.get("artworksPositions")[0];
-    this.artwork1 = new Artwork(
-      texturesMap.get("artworksTextures")[6],
-      parameters.envScale
-    );
+    this.artworks = [];
+    for (let i = 0; i < positions.get("artworksPositions").length; i++) {
+      const artwork = new Artwork(
+        texturesMap.get("artworksTextures")[i],
+        positions.get("artworksPositions")[i]
+      );
+      this.artworks.push(artwork);
+    }
 
     // const artwork2Pos = positions.get("artworksPositions")[1];
     // this.artwork2 = new Artwork(
@@ -127,7 +129,7 @@ export class Grounds extends Group {
     // this.artwork3.rotation.y = -Math.PI * 0.09;
 
     this.add(this.ground1, this.ground2, this.ground3);
-    // this.add(this.artwork1, this.artwork2, this.artwork3, this.artwork4);
+    this.add(...this.artworks);
 
     raf.subscribe("grounds", this.update.bind(this));
 

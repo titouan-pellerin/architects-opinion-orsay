@@ -1,4 +1,4 @@
-import { Vector2 } from "three";
+import { Vector2, Vector3 } from "three";
 
 const positions = new Map();
 
@@ -451,11 +451,10 @@ const woodLogsPositions3 = [
 ];
 
 const artworksPositions = [
-  new Vector2(0.1739, -0.6917),
-  new Vector2(-0.0214, -1.314),
-  new Vector2(-0.0957, -1.8269),
-  new Vector2(0.1291, -2.2294),
-  new Vector2(0.0444, -2.21),
+  new Vector3(0, -1.5, -15.2491),
+  new Vector3(8.9474, -1.5, -11.6339),
+  new Vector3(10.9005, -1.5, -18.4339),
+  new Vector3(7.5684, -1.5, -23.3785),
 ];
 
 positions.set("curvePoints", curvePoints);

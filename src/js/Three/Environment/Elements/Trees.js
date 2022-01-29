@@ -74,8 +74,6 @@ export class Trees extends THREE.Group {
       );
     };
 
-    // initializing a new simplex instance
-    // do this only once as it is relatively expensive
     let noise2D;
 
     const instanceNumber = 1000;
