@@ -29,6 +29,12 @@ export class Grounds extends Group {
       uSpeed: { value: 1.2 },
     };
 
+    this.riverUniforms = {
+      uTime: { value: 0 },
+      uColor: { value: new Color("#a2dae9") },
+      uColor2: { value: new Color("#0f98c4") },
+    };
+
     this.leafUniforms = {
       uTime: { value: 0 },
       uColor: { value: new Color("#d1e997") },
@@ -41,6 +47,7 @@ export class Grounds extends Group {
     this.ground1 = new Ground(
       this.textures[2],
       this.grassUniforms,
+      this.riverUniforms,
       forestPathLine,
       parameters
     );
@@ -52,6 +59,7 @@ export class Grounds extends Group {
     this.ground2 = new Ground(
       this.textures[0],
       this.grassUniforms,
+      this.riverUniforms,
       forestPathLine,
       parameters
     );
@@ -73,6 +81,7 @@ export class Grounds extends Group {
     this.ground3 = new Ground(
       this.textures[1],
       this.grassUniforms,
+      this.riverUniforms,
       forestPathLine,
       parameters
     );
@@ -192,6 +201,10 @@ export class Grounds extends Group {
       .max(1)
       .name("DisplaceIntensity");
     folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
+
+    const riverFolder = sceneFolder.addFolder("River");
+    riverFolder.addColor(this.riverUniforms.uColor, "value").name("Color");
+    riverFolder.addColor(this.riverUniforms.uColor2, "value").name("Color2");
   }
 
   switchGrounds() {
@@ -257,5 +270,6 @@ export class Grounds extends Group {
       console.log("Switch");
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
+    this.riverUniforms.uTime.value = raf.elapsedTime;
   }
 }

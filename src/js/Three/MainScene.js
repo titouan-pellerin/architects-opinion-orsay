@@ -15,6 +15,38 @@ export class MainScene extends THREE.Scene {
   constructor() {
     super();
 
+    THREE.ShaderChunk.fog_fragment = `
+    #ifdef USE_FOG
+      #ifdef FOG_EXP2
+        float fogFactor = 1.0 - exp( - fogDensity * fogDensity * vFogDepth * vFogDepth );
+      #else
+        float fogFactor = smoothstep( fogNear, fogFar, vFogDepth );
+      #endif
+      gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
+    #endif`;
+
+    THREE.ShaderChunk.fog_pars_fragment = `
+    #ifdef USE_FOG
+      uniform vec3 fogColor;
+      varying float vFogDepth;
+      #ifdef FOG_EXP2
+        uniform float fogDensity;
+      #else
+        uniform float fogNear;
+        uniform float fogFar;
+      #endif
+    #endif`;
+
+    THREE.ShaderChunk.fog_pars_vertex = `
+    #ifdef USE_FOG
+      varying float vFogDepth;
+    #endif`;
+
+    THREE.ShaderChunk.fog_vertex = `
+    #ifdef USE_FOG
+      vFogDepth = - mvPosition.z;
+    #endif`;
+
     const parameters = {
       tintColor: new THREE.Color("#ffffff"),
 
@@ -56,7 +88,7 @@ export class MainScene extends THREE.Scene {
       30,
       this.sizes.width / this.sizes.height,
       0.1,
-      45
+      35
     );
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
@@ -103,9 +135,8 @@ export class MainScene extends THREE.Scene {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       powerPreference: "high-performance",
+      antialias: false,
     });
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.physicallyCorrectLights = true;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -120,9 +151,8 @@ export class MainScene extends THREE.Scene {
 
     this.cameraContainer.position.set(0, -0.5, 25);
     this.add(this.cameraContainer);
-    // this.camera.lookAt(-0.08, 0, 22);
 
-    const fog = new THREE.Fog(parameters.skyBgColor, 20, 45);
+    const fog = new THREE.Fog(parameters.skyBgColor, 20, 35);
     this.fog = fog;
 
     const directionalLight = new THREE.DirectionalLight(
@@ -187,15 +217,15 @@ export class MainScene extends THREE.Scene {
     //   })
     //   .name("Disable post");
 
-    atmosphereFolder
-      .addColor(parameters, "skyBgColor")
-      .onChange(() => {
-        fog.color.set(parameters.skyBgColor);
-        this.background.set(parameters.skyBgColor);
-      })
-      .name("SkyBgColor");
-    atmosphereFolder.add(fog, "near").min(-30).max(30).name("FogNear");
-    atmosphereFolder.add(fog, "far").min(30).max(90).name("FogFar");
+    // atmosphereFolder
+    //   .addColor(parameters, "skyBgColor")
+    //   .onChange(() => {
+    //     fog.color.set(parameters.skyBgColor);
+    //     this.background.set(parameters.skyBgColor);
+    //   })
+    //   .name("SkyBgColor");
+    // atmosphereFolder.add(fog, "near").min(-30).max(30).name("FogNear");
+    // atmosphereFolder.add(fog, "far").min(30).max(90).name("FogFar");
 
     const lightFolder = atmosphereFolder.addFolder("Light");
     lightFolder
@@ -233,14 +263,6 @@ export class MainScene extends THREE.Scene {
     const postFolder = atmosphereFolder.addFolder("Postprocessing");
     postFolder.add(postGuiFunctions, "disablePost");
     postFolder.add(postGuiFunctions, "enablePost");
-    const tintFolder = postFolder.addFolder("Tint");
-    tintFolder
-      .addColor(parameters, "tintColor")
-      .onChange(() => {
-        this.customPass.uniforms.uTintColor.value.set(parameters.tintColor);
-      })
-      .name("Color");
-
     const cornerFolder = postFolder.addFolder("Corner");
     cornerFolder
       .addColor(parameters, "cornerColor")

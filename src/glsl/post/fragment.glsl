@@ -104,7 +104,7 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float G = pow(3.0, sqrt((valueGx * valueGx) + (valueGy * valueGy)));
+  float G = pow(3., sqrt((valueGx * valueGx) + (valueGy * valueGy)));
   vec3 border = vec3(G);
 
     // gl_FragColor = render;
