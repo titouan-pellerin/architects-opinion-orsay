@@ -56,7 +56,7 @@ export class MainScene extends THREE.Scene {
       30,
       this.sizes.width / this.sizes.height,
       0.1,
-      45
+      55
     );
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
