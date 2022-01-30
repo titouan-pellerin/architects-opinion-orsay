@@ -21,13 +21,6 @@ const curvePoints = [
   new Vector2(4.6118, -192.1805),
 ];
 
-const checkpoints = [
-  new Vector2(0.1729, -0.6616),
-  new Vector2(-0.0214, -1.2682),
-  new Vector2(-0.0957, -1.7837),
-  new Vector2(0.0897, -2.202),
-];
-
 const treesPositions1 = [
   new Vector2(-3.93740434726622, 4.79599917473483),
   new Vector2(-10.0740578869406, -18.8947754362516),
@@ -451,14 +444,13 @@ const woodLogsPositions3 = [
 ];
 
 const artworksPositions = [
-  new Vector3(0, -1.5, -15.2491),
-  new Vector3(8.9474, -1.5, -11.6339),
-  new Vector3(10.9005, -1.5, -18.4339),
-  new Vector3(7.5684, -1.5, -23.3785),
+  new Vector3(6.8777, -1.5, -25.6264),
+  new Vector3(11.4383, -1.5, -24.0333),
+  new Vector3(12.7515, -1.5, -20.0401),
+  new Vector3(13.5835, -1.5, -15.6866),
 ];
 
 positions.set("curvePoints", curvePoints);
-positions.set("checkpoints", checkpoints);
 positions.set("treesPositions", [treesPositions1, treesPositions2, treesPositions3]);
 positions.set("rocksPositions", [rocksPositions1, rocksPositions2, rocksPositions3]);
 positions.set("woodLogsPositions", [

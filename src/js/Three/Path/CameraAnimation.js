@@ -1,22 +1,25 @@
 /* eslint-disable no-undef */
 import gsap from "gsap";
-import { Vector3 } from "three";
+import { Line, Vector3 } from "three";
 import { guiFolders } from "../../utils/Debug";
 import { mouse } from "../../utils/Mouse";
+import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
+import { Checkpoint } from "./Checkpoint";
 
 export class CameraAnimation {
-  constructor(path, envScale, artworks) {
+  /**
+   *
+   * @param {Line} path
+   * @param {Number} envScale
+   * @param {Checkpoint[]} checkpoints
+   * @param {Artwork[]} artworks
+   */
+  constructor(path, envScale, checkpoints, artworks) {
     gsap.registerPlugin(CustomEase);
     gsap.ticker.lagSmoothing(1000, 16);
 
-    this.checkpoints = [
-      { tick: 0.155, duration: 30 },
-      { tick: 0.345, duration: 42 },
-      { tick: 0.545, duration: 18 },
-      { tick: 0.745, duration: 36 },
-      { tick: 0.99, duration: 20 },
-    ];
+    this.checkpoints = checkpoints;
     this.checkpointsIndex = 0;
     this.isAtCheckpoint = false;
     this.isLeavingCheckpoint = false;
