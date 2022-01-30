@@ -76,7 +76,8 @@ export class Trees extends THREE.Group {
 
     let noise2D;
 
-    const instanceNumber = 1000;
+    // const instanceNumber = 1000;
+    const instanceNumber = 700;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.3, 0.3, 1, 4);
