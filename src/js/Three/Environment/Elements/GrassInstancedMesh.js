@@ -58,7 +58,7 @@ export class GrassInstancedMesh {
 
       instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
       instance.lookAt(instanceNormal);
-      const posY = instance.position.y;
+      let posY = instance.position.y;
 
       for (let j = 0; j < this.curveTexturesData.length; j++) {
         const flipY = j % 2 == 0 ? 1 : -1;
@@ -101,6 +101,7 @@ export class GrassInstancedMesh {
 
             instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
             instance.lookAt(instanceNormal);
+            posY = instance.position.y;
           }
         } while (alpha === 0);
 
