@@ -107,7 +107,10 @@ export class Ground extends Group {
     this.mask.matrixAutoUpdate = false;
     this.mask.updateMatrix();
 
-    const riverMaterial = new MeshToonMaterial();
+    const riverMaterial = new MeshToonMaterial({
+      transparent: true,
+      opacity: 0.8,
+    });
     riverMaterial.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...riverUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
