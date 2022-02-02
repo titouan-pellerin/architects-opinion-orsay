@@ -30,7 +30,7 @@ export class GrassInstancedMesh {
       }
     );
 
-    this.instanceNumber = 100000;
+    this.instanceNumber = 35000;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.01, 0.7, 1, 1);
@@ -58,31 +58,56 @@ export class GrassInstancedMesh {
 
       instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
       instance.lookAt(instanceNormal);
-      const posY = instance.position.y;
+      let posY = instance.position.y;
 
       for (let j = 0; j < this.curveTexturesData.length; j++) {
         const flipY = j % 2 == 0 ? 1 : -1;
-        const textureInstancePosX = Math.floor(
-          ((instance.position.x + 25) * this.textureSize) / 50
-        );
-        const textureInstancePosY = Math.floor(
-          ((flipY * instance.position.z + 25) * this.textureSize) / 50
-        );
 
-        // Red is the main path
-        const red =
-          this.curveTexturesData[j][
-            textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4
-          ];
+        let textureInstancePosX, textureInstancePosY, red, green, alpha;
 
-        // Green is the river path
-        const green =
-          this.curveTexturesData[j][
-            textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4 + 1
-          ];
+        do {
+          textureInstancePosX = Math.floor(
+            ((instance.position.x + 25) * this.textureSize) / 50
+          );
+          textureInstancePosY = Math.floor(
+            ((flipY * instance.position.z + 25) * this.textureSize) / 50
+          );
+          // Red is the main path
+          red =
+            this.curveTexturesData[j][
+              textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4
+            ];
+
+          // Green is the river path
+          green =
+            this.curveTexturesData[j][
+              textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4 + 1
+            ];
+
+          // Alpha is where there is no grass
+          alpha =
+            this.curveTexturesData[j][
+              textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4 + 3
+            ];
+          if (alpha === 0) {
+            sampler.sample(instancePos, instanceNormal);
+            instancePos.x *= envScale;
+            instancePos.y *= -envScale;
+            instancePos.z *= envScale;
+
+            instanceNormal.x *= -envScale;
+            instanceNormal.y *= -envScale;
+            instanceNormal.z *= -envScale;
+
+            instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
+            instance.lookAt(instanceNormal);
+            posY = instance.position.y;
+          }
+        } while (alpha === 0);
+
         instance.position.y = posY * (1 - red / 255) + (-2.9 * red) / 255;
         instance.scale.y = 1 * (1 - red / 255) + (0.4 * red) / 255;
-        if (green >= 1) {
+        if (green >= 1 || alpha === 0) {
           // Setting the vector scale to 0 doesn't work... all instances get black ?
           instance.position.y = -100;
           instance.scale.y = 0;

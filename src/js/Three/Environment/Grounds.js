@@ -1,18 +1,25 @@
-import { Color, Group } from "three";
+import { Color, Group, Line } from "three";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
+import { Checkpoint } from "../Path/Checkpoint";
+import { Artwork } from "./Elements/Artwork";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
 import { Ground } from "./Ground";
-import { Artwork } from "./Elements/Artwork";
-import * as THREE from "three";
 
 export class Grounds extends Group {
-  constructor(groundAmount, parameters = {}, forestPathLine) {
+  /**
+   *
+   * @param {Number} groundAmount
+   * @param {*} parameters
+   * @param {Line} forestPathLine
+   * @param {Checkpoint[]} checkpoints
+   */
+  constructor(groundAmount, parameters = {}, forestPathLine, checkpoints) {
     super();
     this.forestPathLine = forestPathLine;
     this.currentIndex = 1;
@@ -51,6 +58,7 @@ export class Grounds extends Group {
       forestPathLine,
       parameters
     );
+    this.ground1.grass.removeFromParent();
 
     this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
@@ -64,6 +72,7 @@ export class Grounds extends Group {
       parameters
     );
     Ground.grass.setInstanceMatrices(0, this.ground2.grass);
+    // this.ground2.grass.removeFromParent();
 
     const trees1 = new Trees(positions.get("treesPositions")[0], this.leafUniforms);
     this.ground2.trees = trees1;
@@ -86,6 +95,7 @@ export class Grounds extends Group {
       parameters
     );
     Ground.grass.setInstanceMatrices(1, this.ground3.grass);
+    // this.ground3.grass.removeFromParent();
 
     this.ground3.texture.flipY = false;
     this.ground3.position.z -= parameters.envScale * parameters.groundSize;
@@ -106,11 +116,18 @@ export class Grounds extends Group {
     this.ground3.woodLogs = woodLogs2;
     this.ground3.add(woodLogs2);
 
-    const artwork1Pos = positions.get("artworksPositions")[0];
-    this.artwork1 = new Artwork(
-      texturesMap.get("artworksTextures")[6],
-      parameters.envScale
-    );
+    this.artworks = [];
+    for (let i = 0; i < positions.get("artworksPositions").length; i++) {
+      const artwork = new Artwork(
+        texturesMap.get("artworksTextures")[i],
+        positions.get("artworksPositions")[i]
+      );
+      this.artworks.push(artwork);
+    }
+    this.artworks[0].lookAt(checkpoints[0].position.x, -0.8, checkpoints[0].position.y);
+    this.artworks[1].lookAt(checkpoints[0].position.x, -0.8, checkpoints[0].position.y);
+    this.artworks[2].lookAt(checkpoints[0].position.x, -0.8, checkpoints[0].position.y);
+    this.artworks[3].lookAt(checkpoints[0].position.x, -0.8, checkpoints[0].position.y);
 
     // const artwork2Pos = positions.get("artworksPositions")[1];
     // this.artwork2 = new Artwork(
@@ -136,7 +153,7 @@ export class Grounds extends Group {
     // this.artwork3.rotation.y = -Math.PI * 0.09;
 
     this.add(this.ground1, this.ground2, this.ground3);
-    // this.add(this.artwork1, this.artwork2, this.artwork3, this.artwork4);
+    this.add(...this.artworks);
 
     raf.subscribe("grounds", this.update.bind(this));
 

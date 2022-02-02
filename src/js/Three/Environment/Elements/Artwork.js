@@ -11,11 +11,17 @@ import {
   MeshBasicMaterial,
   MeshToonMaterial,
   PlaneGeometry,
+  Texture,
+  Vector3,
 } from "three";
-import { mainScene } from "../../MainScene";
 
 export class Artwork extends Group {
-  constructor(texture, position, envScale) {
+  /**
+   *
+   * @param {Texture} texture
+   * @param {Vector3} position
+   */
+  constructor(texture, position) {
     super();
 
     this.artworkUniforms = {
@@ -56,22 +62,21 @@ export class Artwork extends Group {
 
     this.outerMesh = new Mesh(this.artworkGeometryOuter, this.artworkMaterialOuter);
     this.outerMesh.scale.set(
-      3.3,
-      (texture.image.height * 3.3) / texture.image.width,
+      2.6,
+      (texture.image.height * 2.6) / texture.image.width,
       0.65
     );
 
     this.innerMesh = new Mesh(this.artworkGeometryInner, this.artworkMaterialInner);
-    this.innerMesh.scale.set(3, (texture.image.height * 3) / texture.image.width, 3);
+    this.innerMesh.scale.set(2.3, (texture.image.height * 2.3) / texture.image.width, 3);
     this.innerMesh.position.z = -0.3;
 
-    this.position.set(position.x * envScale, position.y, position.z * envScale);
+    this.position.set(position.x, position.y, position.z);
 
     this.outerMesh.matrixAutoUpdate = false;
     this.innerMesh.matrixAutoUpdate = false;
     this.outerMesh.updateMatrix();
     this.innerMesh.updateMatrix();
-    // this.add(this.innerMesh, this.outerMesh);
-    mainScene.add(this.innerMesh, this.outerMesh);
+    this.add(this.innerMesh, this.outerMesh);
   }
 }

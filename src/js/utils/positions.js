@@ -1,4 +1,4 @@
-import { Vector2 } from "three";
+import { Vector2, Vector3 } from "three";
 
 const positions = new Map();
 
@@ -19,13 +19,6 @@ const curvePoints = [
   new Vector2(-8.2607, -147.1246),
   new Vector2(0.8329, -161.0774),
   new Vector2(4.6118, -192.1805),
-];
-
-const checkpoints = [
-  new Vector2(0.1729, -0.6616),
-  new Vector2(-0.0214, -1.2682),
-  new Vector2(-0.0957, -1.7837),
-  new Vector2(0.0897, -2.202),
 ];
 
 const treesPositions1 = [
@@ -451,15 +444,13 @@ const woodLogsPositions3 = [
 ];
 
 const artworksPositions = [
-  new Vector2(0.1739, -0.6917),
-  new Vector2(-0.0214, -1.314),
-  new Vector2(-0.0957, -1.8269),
-  new Vector2(0.1291, -2.2294),
-  new Vector2(0.0444, -2.21),
+  new Vector3(6.8777, -1.5, -25.6264),
+  new Vector3(11.4383, -1.5, -24.0333),
+  new Vector3(12.7515, -1.5, -20.0401),
+  new Vector3(13.5835, -1.5, -15.6866),
 ];
 
 positions.set("curvePoints", curvePoints);
-positions.set("checkpoints", checkpoints);
 positions.set("treesPositions", [treesPositions1, treesPositions2, treesPositions3]);
 positions.set("rocksPositions", [rocksPositions1, rocksPositions2, rocksPositions3]);
 positions.set("woodLogsPositions", [

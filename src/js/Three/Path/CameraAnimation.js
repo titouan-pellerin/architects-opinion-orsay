@@ -1,21 +1,25 @@
 /* eslint-disable no-undef */
 import gsap from "gsap";
-import { Vector3 } from "three";
+import { Line, Vector3 } from "three";
 import { guiFolders } from "../../utils/Debug";
+import { mouse } from "../../utils/Mouse";
+import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
+import { Checkpoint } from "./Checkpoint";
 
 export class CameraAnimation {
-  constructor(path, envScale, artworks) {
+  /**
+   *
+   * @param {Line} path
+   * @param {Number} envScale
+   * @param {Checkpoint[]} checkpoints
+   * @param {Artwork[]} artworks
+   */
+  constructor(path, envScale, checkpoints, artworks) {
     gsap.registerPlugin(CustomEase);
     gsap.ticker.lagSmoothing(1000, 16);
 
-    this.checkpoints = [
-      { tick: 0.155, duration: 30 },
-      { tick: 0.345, duration: 42 },
-      { tick: 0.545, duration: 18 },
-      { tick: 0.745, duration: 36 },
-      { tick: 0.99, duration: 20 },
-    ];
+    this.checkpoints = checkpoints;
     this.checkpointsIndex = 0;
     this.isAtCheckpoint = false;
     this.isLeavingCheckpoint = false;
@@ -56,6 +60,7 @@ export class CameraAnimation {
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
         duration: this.checkpoints[index].duration,
+        // duration: 1,
         value: this.checkpoints[index].tick,
         ease: CustomEase.create(
           "custom",
@@ -68,8 +73,8 @@ export class CameraAnimation {
           const curvePoint = this.path.spline.getPointAt(this.tick.value);
           const curvePoint2 = this.path.spline.getPointAt(nextTick);
 
-          const camPos = new Vector3(curvePoint.x, -0.5, curvePoint.y);
-          const camPos2 = new Vector3(curvePoint2.x, -0.5, curvePoint2.y);
+          const camPos = new Vector3(curvePoint.x, -0.8, curvePoint.y);
+          const camPos2 = new Vector3(curvePoint2.x, -0.8, curvePoint2.y);
 
           mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
           mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
@@ -78,6 +83,7 @@ export class CameraAnimation {
         },
         onComplete: () => {
           this.checkpointsIndex++;
+          mouse.removeMouseMove();
           // raf.subscribe("ray", this.ray.update.bind(this.ray));
           // raf.unsubscribe("mouse");
         },

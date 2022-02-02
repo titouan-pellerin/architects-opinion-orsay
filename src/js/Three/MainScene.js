@@ -88,7 +88,7 @@ export class MainScene extends THREE.Scene {
       30,
       this.sizes.width / this.sizes.height,
       1,
-      35
+      45
     );
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
@@ -149,7 +149,7 @@ export class MainScene extends THREE.Scene {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.background = new THREE.Color(parameters.skyBgColor);
 
-    this.cameraContainer.position.set(0, -0.5, 25);
+    this.cameraContainer.position.set(0, -0.8, 25);
     this.add(this.cameraContainer);
 
     const fog = new THREE.Fog(parameters.skyBgColor, 20, 35);
