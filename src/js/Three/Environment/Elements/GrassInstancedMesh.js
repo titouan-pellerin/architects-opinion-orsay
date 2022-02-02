@@ -1,11 +1,6 @@
-import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
-import commonVertexShader from "@glsl/grass/commonVertex.glsl";
-import outputFragmentShader from "@glsl/grass/outputFragment.glsl";
-import projectVertexShader from "@glsl/grass/projectVertex.glsl";
 import * as THREE from "three";
 import { Vector3 } from "three";
 import { texturesMap } from "../../../utils/assets";
-import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 
 export class GrassInstancedMesh {
   constructor(uniforms, envScale, sampler, pathLine) {
