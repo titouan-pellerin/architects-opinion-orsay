@@ -51,6 +51,7 @@ export class Grounds extends Group {
       forestPathLine,
       parameters
     );
+    this.ground1.grass.removeFromParent();
 
     this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
@@ -63,6 +64,7 @@ export class Grounds extends Group {
       parameters
     );
     Ground.grass.setInstanceMatrices(0, this.ground2.grass);
+    // this.ground2.grass.removeFromParent();
 
     const trees1 = new Trees(positions.get("treesPositions")[0], this.leafUniforms);
     this.ground2.trees = trees1;
@@ -84,6 +86,7 @@ export class Grounds extends Group {
       parameters
     );
     Ground.grass.setInstanceMatrices(1, this.ground3.grass);
+    // this.ground3.grass.removeFromParent();
 
     this.ground3.texture.flipY = false;
     this.ground3.position.z -= parameters.envScale * parameters.groundSize;
