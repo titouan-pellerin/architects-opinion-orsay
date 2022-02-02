@@ -18,26 +18,35 @@ export class GrassInstancedMesh {
 
     this.generateTexturesData();
 
-    this.material = new CustomMeshToonMaterial(
-      commonFragmentShader,
-      outputFragmentShader,
-      commonVertexShader,
-      null,
-      projectVertexShader,
-      uniforms,
-      {
-        side: THREE.DoubleSide,
-      }
-    );
+    // this.material = new CustomMeshToonMaterial(
+    //   commonFragmentShader,
+    //   outputFragmentShader,
+    //   commonVertexShader,
+    //   null,
+    //   projectVertexShader,
+    //   uniforms,
+    //   {
+    //     side: THREE.DoubleSide,
+    //   }
+    // );
 
-    this.instanceNumber = 35000;
+    this.material = new THREE.MeshBasicMaterial({
+      side: THREE.DoubleSide,
+      map: texturesMap.get("grassPattern")[0],
+      alphaTest: 0.5,
+      depthWrite: true,
+      transparent: false,
+    });
+
+    this.instanceNumber = 2000;
     const instance = new THREE.Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(0.01, 0.7, 1, 1);
+    this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
+    // this.geometry = new THREE.PlaneGeometry(0.01, 0.7, 1, 2);
 
     this.instancedGrassMesh = new THREE.InstancedMesh(
       this.geometry,
-      this.material.meshToonMaterial,
+      this.material,
       this.instanceNumber
     );
 

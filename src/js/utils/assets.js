@@ -88,6 +88,12 @@ const artwork17 = textureLoader.load(
 );
 artwork17.encoding = sRGBEncoding;
 
+const grassPattern = textureLoader.load(
+  "/assets/grass.png"
+);
+grassPattern.encoding = sRGBEncoding;
+texturesMap.set("grassPattern", [grassPattern]);
+
 texturesMap.set("artworksTextures", [
   artwork1,
   artwork2,
