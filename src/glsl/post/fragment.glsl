@@ -89,11 +89,12 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float G = pow(3., sqrt((valueGx * valueGx) + (valueGy * valueGy)));
+  float G = pow(1.3, sqrt((valueGx + valueGy) + (valueGy + valueGx)));
   vec3 border = vec3(G);
 
     // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);
   gl_FragColor = p2;
+  gl_FragColor = texture2D(tDiffuse, vUv) * vec4(vec3(border), 1.0);
   gl_FragColor = (p1 + p2) * vec4(vec3(border), 1.0);
 }

@@ -88,9 +88,7 @@ const artwork17 = textureLoader.load(
 );
 artwork17.encoding = sRGBEncoding;
 
-const grassPattern = textureLoader.load(
-  "/assets/grass.png"
-);
+const grassPattern = textureLoader.load("/assets/grass.png");
 grassPattern.encoding = sRGBEncoding;
 texturesMap.set("grassPattern", [grassPattern]);
 
@@ -123,6 +121,13 @@ gltfLoader.load("/assets/models/trunk2.glb", (gltf) => {
   trees[1] = gltf.scene;
 });
 
+const grass = [];
+gltfLoader.load("/assets/models/grass.glb", (gltf) => {
+  console.log(gltf.scene.children[0].geometry);
+  grass[0] = gltf.scene.children[0].geometry;
+});
+
 modelsMap.set("trees", trees);
+// modelsMap.set("grass", grass[0]);
 
 export { texturesMap, modelsMap };

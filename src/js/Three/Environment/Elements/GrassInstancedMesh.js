@@ -1,6 +1,13 @@
 import * as THREE from "three";
 import { Vector3 } from "three";
 import { texturesMap } from "../../../utils/assets";
+import { modelsMap } from "../../../utils/assets";
+
+import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
+import commonVertexShader from "@glsl/grass/commonVertex.glsl";
+import outputFragmentShader from "@glsl/grass/outputFragment.glsl";
+import projectVertexShader from "@glsl/grass/projectVertex.glsl";
+import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 
 export class GrassInstancedMesh {
   constructor(uniforms, envScale, sampler, pathLine) {
@@ -13,35 +20,37 @@ export class GrassInstancedMesh {
 
     this.generateTexturesData();
 
-    // this.material = new CustomMeshToonMaterial(
-    //   commonFragmentShader,
-    //   outputFragmentShader,
-    //   commonVertexShader,
-    //   null,
-    //   projectVertexShader,
-    //   uniforms,
-    //   {
-    //     side: THREE.DoubleSide,
-    //   }
-    // );
+    this.material = new CustomMeshToonMaterial(
+      commonFragmentShader,
+      outputFragmentShader,
+      commonVertexShader,
+      null,
+      projectVertexShader,
+      uniforms,
+      {
+        side: THREE.DoubleSide,
+      }
+    );
 
-    this.material = new THREE.MeshBasicMaterial({
-      side: THREE.DoubleSide,
-      map: texturesMap.get("grassPattern")[0],
-      alphaTest: 0.5,
-      depthWrite: true,
-      transparent: false,
-    });
+    // this.material = new THREE.MeshBasicMaterial({
+    //   side: THREE.DoubleSide,
+    //   map: texturesMap.get("grassPattern")[0],
+    //   alphaTest: 0.5,
+    //   depthWrite: true,
+    //   transparent: true,
+    // });
 
-    this.instanceNumber = 2000;
+    this.instanceNumber = 50000;
     const instance = new THREE.Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
-    // this.geometry = new THREE.PlaneGeometry(0.01, 0.7, 1, 2);
+    // this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
+    // this.geometry = modelsMap.get("grass");
+    this.geometry = new THREE.PlaneGeometry(0.01, 0.7, 1, 2);
 
     this.instancedGrassMesh = new THREE.InstancedMesh(
       this.geometry,
-      this.material,
+      this.material.meshToonMaterial,
+      // this.material,
       this.instanceNumber
     );
 
@@ -110,7 +119,7 @@ export class GrassInstancedMesh {
         } while (alpha === 0);
 
         instance.position.y = posY * (1 - red / 255) + (-2.9 * red) / 255;
-        instance.scale.y = 1 * (1 - red / 255) + (0.4 * red) / 255;
+        instance.scale.y = 1;
         if (green >= 1 || alpha === 0) {
           // Setting the vector scale to 0 doesn't work... all instances get black ?
           instance.position.y = -100;

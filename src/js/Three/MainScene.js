@@ -217,15 +217,15 @@ export class MainScene extends THREE.Scene {
     //   })
     //   .name("Disable post");
 
-    // atmosphereFolder
-    //   .addColor(parameters, "skyBgColor")
-    //   .onChange(() => {
-    //     fog.color.set(parameters.skyBgColor);
-    //     this.background.set(parameters.skyBgColor);
-    //   })
-    //   .name("SkyBgColor");
-    // atmosphereFolder.add(fog, "near").min(-30).max(30).name("FogNear");
-    // atmosphereFolder.add(fog, "far").min(30).max(90).name("FogFar");
+    atmosphereFolder
+      .addColor(parameters, "skyBgColor")
+      .onChange(() => {
+        fog.color.set(parameters.skyBgColor);
+        this.background.set(parameters.skyBgColor);
+      })
+      .name("SkyBgColor");
+    atmosphereFolder.add(fog, "near").min(-30).max(30).name("FogNear");
+    atmosphereFolder.add(fog, "far").min(30).max(90).name("FogFar");
 
     const lightFolder = atmosphereFolder.addFolder("Light");
     lightFolder

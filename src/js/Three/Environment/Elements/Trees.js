@@ -76,8 +76,7 @@ export class Trees extends THREE.Group {
 
     let noise2D;
 
-    // const instanceNumber = 1000;
-    const instanceNumber = 700;
+    const instanceNumber = 1000;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.3, 0.3, 1, 1);
@@ -162,11 +161,20 @@ export class Trees extends THREE.Group {
     const leaves11 = leaves.clone();
     leaves11.position.set(-11.83, 55.96, 21.94);
 
+    const test = new THREE.MeshNormalMaterial();
+
     const trunk1 = modelsMap.get("trees")[0].clone();
     trunk1.children[0].material = this.material;
 
     const trunk2 = modelsMap.get("trees")[1].clone();
     trunk2.children[0].material = this.material;
+
+    const geometry = new THREE.SphereGeometry(1, 50, 50);
+
+    const cube = new THREE.Mesh(geometry, this.material);
+    cube.position.z = 10;
+    cube.position.y = -1;
+    // this.add(cube);
 
     const tree1 = new THREE.Group();
     tree1.add(trunk1, leaves, leaves2, leaves3, leaves4, leaves5);
@@ -185,7 +193,7 @@ export class Trees extends THREE.Group {
         Math.random() * Math.PI * 2,
         0
       );
-      const randomScale = Math.random() * (0.2 - 0.08) + 0.08;
+      const randomScale = Math.random() * (0.23 - 0.08) + 0.08;
       newTree.scale.set(randomScale, randomScale, randomScale);
       newTree.updateMatrix();
       this.add(newTree);
