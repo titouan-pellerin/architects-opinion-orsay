@@ -2,9 +2,9 @@
 import gsap from "gsap";
 import { Line, Vector3 } from "three";
 import { guiFolders } from "../../utils/Debug";
-import { mouse } from "../../utils/Mouse";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
+import { Raycasting } from "../Raycasting";
 import { Checkpoint } from "./Checkpoint";
 
 export class CameraAnimation {
@@ -15,10 +15,11 @@ export class CameraAnimation {
    * @param {Checkpoint[]} checkpoints
    * @param {Artwork[]} artworks
    */
-  constructor(path, envScale, checkpoints, artworks) {
+  constructor(path, envScale, checkpoints) {
     gsap.registerPlugin(CustomEase);
     gsap.ticker.lagSmoothing(1000, 16);
 
+    this.raycasting = new Raycasting();
     this.checkpoints = checkpoints;
     this.checkpointsIndex = 0;
     this.isAtCheckpoint = false;
@@ -29,8 +30,6 @@ export class CameraAnimation {
     this.tick = {
       value: 0,
     };
-
-    // this.ray = new Ray(artworks, this);
 
     this.debugObject = {
       checkpoint1: () => this.goToCheckpoint(0),
@@ -55,12 +54,13 @@ export class CameraAnimation {
   }
 
   goToCheckpoint(index) {
+    this.raycasting.stop();
     if (!index) index = this.checkpointsIndex;
     if (index <= 4) {
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
-        duration: this.checkpoints[index].duration,
-        // duration: 1,
+        // duration: this.checkpoints[index].duration,
+        duration: 1,
         value: this.checkpoints[index].tick,
         ease: CustomEase.create(
           "custom",
@@ -82,8 +82,9 @@ export class CameraAnimation {
           mainScene.cameraContainer.rotateZ(Math.PI);
         },
         onComplete: () => {
+          this.raycasting.start(this.checkpoints[index].artworks);
           this.checkpointsIndex++;
-          mouse.removeMouseMove();
+          // mouse.removeMouseMove();
           // raf.subscribe("ray", this.ray.update.bind(this.ray));
           // raf.unsubscribe("mouse");
         },

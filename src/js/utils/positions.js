@@ -448,6 +448,19 @@ const artworksPositions = [
   new Vector3(11.4383, -1.5, -24.0333),
   new Vector3(12.7515, -1.5, -20.0401),
   new Vector3(13.5835, -1.5, -15.6866),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
+  new Vector3(100, 1, 100),
 ];
 
 positions.set("curvePoints", curvePoints);

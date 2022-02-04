@@ -7,7 +7,7 @@ export default defineConfig({
     https: false,
     open: true,
   },
-  assetsInclude: ["**/*.gltf"],
+  // assetsInclude: ["**/*.gltf"],
   plugins: [glsl()],
 
   resolve: {
@@ -18,5 +18,4 @@ export default defineConfig({
       { find: "@assets", replacement: "/src/assets" },
     ],
   },
-  rollupOptions: {},
 });
