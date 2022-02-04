@@ -24,7 +24,7 @@ vec4 blur(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
 
 void main() {
   // Small blur
-  vec4 smallBlur = blur(tDiffuse, vUv, uRes, vec2(0.5) * 5.);
+  vec4 smallBlur = blur(tDiffuse, vUv, uRes, vec2(0.5) * 2.);
 
   // Corner
   float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
@@ -57,9 +57,9 @@ void main() {
   } 
 
   // Part2, adding some blur
-  vec4 p2 = ((color / total)) * 0.65;
+  vec4 p2 = ((color / total)) * .7;
 
-  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.;
+  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y);
 
 	// kernel definition (in glsl matrices are filled in column-major order)
   const mat3 Gx = mat3(-1, -2, -1, 0, 0, 0, 1, 2, 1); // x direction kernel
