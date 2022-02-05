@@ -24,7 +24,7 @@ vec4 blur(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
 
 void main() {
   // Small blur
-  vec4 smallBlur = blur(tDiffuse, vUv, uRes, vec2(0.5) * 2.);
+  vec4 smallBlur = blur(tDiffuse, vUv, uRes, vec2(0.5) * 2.5);
 
   // Corner
   float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
