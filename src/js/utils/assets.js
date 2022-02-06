@@ -88,9 +88,10 @@ const artwork17 = textureLoader.load(
 );
 artwork17.encoding = sRGBEncoding;
 
-const grassPattern = textureLoader.load("/assets/grass.png");
-grassPattern.encoding = sRGBEncoding;
-texturesMap.set("grassPattern", [grassPattern]);
+const flowerPattern = textureLoader.load("/assets/flower/flower.jpg");
+flowerPattern.encoding = sRGBEncoding;
+flowerPattern.flipY = false;
+texturesMap.set("flowerPattern", [flowerPattern]);
 
 texturesMap.set("artworksTextures", [
   artwork1,
@@ -121,13 +122,12 @@ gltfLoader.load("/assets/models/trunk2.glb", (gltf) => {
   trees[1] = gltf.scene;
 });
 
-const grass = [];
-gltfLoader.load("/assets/models/grass.glb", (gltf) => {
-  console.log(gltf.scene.children[0].geometry);
-  grass[0] = gltf.scene.children[0].geometry;
+const flower = [];
+gltfLoader.load("/assets/models/flower/flower2.glb", (gltf) => {
+  flower[0] = gltf.scene;
 });
 
 modelsMap.set("trees", trees);
-// modelsMap.set("grass", grass[0]);
+modelsMap.set("flower", flower);
 
 export { texturesMap, modelsMap };

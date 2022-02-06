@@ -11,6 +11,7 @@ riverOffset *= mix(1., .3, (curveCoords.r + curveCoords.g) * .5);
 float riverElevation = mix(1., 0.1, curveCoords.g);
 
 float smallNoise = cnoise(vec2(transformed.xy * 200.)) * 0.0008;
+vSmallNoise = smallNoise;
 
 transformed.z *= elevation * riverElevation;
 transformed.z += smallNoise - riverOffset;

@@ -10,4 +10,6 @@ vec4 curveCoords = texture2D(uTexture, vUv);
 vec3 render = mix(uPathColor, uColor, 1. - curveCoords.r);
 render = mix(riverColor, render, 1. - curveCoords.g);
 
-gl_FragColor = vec4(outgoingLight * render, diffuseColor.a);
+vec3 colorElevation = vec3(vSmallNoise * 100.) * uColor;
+
+gl_FragColor = vec4(outgoingLight * render + colorElevation, diffuseColor.a);

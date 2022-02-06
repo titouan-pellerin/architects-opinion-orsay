@@ -34,7 +34,7 @@ export class Grounds extends Group {
       uColor2: { value: new Color("#236760") },
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
-      uTexture: { value: texturesMap.get("grassPattern")[0] },
+      uTexture: { value: texturesMap.get("flowerPattern")[0] },
     };
 
     this.riverUniforms = {
