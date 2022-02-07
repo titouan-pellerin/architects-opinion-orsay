@@ -1,5 +1,6 @@
 import flowerCommonFragmentShader from "@glsl/flower/commonFragment.glsl";
 import flowerOutputFragmentShader from "@glsl/flower/outputFragment.glsl";
+import flowerCommonVertexShader from "@glsl/flower/commonVertex.glsl";
 import flowerProjectVertexShader from "@glsl/flower/projectVertex.glsl";
 import grassCommonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import grassCommonVertexShader from "@glsl/grass/commonVertex.glsl";
@@ -8,6 +9,7 @@ import grassProjectVertexShader from "@glsl/grass/projectVertex.glsl";
 import { DoubleSide, InstancedMesh, Object3D, PlaneGeometry, Vector3 } from "three";
 import { modelsMap, texturesMap } from "../../../utils/assets";
 import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
+import { MeshToonMaterial } from "three";
 
 export class GroundElements {
   constructor(grassUniforms, flowersUniforms, envScale, sampler, pathLine) {
@@ -31,17 +33,40 @@ export class GroundElements {
         side: DoubleSide,
       }
     );
-    const flowerMaterial = new CustomMeshToonMaterial(
-      flowerCommonFragmentShader,
-      flowerOutputFragmentShader,
-      flowerCommonFragmentShader,
-      null,
-      flowerProjectVertexShader,
-      flowersUniforms,
-      {
-        side: DoubleSide,
-      }
-    );
+    // const flowerMaterial = new CustomMeshToonMaterial(
+    //   flowerCommonFragmentShader,
+    //   flowerOutputFragmentShader,
+    //   flowerCommonFragmentShader,
+    //   null,
+    //   flowerProjectVertexShader,
+    //   flowersUniforms,
+    //   {
+    //     side: DoubleSide,
+    //   }
+    // );
+
+    const flowerMaterial = new MeshToonMaterial({
+      side: DoubleSide,
+    });
+    flowerMaterial.onBeforeCompile = (shader) => {
+      shader.uniforms = { ...shader.uniforms, ...flowersUniforms };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        flowerCommonFragmentShader
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        flowerOutputFragmentShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        flowerCommonVertexShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <project_vertex>",
+        flowerProjectVertexShader
+      );
+    };
 
     const grassInstanceNumber = 20000;
     const flowerInstanceNumber = 2000;
@@ -60,7 +85,7 @@ export class GroundElements {
 
     this.instancedFlowersMesh = new InstancedMesh(
       flowerGeometry,
-      flowerMaterial.meshToonMaterial,
+      flowerMaterial,
       flowerInstanceNumber
     );
 
@@ -164,14 +189,16 @@ export class GroundElements {
    */
   setInstanceMatrices(groundIndex, grassInstancedMesh, flowersInstancedMesh) {
     for (let i = 0; i < grassInstancedMesh.count + flowersInstancedMesh.count; i++) {
-      const instancedMesh =
+      const isFlower =
         i %
           ((grassInstancedMesh.count + flowersInstancedMesh.count) /
             flowersInstancedMesh.count) ===
-        0
-          ? flowersInstancedMesh
-          : grassInstancedMesh;
+        0;
+      const instancedMesh = isFlower ? flowersInstancedMesh : grassInstancedMesh;
       const newInstanceMatrix = this.curveTexturesMatrices.get(groundIndex)[i];
+
+      // if (isFlower) newInstanceMatrix.makeRotationY(Math.random() * Math.PI * 2);
+
       instancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
     }
     grassInstancedMesh.instanceMatrix.needsUpdate = true;
