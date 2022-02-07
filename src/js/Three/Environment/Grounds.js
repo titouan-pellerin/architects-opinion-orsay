@@ -34,6 +34,14 @@ export class Grounds extends Group {
       uColor2: { value: new Color("#236760") },
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
+    };
+
+    this.flowersUniforms = {
+      uTime: { value: 0 },
+      uColor: { value: new Color("#ff0000") },
+      uColor2: { value: new Color("#236760") },
+      uDisplaceIntensity: { value: 0.25 },
+      uSpeed: { value: 1.2 },
       uTexture: { value: texturesMap.get("flowerPattern")[0] },
     };
 
@@ -55,11 +63,11 @@ export class Grounds extends Group {
     this.ground1 = new Ground(
       this.textures[2],
       this.grassUniforms,
+      this.flowersUniforms,
       this.riverUniforms,
       forestPathLine,
       parameters
     );
-    this.ground1.grass.removeFromParent();
 
     this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
@@ -68,11 +76,16 @@ export class Grounds extends Group {
     this.ground2 = new Ground(
       this.textures[0],
       this.grassUniforms,
+      this.flowersUniforms,
       this.riverUniforms,
       forestPathLine,
       parameters
     );
-    Ground.grass.setInstanceMatrices(0, this.ground2.grass);
+    Ground.groundElements.setInstanceMatrices(
+      0,
+      this.ground2.grass,
+      this.ground2.flowers
+    );
     // this.ground2.grass.removeFromParent();
 
     const trees1 = new Trees(positions.get("treesPositions")[0], this.leafUniforms);
@@ -94,11 +107,16 @@ export class Grounds extends Group {
     this.ground3 = new Ground(
       this.textures[1],
       this.grassUniforms,
+      this.flowersUniforms,
       this.riverUniforms,
       forestPathLine,
       parameters
     );
-    Ground.grass.setInstanceMatrices(1, this.ground3.grass);
+    Ground.groundElements.setInstanceMatrices(
+      1,
+      this.ground3.grass,
+      this.ground3.flowers
+    );
     // this.ground3.grass.removeFromParent();
 
     this.ground3.texture.flipY = false;
@@ -222,7 +240,11 @@ export class Grounds extends Group {
       texture.flipY = !!(this.currentIndex % 2);
       currentGround1.groundUniforms.uTexture.value = texture;
       currentGround1.groundMaskUniforms.uTexture.value = texture;
-      Ground.grass.setInstanceMatrices(this.currentIndex + 1, currentGround1.grass);
+      Ground.groundElements.setInstanceMatrices(
+        this.currentIndex + 1,
+        currentGround1.grass,
+        currentGround1.flowers
+      );
 
       currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
 
@@ -243,6 +265,7 @@ export class Grounds extends Group {
       console.log("switch");
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
+    this.flowersUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;
   }
 }

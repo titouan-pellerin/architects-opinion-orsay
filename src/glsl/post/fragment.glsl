@@ -54,7 +54,7 @@ void main() {
     // Part2, adding some blur
   vec4 p2 = ((color / total)) * 0.5;
 
-  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.5;
+  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.;
 
 		// kernel definition (in glsl matrices are filled in column-major order)
 
