@@ -30,11 +30,11 @@ export class GrassInstancedMesh {
       }
     );
 
-    this.instanceNumber = 35000;
+    this.instanceNumber = 30000;
     const instance = new THREE.Object3D();
 
     // this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
-    this.geometry = new THREE.PlaneGeometry(0.01, 0.7, 1, 2);
+    this.geometry = new THREE.PlaneGeometry(0.01, 1, 1, 2);
 
     this.instancedGrassMesh = new THREE.InstancedMesh(
       this.geometry,
@@ -60,12 +60,11 @@ export class GrassInstancedMesh {
       instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
       instance.lookAt(instanceNormal);
       let posY = instance.position.y;
-
       for (let j = 0; j < this.curveTexturesData.length; j++) {
         const flipY = j % 2 == 0 ? 1 : -1;
 
         let textureInstancePosX, textureInstancePosY, red, green, alpha;
-
+        const random = (Math.random() - 0.5) * 30;
         do {
           textureInstancePosX = Math.floor(
             ((instance.position.x + 25) * this.textureSize) / 50
@@ -90,7 +89,7 @@ export class GrassInstancedMesh {
             this.curveTexturesData[j][
               textureInstancePosY * (this.textureSize * 4) + textureInstancePosX * 4 + 3
             ];
-          if (alpha === 0 || red >= 0.99) {
+          if (alpha === 0 || red > 150 + random || green > 0) {
             sampler.sample(instancePos, instanceNormal);
             instancePos.x *= envScale;
             instancePos.y *= -envScale;
@@ -104,15 +103,11 @@ export class GrassInstancedMesh {
             instance.lookAt(instanceNormal);
             posY = instance.position.y;
           }
-        } while (alpha === 0 || red >= 0.99);
+        } while (alpha === 0 || red > 150 + random || green > 0);
 
-        instance.position.y = posY * (1 - red / 255) + (-2.9 * red) / 255;
-        instance.scale.y = 1 * (1 - red / 255) + (0.4 * red) / 255;
-        if (green >= 1) {
-          // Setting the vector scale to 0 doesn't work... all instances get black ?
-          instance.position.y = -100;
-          instance.scale.y = 0;
-        }
+        instance.position.y =
+          posY * (1 - red / (150 + random)) + (-2.9 * red) / (150 + random);
+        instance.scale.y = 1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
 
         instance.updateMatrix();
 
