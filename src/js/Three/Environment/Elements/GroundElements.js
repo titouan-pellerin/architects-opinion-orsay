@@ -33,17 +33,6 @@ export class GroundElements {
         side: DoubleSide,
       }
     );
-    // const flowerMaterial = new CustomMeshToonMaterial(
-    //   flowerCommonFragmentShader,
-    //   flowerOutputFragmentShader,
-    //   flowerCommonFragmentShader,
-    //   null,
-    //   flowerProjectVertexShader,
-    //   flowersUniforms,
-    //   {
-    //     side: DoubleSide,
-    //   }
-    // );
 
     const flowerMaterial = new MeshToonMaterial({
       side: DoubleSide,
@@ -73,7 +62,7 @@ export class GroundElements {
 
     const instance = new Object3D();
 
-    const grassGeometry = new PlaneGeometry(0.01, 1, 1, 2);
+    const grassGeometry = new PlaneGeometry(0.01, 1, 1, 1);
     const flowerGeometry = modelsMap.get("flower")[0].children[0].geometry;
     flowerGeometry.scale(0.3, 0.3, 0.3);
 
