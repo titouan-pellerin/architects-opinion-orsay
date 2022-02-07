@@ -106,7 +106,7 @@ export class GrassInstancedMesh {
         } while (alpha === 0 || red > 150 + random || green > 0);
 
         instance.position.y =
-          posY * (1 - red / (150 + random)) + (-2.9 * red) / (150 + random);
+          posY * (1 - red / (150 + random)) + (-2.75 * red) / (150 + random);
         instance.scale.y = 1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
 
         instance.updateMatrix();
