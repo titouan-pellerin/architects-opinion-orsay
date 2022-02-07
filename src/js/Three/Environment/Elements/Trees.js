@@ -76,7 +76,7 @@ export class Trees extends THREE.Group {
 
     let noise2D;
 
-    const instanceNumber = 1000;
+    const instanceNumber = 700;
     const instance = new THREE.Object3D();
 
     this.geometry = new THREE.PlaneGeometry(0.35, 0.35, 1, 1);
@@ -189,7 +189,7 @@ export class Trees extends THREE.Group {
         Math.random() * Math.PI * 2,
         0
       );
-      const randomScale = Math.random() * (0.23 - 0.08) + 0.08;
+      const randomScale = Math.random() * (0.2 - 0.08) + 0.08;
       newTree.scale.set(randomScale, randomScale, randomScale);
       newTree.updateMatrix();
       this.add(newTree);
