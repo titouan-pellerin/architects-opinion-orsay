@@ -57,7 +57,7 @@ export class GrassInstancedMesh {
       instanceNormal.y *= -envScale;
       instanceNormal.z *= -envScale;
 
-      instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
+      instance.position.set(instancePos.x, instancePos.z - 2.55, instancePos.y);
       instance.lookAt(instanceNormal);
       let posY = instance.position.y;
       for (let j = 0; j < this.curveTexturesData.length; j++) {
@@ -99,7 +99,7 @@ export class GrassInstancedMesh {
             instanceNormal.y *= -envScale;
             instanceNormal.z *= -envScale;
 
-            instance.position.set(instancePos.x, instancePos.z - 2.68, instancePos.y);
+            instance.position.set(instancePos.x, instancePos.z - 2.55, instancePos.y);
             instance.lookAt(instanceNormal);
             posY = instance.position.y;
           }
