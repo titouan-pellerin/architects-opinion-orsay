@@ -57,9 +57,8 @@ export class MainScene extends THREE.Scene {
       // cornerColor: new THREE.Color("#6600ff"),
 
       // Morning backup for toto
-      skyBgColor: new THREE.Color("#9d8543"),
-      // skyBgColor: new THREE.Color("#e5ba43"),
-      cornerColor: new THREE.Color("#000000"),
+      skyBgColor: new THREE.Color("#e5ba43"),
+      cornerColor: new THREE.Color("#631eb8"),
       lightColor: new THREE.Color("#5a544e"),
       light2Color: new THREE.Color("#d8923d"),
 
