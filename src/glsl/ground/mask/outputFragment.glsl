@@ -8,4 +8,4 @@ stroke += (bigNoise * 2.0 - 1.0) + (smallNoise * 2.0 - 1.0);
 // Render
 vec4 render = vec4(uColor, 1.0) * vec4(stroke);
 
-gl_FragColor = vec4(outgoingLight * render.rbg, diffuseColor.a * render.a);
+gl_FragColor = vec4(outgoingLight * render.rgb, diffuseColor.a * render.a);

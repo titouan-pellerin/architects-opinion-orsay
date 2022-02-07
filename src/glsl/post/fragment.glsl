@@ -16,6 +16,21 @@ float hash(vec2 p) {
   return fract(1e4 * sin(17.0 * p.x + p.y * 0.1) * (0.1 + abs(sin(p.y * 13.0 + p.x))));
 }
 
+vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
+  vec4 color = vec4(0.0);
+  vec2 off1 = vec2(1.411764705882353) * direction;
+  vec2 off2 = vec2(3.2941176470588234) * direction;
+  vec2 off3 = vec2(5.176470588235294) * direction;
+  color += texture2D(image, uv) * 0.1964825501511404;
+  color += texture2D(image, uv + (off1 / resolution)) * 0.2969069646728344;
+  color += texture2D(image, uv - (off1 / resolution)) * 0.2969069646728344;
+  color += texture2D(image, uv + (off2 / resolution)) * 0.09447039785044732;
+  color += texture2D(image, uv - (off2 / resolution)) * 0.09447039785044732;
+  color += texture2D(image, uv + (off3 / resolution)) * 0.010381362401148057;
+  color += texture2D(image, uv - (off3 / resolution)) * 0.010381362401148057;
+  return color;
+}
+
 void main() {
     // Tint
   vec4 TintColor = vec4(uTintColor, 1.0);
@@ -26,7 +41,7 @@ void main() {
 
     // Part1, tint & corner
   // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
-  vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * .5;
+  vec4 p1 = texture2D(tDiffuse, vUv) * 0.5 * cornerColor;
 
     // Blur
   vec4 color = vec4(0.0);
@@ -52,9 +67,9 @@ void main() {
   } 
 
     // Part2, adding some blur
-  vec4 p2 = ((color / total)) * 0.5;
+  vec4 p2 = ((color / total)) * 0.75;
 
-  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.5;
+  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.;
 
 		// kernel definition (in glsl matrices are filled in column-major order)
 

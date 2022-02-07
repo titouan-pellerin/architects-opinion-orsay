@@ -58,7 +58,7 @@ export class MainScene extends THREE.Scene {
 
       // Morning backup for toto
       skyBgColor: new THREE.Color("#e5ba43"),
-      cornerColor: new THREE.Color("#631eb8"),
+      cornerColor: new THREE.Color("#575757"),
       lightColor: new THREE.Color("#5a544e"),
       light2Color: new THREE.Color("#d8923d"),
 
@@ -182,14 +182,14 @@ export class MainScene extends THREE.Scene {
         tDiffuse: { value: null },
         uTintColor: { value: parameters.tintColor },
         uCornerColor: { value: parameters.cornerColor },
-        uCornerIntensity: { value: 0.79 },
+        uCornerIntensity: { value: 1 },
         // uCornerSize: { value: 10 },
-        uCornerSize: { value: 2.58 },
+        uCornerSize: { value: 4.5 },
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
-          value: new THREE.Vector2(window.innerWidth * 0.75, window.innerHeight * 1),
-          // value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
+          // value: new THREE.Vector2(window.innerWidth * 0.75, window.innerHeight * 1),
+          value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 1),
         },
         uRes: {
           value: new THREE.Vector2(window.innerWidth, window.innerHeight),
