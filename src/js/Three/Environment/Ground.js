@@ -146,7 +146,7 @@ export class Ground extends Group {
 
     const sampler = new MeshSurfaceSampler(this.ground).build();
     if (!Ground.grass) {
-      Ground.grass = new GrassInstancedMesh(
+      Ground.grass = new FlowerInstancedMesh(
         grassUniforms,
         parameters.envScale,
         sampler,
