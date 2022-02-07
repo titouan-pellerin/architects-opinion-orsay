@@ -44,7 +44,7 @@ export class FlowerInstancedMesh {
     //   transparent: true,
     // });
 
-    this.instanceNumber = 3000;
+    this.instanceNumber = 1000;
     const instance = new THREE.Object3D();
 
     this.geometry = modelsMap.get("flower")[0].children[0].geometry;

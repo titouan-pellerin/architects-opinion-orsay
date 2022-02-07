@@ -7,6 +7,7 @@ import { mainScene } from "../MainScene";
 import { Checkpoint } from "../Path/Checkpoint";
 import { Artwork } from "./Elements/Artwork";
 import { Rocks } from "./Elements/Rocks";
+import { Mist } from "./Elements/Mist";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
 import { Ground } from "./Ground";
@@ -86,6 +87,9 @@ export class Grounds extends Group {
     const woodLogs1 = new WoodLogs(positions.get("woodLogsPositions")[0]);
     this.ground2.woodLogs = woodLogs1;
     this.ground2.add(woodLogs1);
+
+    const mist = new Mist();
+    mainScene.add(mist.particleSystem);
 
     // Next Ground
     this.ground3 = new Ground(
@@ -180,11 +184,6 @@ export class Grounds extends Group {
       .min(0)
       .max(100)
       .name("BigNoise");
-    groundFolder
-      .add(this.ground2.groundMaskUniforms.uSpeed, "value")
-      .min(0)
-      .max(2)
-      .name("Speed");
 
     const groundMaskFolder = sceneFolder.addFolder("Ground");
     groundMaskFolder.addColor(this.ground2.groundUniforms.uColor, "value").name("Color");
@@ -243,35 +242,6 @@ export class Grounds extends Group {
 
       currentGround1.ground.updateMatrix();
       currentGround1.mask.updateMatrix();
-
-      // const newTrees = new Trees(positions.get("treesPositions")[this.currentIndex + 1]);
-      // newTrees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      // currentGround1.remove(currentGround1.trees);
-      // currentGround1.add(newTrees);
-      // currentGround1.trees = newTrees;
-
-      // const newRocks = new Rocks(
-      //   positions.get("rocksPositions")[this.currentIndex + 1],
-      //   this.forestPathLine
-      // );
-      // newRocks.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      // currentGround1.remove(currentGround1.rocks);
-      // currentGround1.add(newRocks);
-      // currentGround1.rocks = newRocks;
-
-      // const newWoodLogs = new WoodLogs(
-      //   positions.get("woodLogsPositions")[this.currentIndex + 1]
-      // );
-      // newWoodLogs.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      // currentGround1.remove(currentGround1.woodLogs);
-      // currentGround1.add(newWoodLogs);
-      // currentGround1.woodLogs = newWoodLogs;
-
-      // const newCubes = new Cubes(positions.get("cubesPositions")[this.currentIndex + 1]);
-      // newCubes.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-      // currentGround1.remove(currentGround1.cubes);
-      // currentGround1.add(newCubes);
-      // currentGround1.cubes = newCubes;
 
       this.ground1 = currentGround2;
       this.ground2 = currentGround3;

@@ -79,7 +79,7 @@ export class Trees extends THREE.Group {
     const instanceNumber = 1000;
     const instance = new THREE.Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(0.3, 0.3, 1, 1);
+    this.geometry = new THREE.PlaneGeometry(0.35, 0.35, 1, 1);
 
     this.leavesPattern = new THREE.InstancedMesh(
       this.geometry,
@@ -90,7 +90,7 @@ export class Trees extends THREE.Group {
     this.leavesPattern.matrixAutoUpdate = false;
     this.leavesPattern.updateMatrix();
 
-    const radius = 2.5;
+    const radius = 3;
 
     for (let i = 0; i < instanceNumber; i++) {
       const angle = Math.random() * Math.PI * 2;
@@ -125,7 +125,12 @@ export class Trees extends THREE.Group {
           2 *
           Math.sin(angleHeight) *
           Math.cos(noise2D * 2),
-        0
+        radius *
+          Math.sin(angle * noise2D * 2) *
+          noise2D *
+          2 *
+          Math.sin(angleHeight) *
+          Math.cos(noise2D * 2)
       );
 
       instance.scale.set(noise2D * 2, noise2D * 2, noise2D * 2);

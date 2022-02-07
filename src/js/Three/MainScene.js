@@ -88,7 +88,7 @@ export class MainScene extends THREE.Scene {
       30,
       this.sizes.width / this.sizes.height,
       1,
-      45
+      35
     );
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
@@ -135,7 +135,7 @@ export class MainScene extends THREE.Scene {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       powerPreference: "high-performance",
-      antialias: true,
+      antialias: false,
     });
     this.renderer.physicallyCorrectLights = true;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
@@ -188,7 +188,8 @@ export class MainScene extends THREE.Scene {
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
-          value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
+          value: new THREE.Vector2(window.innerWidth * 0.75, window.innerHeight * 1),
+          // value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5),
         },
         uRes: {
           value: new THREE.Vector2(window.innerWidth, window.innerHeight),

@@ -69,8 +69,6 @@ export class Ground extends Group {
     this.ground.updateMatrix();
 
     this.groundMaskUniforms = {
-      uTime: { value: 0 },
-      uSpeed: { value: parameters.speed },
       uStroke: { value: parameters.stroke },
       uSmallNoise: { value: parameters.smallNoise },
       uBigNoise: { value: parameters.bigNoise },
@@ -148,7 +146,7 @@ export class Ground extends Group {
 
     const sampler = new MeshSurfaceSampler(this.ground).build();
     if (!Ground.grass) {
-      Ground.grass = new FlowerInstancedMesh(
+      Ground.grass = new GrassInstancedMesh(
         grassUniforms,
         parameters.envScale,
         sampler,
