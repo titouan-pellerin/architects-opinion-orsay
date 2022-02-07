@@ -12,7 +12,6 @@ import riverCommonVertexShader from "@glsl/ground/river/commonVertex.glsl";
 import riverOutputFragmentShader from "@glsl/ground/river/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
 import { GrassInstancedMesh } from "@js/Three/Environment/Elements/GrassInstancedMesh";
-import { FlowerInstancedMesh } from "@js/Three/Environment/Elements/FlowerInstancedMesh";
 import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 import { simplex } from "../../utils/misc";
@@ -146,7 +145,7 @@ export class Ground extends Group {
 
     const sampler = new MeshSurfaceSampler(this.ground).build();
     if (!Ground.grass) {
-      Ground.grass = new FlowerInstancedMesh(
+      Ground.grass = new GrassInstancedMesh(
         grassUniforms,
         parameters.envScale,
         sampler,

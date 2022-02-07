@@ -5,9 +5,8 @@ import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
 import { Checkpoint } from "../Path/Checkpoint";
-import { Artwork } from "./Elements/Artwork";
-import { Rocks } from "./Elements/Rocks";
 import { Mist } from "./Elements/Mist";
+import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
 import { Ground } from "./Ground";
@@ -20,7 +19,7 @@ export class Grounds extends Group {
    * @param {Line} forestPathLine
    * @param {Checkpoint[]} checkpoints
    */
-  constructor(groundAmount, parameters = {}, forestPathLine, checkpoints) {
+  constructor(groundAmount, parameters = {}, forestPathLine, artworks) {
     super();
     this.forestPathLine = forestPathLine;
     this.currentIndex = 1;
@@ -89,7 +88,7 @@ export class Grounds extends Group {
     this.ground2.add(woodLogs1);
 
     const mist = new Mist();
-    mainScene.add(mist.particleSystem);
+    // mainScene.add(mist.particleSystem);
 
     // Next Ground
     this.ground3 = new Ground(
@@ -121,19 +120,6 @@ export class Grounds extends Group {
     this.ground3.woodLogs = woodLogs2;
     this.ground3.add(woodLogs2);
 
-    this.artworks = [];
-    for (let i = 0; i < positions.get("artworksPositions").length; i++) {
-      const artwork = new Artwork(
-        texturesMap.get("artworksTextures")[i],
-        positions.get("artworksPositions")[i]
-      );
-      this.artworks.push(artwork);
-    }
-    this.artworks[0].lookAt(checkpoints[0].position.x, -0.8, checkpoints[0].position.y);
-    this.artworks[1].lookAt(checkpoints[0].position.x, -0.8, checkpoints[0].position.y);
-    this.artworks[2].lookAt(checkpoints[0].position.x, -0.8, checkpoints[0].position.y);
-    this.artworks[3].lookAt(checkpoints[0].position.x, -0.8, checkpoints[0].position.y);
-
     // const artwork2Pos = positions.get("artworksPositions")[1];
     // this.artwork2 = new Artwork(
     //   texturesMap.get("artworksTextures")[1],
@@ -158,7 +144,7 @@ export class Grounds extends Group {
     // this.artwork3.rotation.y = -Math.PI * 0.09;
 
     this.add(this.ground1, this.ground2, this.ground3);
-    this.add(...this.artworks);
+    this.add(...artworks);
 
     raf.subscribe("grounds", this.update.bind(this));
 
@@ -252,10 +238,9 @@ export class Grounds extends Group {
   }
 
   update() {
-    // if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
     if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
       this.switchGrounds();
-      console.log("Switch");
+      console.log("switch");
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;
