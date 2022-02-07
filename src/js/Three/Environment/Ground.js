@@ -11,15 +11,22 @@ import riverCommonFragmentShader from "@glsl/ground/river/commonFragment.glsl";
 import riverCommonVertexShader from "@glsl/ground/river/commonVertex.glsl";
 import riverOutputFragmentShader from "@glsl/ground/river/outputFragment.glsl";
 import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
-import { GrassInstancedMesh } from "@js/Three/Environment/Elements/GrassInstancedMesh";
 import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 import { simplex } from "../../utils/misc";
+import { GroundElements } from "./Elements/GroundElements";
 
 export class Ground extends Group {
   static groundGeometry;
   static grass;
-  constructor(texture, grassUniforms, riverUniforms, pathLine, parameters = {}) {
+  constructor(
+    texture,
+    grassUniforms,
+    flowersUniforms,
+    riverUniforms,
+    pathLine,
+    parameters = {}
+  ) {
     super();
 
     // Static attribute to create only one geometry (because no-indexed geometry requires a bit more time)
@@ -144,18 +151,21 @@ export class Ground extends Group {
     this.add(this.ground, this.mask, this.riverPlane);
 
     const sampler = new MeshSurfaceSampler(this.ground).build();
-    if (!Ground.grass) {
-      Ground.grass = new GrassInstancedMesh(
+    if (!Ground.grass && !Ground.flowers) {
+      Ground.groundElements = new GroundElements(
         grassUniforms,
+        flowersUniforms,
         parameters.envScale,
         sampler,
         pathLine
       );
-      this.grass = Ground.grass.instancedGrassMesh;
+      this.grass = Ground.groundElements.instancedGrassMesh;
+      this.flowers = Ground.groundElements.instancedFlowersMesh;
     } else {
-      this.grass = Ground.grass.instancedGrassMesh.clone();
+      this.grass = Ground.groundElements.instancedGrassMesh.clone();
+      this.flowers = Ground.groundElements.instancedFlowersMesh.clone();
     }
-    this.add(this.grass);
+    this.add(this.grass, this.flowers);
   }
 
   getCenter() {

@@ -1,14 +1,16 @@
-import commonFragmentShader from "@glsl/grass/commonFragment.glsl";
-import commonVertexShader from "@glsl/grass/commonVertex.glsl";
-import outputFragmentShader from "@glsl/grass/outputFragment.glsl";
-import projectVertexShader from "@glsl/grass/projectVertex.glsl";
-import * as THREE from "three";
-import { Vector3 } from "three";
-import { texturesMap } from "../../../utils/assets";
+import flowerCommonFragmentShader from "@glsl/flower/commonFragment.glsl";
+import flowerOutputFragmentShader from "@glsl/flower/outputFragment.glsl";
+import flowerProjectVertexShader from "@glsl/flower/projectVertex.glsl";
+import grassCommonFragmentShader from "@glsl/grass/commonFragment.glsl";
+import grassCommonVertexShader from "@glsl/grass/commonVertex.glsl";
+import grassOutputFragmentShader from "@glsl/grass/outputFragment.glsl";
+import grassProjectVertexShader from "@glsl/grass/projectVertex.glsl";
+import { DoubleSide, InstancedMesh, Object3D, PlaneGeometry, Vector3 } from "three";
+import { modelsMap, texturesMap } from "../../../utils/assets";
 import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
 
-export class GrassInstancedMesh {
-  constructor(uniforms, envScale, sampler, pathLine) {
+export class GroundElements {
+  constructor(grassUniforms, flowersUniforms, envScale, sampler, pathLine) {
     this.pathLine = pathLine;
 
     this.defaultPositions = [];
@@ -18,34 +20,54 @@ export class GrassInstancedMesh {
 
     this.generateTexturesData();
 
-    this.material = new CustomMeshToonMaterial(
-      commonFragmentShader,
-      outputFragmentShader,
-      commonVertexShader,
+    const grassMaterial = new CustomMeshToonMaterial(
+      grassCommonFragmentShader,
+      grassOutputFragmentShader,
+      grassCommonVertexShader,
       null,
-      projectVertexShader,
-      uniforms,
+      grassProjectVertexShader,
+      grassUniforms,
       {
-        side: THREE.DoubleSide,
+        side: DoubleSide,
+      }
+    );
+    const flowerMaterial = new CustomMeshToonMaterial(
+      flowerCommonFragmentShader,
+      flowerOutputFragmentShader,
+      flowerCommonFragmentShader,
+      null,
+      flowerProjectVertexShader,
+      flowersUniforms,
+      {
+        side: DoubleSide,
       }
     );
 
-    this.instanceNumber = 30000;
-    const instance = new THREE.Object3D();
+    const grassInstanceNumber = 20000;
+    const flowerInstanceNumber = 2000;
 
-    // this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
-    this.geometry = new THREE.PlaneGeometry(0.01, 1, 1, 2);
+    const instance = new Object3D();
 
-    this.instancedGrassMesh = new THREE.InstancedMesh(
-      this.geometry,
-      this.material.meshToonMaterial,
-      // this.material,
-      this.instanceNumber
+    const grassGeometry = new PlaneGeometry(0.01, 1, 1, 2);
+    const flowerGeometry = modelsMap.get("flower")[0].children[0].geometry;
+    flowerGeometry.scale(0.3, 0.3, 0.3);
+
+    this.instancedGrassMesh = new InstancedMesh(
+      grassGeometry,
+      grassMaterial.meshToonMaterial,
+      grassInstanceNumber
+    );
+
+    this.instancedFlowersMesh = new InstancedMesh(
+      flowerGeometry,
+      flowerMaterial.meshToonMaterial,
+      flowerInstanceNumber
     );
 
     this.instancedGrassMesh.matrixAutoUpdate = false;
+    this.instancedFlowersMesh.matrixAutoUpdate = false;
 
-    for (let i = 0; i < this.instanceNumber; i++) {
+    for (let i = 0; i < grassInstanceNumber + flowerInstanceNumber; i++) {
       const instancePos = new Vector3();
       const instanceNormal = new Vector3();
 
@@ -134,12 +156,27 @@ export class GrassInstancedMesh {
     canvas.remove();
   }
 
-  setInstanceMatrices(groundIndex, instancedMesh) {
-    for (let i = 0; i < this.instanceNumber; i++) {
+  /**
+   *
+   * @param {Number} groundIndex
+   * @param {InstancedMesh} grassInstancedMesh
+   * @param {InstancedMesh} flowersInstancedMesh
+   */
+  setInstanceMatrices(groundIndex, grassInstancedMesh, flowersInstancedMesh) {
+    for (let i = 0; i < grassInstancedMesh.count + flowersInstancedMesh.count; i++) {
+      const instancedMesh =
+        i %
+          ((grassInstancedMesh.count + flowersInstancedMesh.count) /
+            flowersInstancedMesh.count) ===
+        0
+          ? flowersInstancedMesh
+          : grassInstancedMesh;
       const newInstanceMatrix = this.curveTexturesMatrices.get(groundIndex)[i];
       instancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
     }
-    instancedMesh.instanceMatrix.needsUpdate = true;
-    instancedMesh.updateMatrix();
+    grassInstancedMesh.instanceMatrix.needsUpdate = true;
+    flowersInstancedMesh.instanceMatrix.needsUpdate = true;
+    grassInstancedMesh.updateMatrix();
+    flowersInstancedMesh.updateMatrix();
   }
 }
