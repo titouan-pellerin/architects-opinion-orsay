@@ -166,7 +166,7 @@ export class Ground extends Group {
       this.grass = Ground.groundElements.instancedGrassMesh.clone();
       this.flowers = Ground.groundElements.instancedFlowersMesh.clone();
     }
-    this.add(this.grass, this.flowers);
+    // this.add(this.grass, this.flowers);
   }
 
   getCenter() {
