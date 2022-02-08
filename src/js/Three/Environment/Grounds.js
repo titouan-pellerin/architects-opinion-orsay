@@ -101,7 +101,7 @@ export class Grounds extends Group {
     this.ground2.add(woodLogs1);
 
     const mist = new Mist();
-    // mainScene.add(mist.particleSystem);
+    mainScene.add(mist.particleSystem);
 
     // Next Ground
     this.ground3 = new Ground(

@@ -188,8 +188,8 @@ export class MainScene extends THREE.Scene {
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
-          // value: new THREE.Vector2(window.innerWidth * 0.75, window.innerHeight * 1),
-          value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 1),
+          value: new THREE.Vector2(window.innerWidth * 0.75, window.innerHeight * 1),
+          // value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 1),
         },
         uRes: {
           value: new THREE.Vector2(window.innerWidth, window.innerHeight),

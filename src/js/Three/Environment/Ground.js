@@ -148,7 +148,8 @@ export class Ground extends Group {
     this.riverPlane.matrixAutoUpdate = false;
     this.riverPlane.updateMatrix();
 
-    this.add(this.ground, this.mask, this.riverPlane);
+    this.add(this.riverPlane);
+    // this.add(this.ground, this.mask, this.riverPlane);
 
     const sampler = new MeshSurfaceSampler(this.ground).build();
     if (!Ground.grass && !Ground.flowers) {
