@@ -50,7 +50,7 @@ export class GroundElements {
 
     const grassGeometry = new PlaneGeometry(0.01, 1, 1, 2);
     const flowerGeometry = modelsMap.get("flower")[0].children[0].geometry;
-    flowerGeometry.scale(0.05, 0.05, 0.05);
+    flowerGeometry.scale(0.03, 0.03, 0.03);
 
     this.instancedGrassMesh = new InstancedMesh(
       grassGeometry,

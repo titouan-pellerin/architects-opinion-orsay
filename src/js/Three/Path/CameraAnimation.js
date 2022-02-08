@@ -19,7 +19,7 @@ export class CameraAnimation {
     gsap.registerPlugin(CustomEase);
     gsap.ticker.lagSmoothing(1000, 16);
 
-    this.raycasting = new Raycasting();
+    this.raycasting = new Raycasting(this);
     this.checkpoints = checkpoints;
     this.checkpointsIndex = 0;
     this.isAtCheckpoint = false;
@@ -59,8 +59,8 @@ export class CameraAnimation {
     if (index <= 4) {
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
-        duration: this.checkpoints[index].duration,
-        // duration: 1,
+        // duration: this.checkpoints[index].duration,
+        duration: 1,
         value: this.checkpoints[index].tick,
         ease: CustomEase.create(
           "custom",
@@ -73,11 +73,12 @@ export class CameraAnimation {
           const curvePoint = this.path.spline.getPointAt(this.tick.value);
           const curvePoint2 = this.path.spline.getPointAt(nextTick);
 
-          const camPos = new Vector3(curvePoint.x, -0.8, curvePoint.y);
-          const camPos2 = new Vector3(curvePoint2.x, -0.8, curvePoint2.y);
+          const camPos = new Vector3(curvePoint.x, -1, curvePoint.y);
+          const camPos2 = new Vector3(curvePoint2.x, -1, curvePoint2.y);
 
           mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
           mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
+          mainScene.cameraContainer.userData.lookingAt = camPos2;
           mainScene.cameraContainer.rotateX(Math.PI);
           mainScene.cameraContainer.rotateZ(Math.PI);
         },
@@ -90,5 +91,41 @@ export class CameraAnimation {
         },
       });
     }
+  }
+
+  /**
+   *
+   * @param {Artwork} artwork
+   */
+  goToArtwork(artwork) {
+    console.log(artwork);
+    const newCamPos = new Vector3();
+    artwork.getWorldDirection(newCamPos);
+    newCamPos.multiplyScalar(7);
+    newCamPos.add(artwork.position);
+
+    gsap.to(mainScene.cameraContainer.position, {
+      duration: 3,
+      ease: "power3.inOut",
+      x: newCamPos.x,
+      y: newCamPos.y,
+      z: newCamPos.z,
+    });
+    gsap.to(mainScene.cameraContainer.userData.lookingAt, {
+      duration: 3,
+      ease: "power3.inOut",
+      x: artwork.position.x,
+      y: artwork.position.y,
+      z: artwork.position.z,
+      onUpdate: () => {
+        mainScene.cameraContainer.lookAt(
+          mainScene.cameraContainer.userData.lookingAt.x,
+          mainScene.cameraContainer.userData.lookingAt.y,
+          mainScene.cameraContainer.userData.lookingAt.z
+        );
+        mainScene.cameraContainer.rotateX(Math.PI);
+        mainScene.cameraContainer.rotateZ(Math.PI);
+      },
+    });
   }
 }

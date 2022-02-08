@@ -35,7 +35,7 @@ export class Environment {
     }
 
     const checkpoints = [];
-    const checkpoint1 = new Checkpoint(0.145, 30, this.forestPathLine.spline, [
+    const checkpoint1 = new Checkpoint(0.13, 30, this.forestPathLine.spline, [
       this.artworks[0],
       this.artworks[1],
       this.artworks[2],
