@@ -18,7 +18,7 @@ import { GroundElements } from "./Elements/GroundElements";
 
 export class Ground extends Group {
   static groundGeometry;
-  static grass;
+  static groundElements;
   constructor(
     texture,
     grassUniforms,
@@ -151,7 +151,7 @@ export class Ground extends Group {
     this.add(this.ground, this.mask, this.riverPlane);
 
     const sampler = new MeshSurfaceSampler(this.ground).build();
-    if (!Ground.grass && !Ground.flowers) {
+    if (!Ground.groundElements) {
       Ground.groundElements = new GroundElements(
         grassUniforms,
         flowersUniforms,
