@@ -43,14 +43,14 @@ export class GroundElements {
       }
     );
 
-    const grassInstanceNumber = 20000;
-    const flowerInstanceNumber = 100;
+    const grassInstanceNumber = 19000;
+    const flowerInstanceNumber = 1000;
 
     const instance = new Object3D();
 
     const grassGeometry = new PlaneGeometry(0.01, 1, 1, 2);
     const flowerGeometry = modelsMap.get("flower")[0].children[0].geometry;
-    flowerGeometry.scale(0.3, 0.3, 0.3);
+    flowerGeometry.scale(0.05, 0.05, 0.05);
 
     this.instancedGrassMesh = new InstancedMesh(
       grassGeometry,
