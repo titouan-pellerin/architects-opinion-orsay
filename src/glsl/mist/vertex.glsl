@@ -1,18 +1,45 @@
-attribute float size;
+precision highp float;
 
-varying vec3 vColor;
-varying vec3 vPosition;
+#define PI 3.1415926535897932384626433832795
+
+uniform float uTime;
+
+attribute vec3 aPositions;
+attribute float aOffset;
+attribute float aScale;
+
+varying float vLoop;
+varying float vRandomScale;
+varying vec2 vUv;
+varying vec3 vPos;
+
+const float maxDuration = 10.;
 
 void main() {
+    vUv = uv;
+    vRandomScale = aScale;
+    vPos = position;
+    vec3 pos = position;
 
-    vColor = color;
-    vPosition = position;
+    float time = uTime * .05;
+    float offset = aOffset * aScale;
 
-    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-    mvPosition.x += mvPosition.y;
+    vec3 particlePos = pos + aPositions;
 
-    gl_Position = projectionMatrix * mvPosition;
+    float loop = mod(time + aOffset * maxDuration, maxDuration) / maxDuration;
+    vLoop = loop;
 
-    gl_PointSize = size * (300.0 / -mvPosition.z);
+	// position = (position +/- end) +/- start
+	// add variation with the offset, the scale or the time
+    particlePos.x = loop * ((particlePos.x + (sin(time + aOffset) * aScale)) + (offset));
+    particlePos.y = loop * (((particlePos.y + cos(time * aOffset))));
+    // particlePos.z *= loop * (((sin(time + aOffset))));
+    // particlePos.y = loop * ((particlePos.y + (sin(time + aOffset) * aScale)) + (offset * .01));
+    // particlePos.z = loop * ((particlePos.z + (sin(time + aOffset) * aScale)) + (offset));
 
+    vec4 mv = modelViewMatrix * vec4(particlePos, 1.);
+
+    mv.xyz += pos.xyz * 1.; // Billboard
+
+    gl_Position = projectionMatrix * mv;
 }

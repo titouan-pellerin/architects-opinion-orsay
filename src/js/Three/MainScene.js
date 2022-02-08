@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { Vector2 } from "three";
 import { Group, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
@@ -46,6 +47,9 @@ export class MainScene extends THREE.Scene {
     #ifdef USE_FOG
       vFogDepth = - mvPosition.z;
     #endif`;
+
+    this.resVec2 = new Vector2();
+    this.blurVec2 = new Vector2();
 
     const parameters = {
       tintColor: new THREE.Color("#ffffff"),
@@ -188,11 +192,10 @@ export class MainScene extends THREE.Scene {
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
-          value: new THREE.Vector2(window.innerWidth * 0.75, window.innerHeight * 1),
-          // value: new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 1),
+          value: this.blurVec2.set(this.sizes.width * 0.75, this.sizes.height * 1),
         },
         uRes: {
-          value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+          value: this.resVec2.set(this.sizes.width, this.sizes.height),
         },
       },
       vertexShader: vertexShader,
@@ -311,6 +314,15 @@ export class MainScene extends THREE.Scene {
 
     this.composer.setSize(this.sizes.width, this.sizes.height);
     this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    this.customPass.material.uniforms.uBlurPos.value = this.blurVec2.set(
+      this.sizes.width * 0.75,
+      this.sizes.height * 1
+    );
+    this.customPass.material.uniforms.uRes.value = this.resVec2.set(
+      this.sizes.width,
+      this.sizes.height
+    );
   }
 
   update() {
