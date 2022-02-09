@@ -90,18 +90,16 @@ export class Grounds extends Group {
 
     const trees1 = new Trees(positions.get("treesPositions")[0], this.leafUniforms);
     this.ground2.trees = trees1;
-    this.ground2.add(trees1);
 
     const rocks1 = new Rocks(positions.get("rocksPositions")[0]);
     this.ground2.rocks = rocks1;
-    this.ground2.add(rocks1);
 
     const woodLogs1 = new WoodLogs(positions.get("woodLogsPositions")[0]);
     this.ground2.woodLogs = woodLogs1;
-    this.ground2.add(woodLogs1);
 
     const mist = new Mist();
-    mainScene.add(mist.object.mesh);
+
+    this.ground2.add(woodLogs1, rocks1, trees1, mist.object.mesh);
 
     // Next Ground
     this.ground3 = new Ground(
@@ -126,17 +124,16 @@ export class Grounds extends Group {
     const trees2 = new Trees(positions.get("treesPositions")[1], this.leafUniforms);
     trees2.scale.z = -1;
     this.ground3.trees = trees2;
-    this.ground3.add(trees2);
 
     const rocks2 = new Rocks(positions.get("rocksPositions")[1]);
     rocks2.scale.z = -1;
     this.ground3.rocks = rocks2;
-    this.ground3.add(rocks2);
 
     const woodLogs2 = new WoodLogs(positions.get("woodLogsPositions")[1]);
     woodLogs2.scale.z = -1;
     this.ground3.woodLogs = woodLogs2;
-    this.ground3.add(woodLogs2);
+
+    this.ground3.add(woodLogs2, rocks2, trees2);
 
     // const artwork2Pos = positions.get("artworksPositions")[1];
     // this.artwork2 = new Artwork(

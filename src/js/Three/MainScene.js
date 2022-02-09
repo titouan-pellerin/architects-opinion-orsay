@@ -16,38 +16,6 @@ export class MainScene extends THREE.Scene {
   constructor() {
     super();
 
-    THREE.ShaderChunk.fog_fragment = `
-    #ifdef USE_FOG
-      #ifdef FOG_EXP2
-        float fogFactor = 1.0 - exp( - fogDensity * fogDensity * vFogDepth * vFogDepth );
-      #else
-        float fogFactor = smoothstep( fogNear, fogFar, vFogDepth );
-      #endif
-      gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
-    #endif`;
-
-    THREE.ShaderChunk.fog_pars_fragment = `
-    #ifdef USE_FOG
-      uniform vec3 fogColor;
-      varying float vFogDepth;
-      #ifdef FOG_EXP2
-        uniform float fogDensity;
-      #else
-        uniform float fogNear;
-        uniform float fogFar;
-      #endif
-    #endif`;
-
-    THREE.ShaderChunk.fog_pars_vertex = `
-    #ifdef USE_FOG
-      varying float vFogDepth;
-    #endif`;
-
-    THREE.ShaderChunk.fog_vertex = `
-    #ifdef USE_FOG
-      vFogDepth = - mvPosition.z;
-    #endif`;
-
     this.resVec2 = new Vector2();
     this.blurVec2 = new Vector2();
 
@@ -189,9 +157,11 @@ export class MainScene extends THREE.Scene {
         uCornerIntensity: { value: 1 },
         // uCornerSize: { value: 10 },
         uCornerSize: { value: 4.5 },
-        uBlurIntensity: { value: 1.75 },
+        uBlurIntensity: { value: 3.5 },
+        // uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
+          // value: this.blurVec2.set(this.sizes.width * 0.5, this.sizes.height * 0.5),
           value: this.blurVec2.set(this.sizes.width * 0.75, this.sizes.height * 1),
         },
         uRes: {

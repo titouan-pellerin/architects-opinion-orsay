@@ -22,7 +22,7 @@ const params = {
 export class Mist {
   constructor() {
     this.object = {};
-    this.count = 2048;
+    this.count = 8192;
     this.init();
 
     raf.subscribe("mist", this.update.bind(this));
@@ -46,16 +46,16 @@ export class Mist {
     for (let i = 0; i < particlesCount; i++) {
       this.positions[i * 3 + 0] = MathUtils.randFloatSpread(1);
       this.positions[i * 3 + 1] = MathUtils.randFloatSpread(1);
-      this.positions[i * 3 + 2] = MathUtils.randFloatSpread(1);
+      this.positions[i * 3 + 2] = MathUtils.randFloatSpread(40);
 
-      this.offset[i + 0] = MathUtils.randFloatSpread(50);
-      this.scale[i + 0] = MathUtils.randFloat(0.5, 1.5);
+      this.offset[i + 0] = MathUtils.randFloatSpread(75);
+      this.scale[i + 0] = MathUtils.randFloat(0.5, 3);
     }
   }
 
   setGeometry() {
     const blueprintParticle = new PlaneBufferGeometry();
-    blueprintParticle.scale(0.0035, 0.0035, 0.0035);
+    blueprintParticle.scale(0.01, 0.01, 0.01);
 
     this.object.geometry = new InstancedBufferGeometry();
 
@@ -96,18 +96,16 @@ export class Mist {
       },
       side: DoubleSide,
       transparent: true,
-
-      /* for particles */
-      // depthTest: true,
-      // depthWrite: false,
+      depthTest: true,
+      depthWrite: false,
       blending: AdditiveBlending,
     });
   }
 
   setMesh() {
     this.object.mesh = new Mesh(this.object.geometry, this.object.material);
-    this.object.mesh.position.z = 20;
-    this.object.mesh.position.y = -1.5;
+    // this.object.mesh.position.z = 20;
+    this.object.mesh.position.y = -0.5;
   }
 
   update() {

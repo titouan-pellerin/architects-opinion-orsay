@@ -1,5 +1,3 @@
-precision highp float;
-
 #define PI 3.1415926535897932384626433832795
 
 uniform float uTime;
@@ -11,6 +9,7 @@ varying float vLoop;
 varying float vRandomScale;
 varying vec2 vUv;
 varying vec3 vPos;
+varying float vResetPos;
 
 void main() {
     vec2 uv = vUv;
@@ -22,10 +21,10 @@ void main() {
 
     vec3 particle = vec3(uColor);
     particle *= strength;
-    particle *= smoothstep(0., 1., particle);
+    particle *= smoothstep(1., 10., particle);
 
-    float alpha = smoothstep(1., .75, vLoop) * smoothstep(.0, .25, vLoop) * float(vPos + vec3(uAlpha));
-    alpha *= vRandomScale;
+    // float alpha = smoothstep(1., .75, vLoop) * smoothstep(.0, .25, vLoop) * float(vPos + vec3(uAlpha));
+    // alpha *= vRandomScale * 5.;
 
-    gl_FragColor = vec4(particle, alpha);
+    gl_FragColor = vec4(particle, 1.0);
 }
