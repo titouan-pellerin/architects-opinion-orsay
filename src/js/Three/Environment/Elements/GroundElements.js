@@ -42,9 +42,8 @@ export class GroundElements {
         side: DoubleSide,
       }
     );
-
-    const grassInstanceNumber = 19000;
-    const flowerInstanceNumber = 1000;
+    const grassInstanceNumber = 18000;
+    const flowerInstanceNumber = 200;
 
     const instance = new Object3D();
 
@@ -82,6 +81,9 @@ export class GroundElements {
 
       instance.position.set(instancePos.x, instancePos.z - 2.55, instancePos.y);
       instance.lookAt(instanceNormal);
+
+      if (i >= grassInstanceNumber) instance.rotation.y = Math.random() * Math.PI * 2;
+
       let posY = instance.position.y;
       for (let j = 0; j < this.curveTexturesData.length; j++) {
         const flipY = j % 2 == 0 ? 1 : -1;
@@ -124,6 +126,10 @@ export class GroundElements {
 
             instance.position.set(instancePos.x, instancePos.z - 2.55, instancePos.y);
             instance.lookAt(instanceNormal);
+
+            if (i >= grassInstanceNumber)
+              instance.rotation.y = Math.random() * Math.PI * 2;
+
             posY = instance.position.y;
           }
         } while (alpha === 0 || red > 150 + random || green > 0);
@@ -163,17 +169,17 @@ export class GroundElements {
    * @param {InstancedMesh} flowersInstancedMesh
    */
   setInstanceMatrices(groundIndex, grassInstancedMesh, flowersInstancedMesh) {
-    for (let i = 0; i < grassInstancedMesh.count + flowersInstancedMesh.count; i++) {
-      const instancedMesh =
-        i %
-          ((grassInstancedMesh.count + flowersInstancedMesh.count) /
-            flowersInstancedMesh.count) ===
-        0
-          ? flowersInstancedMesh
-          : grassInstancedMesh;
+    for (let i = 0; i < grassInstancedMesh.count; i++) {
       const newInstanceMatrix = this.curveTexturesMatrices.get(groundIndex)[i];
-      instancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+      grassInstancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
     }
+
+    for (let i = 0; i < flowersInstancedMesh.count; i++) {
+      const newInstanceMatrix =
+        this.curveTexturesMatrices.get(groundIndex)[i + grassInstancedMesh.count];
+      flowersInstancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+    }
+
     grassInstancedMesh.instanceMatrix.needsUpdate = true;
     flowersInstancedMesh.instanceMatrix.needsUpdate = true;
     grassInstancedMesh.updateMatrix();
