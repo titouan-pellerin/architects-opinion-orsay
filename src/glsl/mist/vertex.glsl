@@ -13,7 +13,7 @@ varying float vRandomScale;
 varying vec2 vUv;
 varying vec3 vPos;
 
-const float maxDuration = 10.;
+const float maxDuration = 7.;
 
 void main() {
     vUv = uv;
@@ -36,9 +36,9 @@ void main() {
     particlePos.xy += particlePos.xy * 5.;
     particlePos.y -= particlePos.x * 0.5;
 
-    particlePos.y += sin(position.y + noise + uTime + offset) * 0.15;
-    particlePos.x += sin(position.y + noise + uTime + offset) * 0.15;
-    particlePos.z += sin(position.x + noise + uTime + offset) * 0.15;
+    particlePos.y += sin(position.y + noise + uTime + offset) * 0.2;
+    particlePos.x += sin(position.y + noise + uTime + offset) * 0.2;
+    particlePos.z += sin(position.x + noise + uTime + offset) * 0.2;
 
     vec4 mv = modelViewMatrix * vec4(particlePos, 1.);
 

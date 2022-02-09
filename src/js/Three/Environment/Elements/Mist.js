@@ -16,20 +16,19 @@ const tVec3 = new Vector3();
 const tCol = new Color();
 
 const params = {
-  color: "#ffffff",
+  color: "#e5ba43",
 };
 
 export class Mist {
   constructor() {
     this.object = {};
-    this.count = 8192;
+    this.count = 20000;
     this.init();
 
     raf.subscribe("mist", this.update.bind(this));
   }
 
   init() {
-    console.log("coucou");
     this.setAttributes();
     this.setGeometry();
     this.setMaterial();
@@ -55,6 +54,7 @@ export class Mist {
 
   setGeometry() {
     const blueprintParticle = new PlaneBufferGeometry();
+    // blueprintParticle.scale(0.1, 0.1, 0.1);
     blueprintParticle.scale(0.01, 0.01, 0.01);
 
     this.object.geometry = new InstancedBufferGeometry();
@@ -86,18 +86,11 @@ export class Mist {
         uTime: { value: 0 },
         uColor: { value: tCol.set(params.color) },
         uAlpha: { value: 1 },
-        uRes: {
-          value: tVec3.set(
-            window.innerWidth,
-            window.innerHeight,
-            window.devicePixelRatio
-          ),
-        },
       },
       side: DoubleSide,
       transparent: true,
-      depthTest: true,
-      depthWrite: false,
+      // depthTest: true,
+      // depthWrite: false,
       blending: AdditiveBlending,
     });
   }
@@ -105,7 +98,7 @@ export class Mist {
   setMesh() {
     this.object.mesh = new Mesh(this.object.geometry, this.object.material);
     // this.object.mesh.position.z = 20;
-    this.object.mesh.position.y = -0.5;
+    // this.object.mesh.position.y = -0.5;
   }
 
   update() {

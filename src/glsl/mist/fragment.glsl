@@ -3,19 +3,14 @@
 uniform float uTime;
 uniform float uAlpha;
 uniform vec3 uColor;
-uniform vec3 uResolution;
 
 varying float vLoop;
 varying float vRandomScale;
 varying vec2 vUv;
 varying vec3 vPos;
-varying float vResetPos;
 
 void main() {
     vec2 uv = vUv;
-
-    vec2 res = gl_FragCoord.xy / uResolution.xy;
-    res /= uResolution.z;
 
     float strength = .5 * (vRandomScale * .5) / distance(uv, vec2(.5));
 
@@ -23,8 +18,8 @@ void main() {
     particle *= strength;
     particle *= smoothstep(1., 10., particle);
 
-    // float alpha = smoothstep(1., .75, vLoop) * smoothstep(.0, .25, vLoop) * float(vPos + vec3(uAlpha));
-    // alpha *= vRandomScale * 5.;
+    float alpha = smoothstep(1., 0., vLoop) * smoothstep(.0, 1., vLoop) * float(vPos + vec3(uAlpha));
+    alpha *= vRandomScale * 10.;
 
-    gl_FragColor = vec4(particle, 1.0);
+    gl_FragColor = vec4(particle, sin(uTime + alpha));
 }

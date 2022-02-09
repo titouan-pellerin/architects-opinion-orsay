@@ -127,7 +127,7 @@ gltfLoader.load("/assets/models/trunk2.glb", (gltf) => {
 });
 
 const flower = [];
-gltfLoader.load("/assets/models/flower/flower6.glb", (gltf) => {
+gltfLoader.load("/assets/models/flower/flower7.glb", (gltf) => {
   flower[0] = gltf.scene;
 });
 
