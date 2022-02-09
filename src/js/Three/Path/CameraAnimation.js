@@ -13,7 +13,6 @@ export class CameraAnimation {
    * @param {Line} path
    * @param {Number} envScale
    * @param {Checkpoint[]} checkpoints
-   * @param {Artwork[]} artworks
    */
   constructor(path, envScale, checkpoints) {
     gsap.registerPlugin(CustomEase);
@@ -26,6 +25,9 @@ export class CameraAnimation {
     this.isLeavingCheckpoint = false;
     this.envScale = envScale;
     this.path = path;
+
+    this.lookAtTween;
+    this.positionTween;
 
     this.tick = {
       value: 0,
@@ -101,17 +103,17 @@ export class CameraAnimation {
     console.log(artwork);
     const newCamPos = new Vector3();
     artwork.getWorldDirection(newCamPos);
-    newCamPos.multiplyScalar(7);
+    newCamPos.multiplyScalar(8);
     newCamPos.add(artwork.position);
 
-    gsap.to(mainScene.cameraContainer.position, {
+    this.positionTween = gsap.to(mainScene.cameraContainer.position, {
       duration: 3,
       ease: "power3.inOut",
       x: newCamPos.x,
       y: newCamPos.y,
       z: newCamPos.z,
     });
-    gsap.to(mainScene.cameraContainer.userData.lookingAt, {
+    this.lookAtTween = gsap.to(mainScene.cameraContainer.userData.lookingAt, {
       duration: 3,
       ease: "power3.inOut",
       x: artwork.position.x,
@@ -125,6 +127,11 @@ export class CameraAnimation {
         );
         mainScene.cameraContainer.rotateX(Math.PI);
         mainScene.cameraContainer.rotateZ(Math.PI);
+      },
+      onComplete: () => {
+        this.positionTween.reverse();
+        this.lookAtTween.reverse();
+        this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
       },
     });
   }
