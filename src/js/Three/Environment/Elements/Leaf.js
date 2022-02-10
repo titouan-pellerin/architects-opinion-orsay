@@ -1,5 +1,5 @@
-import vertex from "@glsl/mist/vertex.glsl";
-import fragment from "@glsl/mist/fragment.glsl";
+import vertex from "@glsl/leaf/vertex.glsl";
+import fragment from "@glsl/leaf/fragment.glsl";
 import { Color } from "three";
 import { Vector3 } from "three";
 import { DoubleSide } from "three";
@@ -16,16 +16,17 @@ const tVec3 = new Vector3();
 const tCol = new Color();
 
 const params = {
-  color: "#e5ba43",
+  color: "#d1e997",
+  color2: "#4a9e36",
 };
 
-export class Mist {
+export class Leaf {
   constructor() {
     this.object = {};
-    this.count = 20000;
+    this.count = 4096;
     this.init();
 
-    raf.subscribe("mist", this.update.bind(this));
+    raf.subscribe("leaf", this.update.bind(this));
   }
 
   init() {
@@ -55,7 +56,7 @@ export class Mist {
   setGeometry() {
     const blueprintParticle = new PlaneBufferGeometry();
     // blueprintParticle.scale(0.1, 0.1, 0.1);
-    blueprintParticle.scale(0.01, 0.01, 0.01);
+    blueprintParticle.scale(0.075, 0.075, 0.075);
 
     this.object.geometry = new InstancedBufferGeometry();
 
@@ -85,20 +86,19 @@ export class Mist {
       uniforms: {
         uTime: { value: 0 },
         uColor: { value: tCol.set(params.color) },
+        uColor2: { value: tCol.set(params.color2) },
         uAlpha: { value: 1 },
       },
       side: DoubleSide,
       transparent: true,
-      // depthTest: true,
-      // depthWrite: false,
-      blending: AdditiveBlending,
+      depthTest: true,
+      depthWrite: false,
+      // blending: AdditiveBlending,
     });
   }
 
   setMesh() {
     this.object.mesh = new Mesh(this.object.geometry, this.object.material);
-    // this.object.mesh.position.z = 20;
-    // this.object.mesh.position.y = -0.5;
   }
 
   update() {

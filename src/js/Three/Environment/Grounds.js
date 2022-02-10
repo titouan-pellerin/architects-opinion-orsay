@@ -5,7 +5,8 @@ import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
 import { Checkpoint } from "../Path/Checkpoint";
-import { Mist } from "./Elements/Mist";
+import { Dust } from "./Elements/Dust";
+import { Leaf } from "./Elements/Leaf";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
@@ -97,9 +98,11 @@ export class Grounds extends Group {
     const woodLogs1 = new WoodLogs(positions.get("woodLogsPositions")[0]);
     this.ground2.woodLogs = woodLogs1;
 
-    const mist = new Mist();
+    const dust = new Dust();
 
-    this.ground2.add(woodLogs1, rocks1, trees1, mist.object.mesh);
+    const leaf = new Leaf();
+
+    this.ground2.add(woodLogs1, rocks1, trees1, leaf.object.mesh);
 
     // Next Ground
     this.ground3 = new Ground(

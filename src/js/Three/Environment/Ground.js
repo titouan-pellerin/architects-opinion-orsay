@@ -148,8 +148,8 @@ export class Ground extends Group {
     this.riverPlane.matrixAutoUpdate = false;
     this.riverPlane.updateMatrix();
 
-    this.add(this.ground, this.mask, this.riverPlane);
-    // this.add(this.riverPlane);
+    // this.add(this.ground, this.mask, this.riverPlane);
+    this.add(this.riverPlane);
 
     const sampler = new MeshSurfaceSampler(this.ground).build();
     if (!Ground.grass && !Ground.flowers) {
@@ -166,7 +166,7 @@ export class Ground extends Group {
       this.grass = Ground.groundElements.instancedGrassMesh.clone();
       this.flowers = Ground.groundElements.instancedFlowersMesh.clone();
     }
-    this.add(this.grass, this.flowers);
+    // this.add(this.grass, this.flowers);
   }
 
   getCenter() {
