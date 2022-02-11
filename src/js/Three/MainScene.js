@@ -1,6 +1,5 @@
 import * as THREE from "three";
-import { Vector2 } from "three";
-import { Group, Vector3 } from "three";
+import { Group, Vector2, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
@@ -29,7 +28,7 @@ export class MainScene extends THREE.Scene {
       // cornerColor: new THREE.Color("#6600ff"),
 
       // Morning backup for toto
-      skyBgColor: new THREE.Color("#e5ba43"),
+      skyBgColor: new THREE.Color("#e5aa43"),
       cornerColor: new THREE.Color("#575757"),
       lightColor: new THREE.Color("#5a544e"),
       light2Color: new THREE.Color("#d8923d"),

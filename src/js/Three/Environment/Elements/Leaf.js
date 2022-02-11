@@ -1,7 +1,6 @@
 import fragment from "@glsl/leaf/fragment.glsl";
 import vertex from "@glsl/leaf/vertex.glsl";
 import {
-  AdditiveBlending,
   Color,
   DoubleSide,
   InstancedBufferAttribute,
@@ -95,7 +94,7 @@ export class Leaf {
       transparent: true,
       depthTest: true,
       depthWrite: true,
-      blending: AdditiveBlending,
+      // blending: AdditiveBlending,
     });
   }
 
