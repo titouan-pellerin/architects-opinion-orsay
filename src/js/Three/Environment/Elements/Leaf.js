@@ -23,7 +23,7 @@ const params = {
 export class Leaf {
   constructor() {
     this.object = {};
-    this.count = 4096;
+    this.count = 10000;
     this.init();
 
     raf.subscribe("leaf", this.update.bind(this));
@@ -44,19 +44,19 @@ export class Leaf {
     this.scale = new Float32Array(particlesCount * 1);
 
     for (let i = 0; i < particlesCount; i++) {
-      this.positions[i * 3 + 0] = MathUtils.randFloatSpread(1);
+      this.positions[i * 3 + 0] = MathUtils.randFloatSpread(40);
       this.positions[i * 3 + 1] = MathUtils.randFloatSpread(1);
       this.positions[i * 3 + 2] = MathUtils.randFloatSpread(40);
 
       this.offset[i + 0] = MathUtils.randFloatSpread(75);
-      this.scale[i + 0] = MathUtils.randFloat(0.5, 3);
+      this.scale[i + 0] = MathUtils.randFloat(0.5, 5);
     }
   }
 
   setGeometry() {
     const blueprintParticle = new PlaneBufferGeometry();
     // blueprintParticle.scale(0.1, 0.1, 0.1);
-    blueprintParticle.scale(0.075, 0.075, 0.075);
+    blueprintParticle.scale(0.15, 0.15, 0.15);
 
     this.object.geometry = new InstancedBufferGeometry();
 

@@ -67,7 +67,7 @@ void main() {
   } 
 
     // Part2, adding some blur
-  vec4 p2 = ((color / total)) * .75;
+  vec4 p2 = ((color / total)) * .65;
 
   vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.;
 

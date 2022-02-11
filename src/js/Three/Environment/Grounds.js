@@ -102,7 +102,7 @@ export class Grounds extends Group {
 
     const leaf = new Leaf();
 
-    this.ground2.add(woodLogs1, rocks1, trees1, leaf.object.mesh);
+    this.ground2.add(woodLogs1, rocks1, trees1, leaf.object.mesh, dust.object.mesh);
 
     // Next Ground
     this.ground3 = new Ground(

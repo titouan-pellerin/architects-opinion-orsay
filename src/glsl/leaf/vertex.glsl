@@ -22,28 +22,25 @@ void main() {
 
     vec3 pos = position;
 
-    float time = uTime * .01;
-    float offset = aOffset * aScale * 2.;
+    float offset = aOffset * aScale * 3.;
     float noise = cnoise(uv);
+    float time = -uTime * .04 + aOffset * 10.;
 
     vec3 particlePos = pos + aPositions;
 
     float loop = mod(time + aOffset * maxDuration, maxDuration) / maxDuration;
     vLoop = loop;
 
-    particlePos.x = loop * ((particlePos.x + sin(time + aOffset * aScale)) + (offset)) - 15.;
-
-    particlePos.xy += particlePos.xy * 5.;
-    particlePos.y -= particlePos.x * 0.5;
+    particlePos.y = loop * ((particlePos.y + sin(time + aOffset * aScale)) + (offset)) - 50.;
 
     vec3 rotatedPositions = position;
-    float rX = rotatedPositions.x * cos(uTime - (aOffset * 2.) + noise) - rotatedPositions.y * sin(uTime - (aOffset * 2.) + noise);
-    float rY = rotatedPositions.y * cos(uTime - (aOffset * 2.) + noise) + rotatedPositions.x * sin(uTime - (aOffset * 2.) + noise);
-    // float new_y = rotatedPositions.y * cos(uTime + aOffset) + rotatedPositions.x * sin(uTime + aOffset);
+    float rX = rotatedPositions.x * cos((abs(uTime * -aScale * 0.5) + noise) - (aOffset * 5.) + noise) - rotatedPositions.y * sin((abs(uTime * -aScale * 0.5) + noise) - (aOffset * 5.) + noise);
+    float rY = rotatedPositions.y * cos((abs(uTime * -aScale * 0.5) + noise) - (aOffset * 5.) + noise) + rotatedPositions.x * sin((abs(uTime * -aScale * 0.5) + noise) - (aOffset * 5.) + noise);
+    float rZ = rotatedPositions.x * cos((abs(uTime * -aScale * 0.5) + noise) - (aOffset * 5.) + noise) + rotatedPositions.y * sin((abs(uTime * -aScale * 0.5) + noise) - (aOffset * 5.) + noise);
 
-    particlePos.y -= sin(position.y + noise + uTime + offset) * 0.1 + (rX * 2.) + (rY * 2.);
-    particlePos.x -= sin(position.y + noise + uTime + offset) * 0.1 + (rX * 2.) + (rY * 2.);
-    particlePos.z -= sin(position.x + noise + uTime + offset) * 0.1 + (rX * 2.) + (rY * 2.);
+    particlePos.x += ((sin(position.y + noise + (uTime * aScale * 0.3) + (offset * 10.)) * 0.5 + (rX)));
+    particlePos.z -= (sin(position.x + noise + (uTime * aScale * 0.3) + (offset * 10.)) * 0.5 + (rY));
+    particlePos.y += rZ;
 
     vec4 mv = modelViewMatrix * vec4(particlePos, 1.);
 
