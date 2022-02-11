@@ -1,15 +1,21 @@
 import flowerCommonFragmentShader from "@glsl/flower/commonFragment.glsl";
-import flowerOutputFragmentShader from "@glsl/flower/outputFragment.glsl";
 import flowerCommonVertexShader from "@glsl/flower/commonVertex.glsl";
+import flowerOutputFragmentShader from "@glsl/flower/outputFragment.glsl";
 import flowerProjectVertexShader from "@glsl/flower/projectVertex.glsl";
 import grassCommonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import grassCommonVertexShader from "@glsl/grass/commonVertex.glsl";
 import grassOutputFragmentShader from "@glsl/grass/outputFragment.glsl";
 import grassProjectVertexShader from "@glsl/grass/projectVertex.glsl";
-import { DoubleSide, InstancedMesh, Object3D, PlaneGeometry, Vector3 } from "three";
+import {
+  DoubleSide,
+  InstancedMesh,
+  MeshToonMaterial,
+  Object3D,
+  PlaneGeometry,
+  Vector3,
+} from "three";
 import { modelsMap, texturesMap } from "../../../utils/assets";
 import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
-import { MeshToonMaterial } from "three";
 
 export class GroundElements {
   constructor(grassUniforms, flowersUniforms, envScale, sampler, pathLine) {
@@ -57,14 +63,14 @@ export class GroundElements {
       );
     };
 
-    const grassInstanceNumber = 40000;
-    const flowerInstanceNumber = 2000;
+    const grassInstanceNumber = 22000;
+    const flowerInstanceNumber = 200;
 
     const instance = new Object3D();
 
     const grassGeometry = new PlaneGeometry(0.01, 1, 1, 1);
     const flowerGeometry = modelsMap.get("flower")[0].children[0].geometry;
-    flowerGeometry.scale(0.3, 0.3, 0.3);
+    flowerGeometry.scale(0.03, 0.03, 0.03);
 
     this.instancedGrassMesh = new InstancedMesh(
       grassGeometry,
@@ -96,6 +102,9 @@ export class GroundElements {
 
       instance.position.set(instancePos.x, instancePos.z - 2.55, instancePos.y);
       instance.lookAt(instanceNormal);
+
+      if (i >= grassInstanceNumber) instance.rotation.y = Math.random() * Math.PI * 2;
+
       let posY = instance.position.y;
       for (let j = 0; j < this.curveTexturesData.length; j++) {
         const flipY = j % 2 == 0 ? 1 : -1;
@@ -138,6 +147,10 @@ export class GroundElements {
 
             instance.position.set(instancePos.x, instancePos.z - 2.55, instancePos.y);
             instance.lookAt(instanceNormal);
+
+            if (i >= grassInstanceNumber)
+              instance.rotation.y = Math.random() * Math.PI * 2;
+
             posY = instance.position.y;
           }
         } while (alpha === 0 || red > 150 + random || green > 0);
@@ -177,19 +190,17 @@ export class GroundElements {
    * @param {InstancedMesh} flowersInstancedMesh
    */
   setInstanceMatrices(groundIndex, grassInstancedMesh, flowersInstancedMesh) {
-    for (let i = 0; i < grassInstancedMesh.count + flowersInstancedMesh.count; i++) {
-      const isFlower =
-        i %
-          ((grassInstancedMesh.count + flowersInstancedMesh.count) /
-            flowersInstancedMesh.count) ===
-        0;
-      const instancedMesh = isFlower ? flowersInstancedMesh : grassInstancedMesh;
+    for (let i = 0; i < grassInstancedMesh.count; i++) {
       const newInstanceMatrix = this.curveTexturesMatrices.get(groundIndex)[i];
-
-      // if (isFlower) newInstanceMatrix.makeRotationY(Math.random() * Math.PI * 2);
-
-      instancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+      grassInstancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
     }
+
+    for (let i = 0; i < flowersInstancedMesh.count; i++) {
+      const newInstanceMatrix =
+        this.curveTexturesMatrices.get(groundIndex)[i + grassInstancedMesh.count];
+      flowersInstancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+    }
+
     grassInstancedMesh.instanceMatrix.needsUpdate = true;
     flowersInstancedMesh.instanceMatrix.needsUpdate = true;
     grassInstancedMesh.updateMatrix();

@@ -29,158 +29,18 @@ body {
   opacity: 1;
 }
 
-/*==================
- LOADER
- ==================*/
-
-.text-textures {
-  display: none;
-}
-
-// .loadingImage {
-//   position: absolute;
-//   top: 10%;
-//   left: 10%;
-//   width: 300px;
-// }
-
-.percent {
+.subtitles {
   position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 60px;
-  font-family: "text";
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
-  display: none;
-}
-
-.buttonLoader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  border: none;
-  outline: none;
-  background: none;
-  opacity: 1;
-  font-family: "title";
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-/*==================
- TIMELINE
- ==================*/
-
-.timeline {
-  position: absolute;
-  bottom: 20%;
-  right: 6%;
-  width: 2px;
-  height: 300px;
-  background: purple;
-  transition: transform 0.5s;
-  transform-origin: top left;
+  bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   pointer-events: none;
-  opacity: 0;
-}
+  color: #fff;
 
-.timeline::after {
-  content: "";
-  position: absolute;
-  border-radius: 10px;
-  width: 30px;
-  height: 30px;
-  bottom: 0;
-  left: 0;
-}
-
-.step1 {
-  position: absolute;
-  top: 10%;
-  opacity: 0;
-  left: 30%;
-  width: 30px;
-  height: 30px;
-  background: #000;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-/*==================
-SUBTITLES
- ==================*/
-
-.words {
-  pointer-events: none;
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  width: 60%;
-  text-align: center;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-family: "text";
-  // text-transform: uppercase;
-  letter-spacing: 0.1rem;
-  font-size: 0.92rem;
-}
-
-.char {
-  opacity: 0;
-}
-
-/*==================
-TITLES
- ==================*/
-
-.titles {
-  pointer-events: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40%;
-  text-align: center;
-  color: white;
-  font-size: 80px;
-  line-height: 80px;
-}
-
-/*==================
-CHECKPOINTS NAVIGATION
- ==================*/
-.close {
-  position: fixed;
-  right: 4%;
-  top: 7%;
-  color: white;
-  opacity: 0;
-  font-family: "title";
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  cursor: pointer;
-  font-size: 0.8rem;
-  pointer-events: none;
-}
-
-.next {
-  position: fixed;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-  color: white;
-  opacity: 0;
-  pointer-events: none;
-  font-family: "title";
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  cursor: pointer;
-  font-size: 0.8rem;
+  p {
+    width: 50%;
+    text-align: center;
+    font-size: 1.15rem;
+  }
 }

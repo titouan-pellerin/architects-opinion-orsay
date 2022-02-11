@@ -4,7 +4,8 @@ import raf from "../utils/Raf";
 import { mainScene } from "./MainScene";
 
 export class Raycasting {
-  constructor() {
+  constructor(cameraAnimation) {
+    this.cameraAnimation = cameraAnimation;
     this.raycaster = new Raycaster();
     this.objects = [];
     this.currentIntersect = null;
@@ -26,6 +27,7 @@ export class Raycasting {
 
   onClick(e) {
     e.preventDefault();
+    this.cameraAnimation.goToArtwork(this.currentIntersect.parent);
     this.stop();
   }
 

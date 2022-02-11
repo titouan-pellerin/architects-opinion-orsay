@@ -118,7 +118,6 @@ export class Grounds extends Group {
       this.ground3.grass,
       this.ground3.flowers
     );
-    // this.ground3.grass.removeFromParent();
 
     this.ground3.texture.flipY = false;
     this.ground3.position.z -= parameters.envScale * parameters.groundSize;

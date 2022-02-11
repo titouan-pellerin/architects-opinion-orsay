@@ -1,6 +1,7 @@
 import { Color } from "three";
 import { texturesMap } from "../../utils/assets";
 import { positions } from "../../utils/positions";
+import { Voiceover } from "../../Voiceover/Voiceover";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { Checkpoint } from "../Path/Checkpoint";
 import { ForestPathLine } from "../Path/ForestPathLine";
@@ -35,7 +36,7 @@ export class Environment {
     }
 
     const checkpoints = [];
-    const checkpoint1 = new Checkpoint(0.145, 30, this.forestPathLine.spline, [
+    const checkpoint1 = new Checkpoint(0.13, 35, this.forestPathLine.spline, [
       this.artworks[0],
       this.artworks[1],
       this.artworks[2],
@@ -72,10 +73,15 @@ export class Environment {
       this.artworks
     );
 
+    const voiceOver = new Voiceover();
+
     const cameraAnimation = new CameraAnimation(
       this.forestPathLine,
       this.parameters.envScale,
-      checkpoints
+      checkpoints,
+      voiceOver
     );
+
+    cameraAnimation.goToCheckpoint();
   }
 }

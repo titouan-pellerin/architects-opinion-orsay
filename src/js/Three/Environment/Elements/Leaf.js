@@ -1,15 +1,17 @@
-import vertex from "@glsl/leaf/vertex.glsl";
 import fragment from "@glsl/leaf/fragment.glsl";
-import { Color } from "three";
-import { Vector3 } from "three";
-import { DoubleSide } from "three";
-import { AdditiveBlending } from "three";
-import { InstancedBufferAttribute } from "three";
-import { InstancedBufferGeometry } from "three";
-import { PlaneBufferGeometry } from "three";
-import { MathUtils } from "three";
-import { ShaderMaterial } from "three";
-import { Mesh } from "three";
+import vertex from "@glsl/leaf/vertex.glsl";
+import {
+  AdditiveBlending,
+  Color,
+  DoubleSide,
+  InstancedBufferAttribute,
+  InstancedBufferGeometry,
+  MathUtils,
+  Mesh,
+  PlaneBufferGeometry,
+  ShaderMaterial,
+  Vector3,
+} from "three";
 import raf from "../../../utils/Raf";
 
 const tVec3 = new Vector3();
@@ -92,13 +94,14 @@ export class Leaf {
       side: DoubleSide,
       transparent: true,
       depthTest: true,
-      depthWrite: false,
-      // blending: AdditiveBlending,
+      depthWrite: true,
+      blending: AdditiveBlending,
     });
   }
 
   setMesh() {
     this.object.mesh = new Mesh(this.object.geometry, this.object.material);
+    this.object.mesh.frustumCulled = false;
   }
 
   update() {
