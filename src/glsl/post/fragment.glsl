@@ -56,7 +56,7 @@ void main() {
   float weight;
   vec4 blur;
 
-  for(float t = 0.0; t <= 10.0; t++) {
+  for(float t = 0.0; t <= 40.0; t++) {
     percent = (t + offset) / 80.0;
     weight = 4.0 * (percent - percent * percent);
     blur = texture2D(tDiffuse, vUv + toCenter * percent * uBlurIntensity / uRes);
