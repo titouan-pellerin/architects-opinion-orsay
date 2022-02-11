@@ -1,5 +1,6 @@
 import { records } from "../utils/assets";
 import { Record } from "./Record";
+import subtitles from "./subtitles.json";
 
 export class Voiceover {
   constructor() {
@@ -11,8 +12,8 @@ export class Voiceover {
 
     for (let i = 0; i < records.length; i++) {
       const currentChapter = [];
-      for (const recordOfChapter of records[i]) {
-        currentChapter.push(new Record(recordOfChapter, i));
+      for (let j = 0; j < records[i].length; j++) {
+        currentChapter.push(new Record(records[i][j], i, subtitles[i][j]));
       }
       this.recordsByChapter.push(currentChapter);
     }
@@ -34,7 +35,7 @@ export class Voiceover {
 
     this.currentRecord = this.currentChapter[index];
     if (!this.currentRecord.audio) this.currentRecord.init();
-    this.currentRecord.audio.play();
+    this.currentRecord.play();
     if (nextRecord) {
       this.recordIndex++;
       this.currentRecord.audio.onended = () => {
