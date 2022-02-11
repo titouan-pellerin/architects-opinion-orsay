@@ -2,6 +2,7 @@
 import gsap from "gsap";
 import { Line, Vector3 } from "three";
 import { guiFolders } from "../../utils/Debug";
+import { Voiceover } from "../../Voiceover/Voiceover";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
 import { Raycasting } from "../Raycasting";
@@ -13,11 +14,13 @@ export class CameraAnimation {
    * @param {Line} path
    * @param {Number} envScale
    * @param {Checkpoint[]} checkpoints
+   * @param {Voiceover} voiceOver
    */
-  constructor(path, envScale, checkpoints) {
+  constructor(path, envScale, checkpoints, voiceOver) {
     gsap.registerPlugin(CustomEase);
     gsap.ticker.lagSmoothing(1000, 16);
 
+    this.voiceOver = voiceOver;
     this.raycasting = new Raycasting(this);
     this.checkpoints = checkpoints;
     this.checkpointsIndex = 0;
@@ -59,10 +62,11 @@ export class CameraAnimation {
     this.raycasting.stop();
     if (!index) index = this.checkpointsIndex;
     if (index <= 4) {
+      this.voiceOver.playChapter(index);
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
-        // duration: this.checkpoints[index].duration,
-        duration: 1,
+        duration: this.checkpoints[index].duration,
+        // duration: 1,
         value: this.checkpoints[index].tick,
         ease: CustomEase.create(
           "custom",
