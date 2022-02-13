@@ -19,6 +19,7 @@ import { GroundElements } from "./Elements/GroundElements";
 export class Ground extends Group {
   static groundGeometry;
   static groundElements;
+  static sampler;
   constructor(
     texture,
     grassUniforms,
@@ -36,7 +37,8 @@ export class Ground extends Group {
         parameters.groundSize,
         256,
         256
-      ).toNonIndexed();
+      );
+      // .toNonIndexed();
       const vertices = Ground.groundGeometry.getAttribute("position").array;
 
       for (let i = 0; i < vertices.length / 3; i++) {
@@ -151,13 +153,13 @@ export class Ground extends Group {
     this.add(this.ground, this.mask, this.riverPlane);
     this.add(this.riverPlane);
 
-    const sampler = new MeshSurfaceSampler(this.ground).build();
     if (!Ground.groundElements) {
+      Ground.sampler = new MeshSurfaceSampler(this.ground).build();
       Ground.groundElements = new GroundElements(
         grassUniforms,
         flowersUniforms,
         parameters.envScale,
-        sampler,
+        Ground.sampler,
         pathLine
       );
       this.grass = Ground.groundElements.instancedGrassMesh;

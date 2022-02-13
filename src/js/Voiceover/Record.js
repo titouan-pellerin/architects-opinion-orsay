@@ -21,6 +21,7 @@ export class Record {
   init() {
     this.audio = new Audio(this.src);
     if (this.subtitles.length > 1) raf.subscribe("subtitles", this.onPlaying.bind(this));
+    this.audio.onended = this.onEnded.bind(this);
     return this;
   }
 
@@ -35,6 +36,10 @@ export class Record {
       this.currentSubtitleIndex++;
       this.updateDomEl();
     }
+  }
+
+  onEnded() {
+    Record.domEl.textContent = "";
   }
 
   updateDomEl() {

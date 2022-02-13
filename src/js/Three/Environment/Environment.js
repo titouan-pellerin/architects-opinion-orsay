@@ -1,5 +1,6 @@
 import { Color } from "three";
 import { texturesMap } from "../../utils/assets";
+import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { CameraAnimation } from "../Path/CameraAnimation";
@@ -82,6 +83,12 @@ export class Environment {
       voiceOver
     );
 
-    cameraAnimation.goToCheckpoint();
+    this.debugObject = {
+      start: () => {
+        cameraAnimation.goToCheckpoint();
+      },
+    };
+
+    guiFolders.get("experience").add(this.debugObject, "start").name("Next");
   }
 }

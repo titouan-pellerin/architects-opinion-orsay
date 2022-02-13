@@ -11,7 +11,11 @@ if (!location.hash.includes("debug")) {
 }
 
 const guiFolders = new Map();
+const experienceFolder = gui.addFolder("Experience");
+guiFolders.set("experience", experienceFolder);
+
 const cameraFolder = gui.addFolder("Camera");
+cameraFolder.close();
 guiFolders.set("camera", cameraFolder);
 
 const sceneFolder = gui.addFolder("Scene");
