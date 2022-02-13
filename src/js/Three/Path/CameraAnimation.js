@@ -5,7 +5,7 @@ import { guiFolders } from "../../utils/Debug";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
-import { Raycasting } from "../Raycasting";
+import { Raycasting } from "../utils/Raycasting";
 import { Checkpoint } from "./Checkpoint";
 
 export class CameraAnimation {
@@ -44,13 +44,8 @@ export class CameraAnimation {
       end: () => this.goToCheckpoint(4),
       showLine: false,
     };
-    guiFolders.get("camera").add(this.debugObject, "checkpoint1").name("Checkpoint 1");
-    guiFolders.get("camera").add(this.debugObject, "checkpoint2").name("Checkpoint 2");
-    guiFolders.get("camera").add(this.debugObject, "checkpoint3").name("Checkpoint 3");
-    guiFolders.get("camera").add(this.debugObject, "checkpoint4").name("Checkpoint 4");
-    guiFolders.get("camera").add(this.debugObject, "end").name("End");
     guiFolders
-      .get("camera")
+      .get("experience")
       .add(this.debugObject, "showLine")
       .name("Show line")
       .onChange(() => {
@@ -91,9 +86,7 @@ export class CameraAnimation {
         onComplete: () => {
           this.raycasting.start(this.checkpoints[index].artworks);
           this.checkpointsIndex++;
-          // mouse.removeMouseMove();
-          // raf.subscribe("ray", this.ray.update.bind(this.ray));
-          // raf.unsubscribe("mouse");
+          console.log(this.checkpointsIndex);
         },
       });
     }

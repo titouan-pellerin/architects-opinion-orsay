@@ -1,7 +1,7 @@
 import { Raycaster } from "three";
-import { mouse } from "../utils/Mouse";
-import raf from "../utils/Raf";
-import { mainScene } from "./MainScene";
+import { mouse } from "../../utils/Mouse";
+import raf from "../../utils/Raf";
+import { mainScene } from "../MainScene";
 
 export class Raycasting {
   constructor(cameraAnimation) {
@@ -27,8 +27,10 @@ export class Raycasting {
 
   onClick(e) {
     e.preventDefault();
-    this.cameraAnimation.goToArtwork(this.currentIntersect.parent);
-    this.stop();
+    if (this.currentIntersect) {
+      this.cameraAnimation.goToArtwork(this.currentIntersect.parent);
+      this.stop();
+    }
   }
 
   update() {

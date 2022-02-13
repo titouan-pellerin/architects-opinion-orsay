@@ -10,9 +10,9 @@ import riverBeginVertexShader from "@glsl/ground/river/beginVertex.glsl";
 import riverCommonFragmentShader from "@glsl/ground/river/commonFragment.glsl";
 import riverCommonVertexShader from "@glsl/ground/river/commonVertex.glsl";
 import riverOutputFragmentShader from "@glsl/ground/river/outputFragment.glsl";
-import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
+import { CustomMeshToonMaterial } from "@js/Three/utils/CustomMeshToonMaterial";
+import { MeshSurfaceSampler } from "@js/Three/utils/MeshSurfaceSampler";
 import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
-import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 import { simplex } from "../../utils/misc";
 import { GroundElements } from "./Elements/GroundElements";
 
@@ -30,7 +30,6 @@ export class Ground extends Group {
   ) {
     super();
 
-    // Static attribute to create only one geometry (because no-indexed geometry requires a bit more time)
     if (!Ground.groundGeometry) {
       Ground.groundGeometry = new PlaneGeometry(
         parameters.groundSize,
@@ -38,7 +37,6 @@ export class Ground extends Group {
         256,
         256
       );
-      // .toNonIndexed();
       const vertices = Ground.groundGeometry.getAttribute("position").array;
 
       for (let i = 0; i < vertices.length / 3; i++) {

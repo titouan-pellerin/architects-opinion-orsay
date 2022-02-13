@@ -13,7 +13,7 @@ export class Voiceover {
     for (let i = 0; i < records.length; i++) {
       const currentChapter = [];
       for (let j = 0; j < records[i].length; j++) {
-        currentChapter.push(new Record(records[i][j], i, subtitles[i][j]));
+        currentChapter.push(new Record(records[i][j], i, j, subtitles[i][j]));
       }
       this.recordsByChapter.push(currentChapter);
     }
@@ -24,15 +24,17 @@ export class Voiceover {
 
   playChapter(index = this.chapterIndex) {
     this.currentChapter = this.recordsByChapter[index];
+    this.recordIndex = 0;
     this.playRecord(0);
     this.chapterIndex++;
   }
 
   playRecord(index = this.recordIndex) {
+    if (this.currentRecord && this.currentRecord.audio) this.currentRecord.audio.pause();
     const nextRecord = this.currentChapter[index + 1]
       ? this.currentChapter[index + 1].init()
       : null;
-
+    console.log("recordIndex", index);
     this.currentRecord = this.currentChapter[index];
     if (!this.currentRecord.audio) this.currentRecord.init();
     this.currentRecord.play();

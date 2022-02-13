@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import raf from "../utils/Raf";
 
 export class Record {
@@ -8,9 +9,10 @@ export class Record {
    * @param {Number} chapter
    * @param {Array} subtitles
    */
-  constructor(src, chapter, subtitles) {
+  constructor(src, chapter, recordIndex, subtitles) {
     this.src = src;
     this.chapter = chapter;
+    this.recordIndex = recordIndex;
     this.subtitles = subtitles;
     this.currentSubtitleIndex = 0;
 
@@ -21,25 +23,27 @@ export class Record {
   init() {
     this.audio = new Audio(this.src);
     if (this.subtitles.length > 1) raf.subscribe("subtitles", this.onPlaying.bind(this));
-    this.audio.onended = this.onEnded.bind(this);
     return this;
   }
 
   play() {
     this.audio.play();
-    this.updateDomEl();
+    if (this.recordIndex === 0) {
+      Record.domEl.textContent = this.subtitles[this.currentSubtitleIndex].subtitle;
+      gsap.to(Record.domEl, {
+        duration: 0.2,
+        opacity: 1,
+      });
+    } else this.updateDomEl();
   }
 
   onPlaying() {
-    console.log(this.audio.currentTime);
-    if (this.subtitles[this.currentSubtitleIndex].duration <= this.audio.currentTime) {
-      this.currentSubtitleIndex++;
+    if (
+      this.subtitles[this.currentSubtitleIndex] &&
+      this.subtitles[this.currentSubtitleIndex].duration <= this.audio.currentTime
+    ) {
       this.updateDomEl();
     }
-  }
-
-  onEnded() {
-    Record.domEl.textContent = "";
   }
 
   updateDomEl() {
@@ -47,7 +51,18 @@ export class Record {
       raf.unsubscribe("subtitles");
       return;
     }
-    console.log(this.subtitles[this.currentSubtitleIndex].subtitle);
-    Record.domEl.textContent = this.subtitles[this.currentSubtitleIndex].subtitle;
+    // console.log(this.subtitles[this.currentSubtitleIndex].subtitle);
+    const tween = gsap.to(Record.domEl, {
+      duration: 0.2,
+      opacity: 0,
+      onComplete: () => {
+        if (this.subtitles[this.currentSubtitleIndex]) {
+          Record.domEl.textContent = this.subtitles[this.currentSubtitleIndex].subtitle;
+          this.currentSubtitleIndex++;
+
+          tween.reverse();
+        }
+      },
+    });
   }
 }

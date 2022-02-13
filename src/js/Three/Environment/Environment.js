@@ -61,7 +61,7 @@ export class Environment {
       this.artworks[13],
       this.artworks[14],
     ]);
-    const checkpoint5 = new Checkpoint(0.99, 20, this.forestPathLine.spline, [
+    const checkpoint5 = new Checkpoint(0.95, 20, this.forestPathLine.spline, [
       this.artworks[15],
       this.artworks[16],
     ]);

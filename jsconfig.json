@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "baseUrl": ".",
+        "paths": {
+            "@js/*": [
+                "src/js/*"
+            ],
+            "@glsl/*": [
+                "src/glsl/*"
+            ],
+            "@styles/*": [
+                "src/styles/*"
+            ],
+        }
+    },
+}

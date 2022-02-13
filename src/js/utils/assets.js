@@ -28,70 +28,87 @@ texturesMap.set("mistTexture", [mist]);
 
 const artwork1 = textureLoader.load("/assets/artworks/la-main-emile-galle.jpeg");
 artwork1.encoding = sRGBEncoding;
+artwork1.userData.dimensions = [548, 850];
 
 const artwork2 = textureLoader.load("/assets/artworks/presentoir-eugene-rousseau.jpeg");
 artwork2.encoding = sRGBEncoding;
+artwork2.userData.dimensions = [850, 729];
 
 const artwork3 = textureLoader.load(
   "/assets/artworks/la-reine-isabeau-de-baviere-henry-cros.jpeg"
 );
 artwork3.encoding = sRGBEncoding;
+artwork3.userData.dimensions = [546, 850];
 
 const artwork4 = textureLoader.load("/assets/artworks/vase-albert-dammouse.jpeg");
 artwork4.encoding = sRGBEncoding;
+artwork4.userData.dimensions = [638, 850];
 
 const artwork5 = textureLoader.load(
   "/assets/artworks/the-peacock-garden-walter-crane.jpeg"
 );
 artwork5.encoding = sRGBEncoding;
+artwork5.userData.dimensions = [1530, 2250];
 
 const artwork6 = textureLoader.load(
   "/assets/artworks/holland-park-carpet-william-morris.jpeg"
 );
 artwork6.encoding = sRGBEncoding;
+artwork6.userData.dimensions = [2500, 3185];
 
 const artwork7 = textureLoader.load("/assets/artworks/maison-horta-victor-horta.jpeg");
 artwork7.encoding = sRGBEncoding;
+artwork7.userData.dimensions = [2610, 3910];
 
 const artwork8 = textureLoader.load(
   "/assets/artworks/banquette-de-fumoir-hector-guimard.jpeg"
 );
 artwork8.encoding = sRGBEncoding;
+artwork8.userData.dimensions = [1118, 1189];
 
 const artwork9 = textureLoader.load(
   "/assets/artworks/castel-beranger-hector-guimard.jpeg"
 );
 artwork9.encoding = sRGBEncoding;
+artwork9.userData.dimensions = [3096, 3870];
 
 const artwork10 = textureLoader.load(
   "/assets/artworks/la-libellule-de-la-station-dauphine.jpeg"
 );
 artwork10.encoding = sRGBEncoding;
+artwork10.userData.dimensions = [1497, 1899];
 
 const artwork11 = textureLoader.load("/assets/artworks/hotel-tassel-victor-horta-1.jpeg");
 artwork11.encoding = sRGBEncoding;
+artwork11.userData.dimensions = [800, 1200];
 
 const artwork12 = textureLoader.load("/assets/artworks/hotel-tassel-victor-horta-2.jpeg");
 artwork12.encoding = sRGBEncoding;
+artwork12.userData.dimensions = [1761, 2362];
 
 const artwork13 = textureLoader.load("/assets/artworks/pendentif-rene-lalique.jpeg");
 artwork13.encoding = sRGBEncoding;
+artwork13.userData.dimensions = [579, 850];
 
 const artwork14 = textureLoader.load("/assets/artworks/pavot-rene-lalique.jpeg");
 artwork14.encoding = sRGBEncoding;
+artwork14.userData.dimensions = [850, 849];
 
 const artwork15 = textureLoader.load(
   "/assets/artworks/ecritoire-henry-van-de-velde.jpeg"
 );
 artwork15.encoding = sRGBEncoding;
+artwork15.userData.dimensions = [1000, 640];
 
 const artwork16 = textureLoader.load("/assets/artworks/fauteuil-louis-majorelle.jpeg");
 artwork16.encoding = sRGBEncoding;
+artwork16.userData.dimensions = [651, 850];
 
 const artwork17 = textureLoader.load(
   "/assets/artworks/vol-de-mouettes-jacques-gruber.jpeg"
 );
 artwork17.encoding = sRGBEncoding;
+artwork17.userData.dimensions = [799, 850];
 
 const flowerPattern = textureLoader.load("/assets/flower/flower.jpg");
 flowerPattern.encoding = sRGBEncoding;

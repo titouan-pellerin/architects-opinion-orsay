@@ -15,7 +15,7 @@ import {
   Vector3,
 } from "three";
 import { modelsMap, texturesMap } from "../../../utils/assets";
-import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
+import { CustomMeshToonMaterial } from "../../utils/CustomMeshToonMaterial";
 
 export class GroundElements {
   constructor(grassUniforms, flowersUniforms, envScale, sampler, pathLine) {
@@ -63,7 +63,7 @@ export class GroundElements {
       );
     };
 
-    const grassInstanceNumber = 30000;
+    const grassInstanceNumber = 40000;
     const flowerInstanceNumber = 200;
 
     const instance = new Object3D();
