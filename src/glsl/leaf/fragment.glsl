@@ -59,7 +59,7 @@ void main() {
 
     gl_FragColor = vec4(render.rgb, render.a);
 
-    // if(render.a < 1.0) {
-    //     discard;
-    // }
+    if(render.a < 1.0) {
+        discard;
+    }
 }

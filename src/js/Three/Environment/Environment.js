@@ -2,6 +2,7 @@ import { Color } from "three";
 import { texturesMap } from "../../utils/assets";
 import { positions } from "../../utils/positions";
 import { Voiceover } from "../../Voiceover/Voiceover";
+import { mainScene } from "../MainScene";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { Checkpoint } from "../Path/Checkpoint";
 import { ForestPathLine } from "../Path/ForestPathLine";
@@ -82,6 +83,6 @@ export class Environment {
       voiceOver
     );
 
-    cameraAnimation.goToCheckpoint();
+    // cameraAnimation.goToCheckpoint();
   }
 }
