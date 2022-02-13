@@ -31,33 +31,36 @@ export class Record {
     if (this.recordIndex === 0) {
       Record.domEl.textContent = this.subtitles[this.currentSubtitleIndex].subtitle;
       gsap.to(Record.domEl, {
-        duration: 0.2,
+        duration: 0.15,
         opacity: 1,
       });
     } else this.updateDomEl();
   }
 
   onPlaying() {
-    if (
-      this.subtitles[this.currentSubtitleIndex] &&
-      this.subtitles[this.currentSubtitleIndex].duration <= this.audio.currentTime
-    ) {
+    console.log("onPlaying", this.audio.currentTime);
+    console.log("current sub index", this.currentSubtitleIndex);
+    if (this.subtitles[this.currentSubtitleIndex].duration <= this.audio.currentTime) {
       this.updateDomEl();
+      raf.unsubscribe("subtitles");
     }
   }
 
   updateDomEl() {
-    if (!this.subtitles[this.currentSubtitleIndex]) {
-      raf.unsubscribe("subtitles");
-      return;
-    }
-    // console.log(this.subtitles[this.currentSubtitleIndex].subtitle);
+    console.log("updateDomEl");
+    // if (!this.subtitles[this.currentSubtitleIndex]) {
+    //   raf.unsubscribe("subtitles");
+    //   return;
+    // }
+    console.log(this.subtitles[this.currentSubtitleIndex].subtitle);
     const tween = gsap.to(Record.domEl, {
-      duration: 0.2,
+      duration: 0.15,
       opacity: 0,
       onComplete: () => {
         if (this.subtitles[this.currentSubtitleIndex]) {
           Record.domEl.textContent = this.subtitles[this.currentSubtitleIndex].subtitle;
+          // raf.unsubscribe("subtitles");
+
           this.currentSubtitleIndex++;
 
           tween.reverse();
