@@ -69,3 +69,7 @@ export class Record {
     });
   }
 }
+
+/**
+ * Start => Show first subtitle => Hide first when time over => Show second => Hide second when time complete
+ */
