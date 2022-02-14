@@ -5,7 +5,6 @@ import { guiFolders } from "../../utils/Debug";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
-import { Raycasting } from "../utils/Raycasting";
 import { Checkpoint } from "./Checkpoint";
 
 export class CameraAnimation {
@@ -21,7 +20,6 @@ export class CameraAnimation {
     gsap.ticker.lagSmoothing(1000, 16);
 
     this.voiceOver = voiceOver;
-    this.raycasting = new Raycasting(this);
     this.checkpoints = checkpoints;
     this.checkpointsIndex = 0;
     this.isAtCheckpoint = false;
@@ -54,7 +52,7 @@ export class CameraAnimation {
   }
 
   goToCheckpoint(index) {
-    this.raycasting.stop();
+    // this.raycasting.stop();
     if (!index) index = this.checkpointsIndex;
     if (index <= 4) {
       this.voiceOver.playChapter(index);
@@ -126,7 +124,7 @@ export class CameraAnimation {
       onComplete: () => {
         this.positionTween.reverse();
         this.lookAtTween.reverse();
-        this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
+        // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
       },
     });
   }

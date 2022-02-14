@@ -10,6 +10,8 @@ export class Raycasting {
     this.objects = [];
     this.currentIntersect = null;
     this.onClickHandler = this.onClick.bind(this);
+    // this.meshTest = new Mesh(new SphereGeometry(), new MeshBasicMaterial());
+    // mainScene.add(this.meshTest);
   }
 
   start(objects = []) {
@@ -37,6 +39,13 @@ export class Raycasting {
     this.raycaster.setFromCamera(mouse.normalizedMouseCoords, mainScene.camera);
     const intersects = this.raycaster.intersectObjects(this.objects, true);
     if (intersects.length) {
+      // console.log(intersects[0].point);
+      // this.meshTest.position.set(
+      //   intersects[0].point.x,
+      //   intersects[0].point.y,
+      //   intersects[0].point.z
+      // );
+
       document.body.style.cursor = "pointer";
       this.currentIntersect = intersects[0].object;
     } else {

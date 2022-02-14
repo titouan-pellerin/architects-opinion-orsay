@@ -6,6 +6,7 @@ import { Voiceover } from "../../Voiceover/Voiceover";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { Checkpoint } from "../Path/Checkpoint";
 import { ForestPathLine } from "../Path/ForestPathLine";
+import { Raycasting } from "../utils/Raycasting";
 import { Artwork } from "./Elements/Artwork";
 import { Grounds } from "./Grounds";
 
@@ -82,6 +83,16 @@ export class Environment {
       checkpoints,
       voiceOver
     );
+
+    const raycasting = new Raycasting(cameraAnimation);
+
+    raycasting.start([
+      ...this.artworks,
+      // this.grounds.ground1.ground,
+      // this.grounds.ground2.ground,
+      // this.grounds.ground3.ground,
+      // ...this.grounds.ground2.trees.children,
+    ]);
 
     this.debugObject = {
       start: () => {
