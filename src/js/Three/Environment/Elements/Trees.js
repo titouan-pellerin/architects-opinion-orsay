@@ -82,7 +82,7 @@ export class Trees extends THREE.Group {
 
     this.geometry = new THREE.PlaneGeometry(0.35, 0.35, 1, 1);
 
-    const leafColors = [new Color("#eeff99"), new Color("#bbff99"), new Color("#99ff99")];
+    const leafColors = [new Color("#eeff99"), new Color("#ccff99"), new Color("#eeffaa")];
 
     this.leavesPattern = new THREE.InstancedMesh(
       this.geometry,
