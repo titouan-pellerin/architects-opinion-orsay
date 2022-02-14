@@ -79,7 +79,7 @@ export class GroundElements {
 
     const grassGeometry = new PlaneGeometry(0.01, 1, 1, 1);
     const flowerGeometry = modelsMap.get("flower")[0].children[0].geometry;
-    flowerGeometry.scale(0.03, 0.03, 0.03);
+    flowerGeometry.scale(0.02, 0.02, 0.02);
 
     this.instancedGrassMesh = new InstancedMesh(
       grassGeometry,
@@ -157,8 +157,11 @@ export class GroundElements {
             instance.position.set(instancePos.x, instancePos.z - 2.55, instancePos.y);
             instance.lookAt(instanceNormal);
 
-            if (i >= grassInstanceNumber)
+            if (i >= grassInstanceNumber) {
               instance.rotation.y = Math.random() * Math.PI * 2;
+              const randomScale = MathUtils.randFloat(1, 2);
+              instance.scale.set(randomScale, randomScale, randomScale);
+            }
 
             posY = instance.position.y;
           }
