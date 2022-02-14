@@ -18,58 +18,70 @@ export class Record {
 
     this.duration = null;
     this.audio = null;
+
+    this.isAnimComplete = true;
+    this.isHidden = true;
+
+    this.previousDurations = 0;
+
+    this.showTween = gsap
+      .to(Record.domEl, {
+        duration: 0.2,
+        opacity: 1,
+        onComplete: () => {
+          this.isAnimComplete = true;
+          this.isHidden = false;
+        },
+      })
+      .pause();
+    this.hideTween = gsap
+      .to(Record.domEl, {
+        duration: 0.2,
+        opacity: 0,
+        onComplete: () => {
+          this.isAnimComplete = true;
+          this.isHidden = true;
+          if (this.subtitles[this.currentSubtitleIndex]) this.showSubtitle();
+        },
+      })
+      .pause();
   }
 
   init() {
     this.audio = new Audio(this.src);
-    if (this.subtitles.length > 1) raf.subscribe("subtitles", this.onPlaying.bind(this));
     return this;
   }
 
   play() {
     this.audio.play();
-    if (this.recordIndex === 0) {
-      Record.domEl.textContent = this.subtitles[this.currentSubtitleIndex].subtitle;
-      gsap.to(Record.domEl, {
-        duration: 0.15,
-        opacity: 1,
-      });
-    } else this.updateDomEl();
+    raf.subscribe("subtitles", this.onProgress.bind(this));
+    this.showSubtitle();
   }
 
-  onPlaying() {
-    console.log("onPlaying", this.audio.currentTime);
-    console.log("current sub index", this.currentSubtitleIndex);
-    if (this.subtitles[this.currentSubtitleIndex].duration <= this.audio.currentTime) {
-      this.updateDomEl();
-      raf.unsubscribe("subtitles");
+  showSubtitle() {
+    console.log("show");
+    Record.domEl.textContent = this.subtitles[this.currentSubtitleIndex].subtitle;
+    this.isAnimComplete = false;
+    this.showTween.restart();
+  }
+
+  hideSubtitle() {
+    console.log("hide");
+    this.isAnimComplete = false;
+    this.currentSubtitleIndex++;
+
+    this.hideTween.restart();
+  }
+
+  onProgress() {
+    if (
+      this.isHidden === false &&
+      this.isAnimComplete === true &&
+      this.audio.currentTime >=
+        this.previousDurations + this.subtitles[this.currentSubtitleIndex].duration - 0.2
+    ) {
+      this.previousDurations += this.subtitles[this.currentSubtitleIndex].duration;
+      this.hideSubtitle();
     }
   }
-
-  updateDomEl() {
-    console.log("updateDomEl");
-    // if (!this.subtitles[this.currentSubtitleIndex]) {
-    //   raf.unsubscribe("subtitles");
-    //   return;
-    // }
-    console.log(this.subtitles[this.currentSubtitleIndex].subtitle);
-    const tween = gsap.to(Record.domEl, {
-      duration: 0.15,
-      opacity: 0,
-      onComplete: () => {
-        if (this.subtitles[this.currentSubtitleIndex]) {
-          Record.domEl.textContent = this.subtitles[this.currentSubtitleIndex].subtitle;
-          // raf.unsubscribe("subtitles");
-
-          this.currentSubtitleIndex++;
-
-          tween.reverse();
-        }
-      },
-    });
-  }
 }
-
-/**
- * Start => Show first subtitle => Hide first when time over => Show second => Hide second when time complete
- */
