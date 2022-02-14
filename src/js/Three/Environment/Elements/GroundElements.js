@@ -7,6 +7,7 @@ import grassCommonVertexShader from "@glsl/grass/commonVertex.glsl";
 import grassOutputFragmentShader from "@glsl/grass/outputFragment.glsl";
 import grassProjectVertexShader from "@glsl/grass/projectVertex.glsl";
 import {
+  Color,
   DoubleSide,
   InstancedMesh,
   MeshToonMaterial,
@@ -199,6 +200,10 @@ export class GroundElements {
       const newInstanceMatrix =
         this.curveTexturesMatrices.get(groundIndex)[i + grassInstancedMesh.count];
       flowersInstancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+      flowersInstancedMesh.setColorAt(
+        i,
+        new Color(Math.random(), Math.random(), Math.random())
+      );
     }
 
     grassInstancedMesh.instanceMatrix.needsUpdate = true;

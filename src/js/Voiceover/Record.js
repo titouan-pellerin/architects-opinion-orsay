@@ -59,14 +59,12 @@ export class Record {
   }
 
   showSubtitle() {
-    console.log("show");
     Record.domEl.textContent = this.subtitles[this.currentSubtitleIndex].subtitle;
     this.isAnimComplete = false;
     this.showTween.restart();
   }
 
   hideSubtitle() {
-    console.log("hide");
     this.isAnimComplete = false;
     this.currentSubtitleIndex++;
 

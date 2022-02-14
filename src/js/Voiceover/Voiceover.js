@@ -34,7 +34,6 @@ export class Voiceover {
     const nextRecord = this.currentChapter[index + 1]
       ? this.currentChapter[index + 1].init()
       : null;
-    console.log("recordIndex", index);
     this.currentRecord = this.currentChapter[index];
     if (!this.currentRecord.audio) this.currentRecord.init();
     this.currentRecord.play();

@@ -86,7 +86,6 @@ export class CameraAnimation {
         onComplete: () => {
           this.raycasting.start(this.checkpoints[index].artworks);
           this.checkpointsIndex++;
-          console.log(this.checkpointsIndex);
         },
       });
     }
@@ -97,7 +96,6 @@ export class CameraAnimation {
    * @param {Artwork} artwork
    */
   goToArtwork(artwork) {
-    console.log(artwork);
     const newCamPos = new Vector3();
     artwork.getWorldDirection(newCamPos);
     newCamPos.multiplyScalar(8);

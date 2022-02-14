@@ -39,8 +39,6 @@ export class Grounds extends Group {
 
     this.flowersUniforms = {
       uTime: { value: 0 },
-      uColor: { value: new Color("#ff0000") },
-      uColor2: { value: new Color("#236760") },
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
       uTexture: { value: texturesMap.get("flowerPattern")[0] },
