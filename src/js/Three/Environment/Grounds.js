@@ -39,8 +39,6 @@ export class Grounds extends Group {
 
     this.flowersUniforms = {
       uTime: { value: 0 },
-      uColor: { value: new Color("#ff0000") },
-      uColor2: { value: new Color("#236760") },
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
       uTexture: { value: texturesMap.get("flowerPattern")[0] },
@@ -140,29 +138,6 @@ export class Grounds extends Group {
 
     this.ground3.add(woodLogs2, rocks2, trees2, leaf2, dust2);
 
-    // const artwork2Pos = positions.get("artworksPositions")[1];
-    // this.artwork2 = new Artwork(
-    //   texturesMap.get("artworksTextures")[1],
-    //   new THREE.Vector3(artwork2Pos.x, -1, artwork2Pos.y),
-    //   parameters.envScale
-    // );
-    // this.artwork2.rotation.x *= -1;
-
-    // const artwork3Pos = positions.get("artworksPositions")[2];
-    // this.artwork3 = new Artwork(
-    //   texturesMap.get("artworksTextures")[2],
-    //   new Vector3(artwork3Pos.x, -1.5, artwork3Pos.y),
-    //   parameters.envScale
-    // );
-
-    // const artwork4Pos = positions.get("artworksPositions")[3];
-    // this.artwork4 = new Artwork(
-    //   texturesMap.get("artworksTextures")[3],
-    //   new Vector3(artwork4Pos.x, -0.6, artwork4Pos.y),
-    //   parameters.envScale
-    // );
-    // this.artwork3.rotation.y = -Math.PI * 0.09;
-
     this.add(this.ground1, this.ground2, this.ground3);
     this.add(...artworks);
 
@@ -231,40 +206,40 @@ export class Grounds extends Group {
   }
 
   switchGrounds() {
-    if (this.currentIndex < this.groundAmount) {
-      const currentGround1 = this.ground1;
-      const currentGround2 = this.ground2;
-      const currentGround3 = this.ground3;
+    const currentGround1 = this.ground1;
+    const currentGround2 = this.ground2;
+    const currentGround3 = this.ground3;
 
-      currentGround1.position.z -=
-        this.parameters.envScale * this.parameters.groundSize * 3;
-      const texture = this.textures[this.currentIndex + 1];
-      texture.flipY = !!(this.currentIndex % 2);
-      currentGround1.groundUniforms.uTexture.value = texture;
-      currentGround1.groundMaskUniforms.uTexture.value = texture;
-      Ground.groundElements.setInstanceMatrices(
-        this.currentIndex + 1,
-        currentGround1.grass,
-        currentGround1.flowers
-      );
+    currentGround1.position.z -=
+      this.parameters.envScale * this.parameters.groundSize * 3;
+    const texture = this.textures[this.currentIndex + 1];
+    texture.flipY = !!(this.currentIndex % 2);
+    currentGround1.groundUniforms.uTexture.value = texture;
+    currentGround1.groundMaskUniforms.uTexture.value = texture;
+    Ground.groundElements.setInstanceMatrices(
+      this.currentIndex + 1,
+      currentGround1.grass,
+      currentGround1.flowers
+    );
 
-      currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+    currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
 
-      currentGround1.ground.updateMatrix();
-      currentGround1.mask.updateMatrix();
+    currentGround1.ground.updateMatrix();
+    currentGround1.mask.updateMatrix();
 
-      this.ground1 = currentGround2;
-      this.ground2 = currentGround3;
-      this.ground3 = currentGround1;
+    this.ground1 = currentGround2;
+    this.ground2 = currentGround3;
+    this.ground3 = currentGround1;
 
-      this.currentIndex++;
-    } else raf.unsubscribe("grounds");
+    this.currentIndex++;
   }
 
   update() {
-    if (mainScene.cameraContainer.position.z <= this.ground2.getCenter().z) {
+    if (
+      mainScene.cameraContainer.position.z <= this.ground2.getCenter().z &&
+      this.currentIndex < this.groundAmount
+    ) {
       this.switchGrounds();
-      console.log("switch");
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
     this.flowersUniforms.uTime.value = raf.elapsedTime;

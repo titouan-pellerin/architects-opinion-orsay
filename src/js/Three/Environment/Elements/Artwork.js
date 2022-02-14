@@ -63,12 +63,16 @@ export class Artwork extends Group {
     this.outerMesh = new Mesh(this.artworkGeometryOuter, this.artworkMaterialOuter);
     this.outerMesh.scale.set(
       2.6,
-      (texture.image.height * 2.6) / texture.image.width,
+      (texture.userData.dimensions[1] * 2.6) / texture.userData.dimensions[0],
       0.65
     );
 
     this.innerMesh = new Mesh(this.artworkGeometryInner, this.artworkMaterialInner);
-    this.innerMesh.scale.set(2.3, (texture.image.height * 2.3) / texture.image.width, 3);
+    this.innerMesh.scale.set(
+      2.3,
+      (texture.userData.dimensions[1] * 2.3) / texture.userData.dimensions[0],
+      3
+    );
     this.innerMesh.position.z = -0.3;
 
     this.position.set(position.x, position.y, position.z);

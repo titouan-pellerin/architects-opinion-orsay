@@ -7,15 +7,17 @@ import grassCommonVertexShader from "@glsl/grass/commonVertex.glsl";
 import grassOutputFragmentShader from "@glsl/grass/outputFragment.glsl";
 import grassProjectVertexShader from "@glsl/grass/projectVertex.glsl";
 import {
+  Color,
   DoubleSide,
   InstancedMesh,
+  MathUtils,
   MeshToonMaterial,
   Object3D,
   PlaneGeometry,
   Vector3,
 } from "three";
 import { modelsMap, texturesMap } from "../../../utils/assets";
-import { CustomMeshToonMaterial } from "../../CustomMeshToonMaterial";
+import { CustomMeshToonMaterial } from "../../utils/CustomMeshToonMaterial";
 
 export class GroundElements {
   constructor(grassUniforms, flowersUniforms, envScale, sampler, pathLine) {
@@ -40,6 +42,13 @@ export class GroundElements {
       }
     );
 
+    this.flowersColors = [
+      new Color("#ffffff"),
+      new Color("#f0000f"),
+      new Color("#00ff00"),
+      new Color("#555555"),
+      new Color("#ffff00"),
+    ];
     const flowerMaterial = new MeshToonMaterial({
       side: DoubleSide,
     });
@@ -63,7 +72,7 @@ export class GroundElements {
       );
     };
 
-    const grassInstanceNumber = 30000;
+    const grassInstanceNumber = 40000;
     const flowerInstanceNumber = 200;
 
     const instance = new Object3D();
@@ -199,6 +208,10 @@ export class GroundElements {
       const newInstanceMatrix =
         this.curveTexturesMatrices.get(groundIndex)[i + grassInstancedMesh.count];
       flowersInstancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+      flowersInstancedMesh.setColorAt(
+        i,
+        this.flowersColors[MathUtils.randInt(0, this.flowersColors.length - 1)]
+      );
     }
 
     grassInstancedMesh.instanceMatrix.needsUpdate = true;

@@ -10,16 +10,24 @@ import riverBeginVertexShader from "@glsl/ground/river/beginVertex.glsl";
 import riverCommonFragmentShader from "@glsl/ground/river/commonFragment.glsl";
 import riverCommonVertexShader from "@glsl/ground/river/commonVertex.glsl";
 import riverOutputFragmentShader from "@glsl/ground/river/outputFragment.glsl";
-import { CustomMeshToonMaterial } from "@js/Three/CustomMeshToonMaterial";
-import { PlaneBufferGeometry } from "three";
-import { Color, Group, Mesh, MeshToonMaterial, PlaneGeometry, Vector3 } from "three";
-import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
+import { CustomMeshToonMaterial } from "@js/Three/utils/CustomMeshToonMaterial";
+import { MeshSurfaceSampler } from "@js/Three/utils/MeshSurfaceSampler";
+import {
+  Color,
+  Group,
+  Mesh,
+  MeshToonMaterial,
+  PlaneBufferGeometry,
+  PlaneGeometry,
+  Vector3,
+} from "three";
 import { simplex } from "../../utils/misc";
 import { GroundElements } from "./Elements/GroundElements";
 
 export class Ground extends Group {
   static groundGeometry;
   static groundElements;
+  static sampler;
   constructor(
     texture,
     grassUniforms,
@@ -30,7 +38,6 @@ export class Ground extends Group {
   ) {
     super();
 
-    // Static attribute to create only one geometry (because no-indexed geometry requires a bit more time)
     if (!Ground.groundGeometry) {
       Ground.groundGeometry = new PlaneBufferGeometry(
         parameters.groundSize,
@@ -152,13 +159,13 @@ export class Ground extends Group {
 
     this.add(this.ground, this.mask, this.riverPlane);
 
-    const sampler = new MeshSurfaceSampler(this.ground).build();
     if (!Ground.groundElements) {
+      Ground.sampler = new MeshSurfaceSampler(this.ground).build();
       Ground.groundElements = new GroundElements(
         grassUniforms,
         flowersUniforms,
         parameters.envScale,
-        sampler,
+        Ground.sampler,
         pathLine
       );
       this.grass = Ground.groundElements.instancedGrassMesh;

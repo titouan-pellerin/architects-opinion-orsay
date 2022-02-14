@@ -7,7 +7,7 @@ class Mouse {
   constructor() {
     this.mouseCoords = new Vector2(0, 0);
     this.normalizedMouseCoords = new Vector2(0, 0);
-    this.range = new Vector2(0.15, 0.1);
+    this.range = new Vector2(0.2, 0.1);
     this.mouseMoveHandler = this.mouseMove.bind(this);
     this.isOnMouseMove = true;
     document.addEventListener("mousemove", this.mouseMoveHandler);

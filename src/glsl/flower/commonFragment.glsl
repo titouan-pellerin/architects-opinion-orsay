@@ -1,5 +1,4 @@
 #include <common>
 varying vec2 vUv;
-uniform vec3 uColor;
-uniform vec3 uColor2;
 uniform sampler2D uTexture;
+varying vec3 vInstanceColor;

@@ -1,11 +1,12 @@
 import { Color } from "three";
 import { texturesMap } from "../../utils/assets";
+import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import { Voiceover } from "../../Voiceover/Voiceover";
-import { mainScene } from "../MainScene";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { Checkpoint } from "../Path/Checkpoint";
 import { ForestPathLine } from "../Path/ForestPathLine";
+import { Raycasting } from "../utils/Raycasting";
 import { Artwork } from "./Elements/Artwork";
 import { Grounds } from "./Grounds";
 
@@ -61,7 +62,7 @@ export class Environment {
       this.artworks[13],
       this.artworks[14],
     ]);
-    const checkpoint5 = new Checkpoint(0.99, 20, this.forestPathLine.spline, [
+    const checkpoint5 = new Checkpoint(0.95, 20, this.forestPathLine.spline, [
       this.artworks[15],
       this.artworks[16],
     ]);
@@ -83,6 +84,22 @@ export class Environment {
       voiceOver
     );
 
-    // cameraAnimation.goToCheckpoint();
+    const raycasting = new Raycasting(cameraAnimation);
+
+    raycasting.start([
+      ...this.artworks,
+      // this.grounds.ground1.ground,
+      // this.grounds.ground2.ground,
+      // this.grounds.ground3.ground,
+      // ...this.grounds.ground2.trees.children,
+    ]);
+
+    this.debugObject = {
+      start: () => {
+        cameraAnimation.goToCheckpoint();
+      },
+    };
+
+    guiFolders.get("experience").add(this.debugObject, "start").name("Next");
   }
 }

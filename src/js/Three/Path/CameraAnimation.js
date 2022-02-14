@@ -5,7 +5,6 @@ import { guiFolders } from "../../utils/Debug";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
-import { Raycasting } from "../Raycasting";
 import { Checkpoint } from "./Checkpoint";
 
 export class CameraAnimation {
@@ -21,7 +20,6 @@ export class CameraAnimation {
     gsap.ticker.lagSmoothing(1000, 16);
 
     this.voiceOver = voiceOver;
-    this.raycasting = new Raycasting(this);
     this.checkpoints = checkpoints;
     this.checkpointsIndex = 0;
     this.isAtCheckpoint = false;
@@ -44,13 +42,8 @@ export class CameraAnimation {
       end: () => this.goToCheckpoint(4),
       showLine: false,
     };
-    guiFolders.get("camera").add(this.debugObject, "checkpoint1").name("Checkpoint 1");
-    guiFolders.get("camera").add(this.debugObject, "checkpoint2").name("Checkpoint 2");
-    guiFolders.get("camera").add(this.debugObject, "checkpoint3").name("Checkpoint 3");
-    guiFolders.get("camera").add(this.debugObject, "checkpoint4").name("Checkpoint 4");
-    guiFolders.get("camera").add(this.debugObject, "end").name("End");
     guiFolders
-      .get("camera")
+      .get("experience")
       .add(this.debugObject, "showLine")
       .name("Show line")
       .onChange(() => {
@@ -59,7 +52,7 @@ export class CameraAnimation {
   }
 
   goToCheckpoint(index) {
-    this.raycasting.stop();
+    // this.raycasting.stop();
     if (!index) index = this.checkpointsIndex;
     if (index <= 4) {
       this.voiceOver.playChapter(index);
@@ -91,9 +84,6 @@ export class CameraAnimation {
         onComplete: () => {
           this.raycasting.start(this.checkpoints[index].artworks);
           this.checkpointsIndex++;
-          // mouse.removeMouseMove();
-          // raf.subscribe("ray", this.ray.update.bind(this.ray));
-          // raf.unsubscribe("mouse");
         },
       });
     }
@@ -104,7 +94,6 @@ export class CameraAnimation {
    * @param {Artwork} artwork
    */
   goToArtwork(artwork) {
-    console.log(artwork);
     const newCamPos = new Vector3();
     artwork.getWorldDirection(newCamPos);
     newCamPos.multiplyScalar(8);
@@ -135,7 +124,7 @@ export class CameraAnimation {
       onComplete: () => {
         this.positionTween.reverse();
         this.lookAtTween.reverse();
-        this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
+        // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
       },
     });
   }

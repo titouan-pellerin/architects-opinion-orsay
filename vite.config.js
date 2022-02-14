@@ -15,7 +15,6 @@ export default defineConfig({
       { find: "@js", replacement: "/src/js" },
       { find: "@styles", replacement: "/src/styles" },
       { find: "@glsl", replacement: "/src/glsl" },
-      { find: "@assets", replacement: "/src/assets" },
     ],
   },
 });
