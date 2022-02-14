@@ -4,6 +4,7 @@
 float time = uTime * uSpeed;
 
 vUv = uv;
+vInstanceColor = instanceColor;
 
 // New mvPosition
 vec4 newMvPosition = vec4(position, 1.0);

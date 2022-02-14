@@ -22,10 +22,6 @@ texturesMap.set("curveTextures", [
 const noise = textureLoader.load("/assets/noise.jpg");
 texturesMap.set("noiseTexture", [noise]);
 
-const mist = textureLoader.load("/assets/mist.png");
-mist.encoding = sRGBEncoding;
-texturesMap.set("mistTexture", [mist]);
-
 const artwork1 = textureLoader.load("/assets/artworks/la-main-emile-galle.jpeg");
 artwork1.encoding = sRGBEncoding;
 artwork1.userData.dimensions = [548, 850];
@@ -145,7 +141,7 @@ gltfLoader.load("/assets/models/trunk2.glb", (gltf) => {
 });
 
 const flower = [];
-gltfLoader.load("/assets/models/flower/flower7.glb", (gltf) => {
+gltfLoader.load("/assets/models/flower.glb", (gltf) => {
   flower[0] = gltf.scene;
 });
 

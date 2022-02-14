@@ -8,6 +8,7 @@ import commonVertexShader from "@glsl/tree/trunk/commonVertex.glsl";
 import outputFragmentShader from "@glsl/tree/trunk/outputFragment.glsl";
 import { guiFolders } from "@js/utils/Debug";
 import * as THREE from "three";
+import { Color, MathUtils } from "three";
 import { modelsMap } from "../../../utils/assets";
 import { simplex } from "../../../utils/misc";
 import raf from "../../../utils/Raf";
@@ -81,6 +82,8 @@ export class Trees extends THREE.Group {
 
     this.geometry = new THREE.PlaneGeometry(0.35, 0.35, 1, 1);
 
+    const leafColors = [new Color("#eeff99"), new Color("#bbff99"), new Color("#99ff99")];
+
     this.leavesPattern = new THREE.InstancedMesh(
       this.geometry,
       this.materialLeaf,
@@ -136,6 +139,10 @@ export class Trees extends THREE.Group {
       instance.scale.set(noise2D * 2, noise2D * 2, noise2D * 2);
       instance.updateMatrix();
       this.leavesPattern.setMatrixAt(i, instance.matrix);
+      this.leavesPattern.setColorAt(
+        i,
+        leafColors[MathUtils.randInt(0, leafColors.length - 1)]
+      );
     }
 
     const leaves = new THREE.Group();
