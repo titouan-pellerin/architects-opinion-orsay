@@ -135,7 +135,10 @@ export class Grounds extends Group {
     woodLogs2.scale.z = -1;
     this.ground3.woodLogs = woodLogs2;
 
-    this.ground3.add(woodLogs2, rocks2, trees2);
+    const leaf2 = leaf.object.mesh.clone();
+    const dust2 = dust.object.mesh.clone();
+
+    this.ground3.add(woodLogs2, rocks2, trees2, leaf2, dust2);
 
     // const artwork2Pos = positions.get("artworksPositions")[1];
     // this.artwork2 = new Artwork(

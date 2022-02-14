@@ -18,10 +18,12 @@ particlePos.y = loop * ((particlePos.y + sin(time - aOffset * aScale)) + (offset
 
 vec3 rotatedPositions = position;
 
-float rZ = rotatedPositions.x * cos((abs(uTime * 0.5)) - (aOffset * 5.)) + rotatedPositions.y * sin((abs(uTime * 0.5)) - (aOffset * 5.));
+float rX = rotatedPositions.x * cos((uTime * 2.) - (aOffset * 5.)) - rotatedPositions.y * sin((uTime * 2.) - (aOffset * 5.));
+float rY = rotatedPositions.y * cos((uTime * 2.) - (aOffset * 5.)) + rotatedPositions.x * sin((uTime * 2.) - (aOffset * 5.));
+float rZ = rotatedPositions.x * cos((uTime * 2.) - (aOffset * 5.)) + rotatedPositions.y * sin((uTime * 2.) - (aOffset * 5.));
 
-particlePos.x -= ((sin(position.y - (uTime * aSpeedFactor)) * 0.2));
-particlePos.z -= (sin(position.x - (uTime * aSpeedFactor)) * 0.2);
+particlePos.x -= ((sin(position.y - (uTime * aSpeedFactor)) * 0.75));
+particlePos.z -= (sin(position.x - (uTime * aSpeedFactor)) * 0.75) + rY;
 particlePos.y -= rZ;
 
 vec4 mv = modelViewMatrix * vec4(particlePos, 1.);
