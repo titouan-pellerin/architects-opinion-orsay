@@ -31,7 +31,7 @@ const params = {
 export class Leaf {
   constructor() {
     this.object = {};
-    this.count = 10000;
+    this.count = 350;
     this.init();
 
     raf.subscribe("leaf", this.update.bind(this));
@@ -54,12 +54,12 @@ export class Leaf {
 
     for (let i = 0; i < particlesCount; i++) {
       this.positions[i * 3 + 0] = MathUtils.randFloatSpread(35);
-      this.positions[i * 3 + 1] = MathUtils.randFloatSpread(1);
+      this.positions[i * 3 + 1] = -5;
       this.positions[i * 3 + 2] = MathUtils.randFloatSpread(50);
 
       this.offset[i + 0] = MathUtils.randFloatSpread(75);
-      this.scale[i + 0] = MathUtils.randFloat(0.5, 5);
-      this.speedFactor[i + 0] = MathUtils.randFloat(0.5, 1);
+      this.scale[i + 0] = MathUtils.randFloat(1, 50);
+      this.speedFactor[i + 0] = MathUtils.randFloat(1, 50);
     }
   }
 

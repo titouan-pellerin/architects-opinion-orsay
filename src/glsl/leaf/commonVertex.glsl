@@ -1,3 +1,4 @@
+#include ../utils/noise2d;
 #include <common>
 
 uniform float uTime;
