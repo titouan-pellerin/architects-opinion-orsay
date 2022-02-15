@@ -43,7 +43,7 @@ export class GroundElements {
     );
 
     this.flowersColors = [
-      new Color("#aec1e3"),
+      new Color("#bad1ef"),
       new Color("#ffcd10"),
       new Color("#f94f24"),
       new Color("#eeafb7"),
