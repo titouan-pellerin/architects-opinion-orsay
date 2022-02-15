@@ -1,5 +1,7 @@
 #include ../utils/noise2d;
 
+#define PI 3.1415926535897932384626433832795
+
 uniform sampler2D tDiffuse;
 varying vec2 vUv;
 uniform float uTime;
@@ -18,22 +20,13 @@ float hash(vec2 p) {
   return fract(1e4 * sin(17.0 * p.x + p.y * 0.1) * (0.1 + abs(sin(p.y * 13.0 + p.x))));
 }
 
-vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
-  vec4 color = vec4(0.0);
-  vec2 off1 = vec2(1.411764705882353) * direction;
-  vec2 off2 = vec2(3.2941176470588234) * direction;
-  vec2 off3 = vec2(5.176470588235294) * direction;
-  color += texture2D(image, uv) * 0.1964825501511404;
-  color += texture2D(image, uv + (off1 / resolution)) * 0.2969069646728344;
-  color += texture2D(image, uv - (off1 / resolution)) * 0.2969069646728344;
-  color += texture2D(image, uv + (off2 / resolution)) * 0.09447039785044732;
-  color += texture2D(image, uv - (off2 / resolution)) * 0.09447039785044732;
-  color += texture2D(image, uv + (off3 / resolution)) * 0.010381362401148057;
-  color += texture2D(image, uv - (off3 / resolution)) * 0.010381362401148057;
-  return color;
+vec2 rotate(vec2 uv, float rotation, vec2 mid) {
+  return vec2(cos(rotation) * (uv.x - mid.x) + sin(rotation) * (uv.y - mid.y) + mid.x, cos(rotation) * (uv.y - mid.y) - sin(rotation) * (uv.x - mid.x) + mid.y);
 }
 
 void main() {
+
+  vec2 rotateTest = rotate(uBlurPos, sin(uTime) + PI * 0.5, vec2(0., 0.)); 
 
     // Tint
   vec4 TintColor = vec4(uTintColor, 1.0);
@@ -42,7 +35,7 @@ void main() {
   float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
   vec4 cornerColor = vec4(corner + uCornerIntensity) + vec4(uCornerColor, 1.0);
 
-  float noise = 1.0 - abs(cnoise(vUv * 7. + uTime * 0.35));
+  float noise = 1.0 - abs(cnoise(vUv * 10. + uTime * 0.35));
   // float noise = 1.0 - cnoise(vUv * 20.);
     // Part1, tint & corner
   // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
@@ -53,6 +46,7 @@ void main() {
 
   float total = 0.0;
 
+  // vec2 toCenter = uBlurPos * abs(sin(uTime)) - vUv * uRes;
   vec2 toCenter = uBlurPos - vUv * uRes;
 
   float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
@@ -72,7 +66,8 @@ void main() {
   } 
 
     // Part2, adding some blur
-  vec4 p2 = ((color / total)) * .75;
+  // vec4 p2 = ((color / total)) * 0.75;
+  vec4 p2 = ((color / total)) * 0.75;
 
   vec2 texel = vec2(1. / uRes.x, 1. / uRes.y);
 
@@ -109,7 +104,7 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float G = pow(abs(noise + 2.), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
+  float G = pow(abs(noise + 1.), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
 
     // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);

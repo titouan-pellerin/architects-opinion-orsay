@@ -72,7 +72,7 @@ export class GroundElements {
       );
     };
 
-    const grassInstanceNumber = 40000;
+    const grassInstanceNumber = 60000;
     const flowerInstanceNumber = 200;
 
     const instance = new Object3D();

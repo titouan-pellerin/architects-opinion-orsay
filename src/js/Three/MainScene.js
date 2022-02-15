@@ -160,8 +160,8 @@ export class MainScene extends THREE.Scene {
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
-          // value: this.blurVec2.set(this.sizes.width * 0.5, this.sizes.height * 0.5),
-          value: this.blurVec2.set(this.sizes.width * 0.75, this.sizes.height * 1),
+          value: this.blurVec2.set(this.sizes.width, this.sizes.height),
+          // value: this.blurVec2.set(this.sizes.width * 0.75, this.sizes.height * 1),
         },
         uRes: {
           value: this.resVec2.set(this.sizes.width, this.sizes.height),
