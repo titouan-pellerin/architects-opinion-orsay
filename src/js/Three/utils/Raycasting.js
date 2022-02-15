@@ -1,4 +1,4 @@
-import { Raycaster, Vector3 } from "three";
+import { MathUtils, Raycaster, Vector3 } from "three";
 import { mouse } from "../../utils/Mouse";
 import raf from "../../utils/Raf";
 import { Artwork } from "../Environment/Elements/Artwork";
@@ -8,6 +8,7 @@ export class Raycasting {
   constructor(cameraAnimation) {
     this.cameraAnimation = cameraAnimation;
     this.raycaster = new Raycaster();
+    this.raycaster.far = 25;
     this.objects = [];
     this.artworks = [];
     this.currentIntersect = null;
@@ -52,16 +53,36 @@ export class Raycasting {
       [...this.objects, ...this.artworks],
       true
     );
+
     if (intersects.length) {
       if (intersects[0].object.parent instanceof Artwork) {
         document.body.style.cursor = "pointer";
         this.currentIntersect = intersects[0].object;
       } else {
+        console.log("hi");
         document.body.style.cursor = "default";
         this.currentIntersect = null;
-        this.rayPos.x = intersects[0].point.x;
-        this.rayPos.y = intersects[0].point.y;
-        this.rayPos.z = intersects[0].point.z;
+        this.rayPos.x = MathUtils.damp(
+          this.rayPos.x,
+          intersects[0].point.x,
+          5,
+          raf.deltaTime
+        );
+        this.rayPos.y = MathUtils.damp(
+          this.rayPos.y,
+          intersects[0].point.y,
+          5,
+          raf.deltaTime
+        );
+        this.rayPos.z = MathUtils.damp(
+          this.rayPos.z,
+          intersects[0].point.z,
+          5,
+          raf.deltaTime
+        );
+        // this.rayPos.x = intersects[0].point.x;
+        // this.rayPos.y = intersects[0].point.y;
+        // this.rayPos.z = intersects[0].point.z;
       }
       // console.log(this.rayPos);
       // console.log(intersects[0].point);

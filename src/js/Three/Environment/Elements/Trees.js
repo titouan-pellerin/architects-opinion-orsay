@@ -161,23 +161,31 @@ export class Trees extends Group {
 
     const leaves2 = leaves.clone();
     leaves2.position.set(-3.014, 63.6, -0.32);
+
     const leaves3 = leaves.clone();
     leaves3.position.set(4.61, 48.24, -13.37);
+
     const leaves4 = leaves.clone();
     leaves4.position.set(28.92, 51.7, -11.41);
+
     const leaves5 = leaves.clone();
     leaves5.position.set(9.59, 68.83, -4.69);
 
     const leaves6 = leaves.clone();
     leaves6.position.set(13.89, 73.02, -23.35);
+
     const leaves7 = leaves.clone();
     leaves7.position.set(7.96, 55.73, 14.13);
+
     const leaves8 = leaves.clone();
     leaves8.position.set(-28.89, 56.82, 7.39);
+
     const leaves9 = leaves.clone();
     leaves9.position.set(30.26, 51.28, -30.93);
+
     const leaves10 = leaves.clone();
     leaves10.position.set(-10.41, 61.12, 8.93);
+
     const leaves11 = leaves.clone();
     leaves11.position.set(-11.83, 55.96, 21.94);
 
