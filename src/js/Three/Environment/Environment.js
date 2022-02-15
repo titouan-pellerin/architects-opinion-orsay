@@ -69,13 +69,6 @@ export class Environment {
     ]);
     checkpoints.push(checkpoint1, checkpoint2, checkpoint3, checkpoint4, checkpoint5);
 
-    this.grounds = new Grounds(
-      texturesMap.get("curveTextures").length,
-      this.parameters,
-      this.forestPathLine,
-      this.artworks
-    );
-
     const voiceOver = new Voiceover();
 
     const cameraAnimation = new CameraAnimation(
@@ -87,11 +80,19 @@ export class Environment {
 
     const raycasting = new Raycasting(cameraAnimation);
 
+    this.grounds = new Grounds(
+      texturesMap.get("curveTextures").length,
+      this.parameters,
+      this.forestPathLine,
+      this.artworks,
+      raycasting
+    );
+
     raycasting.start([
       ...this.artworks,
-      // this.grounds.ground1.ground,
-      // this.grounds.ground2.ground,
-      // this.grounds.ground3.ground,
+      this.grounds.ground1.ground,
+      this.grounds.ground2.ground,
+      this.grounds.ground3.ground,
       // ...this.grounds.ground2.trees.children,
     ]);
 

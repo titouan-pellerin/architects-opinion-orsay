@@ -1,4 +1,4 @@
-import { Color, Group, Line } from "three";
+import { Color, Group, Line, Vector2 } from "three";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
@@ -20,12 +20,13 @@ export class Grounds extends Group {
    * @param {Line} forestPathLine
    * @param {Checkpoint[]} checkpoints
    */
-  constructor(groundAmount, parameters = {}, forestPathLine, artworks) {
+  constructor(groundAmount, parameters = {}, forestPathLine, artworks, raycasting) {
     super();
     this.forestPathLine = forestPathLine;
     this.currentIndex = 1;
     this.groundAmount = groundAmount - 1;
     this.parameters = parameters;
+    this.raycasting = raycasting;
 
     this.textures = texturesMap.get("curveTextures");
 
@@ -35,6 +36,7 @@ export class Grounds extends Group {
       uColor2: { value: new Color("#236760") },
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
+      uRayPos: { value: new Vector2() },
     };
 
     this.flowersUniforms = {
@@ -242,6 +244,12 @@ export class Grounds extends Group {
       this.switchGrounds();
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
+
+    // this.ground1.worldToLocal(this.raycasting.rayPos);
+    // console.log(this.raycasting.rayPos);
+    this.grassUniforms.uRayPos.value.x = this.raycasting.rayPos.x;
+    this.grassUniforms.uRayPos.value.y = this.raycasting.rayPos.z;
+
     this.flowersUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;
   }
