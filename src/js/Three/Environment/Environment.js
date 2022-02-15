@@ -1,5 +1,5 @@
-import { AudioListener, Color } from "three";
-import { texturesMap } from "../../utils/assets";
+import { Audio, AudioListener, Color } from "three";
+import { soundsMap, texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import { Voiceover } from "../../Voiceover/Voiceover";
@@ -98,6 +98,10 @@ export class Environment {
       start: () => {
         const audioListener = new AudioListener();
         mainScene.camera.add(audioListener);
+        const music = new Audio(audioListener);
+        music.setBuffer(soundsMap.get("music"));
+        music.setVolume(0.09);
+        music.play();
         voiceOver.init(audioListener);
         cameraAnimation.goToCheckpoint(null, raycasting);
       },

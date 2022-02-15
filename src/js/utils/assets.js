@@ -4,6 +4,7 @@ import { audioLoader, gltfLoader, textureLoader } from "./Loader";
 const texturesMap = new Map();
 const modelsMap = new Map();
 const records = [];
+const soundsMap = new Map();
 
 const curveTexture1 = textureLoader.load("/assets/curve/texture1.png");
 const curveTexture2 = textureLoader.load("/assets/curve/texture2.png");
@@ -281,4 +282,8 @@ records.push(
   buffersChapter5
 );
 
-export { texturesMap, modelsMap, records };
+audioLoader.loadAsync("/assets/musics/ambiant.mp3").then((audioBuffer) => {
+  soundsMap.set("music", audioBuffer);
+});
+
+export { texturesMap, modelsMap, records, soundsMap };

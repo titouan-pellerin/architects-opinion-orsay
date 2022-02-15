@@ -51,7 +51,6 @@ export class Voiceover {
         this.recordIndex++;
         this.playRecord(this.recordIndex);
       } else {
-        this.audioListener.context.suspend();
         raf.unsubscribe("subtitles");
         this.recordIndex = 0;
       }
