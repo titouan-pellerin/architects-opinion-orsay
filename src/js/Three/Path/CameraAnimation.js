@@ -82,7 +82,7 @@ export class CameraAnimation {
           mainScene.cameraContainer.rotateZ(Math.PI);
         },
         onComplete: () => {
-          this.raycasting.start(this.checkpoints[index].artworks);
+          // this.raycasting.start(this.checkpoints[index].artworks);
           this.checkpointsIndex++;
         },
       });

@@ -1,8 +1,9 @@
-import { Color } from "three";
+import { AudioListener, Color } from "three";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import { Voiceover } from "../../Voiceover/Voiceover";
+import { mainScene } from "../MainScene";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { Checkpoint } from "../Path/Checkpoint";
 import { ForestPathLine } from "../Path/ForestPathLine";
@@ -96,9 +97,9 @@ export class Environment {
 
     this.debugObject = {
       start: () => {
-        const BaseAudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioContext = new BaseAudioContext();
-        voiceOver.init(audioContext);
+        const audioListener = new AudioListener();
+        mainScene.camera.add(audioListener);
+        voiceOver.init(audioListener);
         cameraAnimation.goToCheckpoint();
       },
     };

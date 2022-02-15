@@ -1,4 +1,5 @@
 import { records } from "../utils/assets";
+import raf from "../utils/Raf";
 import { Record } from "./Record";
 import subtitles from "./subtitles.json";
 
@@ -10,7 +11,7 @@ export class Voiceover {
     this.chapterIndex = 0;
     this.recordIndex = 0;
 
-    this.context = null;
+    this.audioListener = null;
 
     for (let i = 0; i < records.length; i++) {
       const currentChapter = [];
@@ -23,12 +24,13 @@ export class Voiceover {
     // this.playChapter(0);
   }
 
-  init(context) {
-    this.context = context;
-    this.recordsByChapter[0][0].init(context);
+  init(audioListener) {
+    this.audioListener = audioListener;
+    this.recordsByChapter[0][0].init(audioListener);
   }
 
   playChapter(index = this.chapterIndex) {
+    this.audioListener.context.resume();
     this.currentChapter = this.recordsByChapter[index];
     this.recordIndex = 0;
     this.playRecord(0);
@@ -36,18 +38,24 @@ export class Voiceover {
   }
 
   playRecord(index = this.recordIndex) {
-    if (this.currentRecord && this.currentRecord.source) this.currentRecord.source.stop();
+    if (this.currentRecord && this.currentRecord.audio) this.currentRecord.audio.pause();
     const nextRecord = this.currentChapter[index + 1]
-      ? this.currentChapter[index + 1].init(this.context)
+      ? this.currentChapter[index + 1].init(this.audioListener)
       : null;
     this.currentRecord = this.currentChapter[index];
-    if (!this.currentRecord.source) this.currentRecord.init(this.context);
+    if (!this.currentRecord.audio) this.currentRecord.init(this.audioListener);
     this.currentRecord.play();
-    if (nextRecord) {
-      this.recordIndex++;
-      this.currentRecord.source.onended = () => {
+    this.currentRecord.audio.source.onended = () => {
+      console.log("onended");
+      this.currentRecord.audio.isPlaying = false;
+      if (nextRecord) {
+        this.recordIndex++;
         this.playRecord(this.recordIndex);
-      };
-    } else this.recordIndex = 0;
+      } else {
+        this.audioListener.context.suspend();
+        raf.unsubscribe("subtitles");
+        this.recordIndex = 0;
+      }
+    };
   }
 }

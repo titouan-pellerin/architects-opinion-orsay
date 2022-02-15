@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { PositionalAudio } from "three";
 import raf from "../utils/Raf";
 
 export class Record {
@@ -16,10 +17,8 @@ export class Record {
     this.subtitles = subtitles;
     this.currentSubtitleIndex = 0;
 
-    this.context = null;
-    this.duration = null;
-    this.source = null;
-    this.amp = null;
+    this.audio = null;
+    this.startTime = 0;
 
     this.isAnimComplete = true;
     this.isHidden = true;
@@ -51,22 +50,21 @@ export class Record {
 
   /**
    *
-   * @param {AudioContext} context
+   * @param {AudioListener} audioListener
    * @returns
    */
-  init(context) {
-    this.context = context;
-    this.source = context.createBufferSource();
-    this.amp = context.createGain();
-
-    this.source.buffer = this.buffer;
-    this.source.connect(this.amp);
-    this.amp.connect(context.destination);
+  init(audioListener) {
+    this.audioListener = audioListener;
+    this.audio = new PositionalAudio(audioListener);
+    this.audio.setRefDistance(30);
+    this.audio.setRolloffFactor(0);
+    this.audio.setBuffer(this.buffer);
     return this;
   }
 
   play() {
-    this.source.start();
+    this.startTime = this.audio.context.currentTime;
+    this.audio.play();
     raf.subscribe("subtitles", this.onProgress.bind(this));
     this.showSubtitle();
   }
@@ -85,10 +83,11 @@ export class Record {
   }
 
   onProgress() {
+    console.log(this.audio.context.currentTime - this.startTime);
     if (
       this.isHidden === false &&
       this.isAnimComplete === true &&
-      this.context.currentTime >=
+      this.audio.context.currentTime - this.startTime >=
         this.previousDurations + this.subtitles[this.currentSubtitleIndex].duration - 0.2
     ) {
       this.previousDurations += this.subtitles[this.currentSubtitleIndex].duration;

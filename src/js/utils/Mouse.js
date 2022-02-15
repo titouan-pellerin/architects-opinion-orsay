@@ -1,5 +1,4 @@
-import { Vector2, Vector3 } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { Vector2 } from "three";
 import { mainScene } from "../Three/MainScene";
 import raf from "./Raf";
 
@@ -28,27 +27,6 @@ class Mouse {
     document.removeEventListener("mousemove", this.mouseMoveHandler);
   }
 
-  enableOrbitControls() {
-    this.controls = new OrbitControls(mainScene.camera, mainScene.canvas);
-    mainScene.camera.position.copy(mainScene.cameraContainer.position);
-    mainScene.camera.quaternion.slerp(mainScene.cameraContainer.quaternion, 0.5);
-    mainScene.add(mainScene.camera);
-    mainScene.remove(mainScene.cameraContainer);
-    this.controls.target = new Vector3(
-      mainScene.camera.position.x,
-      mainScene.camera.position.y,
-      mainScene.camera.position.z - 0.1
-    );
-    this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.03;
-    this.controls.enableRotate = true;
-    this.controls.enablePan = false;
-    this.controls.enableZoom = false;
-    this.controls.rotateSpeed = -0.2;
-    this.controls.enabled = true;
-    this.controls.update();
-  }
-
   update() {
     const target = new Vector2();
     target.x = -this.normalizedMouseCoords.x * this.range.x;
@@ -56,16 +34,9 @@ class Mouse {
 
     const xRotateOffset = 0.015 * (target.x - mainScene.camera.rotation.y);
     const yRotateOffset = 0.015 * (target.y - mainScene.camera.rotation.x);
-    if (
-      !this.isOnMouseMove &&
-      Math.abs(xRotateOffset) < 0.0001 &&
-      Math.abs(yRotateOffset) < 0.0001
-    )
-      this.enableOrbitControls();
-    else if (!this.controls) {
-      mainScene.camera.rotation.y += xRotateOffset;
-      mainScene.camera.rotation.x += yRotateOffset;
-    } else this.controls.update();
+
+    mainScene.camera.rotation.y += xRotateOffset;
+    mainScene.camera.rotation.x += yRotateOffset;
   }
 }
 
