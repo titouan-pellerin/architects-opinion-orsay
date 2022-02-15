@@ -1,7 +1,7 @@
-import commonFragmentShader from "@glsl/butterfly/commonFragment.glsl";
-import commonVertexShader from "@glsl/butterfly/commonVertex.glsl";
-import outputFragmentShader from "@glsl/butterfly/outputFragment.glsl";
-import projectVertexShader from "@glsl/butterfly/projectVertex.glsl";
+import commonFragmentShader from "@glsl/leaf/commonFragment.glsl";
+import commonVertexShader from "@glsl/leaf/commonVertex.glsl";
+import outputFragmentShader from "@glsl/leaf/outputFragment.glsl";
+import projectVertexShader from "@glsl/leaf/projectVertex.glsl";
 import { MeshToonMaterial } from "three";
 import {
   Color,
@@ -23,13 +23,13 @@ const params = {
   color2: "#4a9e36",
 };
 
-export class Leaf {
+export class Butterfly {
   constructor() {
     this.object = {};
-    this.count = 250;
+    this.count = 200;
     this.init();
 
-    raf.subscribe("leaf", this.update.bind(this));
+    raf.subscribe("butterfly", this.update.bind(this));
   }
 
   init() {
@@ -60,7 +60,6 @@ export class Leaf {
 
   setGeometry() {
     const blueprintParticle = new PlaneBufferGeometry();
-    // blueprintParticle.scale(0.1, 0.1, 0.1);
     blueprintParticle.scale(0.125, 0.125, 0.125);
 
     this.object.geometry = new InstancedBufferGeometry();

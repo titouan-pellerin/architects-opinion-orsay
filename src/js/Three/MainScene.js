@@ -156,8 +156,8 @@ export class MainScene extends THREE.Scene {
         uCornerIntensity: { value: 1 },
         // uCornerSize: { value: 10 },
         uCornerSize: { value: 4.5 },
-        // uBlurIntensity: { value: 3.5 },
-        uBlurIntensity: { value: 1.75 },
+        uBlurIntensity: { value: 3.5 },
+        // uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
           // value: this.blurVec2.set(this.sizes.width * 0.5, this.sizes.height * 0.5),

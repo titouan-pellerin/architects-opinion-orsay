@@ -7,6 +7,7 @@ import { mainScene } from "../MainScene";
 import { Checkpoint } from "../Path/Checkpoint";
 import { Dust } from "./Elements/Dust";
 import { Leaf } from "./Elements/Leaf";
+import { Butterfly } from "./Elements/Butterfly";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
@@ -100,7 +101,16 @@ export class Grounds extends Group {
 
     const leaf = new Leaf();
 
-    this.ground2.add(woodLogs1, rocks1, trees1, leaf.object.mesh, dust.object.mesh);
+    const butterfly = new Butterfly();
+
+    this.ground2.add(
+      woodLogs1,
+      rocks1,
+      trees1,
+      leaf.object.mesh,
+      dust.object.mesh,
+      butterfly.object.mesh
+    );
 
     // Next Ground
     this.ground3 = new Ground(
@@ -135,8 +145,9 @@ export class Grounds extends Group {
 
     const leaf2 = leaf.object.mesh.clone();
     const dust2 = dust.object.mesh.clone();
+    const butterfly2 = butterfly.object.mesh.clone();
 
-    this.ground3.add(woodLogs2, rocks2, trees2, leaf2, dust2);
+    this.ground3.add(woodLogs2, rocks2, trees2, leaf2, dust2, butterfly2);
 
     this.add(this.ground1, this.ground2, this.ground3);
     this.add(...artworks);

@@ -1,3 +1,5 @@
+#include ../utils/noise2d;
+
 uniform sampler2D tDiffuse;
 varying vec2 vUv;
 uniform float uTime;
@@ -32,6 +34,7 @@ vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
 }
 
 void main() {
+
     // Tint
   vec4 TintColor = vec4(uTintColor, 1.0);
 
@@ -39,6 +42,8 @@ void main() {
   float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
   vec4 cornerColor = vec4(corner + uCornerIntensity) + vec4(uCornerColor, 1.0);
 
+  float noise = 1.0 - abs(cnoise(vUv * 5. + uTime * 0.35));
+  // float noise = 1.0 - cnoise(vUv * 20.);
     // Part1, tint & corner
   // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
   vec4 p1 = texture2D(tDiffuse, vUv) * 0.5 * cornerColor;
@@ -56,7 +61,7 @@ void main() {
   float weight;
   vec4 blur;
 
-  for(float t = 0.0; t <= 40.0; t++) {
+  for(float t = 0.0; t <= 20.0; t++) {
     percent = (t + offset) / 80.0;
     weight = 4.0 * (percent - percent * percent);
     blur = texture2D(tDiffuse, vUv + toCenter * percent * uBlurIntensity / uRes);
@@ -67,9 +72,9 @@ void main() {
   } 
 
     // Part2, adding some blur
-  vec4 p2 = ((color / total)) * .65;
+  vec4 p2 = ((color / total)) * 1.;
 
-  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.;
+  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y);
 
 		// kernel definition (in glsl matrices are filled in column-major order)
 
@@ -104,11 +109,10 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float G = pow(3., sqrt((valueGx * valueGx) + (valueGy * valueGy)));
-  vec3 border = vec3(G);
+  float G = pow(abs(noise + 1.), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
 
     // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);
   gl_FragColor = p2;
-  gl_FragColor = (p1 + p2) * vec4(vec3(border) * 1.0, 1.0);
+  gl_FragColor = (p1 + p2) * vec4(G);
 }
