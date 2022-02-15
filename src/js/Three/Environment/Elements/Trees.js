@@ -7,20 +7,28 @@ import commonFragmentShader from "@glsl/tree/trunk/commonFragment.glsl";
 import commonVertexShader from "@glsl/tree/trunk/commonVertex.glsl";
 import outputFragmentShader from "@glsl/tree/trunk/outputFragment.glsl";
 import { guiFolders } from "@js/utils/Debug";
-import * as THREE from "three";
-import { Color, MathUtils } from "three";
+import {
+  Color,
+  DoubleSide,
+  Group,
+  InstancedMesh,
+  MathUtils,
+  MeshToonMaterial,
+  Object3D,
+  PlaneGeometry,
+} from "three";
 import { modelsMap } from "../../../utils/assets";
 import { simplex } from "../../../utils/misc";
 import raf from "../../../utils/Raf";
 
-export class Trees extends THREE.Group {
+export class Trees extends Group {
   constructor(positions = [], leafUniforms) {
     super();
     this.leafUniforms = leafUniforms;
 
     this.trunkUniforms = {
-      uColor: { value: new THREE.Color("#180c04") },
-      uColor2: { value: new THREE.Color("#f8c270") },
+      uColor: { value: new Color("#180c04") },
+      uColor2: { value: new Color("#f8c270") },
     };
 
     const sceneFolder = guiFolders.get("scene");
@@ -32,7 +40,7 @@ export class Trees extends THREE.Group {
     leafFolder.addColor(this.leafUniforms.uColor, "value").name("Color1");
     leafFolder.addColor(this.leafUniforms.uColor2, "value").name("Color2");
 
-    this.material = new THREE.MeshToonMaterial();
+    this.material = new MeshToonMaterial();
     this.material.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.trunkUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -52,8 +60,8 @@ export class Trees extends THREE.Group {
         beginVertexShader
       );
     };
-    this.materialLeaf = new THREE.MeshToonMaterial({
-      side: THREE.DoubleSide,
+    this.materialLeaf = new MeshToonMaterial({
+      side: DoubleSide,
     });
     this.materialLeaf.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...this.leafUniforms };
@@ -78,13 +86,13 @@ export class Trees extends THREE.Group {
     let noise2D;
 
     const instanceNumber = 500;
-    const instance = new THREE.Object3D();
+    const instance = new Object3D();
 
-    this.geometry = new THREE.PlaneGeometry(0.35, 0.35, 1, 1);
+    this.geometry = new PlaneGeometry(0.35, 0.35, 1, 1);
 
     const leafColors = [new Color("#eeff99"), new Color("#ccff99"), new Color("#eeffaa")];
 
-    this.leavesPattern = new THREE.InstancedMesh(
+    this.leavesPattern = new InstancedMesh(
       this.geometry,
       this.materialLeaf,
       instanceNumber
@@ -145,7 +153,7 @@ export class Trees extends THREE.Group {
       );
     }
 
-    const leaves = new THREE.Group();
+    const leaves = new Group();
     leaves.add(this.leavesPattern);
 
     leaves.scale.set(8, 8, 8);
@@ -179,11 +187,11 @@ export class Trees extends THREE.Group {
     const trunk2 = modelsMap.get("trees")[1].clone();
     trunk2.children[0].material = this.material;
 
-    const tree1 = new THREE.Group();
+    const tree1 = new Group();
     tree1.add(trunk1, leaves, leaves2, leaves3, leaves4, leaves5);
     tree1.matrixAutoUpdate = false;
 
-    const tree2 = new THREE.Group();
+    const tree2 = new Group();
     tree2.add(trunk2, leaves6, leaves7, leaves8, leaves9, leaves10, leaves11);
     tree2.matrixAutoUpdate = false;
 
