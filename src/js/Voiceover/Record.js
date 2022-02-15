@@ -5,19 +5,21 @@ export class Record {
   static domEl = document.querySelector(".subtitles p");
   /**
    *
-   * @param {String} src
+   * @param {AudioBuffer} buffer
    * @param {Number} chapter
    * @param {Array} subtitles
    */
-  constructor(src, chapter, recordIndex, subtitles) {
-    this.src = src;
+  constructor(buffer, chapter, recordIndex, subtitles) {
+    this.buffer = buffer;
     this.chapter = chapter;
     this.recordIndex = recordIndex;
     this.subtitles = subtitles;
     this.currentSubtitleIndex = 0;
 
+    this.context = null;
     this.duration = null;
-    this.audio = null;
+    this.source = null;
+    this.amp = null;
 
     this.isAnimComplete = true;
     this.isHidden = true;
@@ -47,13 +49,24 @@ export class Record {
       .pause();
   }
 
-  init() {
-    this.audio = new Audio(this.src);
+  /**
+   *
+   * @param {AudioContext} context
+   * @returns
+   */
+  init(context) {
+    this.context = context;
+    this.source = context.createBufferSource();
+    this.amp = context.createGain();
+
+    this.source.buffer = this.buffer;
+    this.source.connect(this.amp);
+    this.amp.connect(context.destination);
     return this;
   }
 
   play() {
-    this.audio.play();
+    this.source.start();
     raf.subscribe("subtitles", this.onProgress.bind(this));
     this.showSubtitle();
   }
@@ -75,7 +88,7 @@ export class Record {
     if (
       this.isHidden === false &&
       this.isAnimComplete === true &&
-      this.audio.currentTime >=
+      this.context.currentTime >=
         this.previousDurations + this.subtitles[this.currentSubtitleIndex].duration - 0.2
     ) {
       this.previousDurations += this.subtitles[this.currentSubtitleIndex].duration;

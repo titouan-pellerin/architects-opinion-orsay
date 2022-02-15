@@ -96,6 +96,9 @@ export class Environment {
 
     this.debugObject = {
       start: () => {
+        const BaseAudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioContext = new BaseAudioContext();
+        voiceOver.init(audioContext);
         cameraAnimation.goToCheckpoint();
       },
     };

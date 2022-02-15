@@ -10,6 +10,8 @@ export class Voiceover {
     this.chapterIndex = 0;
     this.recordIndex = 0;
 
+    this.context = null;
+
     for (let i = 0; i < records.length; i++) {
       const currentChapter = [];
       for (let j = 0; j < records[i].length; j++) {
@@ -17,9 +19,13 @@ export class Voiceover {
       }
       this.recordsByChapter.push(currentChapter);
     }
-    this.recordsByChapter[0][0].init();
 
     // this.playChapter(0);
+  }
+
+  init(context) {
+    this.context = context;
+    this.recordsByChapter[0][0].init(context);
   }
 
   playChapter(index = this.chapterIndex) {
@@ -30,16 +36,16 @@ export class Voiceover {
   }
 
   playRecord(index = this.recordIndex) {
-    if (this.currentRecord && this.currentRecord.audio) this.currentRecord.audio.pause();
+    if (this.currentRecord && this.currentRecord.source) this.currentRecord.source.stop();
     const nextRecord = this.currentChapter[index + 1]
-      ? this.currentChapter[index + 1].init()
+      ? this.currentChapter[index + 1].init(this.context)
       : null;
     this.currentRecord = this.currentChapter[index];
-    if (!this.currentRecord.audio) this.currentRecord.init();
+    if (!this.currentRecord.source) this.currentRecord.init(this.context);
     this.currentRecord.play();
     if (nextRecord) {
       this.recordIndex++;
-      this.currentRecord.audio.onended = () => {
+      this.currentRecord.source.onended = () => {
         this.playRecord(this.recordIndex);
       };
     } else this.recordIndex = 0;

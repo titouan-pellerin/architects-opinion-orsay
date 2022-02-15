@@ -159,8 +159,6 @@ export class GroundElements {
 
             if (i >= grassInstanceNumber) {
               instance.rotation.y = Math.random() * Math.PI * 2;
-              const randomScale = MathUtils.randFloat(1, 2);
-              instance.scale.set(randomScale, randomScale, randomScale);
             }
 
             posY = instance.position.y;
@@ -169,7 +167,12 @@ export class GroundElements {
 
         instance.position.y =
           posY * (1 - red / (150 + random)) + (-2.75 * red) / (150 + random);
-        instance.scale.y = 1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
+        if (i >= grassInstanceNumber) {
+          const randomScale = MathUtils.randFloat(1, 2);
+          instance.scale.set(randomScale, randomScale, randomScale);
+        } else
+          instance.scale.y =
+            1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
 
         instance.updateMatrix();
 
