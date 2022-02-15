@@ -83,7 +83,6 @@ export class Record {
   }
 
   onProgress() {
-    console.log(this.audio.context.currentTime - this.startTime);
     if (
       this.isHidden === false &&
       this.isAnimComplete === true &&

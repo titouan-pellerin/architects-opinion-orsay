@@ -281,6 +281,4 @@ records.push(
   buffersChapter5
 );
 
-console.log(records);
-
 export { texturesMap, modelsMap, records };

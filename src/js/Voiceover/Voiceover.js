@@ -46,7 +46,6 @@ export class Voiceover {
     if (!this.currentRecord.audio) this.currentRecord.init(this.audioListener);
     this.currentRecord.play();
     this.currentRecord.audio.source.onended = () => {
-      console.log("onended");
       this.currentRecord.audio.isPlaying = false;
       if (nextRecord) {
         this.recordIndex++;
