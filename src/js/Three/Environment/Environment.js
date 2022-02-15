@@ -89,11 +89,9 @@ export class Environment {
     );
 
     raycasting.start([
-      ...this.artworks,
       this.grounds.ground1.ground,
       this.grounds.ground2.ground,
       this.grounds.ground3.ground,
-      // ...this.grounds.ground2.trees.children,
     ]);
 
     this.debugObject = {
@@ -101,7 +99,7 @@ export class Environment {
         const audioListener = new AudioListener();
         mainScene.camera.add(audioListener);
         voiceOver.init(audioListener);
-        cameraAnimation.goToCheckpoint();
+        cameraAnimation.goToCheckpoint(null, raycasting);
       },
     };
 

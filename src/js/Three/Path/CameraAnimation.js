@@ -5,6 +5,7 @@ import { guiFolders } from "../../utils/Debug";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
+import { Raycasting } from "../utils/Raycasting";
 import { Checkpoint } from "./Checkpoint";
 
 export class CameraAnimation {
@@ -51,15 +52,21 @@ export class CameraAnimation {
       });
   }
 
-  goToCheckpoint(index) {
-    // this.raycasting.stop();
+  /**
+   *
+   * @param {Number} index
+   * @param {Raycasting} raycasting
+   */
+  goToCheckpoint(index, raycasting) {
+    raycasting.removeArtworks();
+
     if (!index) index = this.checkpointsIndex;
     if (index <= 4) {
       this.voiceOver.playChapter(index);
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
-        // duration: this.checkpoints[index].duration,
-        duration: 1,
+        duration: this.checkpoints[index].duration,
+        // duration: 1,
         value: this.checkpoints[index].tick,
         ease: CustomEase.create(
           "custom",
@@ -82,7 +89,7 @@ export class CameraAnimation {
           mainScene.cameraContainer.rotateZ(Math.PI);
         },
         onComplete: () => {
-          // this.raycasting.start(this.checkpoints[index].artworks);
+          raycasting.updateArtworks(this.checkpoints[index].artworks);
           this.checkpointsIndex++;
         },
       });

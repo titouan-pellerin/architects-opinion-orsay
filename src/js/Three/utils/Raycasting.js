@@ -9,6 +9,7 @@ export class Raycasting {
     this.cameraAnimation = cameraAnimation;
     this.raycaster = new Raycaster();
     this.objects = [];
+    this.artworks = [];
     this.currentIntersect = null;
     this.onClickHandler = this.onClick.bind(this);
 
@@ -37,9 +38,20 @@ export class Raycasting {
     }
   }
 
+  updateArtworks(newArtworks = []) {
+    this.artworks = newArtworks;
+  }
+
+  removeArtworks() {
+    this.artworks = [];
+  }
+
   update() {
     this.raycaster.setFromCamera(mouse.normalizedMouseCoords, mainScene.camera);
-    const intersects = this.raycaster.intersectObjects(this.objects, true);
+    const intersects = this.raycaster.intersectObjects(
+      [...this.objects, ...this.artworks],
+      true
+    );
     if (intersects.length) {
       if (intersects[0].object.parent instanceof Artwork) {
         document.body.style.cursor = "pointer";
