@@ -108,8 +108,8 @@ export class Grounds extends Group {
       rocks1,
       trees1,
       leaf.object.mesh,
-      dust.object.mesh,
-      butterfly.object.mesh
+      dust.object.mesh
+      // butterfly.object.mesh
     );
 
     // Next Ground
