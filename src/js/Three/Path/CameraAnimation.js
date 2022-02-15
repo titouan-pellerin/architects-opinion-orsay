@@ -2,6 +2,7 @@
 import gsap from "gsap";
 import { Line, Vector3 } from "three";
 import { guiFolders } from "../../utils/Debug";
+import { mouse } from "../../utils/Mouse";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
@@ -59,6 +60,7 @@ export class CameraAnimation {
    */
   goToCheckpoint(index, raycasting) {
     raycasting.removeArtworks();
+    mouse.range.x = 0.2;
 
     if (!index) index = this.checkpointsIndex;
     if (index <= 4) {
@@ -91,6 +93,7 @@ export class CameraAnimation {
         onComplete: () => {
           raycasting.updateArtworks(this.checkpoints[index].artworks);
           this.checkpointsIndex++;
+          mouse.range.x = 0.4;
         },
       });
     }

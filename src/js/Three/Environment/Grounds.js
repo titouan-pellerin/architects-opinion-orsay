@@ -242,6 +242,7 @@ export class Grounds extends Group {
       this.currentIndex < this.groundAmount
     ) {
       this.switchGrounds();
+      console.log("switch");
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
 

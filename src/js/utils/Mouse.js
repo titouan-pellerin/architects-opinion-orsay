@@ -1,11 +1,11 @@
-import { Vector2 } from "three";
+import { MathUtils, Vector2 } from "three";
 import { mainScene } from "../Three/MainScene";
 import raf from "./Raf";
 
 class Mouse {
   constructor() {
-    this.mouseCoords = new Vector2(0, 0);
-    this.normalizedMouseCoords = new Vector2(0, 0);
+    this.mouseCoords = new Vector2();
+    this.normalizedMouseCoords = new Vector2();
     this.range = new Vector2(0.2, 0.1);
     this.mouseMoveHandler = this.mouseMove.bind(this);
     this.isOnMouseMove = true;
@@ -32,11 +32,23 @@ class Mouse {
     target.x = -this.normalizedMouseCoords.x * this.range.x;
     target.y = this.normalizedMouseCoords.y * this.range.y;
 
-    const xRotateOffset = 0.015 * (target.x - mainScene.camera.rotation.y);
-    const yRotateOffset = 0.015 * (target.y - mainScene.camera.rotation.x);
+    const xRotateOffset = target.x - mainScene.camera.rotation.y;
+    const yRotateOffset = target.y - mainScene.camera.rotation.x;
 
-    mainScene.camera.rotation.y += xRotateOffset;
-    mainScene.camera.rotation.x += yRotateOffset;
+    mainScene.camera.rotation.y = MathUtils.damp(
+      mainScene.camera.rotation.y,
+      mainScene.camera.rotation.y + xRotateOffset,
+      2,
+      raf.deltaTime
+    );
+    mainScene.camera.rotation.x = MathUtils.damp(
+      mainScene.camera.rotation.x,
+      mainScene.camera.rotation.x + yRotateOffset,
+      2,
+      raf.deltaTime
+    );
+    // mainScene.camera.rotation.y += xRotateOffset;
+    // mainScene.camera.rotation.x += yRotateOffset;
   }
 }
 
