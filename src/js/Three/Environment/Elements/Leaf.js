@@ -1,10 +1,7 @@
-import fragment from "@glsl/leaf/fragment.glsl";
-import vertex from "@glsl/leaf/vertex.glsl";
 import commonFragmentShader from "@glsl/leaf/commonFragment.glsl";
 import commonVertexShader from "@glsl/leaf/commonVertex.glsl";
 import outputFragmentShader from "@glsl/leaf/outputFragment.glsl";
 import projectVertexShader from "@glsl/leaf/projectVertex.glsl";
-import { MeshToonMaterial } from "three";
 import {
   Color,
   DoubleSide,
@@ -12,14 +9,10 @@ import {
   InstancedBufferGeometry,
   MathUtils,
   Mesh,
+  MeshToonMaterial,
   PlaneBufferGeometry,
-  ShaderMaterial,
-  Vector3,
 } from "three";
 import raf from "../../../utils/Raf";
-import { MeshNormalMaterial } from "three";
-import { MultiplyBlending } from "three";
-import { AdditiveBlending } from "three";
 
 const tCol = new Color();
 
