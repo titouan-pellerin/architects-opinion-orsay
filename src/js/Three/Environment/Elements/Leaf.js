@@ -61,7 +61,7 @@ export class Leaf {
   setGeometry() {
     const blueprintParticle = new PlaneBufferGeometry();
     // blueprintParticle.scale(0.1, 0.1, 0.1);
-    blueprintParticle.scale(0.125, 0.125, 0.125);
+    blueprintParticle.scale(0.15, 0.15, 0.15);
 
     this.object.geometry = new InstancedBufferGeometry();
 

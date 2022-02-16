@@ -24,6 +24,7 @@ texturesMap.set("noiseTexture", [noise]);
 
 const butterflyPattern = textureLoader.load("/assets/butterfly/butterfly.png");
 texturesMap.set("butterflyPattern", [butterflyPattern]);
+butterflyPattern.encoding = sRGBEncoding;
 
 const artwork1 = textureLoader.load("/assets/artworks/la-main-emile-galle.jpeg");
 artwork1.encoding = sRGBEncoding;
