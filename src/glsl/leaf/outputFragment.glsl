@@ -43,6 +43,6 @@ vec4 render = (shape + lines * (1.0 - noiseRender)) * vec4(vec3(fade), 1.0);
 
 gl_FragColor = vec4(outgoingLight * render.rgb, diffuseColor.a * render.a);
 
-if(render.a < 1.0) {
+if(gl_FragColor.a < 1.0) {
 discard;
 }

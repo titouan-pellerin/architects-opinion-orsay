@@ -22,9 +22,8 @@ texturesMap.set("curveTextures", [
 const noise = textureLoader.load("/assets/noise.jpg");
 texturesMap.set("noiseTexture", [noise]);
 
-const mist = textureLoader.load("/assets/mist.png");
-mist.encoding = sRGBEncoding;
-texturesMap.set("mistTexture", [mist]);
+const butterflyPattern = textureLoader.load("/assets/butterfly/butterfly.png");
+texturesMap.set("butterflyPattern", [butterflyPattern]);
 
 const artwork1 = textureLoader.load("/assets/artworks/la-main-emile-galle.jpeg");
 artwork1.encoding = sRGBEncoding;

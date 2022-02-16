@@ -1,7 +1,7 @@
-import commonFragmentShader from "@glsl/butterfly/commonFragment.glsl";
-import commonVertexShader from "@glsl/butterfly/commonVertex.glsl";
-import outputFragmentShader from "@glsl/butterfly/outputFragment.glsl";
-import projectVertexShader from "@glsl/butterfly/projectVertex.glsl";
+import commonFragmentShader from "@glsl/leaf/commonFragment.glsl";
+import commonVertexShader from "@glsl/leaf/commonVertex.glsl";
+import outputFragmentShader from "@glsl/leaf/outputFragment.glsl";
+import projectVertexShader from "@glsl/leaf/projectVertex.glsl";
 import { MeshToonMaterial } from "three";
 import {
   Color,
@@ -48,7 +48,7 @@ export class Leaf {
     this.speedFactor = new Float32Array(particlesCount * 1);
 
     for (let i = 0; i < particlesCount; i++) {
-      this.positions[i * 3 + 0] = MathUtils.randFloatSpread(35);
+      this.positions[i * 3 + 0] = MathUtils.randFloatSpread(50);
       this.positions[i * 3 + 1] = -5;
       this.positions[i * 3 + 2] = MathUtils.randFloatSpread(50);
 
@@ -89,7 +89,7 @@ export class Leaf {
   }
 
   setMaterial() {
-    this.uniforms = {
+    this.leavesUniforms = {
       uTime: { value: 0 },
       uColor: { value: tCol.set(params.color) },
       uColor2: { value: tCol.set(params.color2) },
@@ -101,7 +101,7 @@ export class Leaf {
       // blending: AdditiveBlending,
     });
     this.object.material.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.uniforms };
+      shader.uniforms = { ...shader.uniforms, ...this.leavesUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader
@@ -127,6 +127,6 @@ export class Leaf {
   }
 
   update() {
-    this.uniforms.uTime.value = raf.elapsedTime;
+    this.leavesUniforms.uTime.value = raf.elapsedTime;
   }
 }

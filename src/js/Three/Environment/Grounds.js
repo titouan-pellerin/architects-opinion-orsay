@@ -108,8 +108,9 @@ export class Grounds extends Group {
       rocks1,
       trees1,
       leaf.object.mesh,
-      dust.object.mesh
-      // butterfly.object.mesh
+      dust.object.mesh,
+      butterfly.object.mesh,
+      butterfly.object.mirrorMesh
     );
 
     // Next Ground
@@ -146,8 +147,17 @@ export class Grounds extends Group {
     const leaf2 = leaf.object.mesh.clone();
     const dust2 = dust.object.mesh.clone();
     const butterfly2 = butterfly.object.mesh.clone();
+    const butterflyMirror2 = butterfly.object.mirrorMesh.clone();
 
-    this.ground3.add(woodLogs2, rocks2, trees2, leaf2, dust2, butterfly2);
+    this.ground3.add(
+      woodLogs2,
+      rocks2,
+      trees2,
+      leaf2,
+      dust2,
+      butterfly2,
+      butterflyMirror2
+    );
 
     this.add(this.ground1, this.ground2, this.ground3);
     this.add(...artworks);

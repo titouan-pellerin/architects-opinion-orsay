@@ -1,7 +1,7 @@
-import commonFragmentShader from "@glsl/leaf/commonFragment.glsl";
-import commonVertexShader from "@glsl/leaf/commonVertex.glsl";
-import outputFragmentShader from "@glsl/leaf/outputFragment.glsl";
-import projectVertexShader from "@glsl/leaf/projectVertex.glsl";
+import commonFragmentShader from "@glsl/butterfly/commonFragment.glsl";
+import commonVertexShader from "@glsl/butterfly/commonVertex.glsl";
+import outputFragmentShader from "@glsl/butterfly/outputFragment.glsl";
+import projectVertexShader from "@glsl/butterfly/projectVertex.glsl";
 import { MeshToonMaterial } from "three";
 import {
   Color,
@@ -14,6 +14,7 @@ import {
   ShaderMaterial,
   Vector3,
 } from "three";
+import { texturesMap } from "../../../utils/assets";
 import raf from "../../../utils/Raf";
 
 const tCol = new Color();
@@ -26,7 +27,7 @@ const params = {
 export class Butterfly {
   constructor() {
     this.object = {};
-    this.count = 200;
+    this.count = 50;
     this.init();
 
     raf.subscribe("butterfly", this.update.bind(this));
@@ -48,19 +49,20 @@ export class Butterfly {
     this.speedFactor = new Float32Array(particlesCount * 1);
 
     for (let i = 0; i < particlesCount; i++) {
-      this.positions[i * 3 + 0] = MathUtils.randFloatSpread(35);
-      this.positions[i * 3 + 1] = -5;
-      this.positions[i * 3 + 2] = MathUtils.randFloatSpread(50);
+      this.positions[i * 3 + 0] = MathUtils.randFloatSpread(50);
+      this.positions[i * 3 + 1] = -10;
+      this.positions[i * 3 + 2] = MathUtils.randFloat(2, 1);
 
       this.offset[i + 0] = MathUtils.randFloatSpread(75);
-      this.scale[i + 0] = MathUtils.randFloat(1, 50);
-      this.speedFactor[i + 0] = MathUtils.randFloat(1, 50);
+      this.scale[i + 0] = MathUtils.randFloat(-10, 10);
+      this.speedFactor[i + 0] = MathUtils.randFloat(10, 20);
     }
   }
 
   setGeometry() {
-    const blueprintParticle = new PlaneBufferGeometry();
-    blueprintParticle.scale(0.125, 0.125, 0.125);
+    const blueprintParticle = new PlaneBufferGeometry(1, 1, 8, 8);
+    // blueprintParticle.rotateX(Math.PI * 0.75);
+    blueprintParticle.scale(0.15, 0.15, 0.15);
 
     this.object.geometry = new InstancedBufferGeometry();
 
@@ -88,19 +90,21 @@ export class Butterfly {
   }
 
   setMaterial() {
-    this.uniforms = {
+    this.butterflyUniforms = {
       uTime: { value: 0 },
       uColor: { value: tCol.set(params.color) },
       uColor2: { value: tCol.set(params.color2) },
+      uTexture: { value: texturesMap.get("butterflyPattern")[0] },
     };
 
     this.object.material = new MeshToonMaterial({
       side: DoubleSide,
+      // wireframe: true,
       // transparent: true,
       // blending: AdditiveBlending,
     });
     this.object.material.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.uniforms };
+      shader.uniforms = { ...shader.uniforms, ...this.butterflyUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader
@@ -123,9 +127,16 @@ export class Butterfly {
   setMesh() {
     this.object.mesh = new Mesh(this.object.geometry, this.object.material);
     this.object.mesh.frustumCulled = false;
+    this.object.mesh.rotation.z = -Math.PI * 0.5;
+    this.object.mesh.rotation.x = Math.PI * 0.5;
+
+    this.object.mirrorMesh = new Mesh(this.object.geometry, this.object.material);
+    this.object.mirrorMesh.frustumCulled = false;
+    this.object.mirrorMesh.rotation.z = Math.PI * 0.5;
+    this.object.mirrorMesh.rotation.x = Math.PI * 0.5;
   }
 
   update() {
-    this.uniforms.uTime.value = raf.elapsedTime;
+    this.butterflyUniforms.uTime.value = raf.elapsedTime;
   }
 }

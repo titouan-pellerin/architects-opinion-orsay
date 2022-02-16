@@ -35,7 +35,7 @@ void main() {
   float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
   vec4 cornerColor = vec4(corner + uCornerIntensity) + vec4(uCornerColor, 1.0);
 
-  float noise = 1.0 - abs(cnoise(vUv * 10. + uTime * 0.35));
+  float noise = 1.0 - abs(cnoise(vUv * 7. + uTime * 0.25));
   // float noise = 1.0 - cnoise(vUv * 20.);
     // Part1, tint & corner
   // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
@@ -67,7 +67,7 @@ void main() {
 
     // Part2, adding some blur
   // vec4 p2 = ((color / total)) * 0.75;
-  vec4 p2 = ((color / total)) * 0.75;
+  vec4 p2 = ((color / total));
 
   vec2 texel = vec2(1. / uRes.x, 1. / uRes.y);
 
@@ -104,7 +104,7 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float G = pow(abs(noise + 1.), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
+  float G = pow(abs(noise + 0.75), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
 
     // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);
