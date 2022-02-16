@@ -39,7 +39,7 @@ void main() {
   // float noise = 1.0 - cnoise(vUv * 20.);
     // Part1, tint & corner
   // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
-  vec4 p1 = texture2D(tDiffuse, vUv) * 0.5 * cornerColor;
+  vec4 p1 = texture2D(tDiffuse, vUv) * 0.65 * cornerColor;
 
     // Blur
   vec4 color = vec4(0.0);
