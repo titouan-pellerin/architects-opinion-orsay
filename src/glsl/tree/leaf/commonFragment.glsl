@@ -2,7 +2,7 @@
 #include <common>
 
 uniform vec3 uColor;
-uniform vec3 uColor2;
+uniform vec3 uRayPos;
 varying vec2 vUv;
 varying vec3 vInstanceColor;
 

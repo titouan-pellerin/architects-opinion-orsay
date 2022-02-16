@@ -1,4 +1,11 @@
-import { MathUtils, Raycaster, Vector3 } from "three";
+import {
+  MathUtils,
+  Mesh,
+  MeshBasicMaterial,
+  Raycaster,
+  SphereGeometry,
+  Vector3,
+} from "three";
 import { mouse } from "../../utils/Mouse";
 import raf from "../../utils/Raf";
 import { Artwork } from "../Environment/Elements/Artwork";
@@ -8,19 +15,27 @@ export class Raycasting {
   constructor(cameraAnimation) {
     this.cameraAnimation = cameraAnimation;
     this.raycaster = new Raycaster();
-    this.raycaster.far = 25;
+    this.raycaster.far = 35;
     this.objects = [];
     this.artworks = [];
+    this.spheresToRaycast = [];
     this.currentIntersect = null;
     this.onClickHandler = this.onClick.bind(this);
 
-    this.rayPos = new Vector3();
+    this.groundRayPos = new Vector3();
+    this.boxTargetRayPos = new Vector3();
+
+    this.sphereTest = new Mesh(new SphereGeometry(), new MeshBasicMaterial());
+    this.sphereTest.scale.setScalar(0.5);
+    mainScene.add(this.sphereTest);
     // this.meshTest = new Mesh(new SphereGeometry(), new MeshBasicMaterial());
     // mainScene.add(this.meshTest);
   }
 
-  start(objects = []) {
+  start(objects = [], spheresToRaycast = []) {
     this.objects = objects;
+    this.spheresToRaycast = spheresToRaycast;
+    console.log(this.spheresToRaycast);
     raf.subscribe("raycasting", this.update.bind(this));
     document.addEventListener("mousedown", this.onClickHandler);
   }
@@ -50,7 +65,7 @@ export class Raycasting {
   update() {
     this.raycaster.setFromCamera(mouse.normalizedMouseCoords, mainScene.camera);
     const intersects = this.raycaster.intersectObjects(
-      [...this.objects, ...this.artworks],
+      [...this.objects, ...this.spheresToRaycast, ...this.artworks],
       true
     );
 
@@ -59,32 +74,34 @@ export class Raycasting {
         document.body.style.cursor = "pointer";
         this.currentIntersect = intersects[0].object;
       } else {
-        console.log("hi");
+        // if (intersects[0].object.geometry instanceof SphereGeometry)
+        console.log(this.groundRayPos);
+        this.sphereTest.position.copy(this.groundRayPos);
         document.body.style.cursor = "default";
         this.currentIntersect = null;
-        this.rayPos.x = MathUtils.damp(
-          this.rayPos.x,
+        this.groundRayPos.x = MathUtils.damp(
+          this.groundRayPos.x,
           intersects[0].point.x,
-          5,
+          4,
           raf.deltaTime
         );
-        this.rayPos.y = MathUtils.damp(
-          this.rayPos.y,
+        this.groundRayPos.y = MathUtils.damp(
+          this.groundRayPos.y,
           intersects[0].point.y,
-          5,
+          4,
           raf.deltaTime
         );
-        this.rayPos.z = MathUtils.damp(
-          this.rayPos.z,
+        this.groundRayPos.z = MathUtils.damp(
+          this.groundRayPos.z,
           intersects[0].point.z,
-          5,
+          4,
           raf.deltaTime
         );
-        // this.rayPos.x = intersects[0].point.x;
-        // this.rayPos.y = intersects[0].point.y;
-        // this.rayPos.z = intersects[0].point.z;
+        // this.groundRayPos.x = intersects[0].point.x;
+        // this.groundRayPos.y = intersects[0].point.y;
+        // this.groundRayPos.z = intersects[0].point.z;
       }
-      // console.log(this.rayPos);
+      // console.log(this.groundRayPos);
       // console.log(intersects[0].point);
       // this.meshTest.position.set(
       //   intersects[0].point.x,

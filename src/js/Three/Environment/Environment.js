@@ -88,11 +88,15 @@ export class Environment {
       raycasting
     );
 
-    raycasting.start([
-      this.grounds.ground1.ground,
-      this.grounds.ground2.ground,
-      this.grounds.ground3.ground,
-    ]);
+    raycasting.start(
+      [
+        this.grounds.ground1.ground,
+        this.grounds.ground2.ground,
+        this.grounds.ground3.ground,
+      ],
+      [...this.grounds.ground2.trees.spheresToRaycast],
+      [...this.grounds.ground3.trees.spheresToRaycast]
+    );
 
     this.debugObject = {
       start: () => {

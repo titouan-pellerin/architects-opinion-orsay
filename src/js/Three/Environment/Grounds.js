@@ -1,4 +1,4 @@
-import { Color, Group, Line, Vector2 } from "three";
+import { Color, Group, Line, Vector2, Vector3 } from "three";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
@@ -55,9 +55,9 @@ export class Grounds extends Group {
     this.leafUniforms = {
       uTime: { value: 0 },
       uColor: { value: new Color("#d1e997") },
-      uColor2: { value: new Color("#4a9e36") },
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
+      uRayPos: { value: new Vector3() },
     };
 
     // Previous Ground
@@ -248,10 +248,16 @@ export class Grounds extends Group {
 
     // this.ground1.worldToLocal(this.raycasting.rayPos);
     // console.log(this.raycasting.rayPos);
-    this.grassUniforms.uRayPos.value.x = this.raycasting.rayPos.x;
-    this.grassUniforms.uRayPos.value.y = this.raycasting.rayPos.z;
+    this.grassUniforms.uRayPos.value.x = this.raycasting.groundRayPos.x;
+    this.grassUniforms.uRayPos.value.y = this.raycasting.groundRayPos.z;
 
     this.flowersUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;
+
+    this.leafUniforms.uTime.value = raf.elapsedTime;
+
+    this.leafUniforms.uRayPos.value.x = this.raycasting.groundRayPos.x;
+    this.leafUniforms.uRayPos.value.y = this.raycasting.groundRayPos.y;
+    this.leafUniforms.uRayPos.value.z = this.raycasting.groundRayPos.z;
   }
 }
