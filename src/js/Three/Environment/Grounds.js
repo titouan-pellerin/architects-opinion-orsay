@@ -44,6 +44,7 @@ export class Grounds extends Group {
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
       uTexture: { value: texturesMap.get("flowerPattern")[0] },
+      uRayPos: { value: new Vector2() },
     };
 
     this.riverUniforms = {
@@ -250,6 +251,9 @@ export class Grounds extends Group {
     // console.log(this.raycasting.rayPos);
     this.grassUniforms.uRayPos.value.x = this.raycasting.groundRayPos.x;
     this.grassUniforms.uRayPos.value.y = this.raycasting.groundRayPos.z;
+
+    this.flowersUniforms.uRayPos.value.x = this.raycasting.groundRayPos.x;
+    this.flowersUniforms.uRayPos.value.y = this.raycasting.groundRayPos.z;
 
     this.flowersUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;

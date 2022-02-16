@@ -1,11 +1,4 @@
-import {
-  MathUtils,
-  Mesh,
-  MeshBasicMaterial,
-  Raycaster,
-  SphereGeometry,
-  Vector3,
-} from "three";
+import { MathUtils, Raycaster, Vector3 } from "three";
 import { mouse } from "../../utils/Mouse";
 import raf from "../../utils/Raf";
 import { Artwork } from "../Environment/Elements/Artwork";
@@ -25,9 +18,9 @@ export class Raycasting {
     this.groundRayPos = new Vector3();
     this.boxTargetRayPos = new Vector3();
 
-    this.sphereTest = new Mesh(new SphereGeometry(), new MeshBasicMaterial());
-    this.sphereTest.scale.setScalar(0.5);
-    mainScene.add(this.sphereTest);
+    // this.sphereTest = new Mesh(new SphereGeometry(), new MeshBasicMaterial());
+    // this.sphereTest.scale.setScalar(0.5);
+    // mainScene.add(this.sphereTest);
     // this.meshTest = new Mesh(new SphereGeometry(), new MeshBasicMaterial());
     // mainScene.add(this.meshTest);
   }
@@ -75,26 +68,26 @@ export class Raycasting {
         this.currentIntersect = intersects[0].object;
       } else {
         // if (intersects[0].object.geometry instanceof SphereGeometry)
-        console.log(this.groundRayPos);
-        this.sphereTest.position.copy(this.groundRayPos);
+        // console.log(this.groundRayPos);
+        // this.sphereTest.position.copy(this.groundRayPos);
         document.body.style.cursor = "default";
         this.currentIntersect = null;
         this.groundRayPos.x = MathUtils.damp(
           this.groundRayPos.x,
           intersects[0].point.x,
-          4,
+          2.5,
           raf.deltaTime
         );
         this.groundRayPos.y = MathUtils.damp(
           this.groundRayPos.y,
           intersects[0].point.y,
-          4,
+          2.5,
           raf.deltaTime
         );
         this.groundRayPos.z = MathUtils.damp(
           this.groundRayPos.z,
           intersects[0].point.z,
-          4,
+          2.5,
           raf.deltaTime
         );
         // this.groundRayPos.x = intersects[0].point.x;
