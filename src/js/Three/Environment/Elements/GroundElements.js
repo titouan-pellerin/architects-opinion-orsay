@@ -72,14 +72,14 @@ export class GroundElements {
       );
     };
 
-    const grassInstanceNumber = 60000;
+    const grassInstanceNumber = 80000;
     const flowerInstanceNumber = 200;
 
     const instance = new Object3D();
 
-    const grassGeometry = new PlaneGeometry(0.01, 1, 1, 1);
+    const grassGeometry = new PlaneGeometry(0.01, 0.5, 1, 1);
     const flowerGeometry = modelsMap.get("flower")[0].children[0].geometry;
-    flowerGeometry.scale(0.03, 0.03, 0.03);
+    flowerGeometry.scale(0.023, 0.023, 0.023);
 
     this.instancedGrassMesh = new InstancedMesh(
       grassGeometry,
@@ -109,7 +109,7 @@ export class GroundElements {
       instanceNormal.y *= -envScale;
       instanceNormal.z *= -envScale;
 
-      instance.position.set(instancePos.x, instancePos.z - 2.55, instancePos.y);
+      instance.position.set(instancePos.x, instancePos.z - 2.78, instancePos.y);
       instance.lookAt(instanceNormal);
 
       if (i >= grassInstanceNumber) instance.rotation.y = Math.random() * Math.PI * 2;
@@ -154,7 +154,7 @@ export class GroundElements {
             instanceNormal.y *= -envScale;
             instanceNormal.z *= -envScale;
 
-            instance.position.set(instancePos.x, instancePos.z - 2.55, instancePos.y);
+            instance.position.set(instancePos.x, instancePos.z - 2.78, instancePos.y);
             instance.lookAt(instanceNormal);
 
             if (i >= grassInstanceNumber)
@@ -165,7 +165,7 @@ export class GroundElements {
         } while (alpha === 0 || red > 150 + random || green > 0);
 
         instance.position.y =
-          posY * (1 - red / (150 + random)) + (-2.75 * red) / (150 + random);
+          posY * (1 - red / (150 + random)) + (-2.78 * red) / (150 + random);
         instance.scale.y = 1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
 
         instance.updateMatrix();

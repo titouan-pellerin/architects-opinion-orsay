@@ -34,7 +34,7 @@ export class Grounds extends Group {
       uTime: { value: 0 },
       uColor: { value: new Color("#84b15a") },
       uColor2: { value: new Color("#236760") },
-      uDisplaceIntensity: { value: 0.25 },
+      uDisplaceIntensity: { value: 0.185 },
       uSpeed: { value: 1.2 },
     };
 

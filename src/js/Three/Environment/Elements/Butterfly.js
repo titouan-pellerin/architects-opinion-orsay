@@ -60,7 +60,7 @@ export class Butterfly {
   }
 
   setGeometry() {
-    const blueprintParticle = new PlaneBufferGeometry(1, 1, 8, 8);
+    const blueprintParticle = new PlaneBufferGeometry(1, 1, 2, 1);
     // blueprintParticle.rotateX(Math.PI * 0.75);
     blueprintParticle.scale(0.15, 0.15, 0.15);
 
