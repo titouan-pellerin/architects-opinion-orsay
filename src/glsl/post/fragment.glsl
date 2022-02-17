@@ -1,5 +1,3 @@
-#include ../utils/noise2d;
-
 #define PI 3.1415926535897932384626433832795
 
 uniform sampler2D tDiffuse;
@@ -35,8 +33,7 @@ void main() {
   float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
   vec4 cornerColor = vec4(corner + uCornerIntensity) + vec4(uCornerColor, 1.0);
 
-  float noise = 1.0 - abs(cnoise(vUv * 7. + uTime * 0.25));
-  // float noise = 1.0 - cnoise(vUv * 20.);
+  // float fakeligthing = 1.0 - cfakeligthing(vUv * 20.);
     // Part1, tint & corner
   // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
   vec4 p1 = texture2D(tDiffuse, vUv) * 0.5 * cornerColor;
@@ -104,10 +101,12 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float G = pow(abs(noise + 2.), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
+  float fakeligthing = 1.0 - abs(sin((20. * vUv.x * vUv.y) + uTime * .5));
+  float G = pow(abs(fakeligthing + 3.), sqrt((valueGx * valueGx * fakeligthing) + (valueGy * valueGy * fakeligthing)));
 
     // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);
   gl_FragColor = p2;
+  gl_FragColor = vec4(fakeligthing);
   gl_FragColor = (p1 + p2) * vec4(G);
 }
