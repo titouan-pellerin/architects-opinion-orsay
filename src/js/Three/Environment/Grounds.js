@@ -1,13 +1,13 @@
-import { Color, Group, Line } from "three";
+import { Color, Group, Line, Vector3 } from "three";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
 import { Checkpoint } from "../Path/Checkpoint";
+import { Butterfly } from "./Elements/Butterfly";
 import { Dust } from "./Elements/Dust";
 import { Leaf } from "./Elements/Leaf";
-import { Butterfly } from "./Elements/Butterfly";
 import { Rocks } from "./Elements/Rocks";
 import { Trees } from "./Elements/Trees";
 import { WoodLogs } from "./Elements/WoodLogs";
@@ -21,12 +21,13 @@ export class Grounds extends Group {
    * @param {Line} forestPathLine
    * @param {Checkpoint[]} checkpoints
    */
-  constructor(groundAmount, parameters = {}, forestPathLine, artworks) {
+  constructor(groundAmount, parameters = {}, forestPathLine, artworks, raycasting) {
     super();
     this.forestPathLine = forestPathLine;
     this.currentIndex = 1;
     this.groundAmount = groundAmount - 1;
     this.parameters = parameters;
+    this.raycasting = raycasting;
 
     this.textures = texturesMap.get("curveTextures");
 
@@ -36,6 +37,8 @@ export class Grounds extends Group {
       uColor2: { value: new Color("#236760") },
       uDisplaceIntensity: { value: 0.185 },
       uSpeed: { value: 1.2 },
+      uRayPos: { value: new Vector3() },
+      uFlipped: { value: 1 },
     };
 
     this.flowersUniforms = {
@@ -43,6 +46,7 @@ export class Grounds extends Group {
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
       uTexture: { value: texturesMap.get("flowerPattern")[0] },
+      uRayPos: { value: new Vector3() },
     };
 
     this.riverUniforms = {
@@ -54,9 +58,9 @@ export class Grounds extends Group {
     this.leafUniforms = {
       uTime: { value: 0 },
       uColor: { value: new Color("#d1e997") },
-      uColor2: { value: new Color("#4a9e36") },
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
+      uRayPos: { value: new Vector3() },
     };
 
     // Previous Ground
@@ -71,6 +75,8 @@ export class Grounds extends Group {
 
     this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
+    this.ground1.ground.updateMatrix();
+    this.ground1.mask.updateMatrix();
 
     // Current Ground
     this.ground2 = new Ground(
@@ -244,7 +250,6 @@ export class Grounds extends Group {
     );
 
     currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-
     currentGround1.ground.updateMatrix();
     currentGround1.mask.updateMatrix();
 
@@ -261,9 +266,18 @@ export class Grounds extends Group {
       this.currentIndex < this.groundAmount
     ) {
       this.switchGrounds();
+      console.log("switch");
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
+
+    this.flowersUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    this.grassUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    this.grassUniforms.uFlipped.value = this.raycasting.groundFlipped;
+    this.leafUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+
     this.flowersUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;
+
+    this.leafUniforms.uTime.value = raf.elapsedTime;
   }
 }

@@ -2,9 +2,11 @@
 import gsap from "gsap";
 import { Line, Vector3 } from "three";
 import { guiFolders } from "../../utils/Debug";
+import { mouse } from "../../utils/Mouse";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { mainScene } from "../MainScene";
+import { Raycasting } from "../utils/Raycasting";
 import { Checkpoint } from "./Checkpoint";
 
 export class CameraAnimation {
@@ -51,8 +53,15 @@ export class CameraAnimation {
       });
   }
 
-  goToCheckpoint(index) {
-    // this.raycasting.stop();
+  /**
+   *
+   * @param {Number} index
+   * @param {Raycasting} raycasting
+   */
+  goToCheckpoint(index, raycasting) {
+    raycasting.removeArtworks();
+    mouse.range.x = 0.2;
+
     if (!index) index = this.checkpointsIndex;
     if (index <= 4) {
       this.voiceOver.playChapter(index);
@@ -82,8 +91,9 @@ export class CameraAnimation {
           mainScene.cameraContainer.rotateZ(Math.PI);
         },
         onComplete: () => {
-          this.raycasting.start(this.checkpoints[index].artworks);
+          raycasting.updateArtworks(this.checkpoints[index].artworks);
           this.checkpointsIndex++;
+          mouse.range.x = 0.4;
         },
       });
     }

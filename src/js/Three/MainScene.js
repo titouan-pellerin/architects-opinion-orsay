@@ -1,5 +1,16 @@
-import * as THREE from "three";
-import { Group, Vector2, Vector3 } from "three";
+import {
+  ACESFilmicToneMapping,
+  Color,
+  DirectionalLight,
+  Fog,
+  Group,
+  PerspectiveCamera,
+  Scene,
+  sRGBEncoding,
+  Vector2,
+  Vector3,
+  WebGLRenderer,
+} from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
@@ -11,7 +22,7 @@ import { guiFolders } from "../utils/Debug";
 import { mouse } from "../utils/Mouse";
 import raf from "../utils/Raf";
 
-export class MainScene extends THREE.Scene {
+export class MainScene extends Scene {
   constructor() {
     super();
 
@@ -19,31 +30,31 @@ export class MainScene extends THREE.Scene {
     this.blurVec2 = new Vector2();
 
     const parameters = {
-      tintColor: new THREE.Color("#ffffff"),
+      tintColor: new Color("#ffffff"),
 
       // Morning
-      // skyBgColor: new THREE.Color("#bdbf36"),
-      // lightColor: new THREE.Color("#47404f"),
-      // light2Color: new THREE.Color("#c396e8"),
-      // cornerColor: new THREE.Color("#6600ff"),
+      // skyBgColor: new Color("#bdbf36"),
+      // lightColor: new Color("#47404f"),
+      // light2Color: new Color("#c396e8"),
+      // cornerColor: new Color("#6600ff"),
 
       // Morning backup for toto
-      skyBgColor: new THREE.Color("#e5aa43"),
-      cornerColor: new THREE.Color("#5a544e"),
-      lightColor: new THREE.Color("#5a544e"),
-      light2Color: new THREE.Color("#d8923d"),
+      skyBgColor: new Color("#e5aa43"),
+      cornerColor: new Color("#5a544e"),
+      lightColor: new Color("#5a544e"),
+      light2Color: new Color("#d8923d"),
 
       // Day
-      // skyBgColor: new THREE.Color("#8ea1a9"),
-      // cornerColor: new THREE.Color("#feffe1"),
-      // lightColor: new THREE.Color("#4e4313"),
-      // light2Color: new THREE.Color("#bbbd84"),
+      // skyBgColor: new Color("#8ea1a9"),
+      // cornerColor: new Color("#feffe1"),
+      // lightColor: new Color("#4e4313"),
+      // light2Color: new Color("#bbbd84"),
 
       // Night
-      // skyBgColor: new THREE.Color("#7ad5ff"),
-      // cornerColor: new THREE.Color("#11051f"),
-      // lightColor: new THREE.Color("#3e70c1"),
-      // light2Color: new THREE.Color("#d69ee5"),
+      // skyBgColor: new Color("#7ad5ff"),
+      // cornerColor: new Color("#11051f"),
+      // lightColor: new Color("#3e70c1"),
+      // light2Color: new Color("#d69ee5"),
 
       lightIntensity: 0.5,
       light2Intensity: 0.5,
@@ -55,12 +66,7 @@ export class MainScene extends THREE.Scene {
     };
 
     this.canvas = document.querySelector(".webgl");
-    this.camera = new THREE.PerspectiveCamera(
-      30,
-      this.sizes.width / this.sizes.height,
-      4,
-      35
-    );
+    this.camera = new PerspectiveCamera(30, this.sizes.width / this.sizes.height, 4, 35);
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
@@ -103,14 +109,14 @@ export class MainScene extends THREE.Scene {
         }
       });
 
-    this.renderer = new THREE.WebGLRenderer({
+    this.renderer = new WebGLRenderer({
       canvas: this.canvas,
       powerPreference: "high-performance",
       antialias: false,
     });
     this.renderer.physicallyCorrectLights = true;
-    this.renderer.outputEncoding = THREE.sRGBEncoding;
-    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.outputEncoding = sRGBEncoding;
+    this.renderer.toneMapping = ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1;
     this.renderer.stencil = false;
     this.renderer.preserveDrawingBuffer = false;
@@ -118,22 +124,22 @@ export class MainScene extends THREE.Scene {
     this.renderer.premultipliedAlpha = false;
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.background = new THREE.Color(parameters.skyBgColor);
+    this.background = new Color(parameters.skyBgColor);
 
     this.cameraContainer.position.set(0, -1, 25);
     this.add(this.cameraContainer);
 
-    const fog = new THREE.Fog(parameters.skyBgColor, 20, 35);
+    const fog = new Fog(parameters.skyBgColor, 20, 35);
     this.fog = fog;
 
-    const directionalLight = new THREE.DirectionalLight(
+    const directionalLight = new DirectionalLight(
       parameters.lightColor,
       parameters.lightIntensity
     );
     directionalLight.position.set(10, 10, -10);
     this.add(directionalLight);
 
-    const directionalLight2 = new THREE.DirectionalLight(
+    const directionalLight2 = new DirectionalLight(
       parameters.light2Color,
       parameters.light2Intensity
     );

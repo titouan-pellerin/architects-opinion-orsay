@@ -9,7 +9,7 @@ float s4 = 1.0 - smoothstep(0.5, 1.0, vUv.x);
 float ligthLeft = vPos.x - vPos.z;
 float ligthRight = -vPos.x - vPos.z;
 
-float borderWidth = .42;
+float borderWidth = .44;
 
 float left = step(borderWidth, vPos.x);
 float right = 1.0 - step(-borderWidth, vPos.x);

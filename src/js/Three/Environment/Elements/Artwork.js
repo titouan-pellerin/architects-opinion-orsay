@@ -62,8 +62,8 @@ export class Artwork extends Group {
 
     this.outerMesh = new Mesh(this.artworkGeometryOuter, this.artworkMaterialOuter);
     this.outerMesh.scale.set(
-      2.6,
-      (texture.userData.dimensions[1] * 2.6) / texture.userData.dimensions[0],
+      2.4,
+      (texture.userData.dimensions[1] * 2.4) / texture.userData.dimensions[0],
       0.65
     );
 

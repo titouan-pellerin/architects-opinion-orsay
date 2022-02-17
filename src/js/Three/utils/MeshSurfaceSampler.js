@@ -19,12 +19,12 @@ class MeshSurfaceSampler {
     let geometry = mesh.geometry;
 
     if (!geometry.isBufferGeometry || geometry.attributes.position.itemSize !== 3) {
-      throw new Error("THREE.MeshSurfaceSampler: Requires BufferGeometry triangle mesh.");
+      throw new Error("MeshSurfaceSampler: Requires BufferGeometry triangle mesh.");
     }
 
     if (geometry.index) {
       //   console.warn(
-      //     "THREE.MeshSurfaceSampler: Converting geometry to non-indexed BufferGeometry."
+      //     "MeshSurfaceSampler: Converting geometry to non-indexed BufferGeometry."
       //   );
 
       geometry = geometry.toNonIndexed();

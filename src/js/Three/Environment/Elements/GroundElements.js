@@ -43,11 +43,10 @@ export class GroundElements {
     );
 
     this.flowersColors = [
-      new Color("#ffffff"),
-      new Color("#f0000f"),
-      new Color("#00ff00"),
-      new Color("#555555"),
-      new Color("#ffff00"),
+      new Color("#bad1ef"),
+      new Color("#ffcd10"),
+      new Color("#f94f24"),
+      new Color("#eeafb7"),
     ];
     const flowerMaterial = new MeshToonMaterial({
       side: DoubleSide,
@@ -157,8 +156,9 @@ export class GroundElements {
             instance.position.set(instancePos.x, instancePos.z - 2.78, instancePos.y);
             instance.lookAt(instanceNormal);
 
-            if (i >= grassInstanceNumber)
+            if (i >= grassInstanceNumber) {
               instance.rotation.y = Math.random() * Math.PI * 2;
+            }
 
             posY = instance.position.y;
           }
@@ -166,7 +166,14 @@ export class GroundElements {
 
         instance.position.y =
           posY * (1 - red / (150 + random)) + (-2.78 * red) / (150 + random);
-        instance.scale.y = 1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
+        // posY * (1 - red / (150 + random)) + (-2.75 * red) / (150 + random);
+        // instance.scale.y = 1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
+        if (i >= grassInstanceNumber) {
+          const randomScale = MathUtils.randFloat(1, 2);
+          instance.scale.set(randomScale, randomScale, randomScale);
+        } else
+          instance.scale.y =
+            1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
 
         instance.updateMatrix();
 

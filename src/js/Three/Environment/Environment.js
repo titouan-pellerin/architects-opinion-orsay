@@ -1,8 +1,9 @@
-import { Color } from "three";
-import { texturesMap } from "../../utils/assets";
+import { Audio, AudioListener, Color } from "three";
+import { soundsMap, texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import { Voiceover } from "../../Voiceover/Voiceover";
+import { mainScene } from "../MainScene";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { Checkpoint } from "../Path/Checkpoint";
 import { ForestPathLine } from "../Path/ForestPathLine";
@@ -38,42 +39,35 @@ export class Environment {
     }
 
     const checkpoints = [];
-    const checkpoint1 = new Checkpoint(0.13, 35, this.forestPathLine.spline, [
+    const checkpoint1 = new Checkpoint(0.13, 35.3, this.forestPathLine.spline, [
       this.artworks[0],
       this.artworks[1],
       this.artworks[2],
       this.artworks[3],
     ]);
-    const checkpoint2 = new Checkpoint(0.345, 42, this.forestPathLine.spline, [
+    const checkpoint2 = new Checkpoint(0.345, 51.6, this.forestPathLine.spline, [
       this.artworks[4],
       this.artworks[5],
       this.artworks[6],
       this.artworks[7],
     ]);
-    const checkpoint3 = new Checkpoint(0.545, 18, this.forestPathLine.spline, [
+    const checkpoint3 = new Checkpoint(0.545, 20.9, this.forestPathLine.spline, [
       this.artworks[8],
       this.artworks[9],
       this.artworks[10],
       this.artworks[11],
     ]);
-    const checkpoint4 = new Checkpoint(0.745, 36, this.forestPathLine.spline, [
+    const checkpoint4 = new Checkpoint(0.745, 45.3, this.forestPathLine.spline, [
       this.artworks[11],
       this.artworks[12],
       this.artworks[13],
       this.artworks[14],
     ]);
-    const checkpoint5 = new Checkpoint(0.95, 20, this.forestPathLine.spline, [
+    const checkpoint5 = new Checkpoint(0.95, 21.3, this.forestPathLine.spline, [
       this.artworks[15],
       this.artworks[16],
     ]);
     checkpoints.push(checkpoint1, checkpoint2, checkpoint3, checkpoint4, checkpoint5);
-
-    this.grounds = new Grounds(
-      texturesMap.get("curveTextures").length,
-      this.parameters,
-      this.forestPathLine,
-      this.artworks
-    );
 
     const voiceOver = new Voiceover();
 
@@ -86,17 +80,34 @@ export class Environment {
 
     const raycasting = new Raycasting(cameraAnimation);
 
-    raycasting.start([
-      ...this.artworks,
-      // this.grounds.ground1.ground,
-      // this.grounds.ground2.ground,
-      // this.grounds.ground3.ground,
-      // ...this.grounds.ground2.trees.children,
-    ]);
+    this.grounds = new Grounds(
+      texturesMap.get("curveTextures").length,
+      this.parameters,
+      this.forestPathLine,
+      this.artworks,
+      raycasting
+    );
+
+    raycasting.start(
+      [
+        this.grounds.ground1.ground,
+        this.grounds.ground2.ground,
+        this.grounds.ground3.ground,
+      ],
+      [...this.grounds.ground2.trees.spheresToRaycast],
+      [...this.grounds.ground3.trees.spheresToRaycast]
+    );
 
     this.debugObject = {
       start: () => {
-        cameraAnimation.goToCheckpoint();
+        const audioListener = new AudioListener();
+        mainScene.camera.add(audioListener);
+        const music = new Audio(audioListener);
+        music.setBuffer(soundsMap.get("music"));
+        music.setVolume(0.09);
+        music.play();
+        voiceOver.init(audioListener);
+        cameraAnimation.goToCheckpoint(null, raycasting);
       },
     };
 
