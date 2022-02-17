@@ -3,7 +3,7 @@ import commonFragmentShader from "@glsl/wood/commonFragment.glsl";
 import commonVertexShader from "@glsl/wood/commonVertex.glsl";
 import outputFragmentShaderInner from "@glsl/wood/inner/outputFragment.glsl";
 import outputFragmentShader from "@glsl/wood/outputFragment.glsl";
-import { Color, CylinderGeometry, Group, Mesh, MeshToonMaterial } from "three";
+import { Color, CylinderGeometry, Group, MathUtils, Mesh, MeshToonMaterial } from "three";
 
 export class WoodLogs extends Group {
   constructor(positions = []) {
@@ -88,7 +88,7 @@ export class WoodLogs extends Group {
     wood3.updateMatrix();
 
     const woodGroup = new Group();
-    const randomScale = Math.random() * (1.25 - 0.85) + 0.85;
+    const randomScale = MathUtils.randFloat(0.85, 1);
     woodGroup.scale.set(randomScale, randomScale, randomScale);
 
     woodGroup.add(wood1, wood2, wood3);

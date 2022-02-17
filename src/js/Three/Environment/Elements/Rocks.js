@@ -7,6 +7,7 @@ import {
   DoubleSide,
   Group,
   InstancedMesh,
+  MathUtils,
   MeshToonMaterial,
   Object3D,
   TetrahedronGeometry,
@@ -75,7 +76,7 @@ export class Rocks extends Group {
       newRock.position.set(positions[i].x, 0, positions[i].y);
       newRock.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
 
-      const randomScale = Math.random() * (0.5 - 0.1) + 0.1;
+      const randomScale = MathUtils.randFloat(0.1, 0.3);
       newRock.scale.set(randomScale, randomScale, randomScale);
 
       newRock.updateMatrix();
