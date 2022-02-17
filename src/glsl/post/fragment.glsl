@@ -1,3 +1,5 @@
+#include ../utils/noise2d;
+
 #define PI 3.1415926535897932384626433832795
 
 uniform sampler2D tDiffuse;
@@ -24,7 +26,8 @@ vec2 rotate(vec2 uv, float rotation, vec2 mid) {
 
 void main() {
 
-  vec2 rotateTest = rotate(uBlurPos, sin(uTime) + PI * 0.5, vec2(0., 0.)); 
+  vec2 rotateTest = rotate(uBlurPos, sin(uTime) + PI * 0.5, vec2(0., 0.));
+  float noise = 1.0 - abs(cnoise(vUv * 7. + uTime * 0.25));
 
     // Tint
   vec4 TintColor = vec4(uTintColor, 1.0);
@@ -101,13 +104,10 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float fakeligthing = 1.0 - abs(sin((20. * vUv.x * vUv.y) + uTime * .35));
-  // float G = pow(abs(fakeligthing + 3.), sqrt((valueGx * valueGx * fakeligthing) + (valueGy * valueGy * fakeligthing)));
-  float G = pow(2.0, sqrt((valueGx * valueGx) + (valueGy * valueGy)));
+  float G = pow(abs(noise + 2.), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
 
     // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);
   gl_FragColor = p2;
-  gl_FragColor = vec4(fakeligthing);
   gl_FragColor = (p1 + p2) * vec4(G);
 }
