@@ -19,6 +19,7 @@ import fragmentShader from "../../glsl/post/fragment.glsl";
 import vertexShader from "../../glsl/post/vertex.glsl";
 import { texturesMap } from "../utils/assets";
 import { guiFolders } from "../utils/Debug";
+import { isSafari } from "../utils/misc";
 import { mouse } from "../utils/Mouse";
 import raf from "../utils/Raf";
 
@@ -66,7 +67,12 @@ export class MainScene extends Scene {
     };
 
     this.canvas = document.querySelector(".webgl");
-    this.camera = new PerspectiveCamera(30, this.sizes.width / this.sizes.height, 4, 35);
+    this.camera = new PerspectiveCamera(
+      30,
+      this.sizes.width / this.sizes.height,
+      isSafari() ? 2 : 1,
+      35
+    );
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
