@@ -39,31 +39,31 @@ export class Environment {
     }
 
     const checkpoints = [];
-    const checkpoint1 = new Checkpoint(0.13, 35, this.forestPathLine.spline, [
+    const checkpoint1 = new Checkpoint(0.13, 35.3, this.forestPathLine.spline, [
       this.artworks[0],
       this.artworks[1],
       this.artworks[2],
       this.artworks[3],
     ]);
-    const checkpoint2 = new Checkpoint(0.345, 42, this.forestPathLine.spline, [
+    const checkpoint2 = new Checkpoint(0.345, 51.6, this.forestPathLine.spline, [
       this.artworks[4],
       this.artworks[5],
       this.artworks[6],
       this.artworks[7],
     ]);
-    const checkpoint3 = new Checkpoint(0.545, 18, this.forestPathLine.spline, [
+    const checkpoint3 = new Checkpoint(0.545, 20.9, this.forestPathLine.spline, [
       this.artworks[8],
       this.artworks[9],
       this.artworks[10],
       this.artworks[11],
     ]);
-    const checkpoint4 = new Checkpoint(0.745, 36, this.forestPathLine.spline, [
+    const checkpoint4 = new Checkpoint(0.745, 45.3, this.forestPathLine.spline, [
       this.artworks[11],
       this.artworks[12],
       this.artworks[13],
       this.artworks[14],
     ]);
-    const checkpoint5 = new Checkpoint(0.95, 20, this.forestPathLine.spline, [
+    const checkpoint5 = new Checkpoint(0.95, 21.3, this.forestPathLine.spline, [
       this.artworks[15],
       this.artworks[16],
     ]);
