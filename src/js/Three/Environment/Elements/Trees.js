@@ -14,7 +14,6 @@ import {
   InstancedMesh,
   MathUtils,
   Mesh,
-  MeshBasicMaterial,
   MeshToonMaterial,
   Object3D,
   PlaneGeometry,
@@ -73,11 +72,28 @@ export class Trees extends Group {
 
     const leafColors = [new Color("#eeff99"), new Color("#ccff99"), new Color("#eeffaa")];
 
-    this.leavesPattern = new InstancedMesh(
-      this.geometry,
-      this.createMaterial(),
-      instanceNumber
-    );
+    const materialLeaf = new MeshToonMaterial({ side: DoubleSide });
+    materialLeaf.onBeforeCompile = (shader) => {
+      shader.uniforms = { ...shader.uniforms, ...this.leafUniforms };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        commonFragmentShaderLeaf
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        outputFragmentShaderLeaf
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        commonVertexShaderLeaf
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <project_vertex>",
+        projectVertexShaderLeaf
+      );
+    };
+
+    this.leavesPattern = new InstancedMesh(this.geometry, materialLeaf, instanceNumber);
 
     this.leavesPattern.matrixAutoUpdate = false;
     this.leavesPattern.updateMatrix();
@@ -139,13 +155,10 @@ export class Trees extends Group {
 
     leaves.scale.setScalar(8);
     leaves.position.set(-3.85, 46.53, 9.81);
-    const sphereToRaycast = new Mesh(
-      new SphereGeometry(1, 8, 4),
-      new MeshBasicMaterial({ wireframe: true })
-    );
+    const sphereToRaycast = new Mesh(new SphereGeometry(1, 8, 4));
     sphereToRaycast.scale.setScalar(15);
     sphereToRaycast.position.copy(leaves.position);
-    sphereToRaycast.visible = true;
+    sphereToRaycast.visible = false;
 
     const leaves2 = leaves.clone();
     leaves2.position.set(-3.014, 63.6, -0.32);
@@ -206,7 +219,6 @@ export class Trees extends Group {
 
     const tree1 = new Group();
     tree1.add(trunk1, leaves, leaves2, leaves3, leaves4, leaves5);
-    // tree1.add(trunk1, leaves);
     const spheresToRaycast1 = [
       sphereToRaycast,
       sphereToRaycast2,
@@ -219,7 +231,6 @@ export class Trees extends Group {
 
     const tree2 = new Group();
     tree2.add(trunk2, leaves6, leaves7, leaves8, leaves9, leaves10, leaves11);
-    // tree2.add(trunk2, leaves6);
     const spheresToRaycast2 = [
       sphereToRaycast6,
       sphereToRaycast7,
@@ -243,15 +254,8 @@ export class Trees extends Group {
       const randomScale = Math.random() * (0.2 - 0.08) + 0.08;
       newTree.scale.set(randomScale, randomScale, randomScale);
 
-      newTree.children
-        .filter((child) => child.children.length > 0)
-        .filter((child) => child.children[0] instanceof InstancedMesh)
-        .map((child) => {
-          child.children[0].material = this.createMaterial();
-          child.children[0].material.needsUpdate = true;
-          return child.children[0].material.needsUpdate;
-        });
       newTree.updateMatrix();
+      newTree.updateMatrixWorld();
       this.add(newTree);
 
       this.spheresToRaycast.push(
@@ -259,7 +263,6 @@ export class Trees extends Group {
       );
     }
   }
-
   createMaterial() {
     const materialLeaf = new MeshToonMaterial({ side: DoubleSide });
     materialLeaf.onBeforeCompile = (shader) => {
@@ -283,8 +286,4 @@ export class Trees extends Group {
     };
     return materialLeaf;
   }
-
-  // update() {
-  //   // this.group.rotation.x = raf.elapsedTime * 0.5;
-  // }
 }

@@ -15,8 +15,8 @@ export class Raycasting {
     this.currentIntersect = null;
     this.onClickHandler = this.onClick.bind(this);
 
-    this.groundRayPos = new Vector3();
-    this.boxTargetRayPos = new Vector3();
+    this.rayPos = new Vector3();
+    this.groundFlipped = 1;
 
     // this.sphereTest = new Mesh(new SphereGeometry(), new MeshBasicMaterial());
     // this.sphereTest.scale.setScalar(0.5);
@@ -28,7 +28,6 @@ export class Raycasting {
   start(objects = [], spheresToRaycast = []) {
     this.objects = objects;
     this.spheresToRaycast = spheresToRaycast;
-    console.log(this.spheresToRaycast);
     raf.subscribe("raycasting", this.update.bind(this));
     document.addEventListener("mousedown", this.onClickHandler);
   }
@@ -67,34 +66,38 @@ export class Raycasting {
         document.body.style.cursor = "pointer";
         this.currentIntersect = intersects[0].object;
       } else {
+        intersects[0].object.parent.scale.z === -1
+          ? (this.groundFlipped = -1)
+          : (this.groundFlipped = 1);
         // if (intersects[0].object.geometry instanceof SphereGeometry)
-        // console.log(this.groundRayPos);
-        // this.sphereTest.position.copy(this.groundRayPos);
+        // console.log(this.rayPos);
+        // this.sphereTest.position.copy(this.rayPos);
+
         document.body.style.cursor = "default";
         this.currentIntersect = null;
-        this.groundRayPos.x = MathUtils.damp(
-          this.groundRayPos.x,
+        this.rayPos.x = MathUtils.damp(
+          this.rayPos.x,
           intersects[0].point.x,
-          2.5,
+          4,
           raf.deltaTime
         );
-        this.groundRayPos.y = MathUtils.damp(
-          this.groundRayPos.y,
+        this.rayPos.y = MathUtils.damp(
+          this.rayPos.y,
           intersects[0].point.y,
-          2.5,
+          4,
           raf.deltaTime
         );
-        this.groundRayPos.z = MathUtils.damp(
-          this.groundRayPos.z,
+        this.rayPos.z = MathUtils.damp(
+          this.rayPos.z,
           intersects[0].point.z,
-          2.5,
+          4,
           raf.deltaTime
         );
-        // this.groundRayPos.x = intersects[0].point.x;
-        // this.groundRayPos.y = intersects[0].point.y;
-        // this.groundRayPos.z = intersects[0].point.z;
+        // this.rayPos.x = intersects[0].point.x;
+        // this.rayPos.y = intersects[0].point.y;
+        // this.rayPos.z = intersects[0].point.z;
       }
-      // console.log(this.groundRayPos);
+      // console.log(this.rayPos);
       // console.log(intersects[0].point);
       // this.meshTest.position.set(
       //   intersects[0].point.x,

@@ -1,4 +1,4 @@
-import { Color, Group, Line, Vector2, Vector3 } from "three";
+import { Color, Group, Line, Vector3 } from "three";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
@@ -36,7 +36,8 @@ export class Grounds extends Group {
       uColor2: { value: new Color("#236760") },
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
-      uRayPos: { value: new Vector2() },
+      uRayPos: { value: new Vector3() },
+      uFlipped: { value: 1 },
     };
 
     this.flowersUniforms = {
@@ -44,7 +45,7 @@ export class Grounds extends Group {
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1.2 },
       uTexture: { value: texturesMap.get("flowerPattern")[0] },
-      uRayPos: { value: new Vector2() },
+      uRayPos: { value: new Vector3() },
     };
 
     this.riverUniforms = {
@@ -73,6 +74,8 @@ export class Grounds extends Group {
 
     this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
+    this.ground1.ground.updateMatrix();
+    this.ground1.mask.updateMatrix();
 
     // Current Ground
     this.ground2 = new Ground(
@@ -103,6 +106,8 @@ export class Grounds extends Group {
 
     const leaf = new Leaf();
 
+    this.ground2.ground.updateMatrix();
+    this.ground2.mask.updateMatrix();
     this.ground2.add(woodLogs1, rocks1, trees1, leaf.object.mesh, dust.object.mesh);
 
     // Next Ground
@@ -139,6 +144,8 @@ export class Grounds extends Group {
     const leaf2 = leaf.object.mesh.clone();
     const dust2 = dust.object.mesh.clone();
 
+    this.ground3.ground.updateMatrix();
+    this.ground3.mask.updateMatrix();
     this.ground3.add(woodLogs2, rocks2, trees2, leaf2, dust2);
 
     this.add(this.ground1, this.ground2, this.ground3);
@@ -226,7 +233,6 @@ export class Grounds extends Group {
     );
 
     currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-
     currentGround1.ground.updateMatrix();
     currentGround1.mask.updateMatrix();
 
@@ -247,21 +253,14 @@ export class Grounds extends Group {
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
 
-    // this.ground1.worldToLocal(this.raycasting.rayPos);
-    // console.log(this.raycasting.rayPos);
-    this.grassUniforms.uRayPos.value.x = this.raycasting.groundRayPos.x;
-    this.grassUniforms.uRayPos.value.y = this.raycasting.groundRayPos.z;
-
-    this.flowersUniforms.uRayPos.value.x = this.raycasting.groundRayPos.x;
-    this.flowersUniforms.uRayPos.value.y = this.raycasting.groundRayPos.z;
+    this.flowersUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    this.grassUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    this.grassUniforms.uFlipped.value = this.raycasting.groundFlipped;
+    this.leafUniforms.uRayPos.value.copy(this.raycasting.rayPos);
 
     this.flowersUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;
 
     this.leafUniforms.uTime.value = raf.elapsedTime;
-
-    this.leafUniforms.uRayPos.value.x = this.raycasting.groundRayPos.x;
-    this.leafUniforms.uRayPos.value.y = this.raycasting.groundRayPos.y;
-    this.leafUniforms.uRayPos.value.z = this.raycasting.groundRayPos.z;
   }
 }
