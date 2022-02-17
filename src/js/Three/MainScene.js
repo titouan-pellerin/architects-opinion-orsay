@@ -58,7 +58,7 @@ export class MainScene extends THREE.Scene {
     this.camera = new THREE.PerspectiveCamera(
       30,
       this.sizes.width / this.sizes.height,
-      2,
+      4,
       35
     );
     this.camera.updateProjectionMatrix();

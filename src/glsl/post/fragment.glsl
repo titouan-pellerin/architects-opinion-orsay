@@ -101,8 +101,9 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float fakeligthing = 1.0 - abs(sin((20. * vUv.x * vUv.y) + uTime * .5));
-  float G = pow(abs(fakeligthing + 3.), sqrt((valueGx * valueGx * fakeligthing) + (valueGy * valueGy * fakeligthing)));
+  float fakeligthing = 1.0 - abs(sin((20. * vUv.x * vUv.y) + uTime * .35));
+  // float G = pow(abs(fakeligthing + 3.), sqrt((valueGx * valueGx * fakeligthing) + (valueGy * valueGy * fakeligthing)));
+  float G = pow(2.0, sqrt((valueGx * valueGx) + (valueGy * valueGy)));
 
     // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);
