@@ -60,19 +60,15 @@ export class MainScene extends Scene {
       lightIntensity: 0.5,
       light2Intensity: 0.5,
     };
-
+    this.aspectRatio =
+      (window.innerWidth * devicePixelRatio) / (window.innerHeight * devicePixelRatio);
     this.sizes = {
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: Math.min(window.innerWidth, (1440 / devicePixelRatio) * this.aspectRatio),
+      height: Math.min(window.innerHeight, 1440 / devicePixelRatio),
     };
 
     this.canvas = document.querySelector(".webgl");
-    this.camera = new PerspectiveCamera(
-      30,
-      this.sizes.width / this.sizes.height,
-      isSafari() ? 2 : 1,
-      35
-    );
+    this.camera = new PerspectiveCamera(30, this.aspectRatio, isSafari() ? 2 : 1, 35);
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
@@ -284,10 +280,15 @@ export class MainScene extends Scene {
   }
 
   resize() {
-    this.sizes.width = window.innerWidth;
-    this.sizes.height = window.innerHeight;
+    this.aspectRatio =
+      (window.innerWidth * devicePixelRatio) / (window.innerHeight * devicePixelRatio);
+    this.sizes.width = Math.min(
+      window.innerWidth,
+      (1440 / devicePixelRatio) * this.aspectRatio
+    );
+    this.sizes.height = Math.min(window.innerHeight, 1440 / devicePixelRatio);
 
-    this.camera.aspect = this.sizes.width / this.sizes.height;
+    this.camera.aspect = this.aspectRatio;
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(this.sizes.width, this.sizes.height);
@@ -297,8 +298,9 @@ export class MainScene extends Scene {
     this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     this.customPass.material.uniforms.uBlurPos.value = this.blurVec2.set(
-      this.sizes.width * 0.75,
-      this.sizes.height * 1
+      // this.sizes.width * 0.75,
+      this.sizes.width,
+      this.sizes.height
     );
     this.customPass.material.uniforms.uRes.value = this.resVec2.set(
       this.sizes.width,

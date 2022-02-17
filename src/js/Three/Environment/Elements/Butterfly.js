@@ -2,7 +2,6 @@ import commonFragmentShader from "@glsl/butterfly/commonFragment.glsl";
 import commonVertexShader from "@glsl/butterfly/commonVertex.glsl";
 import outputFragmentShader from "@glsl/butterfly/outputFragment.glsl";
 import projectVertexShader from "@glsl/butterfly/projectVertex.glsl";
-import { MeshToonMaterial } from "three";
 import {
   Color,
   DoubleSide,
@@ -10,9 +9,8 @@ import {
   InstancedBufferGeometry,
   MathUtils,
   Mesh,
+  MeshToonMaterial,
   PlaneBufferGeometry,
-  ShaderMaterial,
-  Vector3,
 } from "three";
 import { texturesMap } from "../../../utils/assets";
 import raf from "../../../utils/Raf";

@@ -104,7 +104,7 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float G = pow(abs(noise + 2.), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
+  float G = pow(abs(noise * 2.0 + 0.4), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
 
     // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);

@@ -123,7 +123,7 @@ export class Ground extends Group {
 
     const riverMaterial = new MeshToonMaterial({
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.75,
     });
     riverMaterial.onBeforeCompile = (shader) => {
       shader.uniforms = { ...shader.uniforms, ...riverUniforms };

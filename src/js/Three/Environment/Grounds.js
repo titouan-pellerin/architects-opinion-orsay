@@ -270,10 +270,10 @@ export class Grounds extends Group {
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
 
-    this.flowersUniforms.uRayPos.value.copy(this.raycasting.rayPos);
-    this.grassUniforms.uRayPos.value.copy(this.raycasting.rayPos);
-    this.grassUniforms.uFlipped.value = this.raycasting.groundFlipped;
-    this.leafUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    // this.flowersUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    // this.grassUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    // this.grassUniforms.uFlipped.value = this.raycasting.groundFlipped;
+    // this.leafUniforms.uRayPos.value.copy(this.raycasting.rayPos);
 
     this.flowersUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;
