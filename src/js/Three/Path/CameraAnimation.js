@@ -66,8 +66,8 @@ export class CameraAnimation {
       this.voiceOver.playChapter(index);
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
-        duration: this.checkpoints[index].duration,
-        // duration: 1,
+        // duration: this.checkpoints[index].duration,
+        duration: 1,
         value: this.checkpoints[index].tick,
         // value: 1,
         ease: CustomEase.create(
