@@ -1,9 +1,10 @@
 #include <common>
-varying vec2 vUv;
 uniform float uTime;
 uniform float uSpeed;
 uniform float uDisplaceIntensity;
 uniform vec3 uRayPos;
+
+varying vec2 vUv;
 varying vec3 vInstanceColor;
 
 float N(vec2 st) {

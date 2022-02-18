@@ -49,12 +49,7 @@ export class GroundElements {
       new Color("#eeafb7"),
     ];
 
-    this.grassColor = [
-      new Color("#bad1ef"),
-      new Color("#ffcd10"),
-      new Color("#f94f24"),
-      new Color("#eeafb7"),
-    ];
+    this.grassColor = [new Color("#84b15a"), new Color("#236760"), new Color("#236700")];
     const flowerMaterial = new MeshToonMaterial({
       side: DoubleSide,
     });

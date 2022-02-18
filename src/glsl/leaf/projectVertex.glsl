@@ -3,6 +3,7 @@
 vUv = uv;
 vRandomScale = aScale;
 vPos = position;
+vColor = aColor;
 
 vec3 pos = position;
 

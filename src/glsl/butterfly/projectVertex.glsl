@@ -1,6 +1,7 @@
 #include <project_vertex>
 
 vUv = uv;
+vColor = aColor;
 
 float time = uTime;
 float mSpeed = uTime * .1;

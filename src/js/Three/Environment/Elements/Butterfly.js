@@ -17,10 +17,7 @@ import raf from "../../../utils/Raf";
 
 const tCol = new Color();
 
-const params = {
-  color: "#d1e997",
-  color2: "#4a9e36",
-};
+const butterfliesColors = ["#0000ff", "#00ff00", "#0ffff0", "#ff0000"];
 
 export class Butterfly {
   constructor() {
@@ -42,6 +39,7 @@ export class Butterfly {
     const particlesCount = this.count;
 
     this.positions = new Float32Array(particlesCount * 3);
+    this.colors = new Float32Array(particlesCount * 3);
     this.offset = new Float32Array(particlesCount * 1);
     this.scale = new Float32Array(particlesCount * 1);
     this.speedFactor = new Float32Array(particlesCount * 1);
@@ -50,6 +48,13 @@ export class Butterfly {
       this.positions[i * 3 + 0] = MathUtils.randFloatSpread(50);
       this.positions[i * 3 + 1] = -10;
       this.positions[i * 3 + 2] = MathUtils.randFloat(2, 1);
+
+      const randomColor = tCol.set(
+        butterfliesColors[MathUtils.randInt(0, butterfliesColors.length - 1)]
+      );
+      this.colors[i * 3 + 0] = randomColor.r;
+      this.colors[i * 3 + 1] = randomColor.g;
+      this.colors[i * 3 + 2] = randomColor.b;
 
       this.offset[i + 0] = MathUtils.randFloatSpread(75);
       this.scale[i + 0] = MathUtils.randFloat(-10, 10);
@@ -74,6 +79,10 @@ export class Butterfly {
       new InstancedBufferAttribute(this.positions, 3, false)
     );
     this.object.geometry.setAttribute(
+      "aColor",
+      new InstancedBufferAttribute(this.colors, 3, false)
+    );
+    this.object.geometry.setAttribute(
       "aOffset",
       new InstancedBufferAttribute(this.offset, 1, false)
     );
@@ -90,8 +99,6 @@ export class Butterfly {
   setMaterial() {
     this.butterflyUniforms = {
       uTime: { value: 0 },
-      uColor: { value: tCol.set(params.color) },
-      uColor2: { value: tCol.set(params.color2) },
       uTexture: { value: texturesMap.get("butterflyPattern")[0] },
     };
 
