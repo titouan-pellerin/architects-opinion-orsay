@@ -11,6 +11,7 @@ const curveTexture2 = textureLoader.load("/assets/curve/texture2.png");
 const curveTexture3 = textureLoader.load("/assets/curve/texture3.png");
 const curveTexture4 = textureLoader.load("/assets/curve/texture4.png");
 const curveTexture5 = textureLoader.load("/assets/curve/texture5.png");
+const curveTexture6 = textureLoader.load("/assets/curve/texture6.png");
 
 texturesMap.set("curveTextures", [
   curveTexture1,
@@ -18,6 +19,7 @@ texturesMap.set("curveTextures", [
   curveTexture3,
   curveTexture4,
   curveTexture5,
+  curveTexture6,
 ]);
 
 const noise = textureLoader.load("/assets/noise.jpg");

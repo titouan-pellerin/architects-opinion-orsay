@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import gsap from "gsap";
-import { Line, Vector3 } from "three";
+import { Line, ShaderChunk, Vector3 } from "three";
 import { guiFolders } from "../../utils/Debug";
 import { mouse } from "../../utils/Mouse";
 import { Voiceover } from "../../Voiceover/Voiceover";
@@ -32,6 +32,8 @@ export class CameraAnimation {
     this.lookAtTween;
     this.positionTween;
 
+    console.log(ShaderChunk.fog_pars_fragment);
+
     this.tick = {
       value: 0,
     };
@@ -52,7 +54,6 @@ export class CameraAnimation {
         this.debugObject.showLine ? mainScene.add(path) : mainScene.remove(path);
       });
   }
-
   /**
    *
    * @param {Number} index
@@ -70,12 +71,14 @@ export class CameraAnimation {
         duration: this.checkpoints[index].duration,
         // duration: 1,
         value: this.checkpoints[index].tick,
+        // value: 1,
         ease: CustomEase.create(
           "custom",
           `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378
               0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
         ),
         onUpdate: () => {
+          console.log(this.tick.value);
           const nextTick = this.tick.value + 0.007;
 
           const curvePoint = this.path.spline.getPointAt(this.tick.value);

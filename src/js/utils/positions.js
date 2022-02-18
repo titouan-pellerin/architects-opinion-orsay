@@ -19,6 +19,7 @@ const curvePoints = [
   new Vector2(-8.2607, -147.1246),
   new Vector2(0.8329, -161.0774),
   new Vector2(4.6118, -192.1805),
+  new Vector2(4.7937, -230.8594),
 ];
 
 const treesPositions1 = [
