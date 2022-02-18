@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import gsap from "gsap";
-import { Line, ShaderChunk, Vector3 } from "three";
+import { Line, Vector3 } from "three";
 import { guiFolders } from "../../utils/Debug";
 import { mouse } from "../../utils/Mouse";
 import { Voiceover } from "../../Voiceover/Voiceover";
@@ -31,8 +31,6 @@ export class CameraAnimation {
 
     this.lookAtTween;
     this.positionTween;
-
-    console.log(ShaderChunk.fog_pars_fragment);
 
     this.tick = {
       value: 0,
