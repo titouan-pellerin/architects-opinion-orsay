@@ -48,6 +48,13 @@ export class GroundElements {
       new Color("#f94f24"),
       new Color("#eeafb7"),
     ];
+
+    this.grassColor = [
+      new Color("#bad1ef"),
+      new Color("#ffcd10"),
+      new Color("#f94f24"),
+      new Color("#eeafb7"),
+    ];
     const flowerMaterial = new MeshToonMaterial({
       side: DoubleSide,
     });
@@ -209,6 +216,10 @@ export class GroundElements {
     for (let i = 0; i < grassInstancedMesh.count; i++) {
       const newInstanceMatrix = this.curveTexturesMatrices.get(groundIndex)[i];
       grassInstancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+      grassInstancedMesh.setColorAt(
+        i,
+        this.grassColor[MathUtils.randInt(0, this.grassColor.length - 1)]
+      );
     }
 
     for (let i = 0; i < flowersInstancedMesh.count; i++) {
