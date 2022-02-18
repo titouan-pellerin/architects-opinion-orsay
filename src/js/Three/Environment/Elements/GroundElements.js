@@ -23,7 +23,6 @@ export class GroundElements {
   constructor(grassUniforms, flowersUniforms, envScale, sampler, pathLine) {
     this.pathLine = pathLine;
 
-    this.defaultPositions = [];
     this.curveTexturesData = [];
     this.curveTexturesMatrices = new Map();
     this.textureSize = Math.floor(texturesMap.get("curveTextures")[0].image.width * 0.25);
@@ -167,7 +166,7 @@ export class GroundElements {
         } while (alpha === 0 || red > 150 + random || green > 0);
 
         instance.position.y =
-          posY * (1 - red / (150 + random)) + (-2.78 * red) / (150 + random);
+          posY * (1 - red / (150 + random)) + (-2.85 * red) / (150 + random);
         // posY * (1 - red / (150 + random)) + (-2.75 * red) / (150 + random);
         // instance.scale.y = 1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
         if (i >= grassInstanceNumber) {

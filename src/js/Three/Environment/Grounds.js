@@ -253,6 +253,15 @@ export class Grounds extends Group {
     currentGround1.ground.updateMatrix();
     currentGround1.mask.updateMatrix();
 
+    const newTrees = new Trees(
+      positions.get("treesPositions")[this.currentIndex + 1],
+      this.leafUniforms
+    );
+    newTrees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+    currentGround1.remove(currentGround1.trees);
+    currentGround1.add(newTrees);
+    currentGround1.trees = newTrees;
+
     this.ground1 = currentGround2;
     this.ground2 = currentGround3;
     this.ground3 = currentGround1;

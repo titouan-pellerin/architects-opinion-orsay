@@ -66,8 +66,8 @@ export class CameraAnimation {
       this.voiceOver.playChapter(index);
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
-        duration: this.checkpoints[index].duration,
-        // duration: 1,
+        // duration: this.checkpoints[index].duration,
+        duration: 1,
         value: this.checkpoints[index].tick,
         // value: 1,
         ease: CustomEase.create(
@@ -76,7 +76,6 @@ export class CameraAnimation {
               0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
         ),
         onUpdate: () => {
-          console.log(this.tick.value);
           const nextTick = this.tick.value + 0.007;
 
           const curvePoint = this.path.spline.getPointAt(this.tick.value);
