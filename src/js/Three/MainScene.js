@@ -184,13 +184,6 @@ export class MainScene extends Scene {
     this.customPass.material.uniforms.uNoiseTexture.value =
       texturesMap.get("noiseTexture")[0];
 
-    // const effectSobel = new ShaderPass(SobelOperatorShader);
-    // effectSobel.uniforms["resolution"].value.x =
-    //   window.innerWidth * window.devicePixelRatio ;
-    // effectSobel.uniforms["resolution"].value.y =
-    //   window.innerHeight * window.devicePixelRatio ;
-    // this.composer.addPass( effectSobel );
-
     const atmosphereFolder = guiFolders.get("atmosphere");
     // atmosphereFolder
     //   .add(() => {

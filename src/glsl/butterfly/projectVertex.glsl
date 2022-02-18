@@ -17,7 +17,7 @@ float flapTime = radians(sin(uTime * aSpeedFactor * 2. - length(uv - 0.5) * 2.) 
 pos = vec3(cos(flapTime) * pos.x - mouvement, pos.y + mouvement2, sin(flapTime) * abs(pos.x) + mouvement);
 
 float loop = mod((time * 0.15) - (aOffset) * maxDuration, maxDuration) / maxDuration;
-vec3 particlePos = pos + aPositions;
+vec3 particlePos = pos + aPositions;;
 
 particlePos.y += (loop * (50.));
 

@@ -68,7 +68,7 @@ export class Trees extends Group {
     const instanceNumber = 500;
     const instance = new Object3D();
 
-    this.geometry = new PlaneGeometry(0.35, 0.35, 1, 1);
+    this.geometry = new PlaneGeometry(0.325, 0.325, 1, 1);
 
     const leafColors = [new Color("#eeff99"), new Color("#ccff99"), new Color("#eeffaa")];
 

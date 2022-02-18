@@ -9,7 +9,7 @@ vec3 pos = position;
 float offset = aOffset * aScale * 3.;
 
 float time = - uTime * 0.4;
-float noise = cnoise(pos.yz) * 50.;
+float noise = cnoise(pos.yz) * 40.;
 
 float loop = mod(time - (aOffset) * maxDuration, maxDuration) / maxDuration;
 vLoop = loop;

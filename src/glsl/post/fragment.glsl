@@ -3,6 +3,7 @@
 #define PI 3.1415926535897932384626433832795
 
 uniform sampler2D tDiffuse;
+uniform sampler2D uNoiseTexture;
 varying vec2 vUv;
 uniform float uTime;
 uniform float uCornerIntensity;
@@ -26,11 +27,14 @@ vec2 rotate(vec2 uv, float rotation, vec2 mid) {
 
 void main() {
 
-  vec2 rotateTest = rotate(uBlurPos, sin(uTime) + PI * 0.5, vec2(0., 0.));
-  float noise = 1.0 - abs(cnoise(vUv * 7. + uTime * 0.25));
-
     // Tint
   vec4 TintColor = vec4(uTintColor, 1.0);
+
+  vec2 rotateTest = rotate(uBlurPos, sin(uTime) + PI * 0.5, vec2(0., 0.));
+  float noise = 1.0 - abs(cnoise(vUv * 7. + uTime * 0.25));
+  float dist = 1.0 - length(vUv - 0.5);
+
+  float bigNoise = cnoise(6. * vUv + (uTime));
 
     // Corner
   float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
@@ -39,6 +43,7 @@ void main() {
   // float fakeligthing = 1.0 - cfakeligthing(vUv * 20.);
     // Part1, tint & corner
   // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
+
   vec4 p1 = texture2D(tDiffuse, vUv) * 0.5 * cornerColor;
 
     // Blur
@@ -105,9 +110,30 @@ void main() {
 
 		// magnitute of the total gradient
   float G = pow(abs(noise * 2.0 + 0.4), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
+  float G2 = pow(2.0, sqrt((valueGx * valueGx) + (valueGy * valueGy)));
+
+  vec4 mainRender = (p1 + p2) * vec4(G);
+  // vec4 menuRender = ((p2) / vec4(G2));
+  vec4 menuRender = ((p2 * 0.5) * vec4(G2));
+  // vec4 menuRender = ((p2 + p1 * 0.25) / vec4(G));
+
+  float noiseTexture = texture2D(uNoiseTexture, 0.5 * (vUv + 1.0)).r;
+
+  float temp = abs(sin(uTime));
+  // float temp = 1.0;
+  // float temp = uProgress;
+  temp += ((10.0 * noiseTexture - 5.0 * bigNoise) * 0.05) - .35;
+
+  float distanceFromCenter = length(vUv - 0.5);
+  temp = smoothstep(temp - 0.05, temp, distanceFromCenter);
+
+  vec4 finalRender = mix(menuRender, mainRender, temp);
 
     // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);
   gl_FragColor = p2;
   gl_FragColor = (p1 + p2) * vec4(G);
+  gl_FragColor = texture2D(uNoiseTexture, vUv);
+  gl_FragColor = vec4(noise);
+  gl_FragColor = finalRender;
 }

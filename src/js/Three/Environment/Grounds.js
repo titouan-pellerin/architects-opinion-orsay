@@ -35,8 +35,8 @@ export class Grounds extends Group {
       uTime: { value: 0 },
       uColor: { value: new Color("#84b15a") },
       uColor2: { value: new Color("#236760") },
-      uDisplaceIntensity: { value: 0.185 },
-      uSpeed: { value: 1.2 },
+      uDisplaceIntensity: { value: 0.25 },
+      uSpeed: { value: 1 },
       uRayPos: { value: new Vector3() },
       uFlipped: { value: 1 },
     };
@@ -44,7 +44,7 @@ export class Grounds extends Group {
     this.flowersUniforms = {
       uTime: { value: 0 },
       uDisplaceIntensity: { value: 0.25 },
-      uSpeed: { value: 1.2 },
+      uSpeed: { value: 1 },
       uTexture: { value: texturesMap.get("flowerPattern")[0] },
       uRayPos: { value: new Vector3() },
     };
@@ -59,7 +59,7 @@ export class Grounds extends Group {
       uTime: { value: 0 },
       uColor: { value: new Color("#d1e997") },
       uDisplaceIntensity: { value: 0.25 },
-      uSpeed: { value: 1.2 },
+      uSpeed: { value: 1 },
       uRayPos: { value: new Vector3() },
     };
 
@@ -277,7 +277,6 @@ export class Grounds extends Group {
 
     this.flowersUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;
-
     this.leafUniforms.uTime.value = raf.elapsedTime;
   }
 }

@@ -16,6 +16,6 @@ float noise = smoothNoise(newMvPosition.xz + vec2(0., time));
 float rayModifier = mix(4., 1., clamp((distance(uRayPos, worldPosition.xyz)), .0, 1.3) * .769);
 vec3 rayDirection = normalize(uRayPos - worldPosition.xyz);
 
-newMvPosition.x += sin((newMvPosition.z * PI * 5.) + (uTime * 3.)) * 0.02 * rayModifier;
+newMvPosition.x += sin((newMvPosition.z * PI * 5.) + (uTime * 3.)) * 0.0125 * rayModifier;
 
 gl_Position = projectionMatrix * modelViewMatrix * newMvPosition;
