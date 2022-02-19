@@ -156,7 +156,7 @@ export class Trees extends Group {
     leaves.scale.setScalar(8);
     leaves.position.set(-3.85, 46.53, 9.81);
     const sphereToRaycast = new Mesh(new SphereGeometry(1, 8, 4));
-    sphereToRaycast.scale.setScalar(15);
+    sphereToRaycast.scale.setScalar(16);
     sphereToRaycast.position.copy(leaves.position);
     sphereToRaycast.visible = false;
 

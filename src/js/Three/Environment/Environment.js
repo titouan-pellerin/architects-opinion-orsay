@@ -1,4 +1,4 @@
-import { Audio, AudioListener, Color } from "three";
+import { AudioListener, Color, PositionalAudio } from "three";
 import { soundsMap, texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
@@ -88,21 +88,19 @@ export class Environment {
       raycasting
     );
 
-    raycasting.start(
-      [
-        this.grounds.ground1.ground,
-        this.grounds.ground2.ground,
-        this.grounds.ground3.ground,
-      ]
-      // [...this.grounds.ground2.trees.spheresToRaycast],
-      // [...this.grounds.ground3.trees.spheresToRaycast]
-    );
+    raycasting.start([
+      this.grounds.ground1.ground,
+      this.grounds.ground2.ground,
+      this.grounds.ground3.ground,
+    ]);
 
     this.debugObject = {
       start: () => {
         const audioListener = new AudioListener();
         mainScene.camera.add(audioListener);
-        const music = new Audio(audioListener);
+        const music = new PositionalAudio(audioListener);
+        music.setRefDistance(30);
+        music.setRolloffFactor(0);
         music.setBuffer(soundsMap.get("music"));
         music.setVolume(0.09);
         music.play();
