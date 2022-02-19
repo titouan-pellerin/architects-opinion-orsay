@@ -93,12 +93,12 @@ export class Environment {
         this.grounds.ground1.ground,
         this.grounds.ground2.ground,
         this.grounds.ground3.ground,
-      ],
-      [...this.grounds.ground2.trees.spheresToRaycast],
-      [...this.grounds.ground3.trees.spheresToRaycast]
+      ]
+      // [...this.grounds.ground2.trees.spheresToRaycast],
+      // [...this.grounds.ground3.trees.spheresToRaycast]
     );
 
-    const music = (this.debugObject = {
+    this.debugObject = {
       start: () => {
         const audioListener = new AudioListener();
         mainScene.camera.add(audioListener);
@@ -109,7 +109,7 @@ export class Environment {
         voiceOver.init(audioListener);
         cameraAnimation.goToCheckpoint(null, raycasting);
       },
-    });
+    };
 
     guiFolders.get("experience").add(this.debugObject, "start").name("Next");
   }

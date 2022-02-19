@@ -25,9 +25,9 @@ export class Raycasting {
     // mainScene.add(this.meshTest);
   }
 
-  start(objects = [], spheresToRaycast = []) {
+  start(objects = []) {
     this.objects = objects;
-    this.spheresToRaycast = spheresToRaycast;
+    // this.spheresToRaycast = spheresToRaycast;
     raf.subscribe("raycasting", this.update.bind(this));
     document.addEventListener("mousedown", this.onClickHandler);
   }
@@ -57,7 +57,7 @@ export class Raycasting {
   update() {
     this.raycaster.setFromCamera(mouse.normalizedMouseCoords, mainScene.camera);
     const intersects = this.raycaster.intersectObjects(
-      [...this.objects, ...this.spheresToRaycast, ...this.artworks],
+      [...this.objects, ...this.spheresToRaycast.flat(), ...this.artworks],
       true
     );
 

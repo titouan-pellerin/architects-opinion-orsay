@@ -184,4 +184,16 @@ export class Ground extends Group {
     this.ground.localToWorld(center);
     return center;
   }
+
+  updateTrees(newTrees, spheresToRaycastArray) {
+    // console.log(this.trees);
+    if (this.trees)
+      spheresToRaycastArray.splice(
+        spheresToRaycastArray.indexOf(this.trees.spheresToRaycast),
+        1
+      );
+    this.trees = newTrees;
+    spheresToRaycastArray.push(newTrees.spheresToRaycast);
+    console.log(spheresToRaycastArray.length);
+  }
 }

@@ -263,27 +263,4 @@ export class Trees extends Group {
       );
     }
   }
-  createMaterial() {
-    const materialLeaf = new MeshToonMaterial({ side: DoubleSide });
-    materialLeaf.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.leafUniforms };
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <common>",
-        commonFragmentShaderLeaf
-      );
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <output_fragment>",
-        outputFragmentShaderLeaf
-      );
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <common>",
-        commonVertexShaderLeaf
-      );
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <project_vertex>",
-        projectVertexShaderLeaf
-      );
-    };
-    return materialLeaf;
-  }
 }

@@ -95,7 +95,7 @@ export class Grounds extends Group {
     // this.ground2.grass.removeFromParent();
 
     const trees1 = new Trees(positions.get("treesPositions")[0], this.leafUniforms);
-    this.ground2.trees = trees1;
+    this.ground2.updateTrees(trees1, this.raycasting.spheresToRaycast);
 
     const rocks1 = new Rocks(positions.get("rocksPositions")[0]);
     this.ground2.rocks = rocks1;
@@ -140,7 +140,8 @@ export class Grounds extends Group {
 
     const trees2 = new Trees(positions.get("treesPositions")[1], this.leafUniforms);
     trees2.scale.z = -1;
-    this.ground3.trees = trees2;
+
+    this.ground3.updateTrees(trees2, this.raycasting.spheresToRaycast);
 
     const rocks2 = new Rocks(positions.get("rocksPositions")[1]);
     rocks2.scale.z = -1;
@@ -259,8 +260,8 @@ export class Grounds extends Group {
     );
     newTrees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
     currentGround1.remove(currentGround1.trees);
-    currentGround1.add(newTrees);
-    currentGround1.trees = newTrees;
+    currentGround1.updateTrees(newTrees, this.raycasting.spheresToRaycast);
+    currentGround1.add(currentGround1.trees);
 
     this.ground1 = currentGround2;
     this.ground2 = currentGround3;
