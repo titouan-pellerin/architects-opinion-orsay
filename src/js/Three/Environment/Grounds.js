@@ -53,6 +53,7 @@ export class Grounds extends Group {
       uTime: { value: 0 },
       uColor: { value: new Color("#a2dae9") },
       uColor2: { value: new Color("#0f98c4") },
+      uRayPos: { value: new Vector3() },
     };
 
     this.leafUniforms = {
@@ -281,6 +282,7 @@ export class Grounds extends Group {
     this.grassUniforms.uTime.value = raf.elapsedTime;
 
     this.flowersUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    this.riverUniforms.uRayPos.value.copy(this.raycasting.rayPos);
     this.grassUniforms.uRayPos.value.copy(this.raycasting.rayPos);
     this.grassUniforms.uFlipped.value = this.raycasting.groundFlipped;
     this.leafUniforms.uRayPos.value.copy(this.raycasting.rayPos);

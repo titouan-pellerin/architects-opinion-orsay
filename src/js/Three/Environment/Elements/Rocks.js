@@ -65,18 +65,13 @@ export class Rocks extends Group {
       instance.updateMatrix();
       this.rockPattern.setMatrixAt(i, instance.matrix);
     }
-    this.rockPattern.position.set(positions[0].x, 0, positions[0].y);
-    this.rockPattern.scale.set(0.5, 0.5, 0.5);
 
-    this.rockPattern.updateMatrix();
-    this.add(this.rockPattern);
-
-    for (let i = 1; i < positions.length; i++) {
+    for (let i = 0; i < positions.length; i++) {
       const newRock = this.rockPattern.clone();
       newRock.position.set(positions[i].x, 0, positions[i].y);
       newRock.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
 
-      const randomScale = MathUtils.randFloat(0.1, 0.3);
+      const randomScale = MathUtils.randFloat(0.2, 0.3);
       newRock.scale.set(randomScale, randomScale, randomScale);
 
       newRock.updateMatrix();

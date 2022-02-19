@@ -312,7 +312,6 @@ export class MainScene extends Scene {
     if (this.controls) this.controls.update();
 
     this.composer.render();
-    // this.renderer.render(this, this.camera);
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
   }
 }

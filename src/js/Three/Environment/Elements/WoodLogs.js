@@ -88,19 +88,14 @@ export class WoodLogs extends Group {
     wood3.updateMatrix();
 
     const woodGroup = new Group();
-    const randomScale = MathUtils.randFloat(0.85, 1);
-    woodGroup.scale.set(randomScale, randomScale, randomScale);
-
     woodGroup.add(wood1, wood2, wood3);
-    woodGroup.position.set(positions[0].x, 0, positions[0].y);
-    woodGroup.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
 
-    this.add(woodGroup);
-
-    for (let i = 1; i < positions.length; i++) {
+    for (let i = 0; i < positions.length; i++) {
       const newWoodGroup = woodGroup.clone();
       newWoodGroup.position.set(positions[i].x, 0, positions[i].y);
       newWoodGroup.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
+      const randomScale = MathUtils.randFloat(0.85, 1);
+      newWoodGroup.scale.set(randomScale, randomScale, randomScale);
 
       // const randomScale = Math.random() * (1.25 - 0.85) + 0.85;
       // newWoodGroup.scale.set(randomScale, randomScale, randomScale);

@@ -17,17 +17,10 @@ export class Raycasting {
 
     this.rayPos = new Vector3();
     this.groundFlipped = 1;
-
-    // this.sphereTest = new Mesh(new SphereGeometry(), new MeshBasicMaterial());
-    // this.sphereTest.scale.setScalar(0.5);
-    // mainScene.add(this.sphereTest);
-    // this.meshTest = new Mesh(new SphereGeometry(), new MeshBasicMaterial());
-    // mainScene.add(this.meshTest);
   }
 
   start(objects = []) {
     this.objects = objects;
-    // this.spheresToRaycast = spheresToRaycast;
     raf.subscribe("raycasting", this.update.bind(this));
     document.addEventListener("mousedown", this.onClickHandler);
   }
@@ -69,9 +62,6 @@ export class Raycasting {
         intersects[0].object.parent.scale.z === -1
           ? (this.groundFlipped = -1)
           : (this.groundFlipped = 1);
-        // if (intersects[0].object.geometry instanceof SphereGeometry)
-        // console.log(this.rayPos);
-        // this.sphereTest.position.copy(this.rayPos);
 
         document.body.style.cursor = "default";
         this.currentIntersect = null;
@@ -93,18 +83,9 @@ export class Raycasting {
           4,
           raf.deltaTime
         );
-        // this.rayPos.x = intersects[0].point.x;
-        // this.rayPos.y = intersects[0].point.y;
-        // this.rayPos.z = intersects[0].point.z;
       }
-      // console.log(this.rayPos);
-      // console.log(intersects[0].point);
-      // this.meshTest.position.set(
-      //   intersects[0].point.x,
-      //   intersects[0].point.y,
-      //   intersects[0].point.z
-      // );
     } else {
+      this.rayPos.y = MathUtils.damp(this.rayPos.y, -10, 2, raf.deltaTime);
       document.body.style.cursor = "default";
       this.currentIntersect = null;
     }

@@ -186,7 +186,6 @@ export class Ground extends Group {
   }
 
   updateTrees(newTrees, spheresToRaycastArray) {
-    // console.log(this.trees);
     if (this.trees)
       spheresToRaycastArray.splice(
         spheresToRaycastArray.indexOf(this.trees.spheresToRaycast),
@@ -194,6 +193,5 @@ export class Ground extends Group {
       );
     this.trees = newTrees;
     spheresToRaycastArray.push(newTrees.spheresToRaycast);
-    console.log(spheresToRaycastArray.length);
   }
 }
