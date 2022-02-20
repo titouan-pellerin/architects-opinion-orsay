@@ -1,5 +1,6 @@
 import { Color, Group, Line, Vector3 } from "three";
 import { texturesMap } from "../../utils/assets";
+import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
 import { mainScene } from "../MainScene";
@@ -70,6 +71,7 @@ export class Grounds extends Group {
       forestPathLine,
       parameters
     );
+    this.raycasting.spheresToRaycast[0] = this.ground1.trees.spheresToRaycast;
 
     this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
     this.ground1.scale.z = -1;
@@ -91,18 +93,12 @@ export class Grounds extends Group {
       this.ground2.grass,
       this.ground2.flowers
     );
-    // this.ground2.grass.removeFromParent();
 
     this.ground2.trees.updateTreesPositions(positions.get("treesPositions")[0]);
+    this.raycasting.spheresToRaycast[2] = this.ground2.trees.spheresToRaycast;
+
     this.ground2.rocks.updateRocksPositions(positions.get("rocksPositions")[0]);
     this.ground2.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[0]);
-    // this.ground2.updateTrees(trees1, this.raycasting.spheresToRaycast);
-
-    // const rocks1 = new Rocks(positions.get("rocksPositions")[0]);
-    // this.ground2.rocks = rocks1;
-
-    // const woodLogs1 = new WoodLogs(positions.get("woodLogsPositions")[0]);
-    // this.ground2.woodLogs = woodLogs1;
 
     const dust = new Dust();
 
@@ -141,20 +137,12 @@ export class Grounds extends Group {
 
     this.ground3.trees.updateTreesPositions(positions.get("treesPositions")[1]);
     this.ground3.trees.scale.z = -1;
+    this.raycasting.spheresToRaycast[3] = this.ground3.trees.spheresToRaycast;
+
     this.ground3.rocks.updateRocksPositions(positions.get("rocksPositions")[1]);
     this.ground3.rocks.scale.z = -1;
     this.ground3.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[1]);
     this.ground3.woodLogs.scale.z = -1;
-
-    // this.ground3.updateTrees(trees2, this.raycasting.spheresToRaycast);
-
-    // const rocks2 = new Rocks(positions.get("rocksPositions")[1]);
-    // rocks2.scale.z = -1;
-    // this.ground3.rocks = rocks2;
-
-    // const woodLogs2 = new WoodLogs(positions.get("woodLogsPositions")[1]);
-    // woodLogs2.scale.z = -1;
-    // this.ground3.woodLogs = woodLogs2;
 
     const leaf2 = leaf.object.mesh.clone();
     const dust2 = dust.object.mesh.clone();
@@ -177,63 +165,47 @@ export class Grounds extends Group {
     /**
      * DEBUG
      */
-    // const sceneFolder = guiFolders.get("scene");
+    const sceneFolder = guiFolders.get("scene");
 
-    // const groundFolder = sceneFolder.addFolder("Mask");
-    // groundFolder.addColor(this.ground2.groundMaskUniforms.uColor, "value").name("Color");
-    // groundFolder
-    //   .add(this.ground2.groundMaskUniforms.uStroke, "value")
-    //   .min(0)
-    //   .max(10000)
-    //   .name("StrokeQuantity");
-    // groundFolder
-    //   .add(this.ground2.groundMaskUniforms.uSmallNoise, "value")
-    //   .min(250)
-    //   .max(750)
-    //   .name("SmallNoise");
-    // groundFolder
-    //   .add(this.ground2.groundMaskUniforms.uBigNoise, "value")
-    //   .min(0)
-    //   .max(100)
-    //   .name("BigNoise");
+    const groundMaskFolder = sceneFolder.addFolder("Mask");
+    groundMaskFolder
+      .addColor(this.ground2.groundMaskUniforms.uColor, "value")
+      .name("Color");
+    groundMaskFolder
+      .add(this.ground2.groundMaskUniforms.uStroke, "value")
+      .min(0)
+      .max(10000)
+      .name("StrokeQuantity");
+    groundMaskFolder
+      .add(this.ground2.groundMaskUniforms.uSmallNoise, "value")
+      .min(250)
+      .max(750)
+      .name("SmallNoise");
+    groundMaskFolder
+      .add(this.ground2.groundMaskUniforms.uBigNoise, "value")
+      .min(0)
+      .max(100)
+      .name("BigNoise");
 
-    // const groundMaskFolder = sceneFolder.addFolder("Ground");
-    // groundMaskFolder.addColor(this.ground2.groundUniforms.uColor, "value").name("Color");
-    // groundMaskFolder
-    //   .addColor(this.ground2.groundUniforms.uPathColor, "value")
-    //   .name("Path Color");
+    const groundFolder = sceneFolder.addFolder("Ground");
+    groundFolder.addColor(this.ground2.groundUniforms.uColor, "value").name("Color");
+    groundFolder
+      .addColor(this.ground2.groundUniforms.uPathColor, "value")
+      .name("Path Color");
 
-    // const rocksFolder = guiFolders.get("scene").addFolder("Rock");
-    // rocksFolder.addColor(this.ground2.rocks.rockUniforms.uColor, "value").name("Color");
-    // rocksFolder.addColor(this.ground2.rocks.rockUniforms.uColor2, "value").name("Color2");
+    const folder = sceneFolder.addFolder("Grass");
+    folder.addColor(this.grassUniforms.uColor, "value").name("Color");
+    folder.addColor(this.grassUniforms.uColor2, "value").name("Color2");
+    folder
+      .add(this.grassUniforms.uDisplaceIntensity, "value")
+      .min(0)
+      .max(1)
+      .name("DisplaceIntensity");
+    folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
 
-    // const woodLogsFolder = guiFolders.get("scene").addFolder("wood");
-    // woodLogsFolder
-    //   .addColor(this.ground2.woodLogs.woodUniforms.uColor, "value")
-    //   .name("Color");
-    // woodLogsFolder
-    //   .addColor(this.ground2.woodLogs.woodUniforms.uColor2, "value")
-    //   .name("Color2");
-    // woodLogsFolder
-    //   .addColor(this.ground2.woodLogs.woodInnerUniforms.uColor, "value")
-    //   .name("InnerColor");
-    // woodLogsFolder
-    //   .addColor(this.ground2.woodLogs.woodInnerUniforms.uColor2, "value")
-    //   .name("InnerColor2");
-
-    // const folder = sceneFolder.addFolder("Grass");
-    // folder.addColor(this.grassUniforms.uColor, "value").name("Color");
-    // folder.addColor(this.grassUniforms.uColor2, "value").name("Color2");
-    // folder
-    //   .add(this.grassUniforms.uDisplaceIntensity, "value")
-    //   .min(0)
-    //   .max(1)
-    //   .name("DisplaceIntensity");
-    // folder.add(this.grassUniforms.uSpeed, "value").min(0).max(2).name("Speed");
-
-    // const riverFolder = sceneFolder.addFolder("River");
-    // riverFolder.addColor(this.riverUniforms.uColor, "value").name("Color");
-    // riverFolder.addColor(this.riverUniforms.uColor2, "value").name("Color2");
+    const riverFolder = sceneFolder.addFolder("River");
+    riverFolder.addColor(this.riverUniforms.uColor, "value").name("Color");
+    riverFolder.addColor(this.riverUniforms.uColor2, "value").name("Color2");
   }
 
   switchGrounds() {
@@ -260,6 +232,7 @@ export class Grounds extends Group {
     currentGround1.trees.updateTreesPositions(
       positions.get("treesPositions")[this.currentIndex + 1]
     );
+    // this.raycasting.updateSpheresToRaycast(currentGround1.trees.spheresToRaycast, 0);
     currentGround1.trees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
 
     currentGround1.rocks.updateRocksPositions(

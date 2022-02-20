@@ -4,6 +4,7 @@ import commonVertexShader from "@glsl/wood/commonVertex.glsl";
 import outputFragmentShaderInner from "@glsl/wood/inner/outputFragment.glsl";
 import outputFragmentShader from "@glsl/wood/outputFragment.glsl";
 import { Color, CylinderGeometry, Group, MathUtils, Mesh, MeshToonMaterial } from "three";
+import { guiFolders } from "../../../utils/Debug";
 
 export class WoodLogs extends Group {
   static logsGroup;
@@ -94,24 +95,18 @@ export class WoodLogs extends Group {
       logsGroup.visible = false;
 
       WoodLogs.logsGroup = logsGroup;
+
+      /**
+       * DEBUG
+       */
+      const woodLogsFolder = guiFolders.get("scene").addFolder("wood");
+      woodLogsFolder.addColor(barkUniforms.uColor, "value").name("BarkColor");
+      woodLogsFolder.addColor(barkUniforms.uColor2, "value").name("BarkColor2");
+      woodLogsFolder.addColor(logUniforms.uColor, "value").name("InnerColor");
+      woodLogsFolder.addColor(logUniforms.uColor2, "value").name("InnerColor2");
     }
 
     this.fillCurrentLogsGroupArray(10);
-
-    // for (let i = 0; i < positions.length; i++) {
-    //   const newWoodGroup = woodGroup.clone();
-    //   newWoodGroup.position.set(positions[i].x, -2.85, positions[i].y);
-    //   newWoodGroup.rotation.set(Math.PI * 0.5, Math.PI, Math.random() * 3);
-    //   const randomScale = MathUtils.randFloat(0.85, 1);
-    //   newWoodGroup.scale.set(randomScale, randomScale, randomScale);
-
-    //   // const randomScale = Math.random() * (1.25 - 0.85) + 0.85;
-    //   // newWoodGroup.scale.set(randomScale, randomScale, randomScale);
-    //   // newWoodGroup.scale.set(0.5, 0.5, 0.5);
-
-    //   newWoodGroup.updateMatrix();
-    //   this.add(newWoodGroup);
-    // }
   }
 
   fillCurrentLogsGroupArray(maxLogsGroupNumber) {

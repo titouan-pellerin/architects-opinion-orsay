@@ -39,6 +39,16 @@ export class Raycasting {
     }
   }
 
+  // /**
+  //  *
+  //  * @param {Trees} trees
+  //  */
+  // updateSpheresToRaycast(newSpheresToRaycast, groundIndex) {
+  //   this.spheresToRaycast.splice(this.spheresToRaycast.indexOf(newSpheresToRaycast), 1);
+  //   this.spheresToRaycast.push(newSpheresToRaycast);
+  //   console.log(this.spheresToRaycast.length);
+  // }
+
   updateArtworks(newArtworks = []) {
     this.artworks = newArtworks;
   }
@@ -59,6 +69,7 @@ export class Raycasting {
         document.body.style.cursor = "pointer";
         this.currentIntersect = intersects[0].object;
       } else {
+        // console.log(intersects[0].object.geometry);
         intersects[0].object.parent.scale.z === -1
           ? (this.groundFlipped = -1)
           : (this.groundFlipped = 1);

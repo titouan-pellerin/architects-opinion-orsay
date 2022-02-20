@@ -272,6 +272,7 @@ export class Trees extends Group {
   }
 
   updateTreesPositions(positions = []) {
+    this.spheresToRaycast.length = 0;
     for (let i = 0; i < positions.length; i++) {
       const newTree = this.currentTrees[i];
       if (!newTree.visible) newTree.visible = true;
@@ -285,7 +286,11 @@ export class Trees extends Group {
       newTree.scale.set(randomScale, randomScale, randomScale);
 
       newTree.updateMatrix();
-      // newTree.updateMatrixWorld();
+      newTree.updateMatrixWorld();
+
+      this.spheresToRaycast.push(
+        ...newTree.children.filter((child) => child.geometry instanceof SphereGeometry)
+      );
     }
     if (positions.length < this.currentTrees.length) {
       for (let i = positions.length; i < this.currentTrees.length; i++)

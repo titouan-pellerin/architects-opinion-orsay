@@ -12,6 +12,7 @@ import {
   Object3D,
   TetrahedronGeometry,
 } from "three";
+import { guiFolders } from "../../../utils/Debug";
 
 export class Rocks extends Group {
   static rock;
@@ -72,6 +73,13 @@ export class Rocks extends Group {
       }
       rockInstancedMesh.visible = false;
       Rocks.rock = rockInstancedMesh;
+
+      /**
+       * DEBUG
+       */
+      const rocksFolder = guiFolders.get("scene").addFolder("Rock");
+      rocksFolder.addColor(rockUniforms.uColor, "value").name("Color");
+      rocksFolder.addColor(rockUniforms.uColor2, "value").name("Color2");
     }
 
     this.fillCurrentRocksArray(35);

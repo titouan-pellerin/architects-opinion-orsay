@@ -477,6 +477,4 @@ positions.set("woodLogsPositions", [
 ]);
 positions.set("artworksPositions", artworksPositions);
 
-console.log(positions);
-
 export { positions };
