@@ -66,8 +66,8 @@ export class CameraAnimation {
       this.voiceOver.playChapter(index);
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
-        duration: this.checkpoints[index].duration,
-        // duration: 1,
+        // duration: this.checkpoints[index].duration,
+        duration: 1,
         value: this.checkpoints[index].tick,
         // value: 1,
         ease: CustomEase.create(
@@ -131,11 +131,11 @@ export class CameraAnimation {
         mainScene.cameraContainer.rotateX(Math.PI);
         mainScene.cameraContainer.rotateZ(Math.PI);
       },
-      onComplete: () => {
-        this.positionTween.reverse();
-        this.lookAtTween.reverse();
-        // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
-      },
+      // onComplete: () => {
+      //   this.positionTween.reverse();
+      //   this.lookAtTween.reverse();
+      //   // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
+      // },
     });
   }
 }

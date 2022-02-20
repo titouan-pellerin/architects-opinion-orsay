@@ -5,28 +5,21 @@
 html {
   box-sizing: border-box;
   margin: 0;
-  background-color: black;
-  font-size: 85%;
   padding: 0;
+  font-size: 85%;
 }
 
 body {
-  overflow: hidden;
   background-color: black;
-}
-
-#app {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
 }
 
 .canvas-container {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
 }
 
 .webgl {
@@ -34,28 +27,49 @@ body {
   height: 100% !important;
 }
 
-.hidden {
-  opacity: 0;
-}
+.dom-container {
+  .menu-btn_open {
+    left: 20%;
+    top: 0;
+    position: absolute;
+  }
+  .menu-btn_close {
+    left: 30%;
+    top: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .menu-btn_section {
+    left: 40%;
+    top: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .artwork-in {
+    left: 50%;
+    top: 0;
+    position: absolute;
+  }
+  .artwork-out {
+    left: 60%;
+    top: 0;
+    position: absolute;
+  }
+  .subtitles {
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    color: #fff;
 
-.visibile {
-  opacity: 1;
-}
-
-.subtitles {
-  position: absolute;
-  bottom: 2rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  color: #fff;
-
-  p {
-    width: 50%;
-    text-align: center;
-    font-size: 1.15rem;
-    opacity: 0;
+    p {
+      width: 50%;
+      text-align: center;
+      font-size: 1.15rem;
+      opacity: 0;
+    }
   }
 }

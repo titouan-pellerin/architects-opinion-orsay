@@ -1,4 +1,6 @@
 import SimplexNoise from "simplex-noise";
+import { Color } from "three";
+import { texturesMap } from "./assets";
 
 function isSafari() {
   return !!navigator.userAgent.match(/Safari/i) && !navigator.userAgent.match(/Chrome/i);
@@ -6,4 +8,11 @@ function isSafari() {
 
 const simplex = new SimplexNoise("toto-titou");
 
-export { simplex, isSafari };
+const customFogUniforms = {
+  time: { value: 0 },
+  progress: { value: -0.1 },
+  transitionIsIn: { value: 0 },
+  noiseTexture: { value: texturesMap.get("noiseTexture")[0] },
+};
+
+export { simplex, isSafari, customFogUniforms };

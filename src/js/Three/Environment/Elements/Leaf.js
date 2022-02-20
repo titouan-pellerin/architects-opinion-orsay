@@ -2,6 +2,7 @@ import commonFragmentShader from "@glsl/leaf/commonFragment.glsl";
 import commonVertexShader from "@glsl/leaf/commonVertex.glsl";
 import outputFragmentShader from "@glsl/leaf/outputFragment.glsl";
 import projectVertexShader from "@glsl/leaf/projectVertex.glsl";
+import { customFogUniforms } from "@js/utils/misc";
 import {
   Color,
   DoubleSide,
@@ -67,8 +68,7 @@ export class Leaf {
   }
 
   setGeometry() {
-    const blueprintParticle = new PlaneBufferGeometry();
-    // blueprintParticle.scale(0.1, 0.1, 0.1);
+    const blueprintParticle = new PlaneBufferGeometry(1, 1, 2, 2);
     blueprintParticle.scale(0.15, 0.15, 0.15);
 
     this.object.geometry = new InstancedBufferGeometry();
@@ -109,11 +109,13 @@ export class Leaf {
 
     this.object.material = new MeshToonMaterial({
       side: DoubleSide,
-      // transparent: true,
-      // blending: AdditiveBlending,
     });
     this.object.material.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.leavesUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.leavesUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader

@@ -7,6 +7,7 @@ import commonFragmentShaderTrunk from "@glsl/tree/trunk/commonFragment.glsl";
 import commonVertexShaderTrunk from "@glsl/tree/trunk/commonVertex.glsl";
 import outputFragmentShaderTrunk from "@glsl/tree/trunk/outputFragment.glsl";
 import { guiFolders } from "@js/utils/Debug";
+import { customFogUniforms } from "@js/utils/misc";
 import {
   Color,
   DoubleSide,
@@ -27,7 +28,6 @@ export class Trees extends Group {
   static tree2;
   constructor(leafUniforms) {
     super();
-    // this.leafUniforms = leafUniforms;
 
     this.spheresToRaycast = [];
     this.currentTrees = [];
@@ -48,7 +48,7 @@ export class Trees extends Group {
 
       const trunkMaterial = new MeshToonMaterial();
       trunkMaterial.onBeforeCompile = (shader) => {
-        shader.uniforms = { ...shader.uniforms, ...trunkUniforms };
+        shader.uniforms = { ...shader.uniforms, ...trunkUniforms, ...customFogUniforms };
         shader.fragmentShader = shader.fragmentShader.replace(
           "#include <common>",
           commonFragmentShaderTrunk

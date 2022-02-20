@@ -1,0 +1,9 @@
+uniform vec3 fogColor;
+varying float vFogDepth;
+varying float vFogAnimation;
+uniform float fogNear;
+uniform float fogFar;
+uniform float time;
+uniform float progress;
+uniform float transitionIsIn;
+uniform sampler2D noiseTexture;
