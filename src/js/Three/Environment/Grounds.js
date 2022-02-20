@@ -56,6 +56,7 @@ export class Grounds extends Group {
     this.leafUniforms = {
       uTime: { value: 0 },
       uColor: { value: new Color("#d1e997") },
+      uColor2: { value: new Color("#4a9e36") },
       uDisplaceIntensity: { value: 0.25 },
       uSpeed: { value: 1 },
       uRayPos: { value: new Vector3() },

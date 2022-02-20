@@ -3,7 +3,7 @@
 // Shape
 float rightPattern = 1.0 - (step(1.0, length(vUv)));
 float leftPattern = 1.0 - (step(1.0, length(1.0 - vUv)));
-vec4 shape = vec4(rightPattern) * vec4(leftPattern) * vec4(vInstanceColor, 1.0);
+vec4 shape = vec4(rightPattern) * vec4(leftPattern) * vec4(uColor2, 1.0);
 
 // Noise
 float noise = cnoise(vUv * 10.);

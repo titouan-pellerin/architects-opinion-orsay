@@ -3,7 +3,6 @@ uniform float uTime;
 uniform float uSpeed;
 uniform float uDisplaceIntensity;
 uniform vec3 uRayPos;
-varying vec3 vInstanceColor;
 varying vec2 vUv;
 
 float N(vec2 st) {
