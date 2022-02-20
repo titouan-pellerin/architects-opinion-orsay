@@ -20,6 +20,8 @@ export class Artwork extends Group {
    * @param {Texture} texture
    * @param {Vector3} position
    */
+  static materialInner;
+  static materialOuter;
   constructor(texture, position) {
     super();
 

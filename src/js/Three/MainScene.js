@@ -1,3 +1,8 @@
+import fogFragment from "@glsl/customFog/fogFragment.glsl";
+import fogParsFragment from "@glsl/customFog/fogParsFragment.glsl";
+import fogParsVertex from "@glsl/customFog/fogParsVertex.glsl";
+import fogVertex from "@glsl/customFog/fogVertex.glsl";
+import gsap from "gsap";
 import {
   ACESFilmicToneMapping,
   Color,
@@ -6,6 +11,8 @@ import {
   Group,
   PerspectiveCamera,
   Scene,
+  ShaderChunk,
+  ShaderLib,
   sRGBEncoding,
   Vector2,
   Vector3,
@@ -19,16 +26,9 @@ import fragmentShader from "../../glsl/post/fragment.glsl";
 import vertexShader from "../../glsl/post/vertex.glsl";
 import { texturesMap } from "../utils/assets";
 import { guiFolders } from "../utils/Debug";
-import { isSafari, customFogUniforms } from "../utils/misc";
+import { customFogUniforms, isSafari } from "../utils/misc";
 import { mouse } from "../utils/Mouse";
 import raf from "../utils/Raf";
-import gsap from "gsap";
-import { ShaderLib } from "three";
-import fogFragment from "@glsl/customFog/fogFragment.glsl";
-import fogParsFragment from "@glsl/customFog/fogParsFragment.glsl";
-import fogParsVertex from "@glsl/customFog/fogParsVertex.glsl";
-import fogVertex from "@glsl/customFog/fogVertex.glsl";
-import { ShaderChunk } from "three";
 
 export class MainScene extends Scene {
   constructor() {
@@ -108,6 +108,9 @@ export class MainScene extends Scene {
           this.controls.enableDamping = true;
           this.controls.dampingFactor = 0.05;
           this.controls.enableRotate = true;
+          // this.controls.enablePan = false;
+          // this.controls.enableZoom = false;
+          // this.controls.rotateSpeed = -0.1;
           this.camera.position.z += 3;
           this.controls.enabled = true;
           this.controls.update();

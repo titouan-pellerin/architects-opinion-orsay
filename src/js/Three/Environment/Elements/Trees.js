@@ -69,7 +69,7 @@ export class Trees extends Group {
 
       let noise2D;
 
-      const leavesInstanceNumber = 500;
+      const leavesInstanceNumber = 700;
       const instance = new Object3D();
 
       const leaveGeometry = new PlaneGeometry(0.35, 0.35, 1, 1);

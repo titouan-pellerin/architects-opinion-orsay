@@ -38,6 +38,9 @@ export class Environment {
       this.artworks.push(artwork);
     }
 
+    // this.artworks[0].artworkUniforms.uColor.value = new Color("#00ff00");
+    // this.artworks[0].artworkUniforms.uColor2.value = new Color("#0000ff");
+
     const checkpoints = [];
     const checkpoint1 = new Checkpoint(0.16, 35.3, this.forestPathLine.spline, [
       this.artworks[0],

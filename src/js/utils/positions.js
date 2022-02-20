@@ -434,10 +434,10 @@ const woodLogsPositions5 = [
 ];
 
 const artworksPositions = [
-  new Vector3(100, 1, 100),
-  new Vector3(100, 1, 100),
-  new Vector3(100, 1, 100),
-  new Vector3(100, 1, 100),
+  new Vector3(6.8777, -1.5, -25.6264),
+  new Vector3(11.4383, -1.5, -24.0333),
+  new Vector3(12.7515, -1.5, -20.0401),
+  new Vector3(13.5835, -1.5, -15.6866),
   new Vector3(100, 1, 100),
   new Vector3(101, 1, 100),
   new Vector3(102, 1, 100),
