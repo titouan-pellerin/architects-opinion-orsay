@@ -2,10 +2,13 @@
 
 #define PI 3.1415926535897932384626433832795
 
+varying vec2 vUv;
+
 uniform sampler2D tDiffuse;
 uniform sampler2D uNoiseTexture;
-varying vec2 vUv;
 uniform float uTime;
+uniform float uProgress;
+uniform float uMenuSwitch;
 uniform float uCornerIntensity;
 uniform float uCornerSize;
 uniform vec2 uRes;
@@ -31,10 +34,9 @@ void main() {
   vec4 TintColor = vec4(uTintColor, 1.0);
 
   vec2 rotateTest = rotate(uBlurPos, sin(uTime) + PI * 0.5, vec2(0., 0.));
-  float noise = 1.0 - abs(cnoise(vUv * 7. + uTime * 0.25));
-  float dist = 1.0 - length(vUv - 0.5);
+  float noise = 1.0 - abs(cnoise(vUv * 8. + uTime * 0.25));
 
-  float bigNoise = cnoise(6. * vUv + (uTime));
+  float transitionNoise = 1.0 - cnoise(6. * vUv + (uTime * 0.5));
 
     // Corner
   float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
@@ -70,14 +72,13 @@ void main() {
     total += weight;
   } 
 
-    // Part2, adding some blur
+  // Part2, adding some blur
   // vec4 p2 = ((color / total)) * 0.75;
   vec4 p2 = ((color / total));
 
   vec2 texel = vec2(1. / uRes.x, 1. / uRes.y);
 
-		// kernel definition (in glsl matrices are filled in column-major order)
-
+	// kernel definition (in glsl matrices are filled in column-major order)
   const mat3 Gx = mat3(-1, -2, -1, 0, 0, 0, 1, 2, 1); // x direction kernel
   const mat3 Gy = mat3(-1, 0, 1, -2, 0, 2, -1, 0, 1); // y direction kernel
 
@@ -113,23 +114,33 @@ void main() {
   float G2 = pow(2.0, sqrt((valueGx * valueGx) + (valueGy * valueGy)));
 
   vec4 mainRender = (p1 + p2) * vec4(G);
-  // vec4 menuRender = ((p2) / vec4(G2));
-  vec4 menuRender = ((p2 * 0.5) * vec4(G2));
-  // vec4 menuRender = ((p2 + p1 * 0.25) / vec4(G));
+  vec4 menuRender = ((p2 * 0.75) * vec4(G2));
 
   float noiseTexture = texture2D(uNoiseTexture, 0.5 * (vUv + 1.0)).r;
 
-  float temp = abs(sin(uTime));
-  // float temp = 1.0;
-  // float temp = uProgress;
-  temp += ((10.0 * noiseTexture - 5.0 * bigNoise) * 0.05) - .35;
+  float temp = uProgress;
+  temp += ((10.0 * noiseTexture - 5.0 * transitionNoise) * 0.05) - 0.3;
+  temp *= G * 0.9;
 
   float distanceFromCenter = length(vUv - 0.5);
   temp = smoothstep(temp - 0.05, temp, distanceFromCenter);
 
-  vec4 finalRender = mix(menuRender, mainRender, temp);
+  vec4 finalRender;
 
-    // gl_FragColor = render;
+  if(uMenuSwitch == 0.) {
+    finalRender = mix(menuRender, mainRender, temp);
+  }
+  if(uMenuSwitch == 1.) {
+    finalRender = mix(mainRender, menuRender, temp);
+  }
+  if(uMenuSwitch == 2.) {
+    finalRender = mix(vec4(0.), menuRender, temp);
+  }
+  if(uMenuSwitch == 3.) {
+    finalRender = mix(mainRender, vec4(0.), temp);
+  }
+
+  // gl_FragColor = render;
   gl_FragColor = texture2D(tDiffuse, vUv);
   gl_FragColor = p2;
   gl_FragColor = (p1 + p2) * vec4(G);

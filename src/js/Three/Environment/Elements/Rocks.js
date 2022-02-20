@@ -2,6 +2,7 @@ import commonFragmentShader from "@glsl/rock/commonFragment.glsl";
 import commonVertexShader from "@glsl/rock/commonVertex.glsl";
 import outputFragmentShader from "@glsl/rock/outputFragment.glsl";
 import projectVertexShader from "@glsl/rock/projectVertex.glsl";
+import { customFogUniforms } from "@js/utils/misc";
 import {
   Color,
   DoubleSide,
@@ -28,7 +29,11 @@ export class Rocks extends Group {
 
     this.material = new MeshToonMaterial({ side: DoubleSide });
     this.material.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.rockUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.rockUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader

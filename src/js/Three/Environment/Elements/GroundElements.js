@@ -6,6 +6,7 @@ import grassCommonFragmentShader from "@glsl/grass/commonFragment.glsl";
 import grassCommonVertexShader from "@glsl/grass/commonVertex.glsl";
 import grassOutputFragmentShader from "@glsl/grass/outputFragment.glsl";
 import grassProjectVertexShader from "@glsl/grass/projectVertex.glsl";
+import { customFogUniforms } from "@js/utils/misc";
 import {
   Color,
   DoubleSide,
@@ -52,7 +53,7 @@ export class GroundElements {
       side: DoubleSide,
     });
     flowerMaterial.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...flowersUniforms };
+      shader.uniforms = { ...shader.uniforms, ...flowersUniforms, ...customFogUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         flowerCommonFragmentShader

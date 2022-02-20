@@ -2,6 +2,7 @@ import commonFragmentShader from "@glsl/butterfly/commonFragment.glsl";
 import commonVertexShader from "@glsl/butterfly/commonVertex.glsl";
 import outputFragmentShader from "@glsl/butterfly/outputFragment.glsl";
 import projectVertexShader from "@glsl/butterfly/projectVertex.glsl";
+import { customFogUniforms } from "@js/utils/misc";
 import {
   Color,
   DoubleSide,
@@ -102,7 +103,11 @@ export class Butterfly {
       // blending: AdditiveBlending,
     });
     this.object.material.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.butterflyUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.butterflyUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader

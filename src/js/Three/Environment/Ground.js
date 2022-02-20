@@ -10,6 +10,7 @@ import riverBeginVertexShader from "@glsl/ground/river/beginVertex.glsl";
 import riverCommonFragmentShader from "@glsl/ground/river/commonFragment.glsl";
 import riverCommonVertexShader from "@glsl/ground/river/commonVertex.glsl";
 import riverOutputFragmentShader from "@glsl/ground/river/outputFragment.glsl";
+import { customFogUniforms } from "@js/utils/misc";
 import { CustomMeshToonMaterial } from "@js/Three/utils/CustomMeshToonMaterial";
 import { MeshSurfaceSampler } from "@js/Three/utils/MeshSurfaceSampler";
 import {
@@ -95,7 +96,11 @@ export class Ground extends Group {
       transparent: true,
     });
     groundMaskMaterial.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.groundMaskUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.groundMaskUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         maskCommonFragmentShader
@@ -126,7 +131,7 @@ export class Ground extends Group {
       opacity: 0.75,
     });
     riverMaterial.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...riverUniforms };
+      shader.uniforms = { ...shader.uniforms, ...riverUniforms, ...customFogUniforms };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         riverCommonFragmentShader

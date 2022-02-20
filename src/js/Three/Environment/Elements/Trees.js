@@ -7,6 +7,7 @@ import commonFragmentShader from "@glsl/tree/trunk/commonFragment.glsl";
 import commonVertexShader from "@glsl/tree/trunk/commonVertex.glsl";
 import outputFragmentShader from "@glsl/tree/trunk/outputFragment.glsl";
 import { guiFolders } from "@js/utils/Debug";
+import { customFogUniforms } from "@js/utils/misc";
 import {
   Color,
   DoubleSide,
@@ -44,7 +45,11 @@ export class Trees extends Group {
 
     this.material = new MeshToonMaterial();
     this.material.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.trunkUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.trunkUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader
@@ -74,7 +79,11 @@ export class Trees extends Group {
 
     const materialLeaf = new MeshToonMaterial({ side: DoubleSide });
     materialLeaf.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.leafUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.leafUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShaderLeaf
@@ -266,7 +275,11 @@ export class Trees extends Group {
   createMaterial() {
     const materialLeaf = new MeshToonMaterial({ side: DoubleSide });
     materialLeaf.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.leafUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.leafUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShaderLeaf

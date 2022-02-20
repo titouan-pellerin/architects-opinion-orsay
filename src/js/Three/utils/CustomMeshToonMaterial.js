@@ -1,4 +1,5 @@
 import { MeshToonMaterial } from "three";
+import { customFogUniforms } from "@js/utils/misc";
 
 export class CustomMeshToonMaterial {
   constructor(
@@ -12,7 +13,7 @@ export class CustomMeshToonMaterial {
   ) {
     this.meshToonMaterial = new MeshToonMaterial(parameters);
     this.meshToonMaterial.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...customUniforms };
+      shader.uniforms = { ...shader.uniforms, ...customUniforms, ...customFogUniforms };
       if (commonFrag)
         shader.fragmentShader = shader.fragmentShader.replace(
           "#include <common>",

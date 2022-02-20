@@ -19,13 +19,25 @@ import fragmentShader from "../../glsl/post/fragment.glsl";
 import vertexShader from "../../glsl/post/vertex.glsl";
 import { texturesMap } from "../utils/assets";
 import { guiFolders } from "../utils/Debug";
-import { isSafari } from "../utils/misc";
+import { isSafari, customFogUniforms } from "../utils/misc";
 import { mouse } from "../utils/Mouse";
 import raf from "../utils/Raf";
+import gsap from "gsap";
+import { ShaderLib } from "three";
+import fogFragment from "@glsl/customFog/fogFragment.glsl";
+import fogParsFragment from "@glsl/customFog/fogParsFragment.glsl";
+import fogParsVertex from "@glsl/customFog/fogParsVertex.glsl";
+import fogVertex from "@glsl/customFog/fogVertex.glsl";
+import { ShaderChunk } from "three";
 
 export class MainScene extends Scene {
   constructor() {
     super();
+
+    this.fogUniforms = {
+      coucou: { value: 0.2 },
+      ...ShaderLib.toon.uniforms,
+    };
 
     this.resVec2 = new Vector2();
     this.blurVec2 = new Vector2();
@@ -96,9 +108,6 @@ export class MainScene extends Scene {
           this.controls.enableDamping = true;
           this.controls.dampingFactor = 0.05;
           this.controls.enableRotate = true;
-          // this.controls.enablePan = false;
-          // this.controls.enableZoom = false;
-          // this.controls.rotateSpeed = -0.1;
           this.camera.position.z += 3;
           this.controls.enabled = true;
           this.controls.update();
@@ -134,6 +143,11 @@ export class MainScene extends Scene {
     const fog = new Fog(parameters.skyBgColor, 20, 35);
     this.fog = fog;
 
+    ShaderChunk.fog_fragment = fogFragment;
+    ShaderChunk.fog_pars_fragment = fogParsFragment;
+    ShaderChunk.fog_pars_vertex = fogParsVertex;
+    ShaderChunk.fog_vertex = fogVertex;
+
     const directionalLight = new DirectionalLight(
       parameters.lightColor,
       parameters.lightIntensity
@@ -158,13 +172,13 @@ export class MainScene extends Scene {
     const customShader = {
       uniforms: {
         uTime: { value: 0 },
+        uMenuSwitch: { value: 0 },
         tDiffuse: { value: null },
         uTintColor: { value: parameters.tintColor },
         uCornerColor: { value: parameters.cornerColor },
         uCornerIntensity: { value: 1 },
-        // uCornerSize: { value: 10 },
         uCornerSize: { value: 4.5 },
-        // uBlurIntensity: { value: 3.5 },
+        uProgress: { value: 0 },
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
@@ -185,11 +199,6 @@ export class MainScene extends Scene {
       texturesMap.get("noiseTexture")[0];
 
     const atmosphereFolder = guiFolders.get("atmosphere");
-    // atmosphereFolder
-    //   .add(() => {
-    //     this.composer.removePass(noiseShader);
-    //   })
-    //   .name("Disable post");
 
     atmosphereFolder
       .addColor(parameters, "skyBgColor")
@@ -262,14 +271,67 @@ export class MainScene extends Scene {
       .max(1)
       .name("Intensity");
 
+    postFolder.add(this.customPass.uniforms.uProgress, "value").min(0).max(1.3);
+
     window.addEventListener("resize", this.resize.bind(this));
 
-    // const folder = gui.addFolder("PostProcessing");
-    // folder.add(unrealBloomPass, "strength").min(0).max(5).name("Bloom Strength");
-    // folder.add(unrealBloomPass, "radius").min(0).max(50).name("Bloom Radius");
-    // folder.add(unrealBloomPass, "threshold").min(0).max(1).name("Bloom Threshold");
-
     raf.subscribe("scene", this.update.bind(this));
+
+    const openMenu = document.querySelector(".menu-btn_open");
+    const closeMenu = document.querySelector(".menu-btn_close");
+    const li = document.querySelector(".menu-btn_section");
+
+    openMenu.addEventListener("click", () => {
+      openMenu.style.pointerEvents = "none";
+      gsap.to(this.customPass.uniforms.uProgress, {
+        value: 1.3,
+        duration: 1.25,
+        onComplete: () => {
+          this.customPass.uniforms.uMenuSwitch.value = 1.0;
+          this.customPass.uniforms.uProgress.value = 0;
+          closeMenu.style.pointerEvents = "all";
+          li.style.pointerEvents = "all";
+        },
+      });
+    });
+    closeMenu.addEventListener("click", () => {
+      closeMenu.style.pointerEvents = "none";
+      li.style.pointerEvents = "none";
+      gsap.to(this.customPass.uniforms.uProgress, {
+        value: 1.3,
+        duration: 1.25,
+        onComplete: () => {
+          this.customPass.uniforms.uMenuSwitch.value = 0.0;
+          this.customPass.uniforms.uProgress.value = 0;
+          openMenu.style.pointerEvents = "all";
+        },
+      });
+    });
+
+    li.addEventListener("click", () => {
+      closeMenu.style.pointerEvents = "none";
+      li.style.pointerEvents = "none";
+      this.customPass.uniforms.uMenuSwitch.value = 2.0;
+      this.customPass.uniforms.uProgress.value = 0;
+      gsap.to(this.customPass.uniforms.uProgress, {
+        value: 1.3,
+        duration: 1.25,
+        onComplete: () => {
+          this.customPass.uniforms.uMenuSwitch.value = 3.0;
+          this.customPass.uniforms.uProgress.value = 0;
+
+          gsap.to(this.customPass.uniforms.uProgress, {
+            value: 1.3,
+            duration: 1.25,
+            onComplete: () => {
+              this.customPass.uniforms.uMenuSwitch.value = 0;
+              this.customPass.uniforms.uProgress.value = 0;
+              openMenu.style.pointerEvents = "all";
+            },
+          });
+        },
+      });
+    });
   }
 
   resize() {
@@ -291,7 +353,6 @@ export class MainScene extends Scene {
     this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     this.customPass.material.uniforms.uBlurPos.value = this.blurVec2.set(
-      // this.sizes.width * 0.75,
       this.sizes.width,
       this.sizes.height
     );
@@ -305,8 +366,9 @@ export class MainScene extends Scene {
     if (this.controls) this.controls.update();
 
     this.composer.render();
-    // this.renderer.render(this, this.camera);
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
+
+    // customFogUniforms.coucou.value = Math.sin(raf.elapsedTime) * 50;
   }
 }
 

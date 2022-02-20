@@ -4,6 +4,7 @@ import commonVertexShader from "@glsl/wood/commonVertex.glsl";
 import outputFragmentShaderInner from "@glsl/wood/inner/outputFragment.glsl";
 import outputFragmentShader from "@glsl/wood/outputFragment.glsl";
 import { Color, CylinderGeometry, Group, MathUtils, Mesh, MeshToonMaterial } from "three";
+import { customFogUniforms } from "@js/utils/misc";
 
 export class WoodLogs extends Group {
   constructor(positions = []) {
@@ -21,7 +22,11 @@ export class WoodLogs extends Group {
 
     this.material = new MeshToonMaterial();
     this.material.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.woodUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.woodUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader
@@ -42,7 +47,11 @@ export class WoodLogs extends Group {
 
     this.innerMaterial = new MeshToonMaterial();
     this.innerMaterial.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.woodInnerUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.woodInnerUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader

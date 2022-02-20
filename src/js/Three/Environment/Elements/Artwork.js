@@ -2,6 +2,7 @@ import beginVertexShader from "@glsl/artworks/beginVertex.glsl";
 import commonFragmentShader from "@glsl/artworks/commonFragment.glsl";
 import commonVertexShader from "@glsl/artworks/commonVertex.glsl";
 import outputFragmentShader from "@glsl/artworks/outputFragment.glsl";
+import { customFogUniforms } from "@js/utils/misc";
 import {
   BoxGeometry,
   Color,
@@ -35,7 +36,11 @@ export class Artwork extends Group {
     });
 
     this.artworkMaterialOuter.onBeforeCompile = (shader) => {
-      shader.uniforms = { ...shader.uniforms, ...this.artworkUniforms };
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.artworkUniforms,
+        ...customFogUniforms,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader
