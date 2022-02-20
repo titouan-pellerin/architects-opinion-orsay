@@ -207,28 +207,34 @@ export class GroundElements {
    * @param {InstancedMesh} flowersInstancedMesh
    */
   setInstanceMatrices(groundIndex, grassInstancedMesh, flowersInstancedMesh) {
-    for (let i = 0; i < grassInstancedMesh.count; i++) {
-      const newInstanceMatrix = this.curveTexturesMatrices.get(groundIndex)[i];
-      grassInstancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+    let i = 0;
+    while (i < grassInstancedMesh.count) {
+      // for (let i = 0; i < grassInstancedMesh.count; i++) {
+      grassInstancedMesh.setMatrixAt(i, this.curveTexturesMatrices.get(groundIndex)[i]);
       grassInstancedMesh.setColorAt(
         i,
         this.grassColor[MathUtils.randInt(0, this.grassColor.length - 1)]
       );
+      i++;
     }
 
-    for (let i = 0; i < flowersInstancedMesh.count; i++) {
-      const newInstanceMatrix =
-        this.curveTexturesMatrices.get(groundIndex)[i + grassInstancedMesh.count];
-      flowersInstancedMesh.setMatrixAt(i, newInstanceMatrix.clone());
+    i = 0;
+    while (i < flowersInstancedMesh.count) {
+      // for (let i = 0; i < flowersInstancedMesh.count; i++) {
+      flowersInstancedMesh.setMatrixAt(
+        i,
+        this.curveTexturesMatrices.get(groundIndex)[i + grassInstancedMesh.count]
+      );
       flowersInstancedMesh.setColorAt(
         i,
         this.flowersColors[MathUtils.randInt(0, this.flowersColors.length - 1)]
       );
+      i++;
     }
 
     grassInstancedMesh.instanceMatrix.needsUpdate = true;
     flowersInstancedMesh.instanceMatrix.needsUpdate = true;
-    grassInstancedMesh.updateMatrix();
-    flowersInstancedMesh.updateMatrix();
+    // grassInstancedMesh.updateMatrix();
+    // flowersInstancedMesh.updateMatrix();
   }
 }

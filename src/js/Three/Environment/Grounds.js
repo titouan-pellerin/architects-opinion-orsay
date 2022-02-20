@@ -209,6 +209,7 @@ export class Grounds extends Group {
   }
 
   switchGrounds() {
+    console.time("switch");
     const currentGround1 = this.ground1;
     const currentGround2 = this.ground2;
     const currentGround3 = this.ground3;
@@ -245,37 +246,12 @@ export class Grounds extends Group {
     );
     currentGround1.woodLogs.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
 
-    // const newTrees = new Trees(
-    //   positions.get("treesPositions")[this.currentIndex + 1],
-    //   this.leafUniforms
-    // );
-    // console.log(currentGround1.trees);
-    // currentGround1.remove(currentGround1.trees);
-    // currentGround1.updateTrees(newTrees, this.raycasting.spheresToRaycast);
-    // currentGround1.add(currentGround1.trees);
-
-    // const newRocks = new Rocks(
-    //   positions.get("rocksPositions")[this.currentIndex + 1],
-    //   this.forestPathLine
-    // );
-    // newRocks.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-    // currentGround1.remove(currentGround1.rocks);
-    // currentGround1.add(newRocks);
-    // currentGround1.rocks = newRocks;
-
-    // const newWoodLogs = new WoodLogs(
-    //   positions.get("woodLogsPositions")[this.currentIndex + 1]
-    // );
-    // newWoodLogs.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-    // currentGround1.remove(currentGround1.woodLogs);
-    // currentGround1.add(newWoodLogs);
-    // currentGround1.woodLogs = newWoodLogs;
-
     this.ground1 = currentGround2;
     this.ground2 = currentGround3;
     this.ground3 = currentGround1;
 
     this.currentIndex++;
+    console.timeEnd("switch");
   }
 
   update() {
@@ -284,7 +260,7 @@ export class Grounds extends Group {
       this.currentIndex < this.groundAmount
     ) {
       this.switchGrounds();
-      console.log("switch");
+      console.log(raf.deltaTime);
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
 
