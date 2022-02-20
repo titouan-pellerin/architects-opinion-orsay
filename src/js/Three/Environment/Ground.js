@@ -23,6 +23,9 @@ import {
 } from "three";
 import { simplex } from "../../utils/misc";
 import { GroundElements } from "./Elements/GroundElements";
+import { Rocks } from "./Elements/Rocks";
+import { Trees } from "./Elements/Trees";
+import { WoodLogs } from "./Elements/WoodLogs";
 
 export class Ground extends Group {
   static groundGeometry;
@@ -33,6 +36,7 @@ export class Ground extends Group {
     grassUniforms,
     flowersUniforms,
     riverUniforms,
+    leafUniforms,
     pathLine,
     parameters = {}
   ) {
@@ -56,9 +60,11 @@ export class Ground extends Group {
     }
 
     this.texture = texture;
-    this.trees = null;
-    this.rocks = null;
-    this.woodLogs = null;
+
+    this.trees = new Trees(leafUniforms);
+    this.rocks = new Rocks();
+    this.woodLogs = new WoodLogs();
+    this.add(this.trees, this.rocks, this.woodLogs);
 
     this.groundUniforms = {
       uTime: { value: 0 },
@@ -183,15 +189,5 @@ export class Ground extends Group {
     this.ground.geometry.boundingBox.getCenter(center);
     this.ground.localToWorld(center);
     return center;
-  }
-
-  updateTrees(newTrees, spheresToRaycastArray) {
-    if (this.trees)
-      spheresToRaycastArray.splice(
-        spheresToRaycastArray.indexOf(this.trees.spheresToRaycast),
-        1
-      );
-    this.trees = newTrees;
-    spheresToRaycastArray.push(newTrees.spheresToRaycast);
   }
 }
