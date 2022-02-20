@@ -143,8 +143,8 @@ export class MainScene extends Scene {
     const fog = new Fog(parameters.skyBgColor, 20, 35);
     this.fog = fog;
 
-    ShaderChunk.fog_fragment = fogFragment;
     ShaderChunk.fog_pars_fragment = fogParsFragment;
+    ShaderChunk.fog_fragment = fogFragment;
     ShaderChunk.fog_pars_vertex = fogParsVertex;
     ShaderChunk.fog_vertex = fogVertex;
 
@@ -280,6 +280,8 @@ export class MainScene extends Scene {
     const openMenu = document.querySelector(".menu-btn_open");
     const closeMenu = document.querySelector(".menu-btn_close");
     const li = document.querySelector(".menu-btn_section");
+    const artworkIn = document.querySelector(".artwork-in");
+    const artworkOut = document.querySelector(".artwork-out");
 
     openMenu.addEventListener("click", () => {
       openMenu.style.pointerEvents = "none";
@@ -332,6 +334,26 @@ export class MainScene extends Scene {
         },
       });
     });
+
+    let tl = gsap.timeline({ paused: true });
+    tl.to(artworkIn, { duration: 0, pointerEvents: "none" });
+    tl.to(customFogUniforms.progress, { duration: 2.5, value: 1.0 });
+    tl.to(customFogUniforms.transitionIsIn, { duration: 0, value: 1.0, delay: -1 });
+    tl.to(customFogUniforms.progress, { duration: 0, value: -0.1, delay: -1 });
+    tl.to(customFogUniforms.progress, { duration: 2.5, value: 1.0, delay: -1 });
+    tl.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
+    tl.to(customFogUniforms.progress, { duration: 0, value: -0.1 });
+    tl.to(artworkIn, { duration: 0, pointerEvents: "all" });
+
+    artworkIn.addEventListener("click", () => {
+      tl.pause(0);
+      tl.play();
+    });
+    artworkOut.addEventListener("click", () => {
+      tl.play();
+    });
+
+    artworkOut.addEventListener("click", () => {});
   }
 
   resize() {
@@ -368,7 +390,7 @@ export class MainScene extends Scene {
     this.composer.render();
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
 
-    // customFogUniforms.coucou.value = Math.sin(raf.elapsedTime) * 50;
+    customFogUniforms.time.value = raf.elapsedTime;
   }
 }
 

@@ -131,11 +131,11 @@ export class CameraAnimation {
         mainScene.cameraContainer.rotateX(Math.PI);
         mainScene.cameraContainer.rotateZ(Math.PI);
       },
-      onComplete: () => {
-        this.positionTween.reverse();
-        this.lookAtTween.reverse();
-        // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
-      },
+      // onComplete: () => {
+      //   this.positionTween.reverse();
+      //   this.lookAtTween.reverse();
+      //   // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
+      // },
     });
   }
 }

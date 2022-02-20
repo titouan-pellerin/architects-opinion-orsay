@@ -1,3 +1,2 @@
-#ifdef USE_FOG
 varying float vFogDepth;
-#endif
+varying float vFogAnimation;

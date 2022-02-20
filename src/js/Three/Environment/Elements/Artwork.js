@@ -1,7 +1,7 @@
-import beginVertexShader from "@glsl/artworks/beginVertex.glsl";
-import commonFragmentShader from "@glsl/artworks/commonFragment.glsl";
-import commonVertexShader from "@glsl/artworks/commonVertex.glsl";
-import outputFragmentShader from "@glsl/artworks/outputFragment.glsl";
+import outerBeginVertexShader from "@glsl/artworks/outer/beginVertex.glsl";
+import outerCommonFragmentShader from "@glsl/artworks/outer/commonFragment.glsl";
+import outerCommonVertexShader from "@glsl/artworks/outer/commonVertex.glsl";
+import outerOutputFragmentShader from "@glsl/artworks/outer/outputFragment.glsl";
 import { customFogUniforms } from "@js/utils/misc";
 import {
   BoxGeometry,
@@ -12,8 +12,6 @@ import {
   MeshBasicMaterial,
   MeshToonMaterial,
   PlaneGeometry,
-  Texture,
-  Vector3,
 } from "three";
 
 export class Artwork extends Group {
@@ -43,25 +41,33 @@ export class Artwork extends Group {
       };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
-        commonFragmentShader
+        outerCommonFragmentShader
       );
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <output_fragment>",
-        outputFragmentShader
+        outerOutputFragmentShader
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <common>",
-        commonVertexShader
+        outerCommonVertexShader
       );
       shader.vertexShader = shader.vertexShader.replace(
         "#include <begin_vertex>",
-        beginVertexShader
+        outerBeginVertexShader
       );
     };
 
     this.artworkMaterialInner = new MeshBasicMaterial({
       map: texture,
     });
+
+    this.artworkMaterialInner.onBeforeCompile = (shader) => {
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.artworkUniforms,
+        ...customFogUniforms,
+      };
+    };
     this.artworkGeometryOuter = new BoxGeometry();
     this.artworkGeometryInner = new PlaneGeometry();
 

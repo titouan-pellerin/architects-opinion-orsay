@@ -1,8 +1,9 @@
-#ifdef USE_FOG
 uniform vec3 fogColor;
 varying float vFogDepth;
+varying float vFogAnimation;
 uniform float fogNear;
 uniform float fogFar;
-uniform float coucou;
-uniform vec3 coucou2;
-#endif
+uniform float time;
+uniform float progress;
+uniform float transitionIsIn;
+uniform sampler2D noiseTexture;

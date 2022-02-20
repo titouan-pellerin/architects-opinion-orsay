@@ -45,6 +45,16 @@ body {
     position: absolute;
     pointer-events: none;
   }
+  .artwork-in {
+    left: 50%;
+    top: 0;
+    position: absolute;
+  }
+  .artwork-out {
+    left: 60%;
+    top: 0;
+    position: absolute;
+  }
   .subtitles {
     position: absolute;
     bottom: 2rem;
