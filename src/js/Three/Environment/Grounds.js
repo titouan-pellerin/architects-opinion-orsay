@@ -233,7 +233,6 @@ export class Grounds extends Group {
     currentGround1.trees.updateTreesPositions(
       positions.get("treesPositions")[this.currentIndex + 1]
     );
-    // this.raycasting.updateSpheresToRaycast(currentGround1.trees.spheresToRaycast, 0);
     currentGround1.trees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
 
     currentGround1.rocks.updateRocksPositions(
@@ -260,7 +259,6 @@ export class Grounds extends Group {
       this.currentIndex < this.groundAmount
     ) {
       this.switchGrounds();
-      console.log(raf.deltaTime);
     }
     this.grassUniforms.uTime.value = raf.elapsedTime;
 
