@@ -74,7 +74,7 @@ export class Trees extends Group {
 
       const leaveGeometry = new PlaneGeometry(0.35, 0.35, 1, 1);
 
-      const leafColors = [new Color("#fff"), new Color("#fff"), new Color("#fff")];
+      const leafColors = [new Color("#fff"), new Color("#ccc"), new Color("#999")];
 
       const materialLeaf = new MeshToonMaterial({ side: DoubleSide });
       materialLeaf.onBeforeCompile = (shader) => {
