@@ -337,6 +337,11 @@ export class MainScene extends Scene {
       value: 1.15,
       delay: -1,
     });
+    menuAnimation.to(this.customPass.uniforms.uFadeProgress, {
+      value: 1,
+      duration: 1.5,
+      delay: -2.5,
+    });
     menuAnimation.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
     menuAnimation.to(customFogUniforms.progress, {
       duration: 0,
@@ -355,12 +360,6 @@ export class MainScene extends Scene {
     li.addEventListener("click", () => {
       menuAnimation.pause(0);
       menuAnimation.play();
-      gsap.to(this.customPass.uniforms.uFadeProgress, {
-        value: 1,
-        duration: 1.5,
-        delay: 1.5,
-        onComplete: () => {},
-      });
     });
 
     const chockwaveAnimation = gsap.timeline({ paused: true });

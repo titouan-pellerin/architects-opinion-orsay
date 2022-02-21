@@ -2,10 +2,14 @@
 @import "./utils/_var";
 @import "./utils/_reset";
 
-html {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  cursor: none;
+}
+
+html {
   font-size: 85%;
 }
 
@@ -27,6 +31,7 @@ body {
 }
 
 .dom-container {
+  display: none;
   .menu-btn_open {
     left: 20%;
     top: 0;

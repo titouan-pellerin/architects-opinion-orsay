@@ -77,7 +77,7 @@ export class Artwork extends Group {
     this.outerMesh.scale.set(
       2.4,
       (texture.userData.dimensions[1] * 2.4) / texture.userData.dimensions[0],
-      0.65
+      0.3
     );
 
     this.innerMesh = new Mesh(this.artworkGeometryInner, this.artworkMaterialInner);
@@ -86,7 +86,7 @@ export class Artwork extends Group {
       (texture.userData.dimensions[1] * 2.3) / texture.userData.dimensions[0],
       3
     );
-    this.innerMesh.position.z = -0.3;
+    this.innerMesh.position.z = -0.14;
 
     this.position.set(position.x, position.y, position.z);
 

@@ -97,7 +97,6 @@ export class Dust {
       transparent: true,
       depthTest: true,
       depthWrite: false,
-      // blending: AdditiveBlending,
     });
     this.object.material.onBeforeCompile = (shader) => {
       shader.uniforms = {
