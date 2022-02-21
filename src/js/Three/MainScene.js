@@ -284,8 +284,7 @@ export class MainScene extends Scene {
       .min(0)
       .max(1.3)
       .name("uProgress");
-    guiFolders
-      .get("experience")
+    postFolder
       .add(this.customPass.uniforms.uSunProgress, "value")
       .min(0)
       .max(1)

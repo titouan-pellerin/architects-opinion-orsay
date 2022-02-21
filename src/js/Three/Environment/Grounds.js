@@ -18,7 +18,7 @@ export class Grounds extends Group {
    * @param {Line} forestPathLine
    * @param {Checkpoint[]} checkpoints
    */
-  constructor(groundAmount, parameters = {}, forestPathLine, artworks, raycasting) {
+  constructor(parameters = {}, forestPathLine, artworks, raycasting) {
     super();
     this.forestPathLine = forestPathLine;
     this.groundIndex = 1;
@@ -203,6 +203,8 @@ export class Grounds extends Group {
       this.ground5.grass,
       this.ground5.flowers
     );
+    Ground.groundElements.curveTexturesData = null;
+    Ground.groundElements.curveTexturesMatrices = null;
 
     this.ground5.trees.updateTreesPositions(positions.get("treesPositions")[4]);
     this.ground5.rocks.updateRocksPositions(positions.get("rocksPositions")[4]);

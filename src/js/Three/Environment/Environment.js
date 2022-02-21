@@ -81,7 +81,6 @@ export class Environment {
     const raycasting = new Raycasting(cameraAnimation);
 
     this.grounds = new Grounds(
-      texturesMap.get("curveTextures").length,
       this.parameters,
       this.forestPathLine,
       this.artworks,
