@@ -40,7 +40,7 @@ vec4 lines = (centerLineFinal + rightLineFinal + leftLineFinal) * vec4(uColor2, 
 
 // Global render
 vec4 render = (shape + lines * (1.0 - noiseRender)) * vec4(vec3(fade), 1.0);
-
+render.rgb = mix(render.rgb, vec3(3.), vRayModifier);
 gl_FragColor = vec4(outgoingLight * render.rgb, diffuseColor.a * render.a);
 // gl_FragColor = vec4(render.rgb, render.a);
 

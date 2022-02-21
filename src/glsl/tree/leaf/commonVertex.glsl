@@ -3,6 +3,8 @@ uniform float uTime;
 uniform float uSpeed;
 uniform float uDisplaceIntensity;
 uniform vec3 uRayPos;
+
+varying float vRayModifier;
 varying vec2 vUv;
 
 float N(vec2 st) {
@@ -24,4 +26,8 @@ float smoothNoise(vec2 ip) {
     float t = mix(tl, tr, lv.x);
 
     return mix(b, t, lv.y);
+}
+
+float map(float value, float start1, float stop1, float start2, float stop2) {
+    return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
 }

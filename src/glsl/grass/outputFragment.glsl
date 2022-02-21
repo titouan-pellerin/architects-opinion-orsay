@@ -7,6 +7,7 @@ float grassPattern = 1. - (step(0.99, abs(vUv.x - 0.5) + vUv.y * 1.2));
 
 // Render
 vec3 render = mix(uColor, uColor2, stroke);
+render = mix(render, vec3(2.), vRayModifier);
 vec4 grass = texture2D(uTexture, vUv);
 
 // gl_FragColor = vec4(1.);

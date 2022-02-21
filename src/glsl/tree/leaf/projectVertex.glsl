@@ -13,7 +13,10 @@ vec4 worldPosition = modelMatrix * instanceMatrix * vec4(position, 1.);
 // Displacement on each vertex
 float noise = smoothNoise(newMvPosition.xz + vec2(0., time));
 
-float rayModifier = mix(2., 1., clamp((distance(uRayPos.xyz, worldPosition.xyz)), .0, 1.) * 1.);
+float rayModifierMax = 2.;
+float rayModifierMin = 1.;
+float rayModifier = mix(rayModifierMax, rayModifierMin, clamp((distance(uRayPos.xyz, worldPosition.xyz)), .0, 1.) * 1.);
+vRayModifier = map(rayModifier, rayModifierMin, rayModifierMax, 0., 1.);
 
 vec3 rayDirection = normalize(uRayPos.xyz - worldPosition.xyz);
 // if(rayModifier == 1.) rayDirection = vec3(1.);
