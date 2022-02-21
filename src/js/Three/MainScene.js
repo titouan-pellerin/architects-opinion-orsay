@@ -182,6 +182,7 @@ export class MainScene extends Scene {
         uCornerIntensity: { value: 1 },
         uCornerSize: { value: 4.5 },
         uProgress: { value: 0 },
+        uFadeProgress: { value: 0 },
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
@@ -288,9 +289,11 @@ export class MainScene extends Scene {
 
     openMenu.addEventListener("click", () => {
       openMenu.style.pointerEvents = "none";
+      artworkIn.style.pointerEvents = "none";
+      artworkOut.style.pointerEvents = "none";
       gsap.to(this.customPass.uniforms.uProgress, {
         value: 1.3,
-        duration: 1.25,
+        duration: 1.5,
         onComplete: () => {
           this.customPass.uniforms.uMenuSwitch.value = 1.0;
           this.customPass.uniforms.uProgress.value = 0;
@@ -304,59 +307,100 @@ export class MainScene extends Scene {
       li.style.pointerEvents = "none";
       gsap.to(this.customPass.uniforms.uProgress, {
         value: 1.3,
-        duration: 1.25,
+        duration: 1.5,
         onComplete: () => {
           this.customPass.uniforms.uMenuSwitch.value = 0.0;
           this.customPass.uniforms.uProgress.value = 0;
           openMenu.style.pointerEvents = "all";
+          artworkIn.style.pointerEvents = "all";
+          artworkOut.style.pointerEvents = "all";
         },
       });
+    });
+
+    const menuAnimation = gsap.timeline({ paused: true });
+    menuAnimation.to(closeMenu, { duration: 0, pointerEvents: "none" });
+    menuAnimation.to(li, { duration: 0, pointerEvents: "none" });
+    menuAnimation.to(this.customPass.uniforms.uMenuSwitch, {
+      duration: 0,
+      value: 2,
+    });
+    menuAnimation.to(customFogUniforms.progress, { duration: 3, value: 1.15 });
+    menuAnimation.to(customFogUniforms.transitionIsIn, {
+      duration: 0,
+      value: 1,
+      delay: -1,
+    });
+    menuAnimation.to(customFogUniforms.progress, { duration: 0, value: -0.1, delay: -1 });
+    menuAnimation.to(customFogUniforms.progress, {
+      duration: 3,
+      value: 1.15,
+      delay: -1,
+    });
+    menuAnimation.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
+    menuAnimation.to(customFogUniforms.progress, {
+      duration: 0,
+      value: -0.1,
+      onComplete: () => {
+        this.customPass.uniforms.uMenuSwitch.value = 0.0;
+        this.customPass.uniforms.uProgress.value = 0;
+        this.customPass.uniforms.uMenuSwitch.value = 0;
+        this.customPass.uniforms.uFadeProgress.value = 0;
+        openMenu.style.pointerEvents = "all";
+        artworkIn.style.pointerEvents = "all";
+        artworkOut.style.pointerEvents = "all";
+      },
     });
 
     li.addEventListener("click", () => {
-      closeMenu.style.pointerEvents = "none";
-      li.style.pointerEvents = "none";
-      this.customPass.uniforms.uMenuSwitch.value = 2.0;
-      this.customPass.uniforms.uProgress.value = 0;
-      gsap.to(this.customPass.uniforms.uProgress, {
-        value: 1.3,
-        duration: 1.25,
-        onComplete: () => {
-          this.customPass.uniforms.uMenuSwitch.value = 3.0;
-          this.customPass.uniforms.uProgress.value = 0;
-
-          gsap.to(this.customPass.uniforms.uProgress, {
-            value: 1.3,
-            duration: 1.25,
-            onComplete: () => {
-              this.customPass.uniforms.uMenuSwitch.value = 0;
-              this.customPass.uniforms.uProgress.value = 0;
-              openMenu.style.pointerEvents = "all";
-            },
-          });
-        },
+      menuAnimation.pause(0);
+      menuAnimation.play();
+      gsap.to(this.customPass.uniforms.uFadeProgress, {
+        value: 1,
+        duration: 1.5,
+        delay: 1.5,
+        onComplete: () => {},
       });
     });
 
-    let tl = gsap.timeline({ paused: true });
-    tl.to(artworkIn, { duration: 0, pointerEvents: "none" });
-    tl.to(customFogUniforms.progress, { duration: 2.5, value: 1.0 });
-    tl.to(customFogUniforms.transitionIsIn, { duration: 0, value: 1.0, delay: -1 });
-    tl.to(customFogUniforms.progress, { duration: 0, value: -0.1, delay: -1 });
-    tl.to(customFogUniforms.progress, { duration: 2.5, value: 1.0, delay: -1 });
-    tl.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
-    tl.to(customFogUniforms.progress, { duration: 0, value: -0.1 });
-    tl.to(artworkIn, { duration: 0, pointerEvents: "all" });
+    const chockwaveAnimation = gsap.timeline({ paused: true });
+    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
+      duration: 0,
+      value: 2,
+    });
+    chockwaveAnimation.to(artworkIn, { duration: 0, pointerEvents: "none" });
+    chockwaveAnimation.to(artworkOut, { duration: 0, pointerEvents: "none" });
+    chockwaveAnimation.to(openMenu, { duration: 0, pointerEvents: "none" });
+    chockwaveAnimation.to(customFogUniforms.progress, { duration: 2.25, value: 1.15 });
+    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
+      duration: 0,
+      value: 3,
+      delay: -1.25,
+    });
+    chockwaveAnimation.to(customFogUniforms.progress, {
+      duration: 0,
+      value: -0.1,
+      delay: -1.25,
+    });
+    chockwaveAnimation.to(customFogUniforms.progress, {
+      duration: 2.25,
+      value: 1.15,
+      delay: -1.25,
+    });
+    chockwaveAnimation.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
+    chockwaveAnimation.to(customFogUniforms.progress, { duration: 0, value: -0.1 });
+    chockwaveAnimation.to(artworkIn, { duration: 0, pointerEvents: "all" });
+    chockwaveAnimation.to(artworkOut, { duration: 0, pointerEvents: "all" });
+    chockwaveAnimation.to(openMenu, { duration: 0, pointerEvents: "all" });
 
     artworkIn.addEventListener("click", () => {
-      tl.pause(0);
-      tl.play();
+      chockwaveAnimation.pause(0);
+      chockwaveAnimation.play();
     });
     artworkOut.addEventListener("click", () => {
-      tl.play();
+      chockwaveAnimation.pause(0);
+      chockwaveAnimation.play();
     });
-
-    artworkOut.addEventListener("click", () => {});
   }
 
   resize() {

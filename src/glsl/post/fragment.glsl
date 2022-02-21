@@ -8,6 +8,7 @@ uniform sampler2D tDiffuse;
 uniform sampler2D uNoiseTexture;
 uniform float uTime;
 uniform float uProgress;
+uniform float uFadeProgress;
 uniform float uMenuSwitch;
 uniform float uCornerIntensity;
 uniform float uCornerSize;
@@ -114,7 +115,7 @@ void main() {
   float G2 = pow(2.0, sqrt((valueGx * valueGx) + (valueGy * valueGy)));
 
   vec4 mainRender = (p1 + p2) * vec4(G);
-  vec4 menuRender = ((p2 * 0.75) * vec4(G2));
+  vec4 menuRender = ((p2 * 0.5) * vec4(G2));
 
   float noiseTexture = texture2D(uNoiseTexture, 0.5 * (vUv + 1.0)).r;
 
@@ -134,10 +135,7 @@ void main() {
     finalRender = mix(mainRender, menuRender, temp);
   }
   if(uMenuSwitch == 2.) {
-    finalRender = mix(vec4(0.), menuRender, temp);
-  }
-  if(uMenuSwitch == 3.) {
-    finalRender = mix(mainRender, vec4(0.), temp);
+    finalRender = mix(menuRender, mainRender, uFadeProgress);
   }
 
   // gl_FragColor = render;

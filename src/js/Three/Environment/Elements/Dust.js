@@ -1,5 +1,9 @@
-import fragment from "@glsl/dust/fragment.glsl";
-import vertex from "@glsl/dust/vertex.glsl";
+import commonFragmentShader from "@glsl/dust/commonFragment.glsl";
+import commonVertexShader from "@glsl/dust/commonVertex.glsl";
+import outputFragmentShader from "@glsl/dust/outputFragment.glsl";
+import projectVertexShader from "@glsl/dust/projectVertex.glsl";
+import { customFogUniforms } from "@js/utils/misc";
+import { MeshBasicMaterial } from "three";
 import {
   AdditiveBlending,
   Color,
@@ -81,20 +85,43 @@ export class Dust {
   }
 
   setMaterial() {
-    this.object.material = new ShaderMaterial({
-      vertexShader: vertex,
-      fragmentShader: fragment,
-      uniforms: {
-        uTime: { value: 0 },
-        uColor: { value: tCol.set(params.color) },
-        uAlpha: { value: 1 },
-      },
+    this.dustUniforms = {
+      uTime: { value: 0 },
+      uColor: { value: tCol.set(params.color) },
+      uAlpha: { value: 1 },
+      ...customFogUniforms,
+    };
+
+    this.object.material = new MeshBasicMaterial({
       side: DoubleSide,
       transparent: true,
       depthTest: true,
       depthWrite: false,
-      blending: AdditiveBlending,
+      // blending: AdditiveBlending,
     });
+    this.object.material.onBeforeCompile = (shader) => {
+      shader.uniforms = {
+        ...shader.uniforms,
+        ...this.dustUniforms,
+        ...customFogUniforms,
+      };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        commonFragmentShader
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        outputFragmentShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        commonVertexShader
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <project_vertex>",
+        projectVertexShader
+      );
+    };
   }
 
   setMesh() {
@@ -106,6 +133,6 @@ export class Dust {
   }
 
   update() {
-    this.object.material.uniforms.uTime.value = raf.elapsedTime;
+    this.dustUniforms.uTime.value = raf.elapsedTime;
   }
 }

@@ -34,8 +34,8 @@ export class Artwork extends Group {
       side: DoubleSide,
       transparent: true,
     });
-
     this.artworkMaterialOuter.onBeforeCompile = (shader) => {
+      console.log(shader);
       shader.uniforms = {
         ...shader.uniforms,
         ...this.artworkUniforms,
