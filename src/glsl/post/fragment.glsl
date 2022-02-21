@@ -8,6 +8,7 @@ uniform sampler2D tDiffuse;
 uniform sampler2D uNoiseTexture;
 uniform float uTime;
 uniform float uProgress;
+uniform float uSunProgress;
 uniform float uMenuSwitch;
 uniform float uCornerIntensity;
 uniform float uCornerSize;
@@ -26,6 +27,10 @@ float hash(vec2 p) {
 
 vec2 rotate(vec2 uv, float rotation, vec2 mid) {
   return vec2(cos(rotation) * (uv.x - mid.x) + sin(rotation) * (uv.y - mid.y) + mid.x, cos(rotation) * (uv.y - mid.y) - sin(rotation) * (uv.x - mid.x) + mid.y);
+}
+
+float parabola(float x) {
+  return -2.8 * pow(x, 2.) + 2.8 * x + 0.3;
 }
 
 void main() {
@@ -54,7 +59,9 @@ void main() {
   float total = 0.0;
 
   // vec2 toCenter = uBlurPos * abs(sin(uTime)) - vUv * uRes;
-  vec2 toCenter = uBlurPos - vUv * uRes;
+  // vec2 toCenter = uBlurPos * parabola(uSunProgress) - vUv * uRes;
+  vec2 toCenter = vec2(uSunProgress, parabola(uSunProgress)) * uBlurPos - vUv * uRes;
+  // vec2 toCenter = uBlurPos - vUv * uRes;
 
   float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
 

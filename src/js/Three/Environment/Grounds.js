@@ -136,7 +136,6 @@ export class Grounds extends Group {
       parameters
     );
     this.ground3.position.z = -parameters.envScale * parameters.groundSize * 2;
-    // this.ground3.texture.flipY = false;
 
     Ground.groundElements.setInstanceMatrices(
       2,
@@ -145,13 +144,8 @@ export class Grounds extends Group {
     );
 
     this.ground3.trees.updateTreesPositions(positions.get("treesPositions")[2]);
-    // this.raycasting.spheresToRaycast[1] = this.ground3.trees.spheresToRaycast;
-    // this.ground3.trees.scale.z = -1;
-
     this.ground3.rocks.updateRocksPositions(positions.get("rocksPositions")[2]);
-    // this.ground3.rocks.scale.z = -1;
     this.ground3.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[2]);
-    // this.ground3.woodLogs.scale.z = -1;
 
     this.ground3.add(
       leaf.object.mesh.clone(),
