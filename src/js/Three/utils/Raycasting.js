@@ -39,16 +39,6 @@ export class Raycasting {
     }
   }
 
-  // /**
-  //  *
-  //  * @param {Trees} trees
-  //  */
-  // updateSpheresToRaycast(newSpheresToRaycast, groundIndex) {
-  //   this.spheresToRaycast.splice(this.spheresToRaycast.indexOf(newSpheresToRaycast), 1);
-  //   this.spheresToRaycast.push(newSpheresToRaycast);
-  //   console.log(this.spheresToRaycast.length);
-  // }
-
   updateArtworks(newArtworks = []) {
     this.artworks = newArtworks;
   }
@@ -79,24 +69,24 @@ export class Raycasting {
         this.rayPos.x = MathUtils.damp(
           this.rayPos.x,
           intersects[0].point.x,
-          4,
+          4.5,
           raf.deltaTime
         );
         this.rayPos.y = MathUtils.damp(
           this.rayPos.y,
           intersects[0].point.y,
-          4,
+          4.5,
           raf.deltaTime
         );
         this.rayPos.z = MathUtils.damp(
           this.rayPos.z,
           intersects[0].point.z,
-          4,
+          4.5,
           raf.deltaTime
         );
       }
     } else {
-      this.rayPos.y = MathUtils.damp(this.rayPos.y, -10, 2, raf.deltaTime);
+      this.rayPos.y = MathUtils.damp(this.rayPos.y, -10, 0.1, raf.deltaTime);
       document.body.style.cursor = "default";
       this.currentIntersect = null;
     }
