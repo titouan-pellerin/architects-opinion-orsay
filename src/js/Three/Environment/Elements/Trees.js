@@ -76,9 +76,11 @@ export class Trees extends Group {
 
       const leafColors = [new Color("#fff"), new Color("#ccc"), new Color("#999")];
 
-      const materialLeaf = new MeshToonMaterial({ side: DoubleSide });
+      const materialLeaf = new MeshToonMaterial({
+        side: DoubleSide,
+      });
       materialLeaf.onBeforeCompile = (shader) => {
-        shader.uniforms = { ...shader.uniforms, ...leafUniforms };
+        shader.uniforms = { ...shader.uniforms, ...leafUniforms, ...customFogUniforms };
         shader.fragmentShader = shader.fragmentShader.replace(
           "#include <common>",
           commonFragmentShaderLeaf

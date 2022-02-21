@@ -16,13 +16,14 @@ import {
 import raf from "../../../utils/Raf";
 
 const tCol = new Color();
+const tCol2 = new Color();
 
 const params = {
-  color: "#d1e997",
-  // color2: "#4a9e36",
+  uColor: { value: new Color("#d1e997") },
+  uColor2: { value: new Color("#4a9e36") },
 };
 
-const leavesColors = ["#eeff99", "#ccff99", "#eeffaa"];
+const leavesColors = ["#fff", "#ccc", "#999"];
 
 export class Leaf {
   constructor() {
@@ -104,7 +105,7 @@ export class Leaf {
     this.leavesUniforms = {
       uTime: { value: 0 },
       uColor: { value: tCol.set(params.color) },
-      // uColor2: { value: tCol.set(params.color2) },
+      uColor2: { value: tCol2.set(params.color2) },
     };
 
     this.object.material = new MeshToonMaterial({
