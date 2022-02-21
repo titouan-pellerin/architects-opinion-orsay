@@ -21,8 +21,7 @@ export class Grounds extends Group {
   constructor(groundAmount, parameters = {}, forestPathLine, artworks, raycasting) {
     super();
     this.forestPathLine = forestPathLine;
-    this.currentIndex = 1;
-    this.groundAmount = groundAmount - 1;
+    this.groundIndex = 1;
     this.parameters = parameters;
     this.raycasting = raycasting;
 
@@ -62,25 +61,12 @@ export class Grounds extends Group {
       uRayPos: { value: new Vector3() },
     };
 
-    // Previous Ground
+    const dust = new Dust();
+    const leaf = new Leaf();
+    const butterfly = new Butterfly();
+
+    // Ground 1
     this.ground1 = new Ground(
-      this.textures[2],
-      this.grassUniforms,
-      this.flowersUniforms,
-      this.riverUniforms,
-      this.leafUniforms,
-      forestPathLine,
-      parameters
-    );
-    this.raycasting.spheresToRaycast[0] = this.ground1.trees.spheresToRaycast;
-
-    this.ground1.position.z += parameters.envScale * this.parameters.groundSize;
-    this.ground1.scale.z = -1;
-    this.ground1.ground.updateMatrix();
-    this.ground1.mask.updateMatrix();
-
-    // Current Ground
-    this.ground2 = new Ground(
       this.textures[0],
       this.grassUniforms,
       this.flowersUniforms,
@@ -91,33 +77,23 @@ export class Grounds extends Group {
     );
     Ground.groundElements.setInstanceMatrices(
       0,
-      this.ground2.grass,
-      this.ground2.flowers
+      this.ground1.grass,
+      this.ground1.flowers
     );
 
-    this.ground2.trees.updateTreesPositions(positions.get("treesPositions")[0]);
-    this.raycasting.spheresToRaycast[2] = this.ground2.trees.spheresToRaycast;
+    this.ground1.trees.updateTreesPositions(positions.get("treesPositions")[0]);
+    this.ground1.rocks.updateRocksPositions(positions.get("rocksPositions")[0]);
+    this.ground1.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[0]);
 
-    this.ground2.rocks.updateRocksPositions(positions.get("rocksPositions")[0]);
-    this.ground2.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[0]);
-
-    const dust = new Dust();
-
-    const leaf = new Leaf();
-
-    const butterfly = new Butterfly();
-
-    this.ground2.add(
-      // woodLogs1,
-      // rocks1,
+    this.ground1.add(
       leaf.object.mesh,
       dust.object.mesh,
       butterfly.object.mesh,
       butterfly.object.mirrorMesh
     );
 
-    // Next Ground
-    this.ground3 = new Ground(
+    // Ground 2
+    this.ground2 = new Ground(
       this.textures[1],
       this.grassUniforms,
       this.flowersUniforms,
@@ -128,37 +104,139 @@ export class Grounds extends Group {
     );
     Ground.groundElements.setInstanceMatrices(
       1,
+      this.ground2.grass,
+      this.ground2.flowers
+    );
+
+    this.ground2.trees.updateTreesPositions(positions.get("treesPositions")[1]);
+    this.ground2.rocks.updateRocksPositions(positions.get("rocksPositions")[1]);
+    this.ground2.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[1]);
+
+    this.ground2.texture.flipY = false;
+    this.ground2.scale.z = -1;
+    this.ground2.trees.scale.z = -1;
+    this.ground2.rocks.scale.z = -1;
+    this.ground2.woodLogs.scale.z = -1;
+    this.ground2.position.z = -parameters.envScale * parameters.groundSize;
+
+    this.ground2.add(
+      leaf.object.mesh.clone(),
+      dust.object.mesh.clone(),
+      butterfly.object.mesh.clone(),
+      butterfly.object.mirrorMesh.clone()
+    );
+
+    this.ground3 = new Ground(
+      this.textures[2],
+      this.grassUniforms,
+      this.flowersUniforms,
+      this.riverUniforms,
+      this.leafUniforms,
+      forestPathLine,
+      parameters
+    );
+    this.ground3.position.z = -parameters.envScale * parameters.groundSize * 2;
+    // this.ground3.texture.flipY = false;
+
+    Ground.groundElements.setInstanceMatrices(
+      2,
       this.ground3.grass,
       this.ground3.flowers
     );
 
-    this.ground3.texture.flipY = false;
-    this.ground3.position.z -= parameters.envScale * parameters.groundSize;
-    this.ground3.scale.z = -1;
+    this.ground3.trees.updateTreesPositions(positions.get("treesPositions")[2]);
+    // this.raycasting.spheresToRaycast[1] = this.ground3.trees.spheresToRaycast;
+    // this.ground3.trees.scale.z = -1;
 
-    this.ground3.trees.updateTreesPositions(positions.get("treesPositions")[1]);
-    this.ground3.trees.scale.z = -1;
-    this.raycasting.spheresToRaycast[3] = this.ground3.trees.spheresToRaycast;
-
-    this.ground3.rocks.updateRocksPositions(positions.get("rocksPositions")[1]);
-    this.ground3.rocks.scale.z = -1;
-    this.ground3.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[1]);
-    this.ground3.woodLogs.scale.z = -1;
-
-    const leaf2 = leaf.object.mesh.clone();
-    const dust2 = dust.object.mesh.clone();
-    const butterfly2 = butterfly.object.mesh.clone();
-    const butterflyMirror2 = butterfly.object.mirrorMesh.clone();
+    this.ground3.rocks.updateRocksPositions(positions.get("rocksPositions")[2]);
+    // this.ground3.rocks.scale.z = -1;
+    this.ground3.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[2]);
+    // this.ground3.woodLogs.scale.z = -1;
 
     this.ground3.add(
-      // woodLogs2, rocks2,
-      leaf2,
-      dust2,
-      butterfly2,
-      butterflyMirror2
+      leaf.object.mesh.clone(),
+      dust.object.mesh.clone(),
+      butterfly.object.mesh.clone(),
+      butterfly.object.mirrorMesh.clone()
     );
 
-    this.add(this.ground1, this.ground2, this.ground3);
+    this.ground4 = new Ground(
+      this.textures[3],
+      this.grassUniforms,
+      this.flowersUniforms,
+      this.riverUniforms,
+      this.leafUniforms,
+      forestPathLine,
+      parameters
+    );
+    Ground.groundElements.setInstanceMatrices(
+      3,
+      this.ground4.grass,
+      this.ground4.flowers
+    );
+
+    this.ground4.trees.updateTreesPositions(positions.get("treesPositions")[3]);
+    this.ground4.rocks.updateRocksPositions(positions.get("rocksPositions")[3]);
+    this.ground4.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[3]);
+
+    this.ground4.texture.flipY = false;
+    this.ground4.trees.scale.z = -1;
+    this.ground4.rocks.scale.z = -1;
+    this.ground4.woodLogs.scale.z = -1;
+    this.ground4.scale.z = -1;
+    this.ground4.position.z = -parameters.envScale * parameters.groundSize * 3;
+
+    this.ground4.add(
+      leaf.object.mesh.clone(),
+      dust.object.mesh.clone(),
+      butterfly.object.mesh.clone(),
+      butterfly.object.mirrorMesh.clone()
+    );
+
+    this.ground5 = new Ground(
+      this.textures[4],
+      this.grassUniforms,
+      this.flowersUniforms,
+      this.riverUniforms,
+      this.leafUniforms,
+      forestPathLine,
+      parameters
+    );
+    this.ground5.position.z = -parameters.envScale * parameters.groundSize * 4;
+
+    Ground.groundElements.setInstanceMatrices(
+      4,
+      this.ground5.grass,
+      this.ground5.flowers
+    );
+
+    this.ground5.trees.updateTreesPositions(positions.get("treesPositions")[4]);
+    this.ground5.rocks.updateRocksPositions(positions.get("rocksPositions")[4]);
+    this.ground5.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[4]);
+
+    this.ground5.add(
+      leaf.object.mesh.clone(),
+      dust.object.mesh.clone(),
+      butterfly.object.mesh.clone(),
+      butterfly.object.mirrorMesh.clone()
+    );
+
+    this.ground3.visible = false;
+    this.ground4.visible = false;
+    this.ground5.visible = false;
+
+    this.raycasting.spheresToRaycast[0] = this.ground1.trees.spheresToRaycast;
+    this.raycasting.spheresToRaycast[1] = this.ground2.trees.spheresToRaycast;
+    this.raycasting.groundsToRaycast = [this.ground1.ground, this.ground2.ground];
+
+    this.groundsArray = [
+      this.ground1,
+      this.ground2,
+      this.ground3,
+      this.ground4,
+      this.ground5,
+    ];
+    this.add(this.ground1, this.ground2, this.ground3, this.ground4, this.ground5);
     this.add(...artworks);
 
     raf.subscribe("grounds", this.update.bind(this));
@@ -210,57 +288,36 @@ export class Grounds extends Group {
   }
 
   switchGrounds() {
+    console.log(this.groundIndex);
     console.time("switch");
-    const currentGround1 = this.ground1;
-    const currentGround2 = this.ground2;
-    const currentGround3 = this.ground3;
 
-    currentGround1.position.z -=
-      this.parameters.envScale * this.parameters.groundSize * 3;
-    const texture = this.textures[this.currentIndex + 1];
-    texture.flipY = !!(this.currentIndex % 2);
-    currentGround1.groundUniforms.uTexture.value = texture;
-    currentGround1.groundMaskUniforms.uTexture.value = texture;
-    Ground.groundElements.setInstanceMatrices(
-      this.currentIndex + 1,
-      currentGround1.grass,
-      currentGround1.flowers
-    );
+    this.groundsArray
+      .filter((ground) => ground.visible)
+      .forEach((ground) => (ground.visible = false));
 
-    currentGround1.ground.updateMatrix();
-    currentGround1.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-    currentGround1.mask.updateMatrix();
+    this.groundsArray[this.groundIndex].visible = true;
+    this.groundsArray[this.groundIndex + 1].visible = true;
 
-    currentGround1.trees.updateTreesPositions(
-      positions.get("treesPositions")[this.currentIndex + 1]
-    );
-    currentGround1.trees.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+    this.raycasting.spheresToRaycast[0] =
+      this.groundsArray[this.groundIndex].trees.spheresToRaycast;
+    this.raycasting.spheresToRaycast[1] =
+      this.groundsArray[this.groundIndex + 1].trees.spheresToRaycast;
 
-    currentGround1.rocks.updateRocksPositions(
-      positions.get("rocksPositions")[this.currentIndex + 1]
-    );
-    currentGround1.rocks.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
+    this.raycasting.groundsToRaycast[0] = this.groundsArray[this.groundIndex].ground;
+    this.raycasting.groundsToRaycast[1] = this.groundsArray[this.groundIndex + 1].ground;
 
-    currentGround1.woodLogs.updateWoodLogsPositions(
-      positions.get("woodLogsPositions")[this.currentIndex + 1]
-    );
-    currentGround1.woodLogs.scale.z = !!(this.currentIndex % 2) ? 1 : -1;
-
-    this.ground1 = currentGround2;
-    this.ground2 = currentGround3;
-    this.ground3 = currentGround1;
-
-    this.currentIndex++;
+    this.groundIndex++;
     console.timeEnd("switch");
   }
 
   update() {
     if (
-      mainScene.cameraContainer.position.z <= this.ground2.getCenter().z &&
-      this.currentIndex < this.groundAmount
-    ) {
+      mainScene.cameraContainer.position.z <=
+      this.groundsArray[this.groundIndex].position.z +
+        this.parameters.envScale * this.parameters.groundSize * 0.5
+    )
       this.switchGrounds();
-    }
+
     this.grassUniforms.uTime.value = raf.elapsedTime;
 
     this.flowersUniforms.uRayPos.value.copy(this.raycasting.rayPos);

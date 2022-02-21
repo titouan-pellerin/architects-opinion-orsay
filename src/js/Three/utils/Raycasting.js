@@ -9,7 +9,7 @@ export class Raycasting {
     this.cameraAnimation = cameraAnimation;
     this.raycaster = new Raycaster();
     this.raycaster.far = 35;
-    this.objects = [];
+    this.groundsToRaycast = [];
     this.artworks = [];
     this.spheresToRaycast = [];
     this.currentIntersect = null;
@@ -19,8 +19,7 @@ export class Raycasting {
     this.groundFlipped = 1;
   }
 
-  start(objects = []) {
-    this.objects = objects;
+  start() {
     raf.subscribe("raycasting", this.update.bind(this));
     document.addEventListener("mousedown", this.onClickHandler);
   }
@@ -50,7 +49,7 @@ export class Raycasting {
   update() {
     this.raycaster.setFromCamera(mouse.normalizedMouseCoords, mainScene.camera);
     const intersects = this.raycaster.intersectObjects(
-      [...this.objects, ...this.spheresToRaycast.flat(), ...this.artworks],
+      [...this.groundsToRaycast, ...this.spheresToRaycast.flat(), ...this.artworks],
       true
     );
 
@@ -86,7 +85,7 @@ export class Raycasting {
         );
       }
     } else {
-      this.rayPos.y = MathUtils.damp(this.rayPos.y, -10, 0.1, raf.deltaTime);
+      this.rayPos.y = MathUtils.damp(this.rayPos.y, -5, 1, raf.deltaTime);
       document.body.style.cursor = "default";
       this.currentIntersect = null;
     }
