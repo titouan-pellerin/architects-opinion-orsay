@@ -115,6 +115,7 @@ void main() {
 
   vec4 mainRender = (p1 + p2) * vec4(G);
   vec4 menuRender = ((p2 * 0.75) * vec4(G2));
+  // vec4 menuRender = ((p2 * 0.75) * vec4(G2 * 0.2)); // smooth color à changer
 
   float noiseTexture = texture2D(uNoiseTexture, 0.5 * (vUv + 1.0)).r;
 
