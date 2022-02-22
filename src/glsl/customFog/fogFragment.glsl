@@ -1,8 +1,8 @@
 float fogFactor = smoothstep(fogNear, fogFar, vFogDepthZ);
-float fogFactorLeft = smoothstep(23.5, fogFar, vFogDepthLeft);
-float fogDepthRight = smoothstep(23.5, fogFar, vFogDepthRight);
+float fogFactorLeft = smoothstep(24., fogFar, vFogDepthLeft);
+float fogDepthRight = smoothstep(24., fogFar, vFogDepthRight);
 
-float vFogAnimation = smoothstep(fogNear * 40., fogFar, vFogDepthZ);
+float vFogAnimation = smoothstep(fogNear * 5., fogFar, vFogDepthZ);
 
 float t1 = texture2D(noiseTexture, vUv).g;
 
