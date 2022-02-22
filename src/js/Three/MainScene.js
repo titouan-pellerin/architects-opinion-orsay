@@ -26,7 +26,7 @@ import fragmentShader from "../../glsl/post/fragment.glsl";
 import vertexShader from "../../glsl/post/vertex.glsl";
 import { texturesMap } from "../utils/assets";
 import { guiFolders } from "../utils/Debug";
-import { customFogUniforms, isSafari } from "../utils/misc";
+import { customFogUniforms, isMobile, isSafari } from "../utils/misc";
 import { mouse } from "../utils/Mouse";
 import raf from "../utils/Raf";
 
@@ -72,11 +72,15 @@ export class MainScene extends Scene {
       lightIntensity: 0.5,
       light2Intensity: 0.5,
     };
+    this.maxRes = isMobile() ? 1080 : 1440;
     this.aspectRatio =
       (window.innerWidth * devicePixelRatio) / (window.innerHeight * devicePixelRatio);
     this.sizes = {
-      width: Math.min(window.innerWidth, (1440 / devicePixelRatio) * this.aspectRatio),
-      height: Math.min(window.innerHeight, 1440 / devicePixelRatio),
+      width: Math.min(
+        window.innerWidth,
+        (this.maxRes / devicePixelRatio) * this.aspectRatio
+      ),
+      height: Math.min(window.innerHeight, this.maxRes / devicePixelRatio),
     };
 
     this.canvas = document.querySelector(".webgl");
@@ -183,6 +187,7 @@ export class MainScene extends Scene {
         uCornerSize: { value: 4.5 },
         uProgress: { value: 0 },
         uFadeProgress: { value: 0 },
+        uSunProgress: { value: 0.3 },
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
@@ -275,7 +280,16 @@ export class MainScene extends Scene {
       .max(1)
       .name("Intensity");
 
-    postFolder.add(this.customPass.uniforms.uProgress, "value").min(0).max(1.3);
+    postFolder
+      .add(this.customPass.uniforms.uProgress, "value")
+      .min(0)
+      .max(1.3)
+      .name("uProgress");
+    postFolder
+      .add(this.customPass.uniforms.uSunProgress, "value")
+      .min(0)
+      .max(1)
+      .name("uSunProgress");
 
     window.addEventListener("resize", this.resize.bind(this));
 
@@ -407,9 +421,9 @@ export class MainScene extends Scene {
       (window.innerWidth * devicePixelRatio) / (window.innerHeight * devicePixelRatio);
     this.sizes.width = Math.min(
       window.innerWidth,
-      (1440 / devicePixelRatio) * this.aspectRatio
+      (this.maxRes / devicePixelRatio) * this.aspectRatio
     );
-    this.sizes.height = Math.min(window.innerHeight, 1440 / devicePixelRatio);
+    this.sizes.height = Math.min(window.innerHeight, this.maxRes / devicePixelRatio);
 
     this.camera.aspect = this.aspectRatio;
     this.camera.updateProjectionMatrix();

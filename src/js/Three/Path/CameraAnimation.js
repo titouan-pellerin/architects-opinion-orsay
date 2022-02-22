@@ -37,11 +37,6 @@ export class CameraAnimation {
     };
 
     this.debugObject = {
-      checkpoint1: () => this.goToCheckpoint(0),
-      checkpoint2: () => this.goToCheckpoint(1),
-      checkpoint3: () => this.goToCheckpoint(2),
-      checkpoint4: () => this.goToCheckpoint(3),
-      end: () => this.goToCheckpoint(4),
       showLine: false,
     };
     guiFolders
@@ -52,6 +47,26 @@ export class CameraAnimation {
         this.debugObject.showLine ? mainScene.add(path) : mainScene.remove(path);
       });
   }
+
+  tpToCheckpoint(index) {
+    if (index === 0) this.tick.value = 0;
+    else this.tick.value = this.checkpoints[index - 1].tick;
+    const nextTick = this.tick.value + 0.007;
+
+    const curvePoint = this.path.spline.getPointAt(this.tick.value);
+    const curvePoint2 = this.path.spline.getPointAt(nextTick);
+
+    const camPos = new Vector3(curvePoint.x, -1, curvePoint.y);
+    const camPos2 = new Vector3(curvePoint2.x, -1, curvePoint2.y);
+
+    mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
+    mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
+    mainScene.cameraContainer.userData.lookingAt = camPos2;
+    mainScene.cameraContainer.rotateX(Math.PI);
+    mainScene.cameraContainer.rotateZ(Math.PI);
+    this.checkpointsIndex = index;
+  }
+
   /**
    *
    * @param {Number} index
@@ -66,8 +81,8 @@ export class CameraAnimation {
       this.voiceOver.playChapter(index);
       gsap.to(this.tick, {
         // delay: index === 0 ? 3 : 0,
-        // duration: this.checkpoints[index].duration,
-        duration: 1,
+        duration: this.checkpoints[index].duration * 0.5,
+        // duration: 1,
         value: this.checkpoints[index].tick,
         // value: 1,
         ease: CustomEase.create(

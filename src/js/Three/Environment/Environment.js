@@ -38,9 +38,6 @@ export class Environment {
       this.artworks.push(artwork);
     }
 
-    // this.artworks[0].artworkUniforms.uColor.value = new Color("#00ff00");
-    // this.artworks[0].artworkUniforms.uColor2.value = new Color("#0000ff");
-
     const checkpoints = [];
     const checkpoint1 = new Checkpoint(0.16, 35.3, this.forestPathLine.spline, [
       this.artworks[0],
@@ -84,18 +81,13 @@ export class Environment {
     const raycasting = new Raycasting(cameraAnimation);
 
     this.grounds = new Grounds(
-      texturesMap.get("curveTextures").length,
       this.parameters,
       this.forestPathLine,
       this.artworks,
       raycasting
     );
 
-    raycasting.start([
-      this.grounds.ground1.ground,
-      this.grounds.ground2.ground,
-      this.grounds.ground3.ground,
-    ]);
+    raycasting.start();
 
     this.debugObject = {
       start: () => {
@@ -110,8 +102,38 @@ export class Environment {
         voiceOver.init(audioListener);
         cameraAnimation.goToCheckpoint(null, raycasting);
       },
+      tpToCheckpoints0: () => {
+        this.grounds.groundIndex = 0;
+        cameraAnimation.tpToCheckpoint(0);
+      },
+      tpToCheckpoints1: () => {
+        this.grounds.groundIndex = 0;
+        cameraAnimation.tpToCheckpoint(1);
+      },
+      tpToCheckpoints2: () => {
+        this.grounds.groundIndex = 1;
+        cameraAnimation.tpToCheckpoint(2);
+      },
+      tpToCheckpoints3: () => {
+        this.grounds.groundIndex = 2;
+        cameraAnimation.tpToCheckpoint(3);
+      },
+      tpToCheckpoints4: () => {
+        this.grounds.groundIndex = 3;
+        cameraAnimation.tpToCheckpoint(4);
+      },
+      tpToCheckpoints5: () => {
+        this.grounds.groundIndex = 3;
+        cameraAnimation.tpToCheckpoint(5);
+      },
     };
 
     guiFolders.get("experience").add(this.debugObject, "start").name("Next");
+    guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints0");
+    guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints1");
+    guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints2");
+    guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints3");
+    guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints4");
+    guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints5");
   }
 }

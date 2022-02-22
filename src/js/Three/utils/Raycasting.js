@@ -9,7 +9,7 @@ export class Raycasting {
     this.cameraAnimation = cameraAnimation;
     this.raycaster = new Raycaster();
     this.raycaster.far = 35;
-    this.objects = [];
+    this.groundsToRaycast = [];
     this.artworks = [];
     this.spheresToRaycast = [];
     this.currentIntersect = null;
@@ -19,8 +19,7 @@ export class Raycasting {
     this.groundFlipped = 1;
   }
 
-  start(objects = []) {
-    this.objects = objects;
+  start() {
     raf.subscribe("raycasting", this.update.bind(this));
     document.addEventListener("mousedown", this.onClickHandler);
   }
@@ -39,16 +38,6 @@ export class Raycasting {
     }
   }
 
-  // /**
-  //  *
-  //  * @param {Trees} trees
-  //  */
-  // updateSpheresToRaycast(newSpheresToRaycast, groundIndex) {
-  //   this.spheresToRaycast.splice(this.spheresToRaycast.indexOf(newSpheresToRaycast), 1);
-  //   this.spheresToRaycast.push(newSpheresToRaycast);
-  //   console.log(this.spheresToRaycast.length);
-  // }
-
   updateArtworks(newArtworks = []) {
     this.artworks = newArtworks;
   }
@@ -60,7 +49,7 @@ export class Raycasting {
   update() {
     this.raycaster.setFromCamera(mouse.normalizedMouseCoords, mainScene.camera);
     const intersects = this.raycaster.intersectObjects(
-      [...this.objects, ...this.spheresToRaycast.flat(), ...this.artworks],
+      [...this.groundsToRaycast, ...this.spheresToRaycast.flat(), ...this.artworks],
       true
     );
 
@@ -79,24 +68,24 @@ export class Raycasting {
         this.rayPos.x = MathUtils.damp(
           this.rayPos.x,
           intersects[0].point.x,
-          4,
+          4.5,
           raf.deltaTime
         );
         this.rayPos.y = MathUtils.damp(
           this.rayPos.y,
           intersects[0].point.y,
-          4,
+          4.5,
           raf.deltaTime
         );
         this.rayPos.z = MathUtils.damp(
           this.rayPos.z,
           intersects[0].point.z,
-          4,
+          4.5,
           raf.deltaTime
         );
       }
     } else {
-      this.rayPos.y = MathUtils.damp(this.rayPos.y, -10, 2, raf.deltaTime);
+      this.rayPos.y = MathUtils.damp(this.rayPos.y, -5, 1, raf.deltaTime);
       document.body.style.cursor = "default";
       this.currentIntersect = null;
     }

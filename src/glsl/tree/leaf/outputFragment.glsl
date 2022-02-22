@@ -3,7 +3,8 @@
 // Shape
 float rightPattern = 1.0 - (step(1.0, length(vUv)));
 float leftPattern = 1.0 - (step(1.0, length(1.0 - vUv)));
-vec4 shape = vec4(rightPattern) * vec4(leftPattern) * vec4(uColor * 1.5, 1.0);
+// vec4 shape = vec4(rightPattern) * vec4(leftPattern) * vec4(uColor * 1.5, 1.0);
+vec4 shape = vec4(rightPattern) * vec4(leftPattern) * vec4(mix(uColor, vec3(3.), vRayModifier) * 1.5, 1.);
 
 // Noise
 float noise = cnoise(vUv * 10.);
@@ -42,6 +43,7 @@ vec4 lines = (centerLineFinal + rightLineFinal + leftLineFinal) * vec4(uColor2, 
 vec4 render = (shape + lines * (1.0 - noiseRender)) * vec4(vec3(fade), 1.0);
 
 gl_FragColor = render;
+// render.rgb = mix(render.rgb, vec3(3.), vRayModifier);
 gl_FragColor = vec4(outgoingLight * render.rgb, diffuseColor.a * render.a);
 
 if(render.a < 1.0) {
