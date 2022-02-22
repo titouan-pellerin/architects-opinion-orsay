@@ -76,14 +76,14 @@ export class CameraAnimation {
     raycasting.removeArtworks();
     mouse.range.x = 0.2;
 
-    if (!index) index = this.checkpointsIndex;
-    if (index <= 4) {
-      this.voiceOver.playChapter(index);
+    if (index) this.checkpointsIndex = index;
+    if (this.checkpointsIndex <= 4) {
+      this.voiceOver.playChapter(this.checkpointsIndex);
       gsap.to(this.tick, {
-        // delay: index === 0 ? 3 : 0,
-        duration: this.checkpoints[index].duration * 0.5,
+        // delay: this.checkpointsIndex === 0 ? 3 : 0,
+        duration: this.checkpoints[this.checkpointsIndex].duration,
         // duration: 1,
-        value: this.checkpoints[index].tick,
+        value: this.checkpoints[this.checkpointsIndex].tick,
         // value: 1,
         ease: CustomEase.create(
           "custom",
@@ -106,7 +106,7 @@ export class CameraAnimation {
           mainScene.cameraContainer.rotateZ(Math.PI);
         },
         onComplete: () => {
-          raycasting.updateArtworks(this.checkpoints[index].artworks);
+          raycasting.updateArtworks(this.checkpoints[this.checkpointsIndex].artworks);
           this.checkpointsIndex++;
           mouse.range.x = 0.4;
         },

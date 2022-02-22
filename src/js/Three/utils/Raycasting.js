@@ -57,8 +57,8 @@ export class Raycasting {
       if (intersects[0].object.parent instanceof Artwork) {
         document.body.style.cursor = "pointer";
         this.currentIntersect = intersects[0].object;
+        this.rayPos.y = MathUtils.damp(this.rayPos.y, -5, 1, raf.deltaTime);
       } else {
-        // console.log(intersects[0].object.geometry);
         intersects[0].object.parent.scale.z === -1
           ? (this.groundFlipped = -1)
           : (this.groundFlipped = 1);

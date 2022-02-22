@@ -45,7 +45,7 @@ export class Environment {
       this.artworks[2],
       this.artworks[3],
     ]);
-    const checkpoint2 = new Checkpoint(0.43, 51.6, this.forestPathLine.spline, [
+    const checkpoint2 = new Checkpoint(0.42, 51.6, this.forestPathLine.spline, [
       this.artworks[4],
       this.artworks[5],
       this.artworks[6],
@@ -58,15 +58,12 @@ export class Environment {
       this.artworks[11],
     ]);
     const checkpoint4 = new Checkpoint(0.8, 45.3, this.forestPathLine.spline, [
-      this.artworks[11],
       this.artworks[12],
       this.artworks[13],
       this.artworks[14],
-    ]);
-    const checkpoint5 = new Checkpoint(0.9, 21.3, this.forestPathLine.spline, [
       this.artworks[15],
-      this.artworks[16],
     ]);
+    const checkpoint5 = new Checkpoint(0.9, 21.3, this.forestPathLine.spline, []);
     checkpoints.push(checkpoint1, checkpoint2, checkpoint3, checkpoint4, checkpoint5);
 
     const voiceOver = new Voiceover();

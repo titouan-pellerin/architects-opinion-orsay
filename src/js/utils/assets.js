@@ -27,52 +27,52 @@ const butterflyPattern = textureLoader.load("/assets/butterfly/butterfly.png");
 texturesMap.set("butterflyPattern", [butterflyPattern]);
 butterflyPattern.encoding = sRGBEncoding;
 
-const artwork1 = textureLoader.load("/assets/artworks/la-main-emile-galle.jpeg");
+const artwork1 = textureLoader.load("/assets/artworks/la-main-emile-galle.jpg");
 artwork1.encoding = sRGBEncoding;
 
-const artwork2 = textureLoader.load("/assets/artworks/presentoir-eugene-rousseau.jpeg");
+const artwork2 = textureLoader.load("/assets/artworks/presentoir-eugene-rousseau.jpg");
 artwork2.encoding = sRGBEncoding;
 
 const artwork3 = textureLoader.load(
-  "/assets/artworks/la-reine-isabeau-de-baviere-henry-cros.jpeg"
+  "/assets/artworks/la-reine-isabeau-de-baviere-henry-cros.jpg"
 );
 artwork3.encoding = sRGBEncoding;
 
-const artwork4 = textureLoader.load("/assets/artworks/vase-albert-dammouse.jpeg");
+const artwork4 = textureLoader.load("/assets/artworks/vase-albert-dammouse.jpg");
 artwork4.encoding = sRGBEncoding;
 
 const artwork5 = textureLoader.load(
-  "/assets/artworks/the-peacock-garden-walter-crane.jpeg"
+  "/assets/artworks/the-peacock-garden-walter-crane.jpg"
 );
 artwork5.encoding = sRGBEncoding;
 
 const artwork6 = textureLoader.load(
-  "/assets/artworks/holland-park-carpet-william-morris.jpeg"
+  "/assets/artworks/holland-park-carpet-william-morris.jpg"
 );
 artwork6.encoding = sRGBEncoding;
 
-const artwork7 = textureLoader.load("/assets/artworks/maison-horta-victor-horta.jpeg");
+const artwork7 = textureLoader.load("/assets/artworks/maison-horta-victor-horta.jpg");
 artwork7.encoding = sRGBEncoding;
 
 const artwork8 = textureLoader.load(
-  "/assets/artworks/banquette-de-fumoir-hector-guimard.jpeg"
+  "/assets/artworks/banquette-de-fumoir-hector-guimard.jpg"
 );
 artwork8.encoding = sRGBEncoding;
 
 const artwork9 = textureLoader.load(
-  "/assets/artworks/castel-beranger-hector-guimard.jpeg"
+  "/assets/artworks/castel-beranger-hector-guimard.jpg"
 );
 artwork9.encoding = sRGBEncoding;
 
 const artwork10 = textureLoader.load(
-  "/assets/artworks/la-libellule-de-la-station-dauphine.jpeg"
+  "/assets/artworks/la-libellule-de-la-station-dauphine.jpg"
 );
 artwork10.encoding = sRGBEncoding;
 
-const artwork11 = textureLoader.load("/assets/artworks/hotel-tassel-victor-horta-1.jpeg");
+const artwork11 = textureLoader.load("/assets/artworks/hotel-tassel-victor-horta-1.jpg");
 artwork11.encoding = sRGBEncoding;
 
-const artwork12 = textureLoader.load("/assets/artworks/hotel-tassel-victor-horta-2.jpeg");
+const artwork12 = textureLoader.load("/assets/artworks/hotel-tassel-victor-horta-2.jpg");
 artwork12.encoding = sRGBEncoding;
 
 const artwork13 = textureLoader.load("/assets/artworks/pendentif-rene-lalique.jpeg");
@@ -151,7 +151,7 @@ texturesMap.set("artworksTextures", [
   },
   {
     texture: artwork8,
-    dimensions: [1118, 1189],
+    dimensions: [1118, 1280],
     author: "Hector Guimard",
     title: "Banquette de fumoir",
     year: "1897",

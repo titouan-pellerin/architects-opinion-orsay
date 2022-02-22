@@ -203,8 +203,8 @@ export class Grounds extends Group {
       this.ground5.grass,
       this.ground5.flowers
     );
-    Ground.groundElements.curveTexturesData = null;
-    Ground.groundElements.curveTexturesMatrices = null;
+    // Ground.groundElements.curveTexturesData = null;
+    // Ground.groundElements.curveTexturesMatrices = null;
 
     this.ground5.trees.updateTreesPositions(positions.get("treesPositions")[4]);
     this.ground5.rocks.updateRocksPositions(positions.get("rocksPositions")[4]);
@@ -216,10 +216,6 @@ export class Grounds extends Group {
       butterfly.object.mesh.clone(),
       butterfly.object.mirrorMesh.clone()
     );
-
-    this.ground3.visible = false;
-    this.ground4.visible = false;
-    this.ground5.visible = false;
 
     this.raycasting.spheresToRaycast[0] = this.ground1.trees.spheresToRaycast;
     this.raycasting.spheresToRaycast[1] = this.ground2.trees.spheresToRaycast;
@@ -233,6 +229,9 @@ export class Grounds extends Group {
       this.ground5,
     ];
     this.add(this.ground1, this.ground2, this.ground3, this.ground4, this.ground5);
+    this.ground3.visible = false;
+    this.ground4.visible = false;
+    this.ground5.visible = false;
     this.add(...artworks);
 
     raf.subscribe("grounds", this.update.bind(this));
@@ -293,6 +292,8 @@ export class Grounds extends Group {
 
     this.groundsArray[this.groundIndex].visible = true;
     this.groundsArray[this.groundIndex + 1].visible = true;
+    this.groundsArray[this.groundIndex].updateMatrix();
+    this.groundsArray[this.groundIndex + 1].updateMatrix();
 
     this.raycasting.spheresToRaycast[0] =
       this.groundsArray[this.groundIndex].trees.spheresToRaycast;

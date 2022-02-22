@@ -10,7 +10,7 @@ attribute float aScale;
 
 varying float vLoop;
 varying float vRandomScale;
-varying vec2 vUv;
+// // varying vec2 vUv;
 varying vec3 vPos;
 
 const float maxDuration = 7.;

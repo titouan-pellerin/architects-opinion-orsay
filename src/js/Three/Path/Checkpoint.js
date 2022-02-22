@@ -12,9 +12,9 @@ export class Checkpoint {
   constructor(tick, duration, splineCurve, artworks) {
     this.tick = tick;
     this.duration = duration;
-    this.position = splineCurve.getPointAt(tick);
+    this.position = splineCurve.getPointAt(tick + 0.035);
     this.artworks = artworks;
     for (const artwork of artworks)
-      artwork.lookAt(this.position.x, -0.8, this.position.y);
+      artwork.lookAt(this.position.x, -0.7, this.position.y);
   }
 }

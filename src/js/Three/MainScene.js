@@ -84,7 +84,7 @@ export class MainScene extends Scene {
     };
 
     this.canvas = document.querySelector(".webgl");
-    this.camera = new PerspectiveCamera(30, this.aspectRatio, isSafari() ? 2 : 1, 35);
+    this.camera = new PerspectiveCamera(30, this.aspectRatio, isSafari() ? 2 : 1.5, 35);
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
@@ -142,6 +142,7 @@ export class MainScene extends Scene {
     this.renderer.premultipliedAlpha = false;
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.compile(this, this.camera);
     this.background = new Color(parameters.skyBgColor);
 
     this.cameraContainer.position.set(0, -1, 25);
@@ -203,6 +204,7 @@ export class MainScene extends Scene {
     };
 
     this.customPass = new ShaderPass(customShader);
+    this.customPass.setSize(this.sizes.width * 0.5, this.sizes.height * 0.5);
     this.composer.addPass(this.customPass);
     this.customPass.material.uniforms.uNoiseTexture.value =
       texturesMap.get("noiseTexture")[0];

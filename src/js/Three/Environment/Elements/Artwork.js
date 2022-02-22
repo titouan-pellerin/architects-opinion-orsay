@@ -54,16 +54,29 @@ export class Artwork extends Group {
       );
     };
 
-    this.artworkMaterialInner = new MeshBasicMaterial({
-      map: details.texture,
-    });
+    this.artworkMaterialInner = new MeshBasicMaterial();
 
     this.artworkMaterialInner.onBeforeCompile = (shader) => {
       shader.uniforms = {
+        uTexture: { value: details.texture },
         ...shader.uniforms,
-        ...this.artworkUniforms,
         ...customFogUniforms,
       };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        `#include <common>
+        uniform sampler2D uTexture;`
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        `#include <output_fragment>
+        gl_FragColor = texture2D(uTexture, vUv);`
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <begin_vertex>",
+        `#include <begin_vertex>
+        vUv = uv;`
+      );
     };
     this.artworkGeometryOuter = new BoxGeometry();
     this.artworkGeometryInner = new PlaneGeometry();

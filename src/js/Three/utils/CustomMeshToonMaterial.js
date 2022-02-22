@@ -1,5 +1,5 @@
-import { MeshToonMaterial } from "three";
 import { customFogUniforms } from "@js/utils/misc";
+import { MeshToonMaterial } from "three";
 
 export class CustomMeshToonMaterial {
   constructor(
