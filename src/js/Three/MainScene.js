@@ -187,12 +187,12 @@ export class MainScene extends Scene {
         uCornerSize: { value: 4.5 },
         uProgress: { value: 0 },
         uFadeProgress: { value: 0 },
+        uBorderFadeProgress: { value: 1 },
         uSunProgress: { value: 0.3 },
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
           value: this.blurVec2.set(this.sizes.width, this.sizes.height),
-          // value: this.blurVec2.set(this.sizes.width * 0.75, this.sizes.height * 1),
         },
         uRes: {
           value: this.resVec2.set(this.sizes.width, this.sizes.height),
@@ -340,6 +340,11 @@ export class MainScene extends Scene {
       value: 2,
     });
     menuAnimation.to(customFogUniforms.progress, { duration: 3, value: 1.15 });
+    menuAnimation.to(this.customPass.uniforms.uBorderFadeProgress, {
+      duration: 1.25,
+      value: 0.2,
+      delay: -3,
+    });
     menuAnimation.to(customFogUniforms.transitionIsIn, {
       duration: 0,
       value: 1,
@@ -361,6 +366,7 @@ export class MainScene extends Scene {
       duration: 0,
       value: -0.1,
       onComplete: () => {
+        this.customPass.uniforms.uBorderFadeProgress.value = 1;
         this.customPass.uniforms.uMenuSwitch.value = 0.0;
         this.customPass.uniforms.uProgress.value = 0;
         this.customPass.uniforms.uMenuSwitch.value = 0;
