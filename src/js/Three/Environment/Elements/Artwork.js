@@ -15,15 +15,11 @@ import {
 } from "three";
 
 export class Artwork extends Group {
-  /**
-   *
-   * @param {Texture} texture
-   * @param {Vector3} position
-   */
   static materialInner;
   static materialOuter;
-  constructor(texture, position) {
+  constructor(details, position) {
     super();
+    this.details = details;
 
     this.artworkUniforms = {
       uColor: { value: new Color("#180c04") },
@@ -60,7 +56,7 @@ export class Artwork extends Group {
     };
 
     this.artworkMaterialInner = new MeshBasicMaterial({
-      map: texture,
+      map: details.texture,
     });
 
     this.artworkMaterialInner.onBeforeCompile = (shader) => {
@@ -76,14 +72,14 @@ export class Artwork extends Group {
     this.outerMesh = new Mesh(this.artworkGeometryOuter, this.artworkMaterialOuter);
     this.outerMesh.scale.set(
       2.4,
-      (texture.userData.dimensions[1] * 2.4) / texture.userData.dimensions[0],
+      (details.dimensions[1] * 2.4) / details.dimensions[0],
       0.65
     );
 
     this.innerMesh = new Mesh(this.artworkGeometryInner, this.artworkMaterialInner);
     this.innerMesh.scale.set(
       2.3,
-      (texture.userData.dimensions[1] * 2.3) / texture.userData.dimensions[0],
+      (details.dimensions[1] * 2.3) / details.dimensions[0],
       3
     );
     this.innerMesh.position.z = -0.3;

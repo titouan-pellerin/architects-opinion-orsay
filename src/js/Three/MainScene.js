@@ -186,7 +186,7 @@ export class MainScene extends Scene {
         uCornerIntensity: { value: 1 },
         uCornerSize: { value: 4.5 },
         uProgress: { value: 0 },
-        uSunProgress: { value: 0 },
+        uSunProgress: { value: 0.3 },
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
