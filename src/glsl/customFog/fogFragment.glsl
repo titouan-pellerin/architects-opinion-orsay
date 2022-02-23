@@ -8,8 +8,10 @@ float vFogAnimation = smoothstep(fogNear * 5., fogFar, vFogDepthZ);
 
 float temp = progress;
 temp += ((10.0 - 5.) * 0.05);
+// temp += ((10.0 * t1 - 5.) * 0.05);
 
-float distanceFromCenter = length(vUv - 0.5);
+// float distanceFromCenter = length(vUv - 0.5);
+float distanceFromCenter = length(fogFactor - 0.5);
 temp = smoothstep(temp - 0.05, temp, distanceFromCenter);
 
 vec3 initialRender = mix(gl_FragColor.rgb, fogColor, fogFactor);
