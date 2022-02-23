@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import { MathUtils, Vector2 } from "three";
 import { mainScene } from "../Three/MainScene";
 import raf from "./Raf";
@@ -47,8 +48,20 @@ class Mouse {
       2,
       raf.deltaTime
     );
-    // mainScene.camera.rotation.y += xRotateOffset;
-    // mainScene.camera.rotation.x += yRotateOffset;
+  }
+
+  pause() {
+    this.removeMouseMove();
+    gsap.to(this.range, {
+      duration: 1,
+      x: 0,
+      y: 0,
+    });
+  }
+
+  resume() {
+    document.addEventListener("mousemove", this.mouseMoveHandler);
+    gsap.to(this.range, { duration: 1, x: 0.2, y: 0.1 });
   }
 }
 

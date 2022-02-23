@@ -22,6 +22,7 @@ float rayModifier = mix(rayModifierMax, rayModifierMin, clamp((distance(rayPos, 
 vRayModifier = map(rayModifier, rayModifierMin, rayModifierMax, 0., 1.);
 
 vec3 rayDirection = normalize(rayPos - worldPosition.xyz);
+rayDirection = mix(vec3(1.), rayDirection, vRayModifier);
 
 float dispPower = 1. - cos(uv.y * PI * uDisplaceIntensity);
 

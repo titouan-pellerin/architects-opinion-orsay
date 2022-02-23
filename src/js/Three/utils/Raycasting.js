@@ -8,7 +8,7 @@ export class Raycasting {
   constructor(cameraAnimation) {
     this.cameraAnimation = cameraAnimation;
     this.raycaster = new Raycaster();
-    this.raycaster.far = 35;
+    this.raycaster.far = 30;
     this.groundsToRaycast = [];
     this.artworks = [];
     this.spheresToRaycast = [];
@@ -57,35 +57,36 @@ export class Raycasting {
       if (intersects[0].object.parent instanceof Artwork) {
         document.body.style.cursor = "pointer";
         this.currentIntersect = intersects[0].object;
-        this.rayPos.y = MathUtils.damp(this.rayPos.y, -5, 1, raf.deltaTime);
+        this.rayPos.y = MathUtils.damp(this.rayPos.y, 0, 2, raf.deltaTime);
       } else {
         intersects[0].object.parent.scale.z === -1
           ? (this.groundFlipped = -1)
           : (this.groundFlipped = 1);
+        const dampingFactor = 4.5;
 
         document.body.style.cursor = "default";
         this.currentIntersect = null;
         this.rayPos.x = MathUtils.damp(
           this.rayPos.x,
           intersects[0].point.x,
-          4.5,
+          dampingFactor,
           raf.deltaTime
         );
         this.rayPos.y = MathUtils.damp(
           this.rayPos.y,
           intersects[0].point.y,
-          4.5,
+          dampingFactor,
           raf.deltaTime
         );
         this.rayPos.z = MathUtils.damp(
           this.rayPos.z,
           intersects[0].point.z,
-          4.5,
+          dampingFactor,
           raf.deltaTime
         );
       }
     } else {
-      this.rayPos.y = MathUtils.damp(this.rayPos.y, -5, 1, raf.deltaTime);
+      this.rayPos.y = MathUtils.damp(this.rayPos.y, 3, 2, raf.deltaTime);
       document.body.style.cursor = "default";
       this.currentIntersect = null;
     }

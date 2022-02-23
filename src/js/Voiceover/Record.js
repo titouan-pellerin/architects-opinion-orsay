@@ -24,6 +24,7 @@ export class Record {
     this.isHidden = true;
 
     this.previousDurations = 0;
+    this.pausedTime = 0;
 
     this.showTween = gsap
       .to(Record.domEl, {
@@ -59,12 +60,15 @@ export class Record {
     this.audio.setRefDistance(30);
     this.audio.setRolloffFactor(0);
     this.audio.setBuffer(this.buffer);
+    this.audio.setVolume(0.5);
+
     return this;
   }
 
   play() {
     this.startTime = this.audio.context.currentTime;
     this.audio.play();
+
     raf.subscribe("subtitles", this.onProgress.bind(this));
     this.showSubtitle();
   }
@@ -78,7 +82,6 @@ export class Record {
   hideSubtitle() {
     this.isAnimComplete = false;
     this.currentSubtitleIndex++;
-
     this.hideTween.restart();
   }
 
@@ -86,11 +89,21 @@ export class Record {
     if (
       this.isHidden === false &&
       this.isAnimComplete === true &&
-      this.audio.context.currentTime - this.startTime >=
+      this.audio.context.currentTime - this.startTime + this.pausedTime >=
         this.previousDurations + this.subtitles[this.currentSubtitleIndex].duration - 0.2
     ) {
       this.previousDurations += this.subtitles[this.currentSubtitleIndex].duration;
       this.hideSubtitle();
     }
+  }
+
+  pause() {
+    this.pausedTime = this.audio.context.currentTime;
+    raf.unsubscribe("subtitles");
+  }
+
+  resume() {
+    this.pausedTime -= this.audio.context.currentTime;
+    raf.subscribe("subtitles", this.onProgress.bind(this));
   }
 }

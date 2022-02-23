@@ -15,11 +15,11 @@ float noise = smoothNoise(newMvPosition.xz + vec2(0., time));
 
 float rayModifierMax = 2.;
 float rayModifierMin = 1.;
-float rayModifier = mix(rayModifierMax, rayModifierMin, clamp((distance(uRayPos.xyz, worldPosition.xyz)), .0, 1.) * 1.);
+float rayModifier = mix(rayModifierMax, rayModifierMin, clamp((distance(uRayPos.xyz, worldPosition.xyz)), .0, 1.5) * .67);
 vRayModifier = map(rayModifier, rayModifierMin, rayModifierMax, 0., 1.);
 
 vec3 rayDirection = normalize(uRayPos.xyz - worldPosition.xyz);
-// if(rayModifier == 1.) rayDirection = vec3(1.);
+rayDirection = mix(vec3(1.), rayDirection, vRayModifier);
 // vec3 rayDirection = vec3(1.);
 
 // To make sure that rayDirection wont alterate instances which are not in range

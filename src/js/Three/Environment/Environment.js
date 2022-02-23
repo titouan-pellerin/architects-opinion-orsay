@@ -1,6 +1,9 @@
+import gsap from "gsap";
 import { AudioListener, Color, PositionalAudio } from "three";
 import { soundsMap, texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
+import { customFogUniforms } from "../../utils/misc";
+import { mouse } from "../../utils/Mouse";
 import { positions } from "../../utils/positions";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { mainScene } from "../MainScene";
@@ -66,16 +69,16 @@ export class Environment {
     const checkpoint5 = new Checkpoint(0.9, 21.3, this.forestPathLine.spline, []);
     checkpoints.push(checkpoint1, checkpoint2, checkpoint3, checkpoint4, checkpoint5);
 
-    const voiceOver = new Voiceover();
+    this.voiceOver = new Voiceover();
 
-    const cameraAnimation = new CameraAnimation(
+    this.cameraAnimation = new CameraAnimation(
       this.forestPathLine,
       this.parameters.envScale,
       checkpoints,
-      voiceOver
+      this.voiceOver
     );
 
-    const raycasting = new Raycasting(cameraAnimation);
+    const raycasting = new Raycasting(this.cameraAnimation);
 
     this.grounds = new Grounds(
       this.parameters,
@@ -85,6 +88,8 @@ export class Environment {
     );
 
     raycasting.start();
+
+    document.addEventListener("visibilitychange", this.checkVisibility.bind(this));
 
     this.debugObject = {
       start: () => {
@@ -96,32 +101,32 @@ export class Environment {
         music.setBuffer(soundsMap.get("music"));
         music.setVolume(0.09);
         music.play();
-        voiceOver.init(audioListener);
-        cameraAnimation.goToCheckpoint(null, raycasting);
+        this.voiceOver.init(audioListener);
+        this.cameraAnimation.goToCheckpoint(null, raycasting);
       },
       tpToCheckpoints0: () => {
         this.grounds.groundIndex = 0;
-        cameraAnimation.tpToCheckpoint(0);
+        this.cameraAnimation.tpToCheckpoint(0);
       },
       tpToCheckpoints1: () => {
         this.grounds.groundIndex = 0;
-        cameraAnimation.tpToCheckpoint(1);
+        this.cameraAnimation.tpToCheckpoint(1);
       },
       tpToCheckpoints2: () => {
         this.grounds.groundIndex = 1;
-        cameraAnimation.tpToCheckpoint(2);
+        this.cameraAnimation.tpToCheckpoint(2);
       },
       tpToCheckpoints3: () => {
         this.grounds.groundIndex = 2;
-        cameraAnimation.tpToCheckpoint(3);
+        this.cameraAnimation.tpToCheckpoint(3);
       },
       tpToCheckpoints4: () => {
         this.grounds.groundIndex = 3;
-        cameraAnimation.tpToCheckpoint(4);
+        this.cameraAnimation.tpToCheckpoint(4);
       },
       tpToCheckpoints5: () => {
         this.grounds.groundIndex = 3;
-        cameraAnimation.tpToCheckpoint(5);
+        this.cameraAnimation.tpToCheckpoint(5);
       },
     };
 
@@ -132,5 +137,153 @@ export class Environment {
     guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints3");
     guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints4");
     guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints5");
+
+    /**
+     * Menu animations
+     */
+    const openMenu = document.querySelector(".menu-btn_open");
+    const closeMenu = document.querySelector(".menu-btn_close");
+    const li = document.querySelector(".menu-btn_section");
+    const artworkIn = document.querySelector(".artwork-in");
+    const artworkOut = document.querySelector(".artwork-out");
+
+    openMenu.addEventListener("click", () => {
+      this.pauseExperience();
+      openMenu.style.pointerEvents = "none";
+      artworkIn.style.pointerEvents = "none";
+      artworkOut.style.pointerEvents = "none";
+      gsap.to(mainScene.customPass.uniforms.uProgress, {
+        value: 1.3,
+        duration: 1.5,
+        onComplete: () => {
+          mainScene.customPass.uniforms.uMenuSwitch.value = 1.0;
+          mainScene.customPass.uniforms.uProgress.value = 0;
+          closeMenu.style.pointerEvents = "all";
+          li.style.pointerEvents = "all";
+        },
+      });
+    });
+    closeMenu.addEventListener("click", () => {
+      this.resumeExperience();
+      closeMenu.style.pointerEvents = "none";
+      li.style.pointerEvents = "none";
+      gsap.to(mainScene.customPass.uniforms.uProgress, {
+        value: 1.3,
+        duration: 1.5,
+        onComplete: () => {
+          mainScene.customPass.uniforms.uMenuSwitch.value = 0.0;
+          mainScene.customPass.uniforms.uProgress.value = 0;
+          openMenu.style.pointerEvents = "all";
+          artworkIn.style.pointerEvents = "all";
+          artworkOut.style.pointerEvents = "all";
+        },
+      });
+    });
+
+    const menuAnimation = gsap.timeline({ paused: true });
+    menuAnimation.to(closeMenu, { duration: 0, pointerEvents: "none" });
+    menuAnimation.to(li, { duration: 0, pointerEvents: "none" });
+    menuAnimation.to(mainScene.customPass.uniforms.uMenuSwitch, {
+      duration: 0,
+      value: 2,
+    });
+    menuAnimation.to(customFogUniforms.progress, { duration: 3, value: 1.15 });
+    menuAnimation.to(customFogUniforms.transitionIsIn, {
+      duration: 0,
+      value: 1,
+      delay: -1,
+    });
+    menuAnimation.to(customFogUniforms.progress, {
+      duration: 0,
+      value: -0.1,
+      delay: -1,
+    });
+    menuAnimation.to(customFogUniforms.progress, {
+      duration: 3,
+      value: 1.15,
+      delay: -1,
+    });
+    menuAnimation.to(mainScene.customPass.uniforms.uFadeProgress, {
+      value: 1,
+      duration: 1.5,
+      delay: -2.5,
+    });
+    menuAnimation.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
+    menuAnimation.to(customFogUniforms.progress, {
+      duration: 0,
+      value: -0.1,
+      onComplete: () => {
+        mainScene.customPass.uniforms.uMenuSwitch.value = 0.0;
+        mainScene.customPass.uniforms.uProgress.value = 0;
+        mainScene.customPass.uniforms.uMenuSwitch.value = 0;
+        mainScene.customPass.uniforms.uFadeProgress.value = 0;
+        openMenu.style.pointerEvents = "all";
+        artworkIn.style.pointerEvents = "all";
+        artworkOut.style.pointerEvents = "all";
+      },
+    });
+
+    li.addEventListener("click", () => {
+      menuAnimation.pause(0);
+      menuAnimation.play();
+    });
+
+    const chockwaveAnimation = gsap.timeline({ paused: true });
+    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
+      duration: 0,
+      value: 2,
+    });
+    chockwaveAnimation.to(artworkIn, { duration: 0, pointerEvents: "none" });
+    chockwaveAnimation.to(artworkOut, { duration: 0, pointerEvents: "none" });
+    chockwaveAnimation.to(openMenu, { duration: 0, pointerEvents: "none" });
+    chockwaveAnimation.to(customFogUniforms.progress, { duration: 2.25, value: 1.15 });
+    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
+      duration: 0,
+      value: 3,
+      delay: -1.25,
+    });
+    chockwaveAnimation.to(customFogUniforms.progress, {
+      duration: 0,
+      value: -0.1,
+      delay: -1.25,
+    });
+    chockwaveAnimation.to(customFogUniforms.progress, {
+      duration: 2.25,
+      value: 1.15,
+      delay: -1.25,
+    });
+    chockwaveAnimation.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
+    chockwaveAnimation.to(customFogUniforms.progress, { duration: 0, value: -0.1 });
+    chockwaveAnimation.to(artworkIn, { duration: 0, pointerEvents: "all" });
+    chockwaveAnimation.to(artworkOut, { duration: 0, pointerEvents: "all" });
+    chockwaveAnimation.to(openMenu, { duration: 0, pointerEvents: "all" });
+
+    artworkIn.addEventListener("click", () => {
+      chockwaveAnimation.pause(0);
+      chockwaveAnimation.play();
+    });
+    artworkOut.addEventListener("click", () => {
+      chockwaveAnimation.pause(0);
+      chockwaveAnimation.play();
+    });
+  }
+
+  checkVisibility() {
+    if (document.visibilityState === "visible") this.resumeExperience();
+    else this.pauseExperience();
+  }
+
+  pauseExperience() {
+    console.log("Pause experience");
+    this.cameraAnimation.pause();
+    mouse.pause();
+    if (this.voiceOver.currentRecord) this.voiceOver.pause();
+  }
+
+  resumeExperience() {
+    console.log("Resume experience");
+    this.cameraAnimation.resume();
+    mouse.resume();
+    if (this.voiceOver.currentRecord) this.voiceOver.resume();
   }
 }

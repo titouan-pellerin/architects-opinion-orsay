@@ -75,151 +75,259 @@ artwork11.encoding = sRGBEncoding;
 const artwork12 = textureLoader.load("/assets/artworks/hotel-tassel-victor-horta-2.jpg");
 artwork12.encoding = sRGBEncoding;
 
-const artwork13 = textureLoader.load("/assets/artworks/pendentif-rene-lalique.jpeg");
+const artwork13 = textureLoader.load("/assets/artworks/pendentif-rene-lalique.jpg");
 artwork13.encoding = sRGBEncoding;
 
-const artwork14 = textureLoader.load("/assets/artworks/pavot-rene-lalique.jpeg");
+const artwork14 = textureLoader.load("/assets/artworks/pavot-rene-lalique.jpg");
 artwork14.encoding = sRGBEncoding;
 
-const artwork15 = textureLoader.load(
-  "/assets/artworks/ecritoire-henry-van-de-velde.jpeg"
-);
+const artwork15 = textureLoader.load("/assets/artworks/fauteuil-louis-majorelle.jpg");
 artwork15.encoding = sRGBEncoding;
 
-const artwork16 = textureLoader.load("/assets/artworks/fauteuil-louis-majorelle.jpeg");
-artwork16.encoding = sRGBEncoding;
-
-const artwork17 = textureLoader.load(
-  "/assets/artworks/vol-de-mouettes-jacques-gruber.jpeg"
+const artwork16 = textureLoader.load(
+  "/assets/artworks/vol-de-mouettes-jacques-gruber.jpg"
 );
-artwork17.encoding = sRGBEncoding;
 
 const flowerPattern = textureLoader.load("/assets/flower/flower.jpg");
 flowerPattern.encoding = sRGBEncoding;
 flowerPattern.flipY = false;
 texturesMap.set("flowerPattern", [flowerPattern]);
 
-texturesMap.set("artworksTextures", [
-  {
-    texture: artwork1,
-    dimensions: [548, 850],
-    author: "Emile Gallé",
-    title: "La Main aux algues et aux coquillages",
-    year: "1904",
-  },
-  {
-    texture: artwork2,
-    dimensions: [850, 729],
-    author: "Eugène Rousseau",
-    title: "Présentoir",
-    year: "1884",
-  },
-  {
-    texture: artwork3,
-    dimensions: [546, 850],
-    author: "Henry Cros",
-    title: "La reine Isabeau de Bavière (1371-1435)",
-    year: "1875",
-  },
-  {
-    texture: artwork4,
-    dimensions: [638, 850],
-    author: "Albert Dammouse",
-    title: "Vase",
-    year: "1880",
-  },
-  {
-    texture: artwork5,
-    dimensions: [1530, 2250],
-    author: "Walter Crane",
-    title: "The Peacock Garden",
-    year: "1880",
-  },
-  {
-    texture: artwork6,
-    dimensions: [2500, 3185],
-    author: "William Morris",
-    title: "Holland Park carpet",
-    year: "late 19th century",
-  },
-  {
-    texture: artwork7,
-    dimensions: [2610, 3910],
-    author: "Victor Horta",
-    title: "Horta Museum (Maison Horta)",
-    year: "",
-  },
-  {
-    texture: artwork8,
-    dimensions: [1118, 1280],
-    author: "Hector Guimard",
-    title: "Banquette de fumoir",
-    year: "1897",
-  },
-  {
-    texture: artwork9,
-    dimensions: [3096, 3870],
-    author: "Hector Guimard",
-    title: "Castel Béranger - Exemple du portail d'entrée",
-    year: "",
-  },
-  {
-    texture: artwork10,
-    dimensions: [1497, 1899],
-    author: "Hector Guimard",
-    title: "Gares du métropolitain de Paris",
-    year: "",
-  },
-  {
-    texture: artwork11,
-    dimensions: [800, 1200],
-    author: "Victor Horta",
-    title: "Hotel Tassel",
-    year: "",
-  },
-  {
-    texture: artwork12,
-    dimensions: [1761, 2362],
-    author: "Victor Horta",
-    title: "Hotel Tassel",
-    year: "",
-  },
-  {
-    texture: artwork13,
-    dimensions: [579, 850],
-    author: "René Lalique",
-    title: "Pendentif",
-    year: "1904",
-  },
-  {
-    texture: artwork14,
-    dimensions: [850, 849],
-    author: "René Lalique",
-    title: "Pavot",
-    year: "1897",
-  },
-  {
-    texture: artwork15,
-    dimensions: [1000, 640],
-    author: "Henry Van de Velde",
-    title: "Écritoire",
-    year: "1898",
-  },
-  {
-    texture: artwork16,
-    dimensions: [651, 850],
-    author: "Louis Majorelle",
-    title: "Fauteuil",
-    year: "Entre 1898 et 1899",
-  },
-  {
-    texture: artwork17,
-    dimensions: [799, 850],
-    author: "Jacques Gruber",
-    title: "Vol de mouettes",
-    year: "entre 1905 et 1908",
-  },
-]);
+if (!location.hash.includes("bzh") && !location.hash.includes("enzo")) {
+  texturesMap.set("artworksTextures", [
+    {
+      texture: artwork1,
+      dimensions: [548, 850],
+      author: "Emile Gallé",
+      title: "La Main aux algues et aux coquillages",
+      year: "1904",
+    },
+    {
+      texture: artwork2,
+      dimensions: [850, 729],
+      author: "Eugène Rousseau",
+      title: "Présentoir",
+      year: "1884",
+    },
+    {
+      texture: artwork3,
+      dimensions: [546, 850],
+      author: "Henry Cros",
+      title: "La reine Isabeau de Bavière (1371-1435)",
+      year: "1875",
+    },
+    {
+      texture: artwork4,
+      dimensions: [638, 850],
+      author: "Albert Dammouse",
+      title: "Vase",
+      year: "1880",
+    },
+    {
+      texture: artwork5,
+      dimensions: [1530, 2250],
+      author: "Walter Crane",
+      title: "The Peacock Garden",
+      year: "1880",
+    },
+    {
+      texture: artwork6,
+      dimensions: [2500, 3185],
+      author: "William Morris",
+      title: "Holland Park carpet",
+      year: "late 19th century",
+    },
+    {
+      texture: artwork7,
+      dimensions: [2610, 3910],
+      author: "Victor Horta",
+      title: "Horta Museum (Maison Horta)",
+      year: "",
+    },
+    {
+      texture: artwork8,
+      dimensions: [1118, 1280],
+      author: "Hector Guimard",
+      title: "Banquette de fumoir",
+      year: "1897",
+    },
+    {
+      texture: artwork9,
+      dimensions: [3096, 3870],
+      author: "Hector Guimard",
+      title: "Castel Béranger - Exemple du portail d'entrée",
+      year: "",
+    },
+    {
+      texture: artwork10,
+      dimensions: [1497, 1899],
+      author: "Hector Guimard",
+      title: "Gares du métropolitain de Paris",
+      year: "",
+    },
+    {
+      texture: artwork11,
+      dimensions: [800, 1200],
+      author: "Victor Horta",
+      title: "Hotel Tassel",
+      year: "",
+    },
+    {
+      texture: artwork12,
+      dimensions: [1761, 2362],
+      author: "Victor Horta",
+      title: "Hotel Tassel",
+      year: "",
+    },
+    {
+      texture: artwork13,
+      dimensions: [579, 850],
+      author: "René Lalique",
+      title: "Pendentif",
+      year: "1904",
+    },
+    {
+      texture: artwork14,
+      dimensions: [1024, 1280],
+      author: "René Lalique",
+      title: "Pavot",
+      year: "1897",
+    },
+    {
+      texture: artwork15,
+      dimensions: [651, 850],
+      author: "Louis Majorelle",
+      title: "Fauteuil",
+      year: "Entre 1898 et 1899",
+    },
+    {
+      texture: artwork16,
+      dimensions: [689, 768],
+      author: "Jacques Gruber",
+      title: "Vol de mouettes",
+      year: "entre 1905 et 1908",
+    },
+  ]);
+} else {
+  const easter = location.hash.includes("bzh")
+    ? textureLoader.load("/assets/artworks/gwenn-ha-du.jpg")
+    : textureLoader.load("/assets/artworks/venom.jpg");
+  easter.encoding = sRGBEncoding;
+  texturesMap.set("artworksTextures", [
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Emile Gallé",
+      title: "La Main aux algues et aux coquillages",
+      year: "1904",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Eugène Rousseau",
+      title: "Présentoir",
+      year: "1884",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Henry Cros",
+      title: "La reine Isabeau de Bavière (1371-1435)",
+      year: "1875",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Albert Dammouse",
+      title: "Vase",
+      year: "1880",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Walter Crane",
+      title: "The Peacock Garden",
+      year: "1880",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "William Morris",
+      title: "Holland Park carpet",
+      year: "late 19th century",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Victor Horta",
+      title: "Horta Museum (Maison Horta)",
+      year: "",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Hector Guimard",
+      title: "Banquette de fumoir",
+      year: "1897",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Hector Guimard",
+      title: "Castel Béranger - Exemple du portail d'entrée",
+      year: "",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Hector Guimard",
+      title: "Gares du métropolitain de Paris",
+      year: "",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Victor Horta",
+      title: "Hotel Tassel",
+      year: "",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Victor Horta",
+      title: "Hotel Tassel",
+      year: "",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "René Lalique",
+      title: "Pendentif",
+      year: "1904",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "René Lalique",
+      title: "Pavot",
+      year: "1897",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Louis Majorelle",
+      title: "Fauteuil",
+      year: "Entre 1898 et 1899",
+    },
+    {
+      texture: easter,
+      dimensions: [1500, 1000],
+      author: "Jacques Gruber",
+      title: "Vol de mouettes",
+      year: "entre 1905 et 1908",
+    },
+  ]);
+}
 
 const trees = [];
 gltfLoader.load("/assets/models/trunk1.glb", (gltf) => {
