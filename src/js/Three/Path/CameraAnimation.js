@@ -79,6 +79,22 @@ export class CameraAnimation {
     if (index) this.checkpointsIndex = index;
     if (this.checkpointsIndex <= 4) {
       this.voiceOver.playChapter(this.checkpointsIndex);
+      gsap.to(mainScene.background, {
+        duration: this.checkpoints[this.checkpointsIndex].duration,
+        r: mainScene.parameters.skyBgColor2.r,
+        g: mainScene.parameters.skyBgColor2.g,
+        b: mainScene.parameters.skyBgColor2.b,
+      });
+      gsap.to(mainScene.fog.color, {
+        duration: this.checkpoints[this.checkpointsIndex].duration,
+        r: mainScene.parameters.skyBgColor2.r,
+        g: mainScene.parameters.skyBgColor2.g,
+        b: mainScene.parameters.skyBgColor2.b,
+      });
+      gsap.to(mainScene.customPass.material.uniforms.uSunProgress, {
+        duration: this.checkpoints[this.checkpointsIndex].duration,
+        value: 0.3,
+      });
       gsap.to(this.tick, {
         // delay: this.checkpointsIndex === 0 ? 3 : 0,
         duration: this.checkpoints[this.checkpointsIndex].duration,
