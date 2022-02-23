@@ -155,8 +155,6 @@ export class MainScene extends Scene {
     ShaderChunk.fog_pars_vertex = fogParsVertex;
     ShaderChunk.fog_vertex = fogVertex;
 
-    console.log(ShaderChunk.fog_pars_fragment);
-
     const directionalLight = new DirectionalLight(
       parameters.lightColor,
       parameters.lightIntensity

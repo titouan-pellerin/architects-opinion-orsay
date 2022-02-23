@@ -1,7 +1,7 @@
 uniform vec3 fogColor;
 varying float vFogDepthZ;
-// varying float vFogDepthLeft;
-// varying float vFogDepthRight;
+varying float vFogDepthLeft;
+varying float vFogDepthRight;
 varying float vFogAnimation;
 uniform float fogNear;
 uniform float fogFar;

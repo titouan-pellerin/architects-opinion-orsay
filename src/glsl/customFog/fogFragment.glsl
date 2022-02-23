@@ -1,28 +1,28 @@
 float fogFactor = smoothstep(fogNear, fogFar, vFogDepthZ);
-// float fogFactorLeft = smoothstep(24., fogFar, vFogDepthLeft);
-// float fogDepthRight = smoothstep(24., fogFar, vFogDepthRight);
+float fogFactorLeft = smoothstep(25., fogFar, vFogDepthLeft);
+float fogDepthRight = smoothstep(25., fogFar, vFogDepthRight);
 
 float vFogAnimation = smoothstep(fogNear * 5., fogFar, vFogDepthZ);
 
-float t1 = texture2D(noiseTexture, vUv).g;
+// float t1 = texture2D(noiseTexture, vUv).g;
 
 float temp = progress;
-temp += ((10.0 * t1 - 5.) * 0.05);
+temp += ((10.0 - 5.) * 0.05);
 
 float distanceFromCenter = length(vUv - 0.5);
 temp = smoothstep(temp - 0.05, temp, distanceFromCenter);
 
 vec3 initialRender = mix(gl_FragColor.rgb, fogColor, fogFactor);
-// initialRender = mix(initialRender, fogColor, fogFactorLeft);
-// initialRender = mix(initialRender, fogColor, fogDepthRight);
+initialRender = mix(initialRender, fogColor, fogFactorLeft);
+initialRender = mix(initialRender, fogColor, fogDepthRight);
 
 vec3 clickMenuRender = mix(gl_FragColor.rgb * 3., fogColor, vFogAnimation);
-// clickMenuRender = mix(clickMenuRender, fogColor, fogFactorLeft);
-// clickMenuRender = mix(clickMenuRender, fogColor, fogDepthRight);
+clickMenuRender = mix(clickMenuRender, fogColor, fogFactorLeft);
+clickMenuRender = mix(clickMenuRender, fogColor, fogDepthRight);
 
 vec3 clickArtworkRender = mix(gl_FragColor.rgb * 2., fogColor, fogFactor);
-// clickArtworkRender = mix(clickArtworkRender, fogColor, fogFactorLeft);
-// clickArtworkRender = mix(clickArtworkRender, fogColor, fogDepthRight);
+clickArtworkRender = mix(clickArtworkRender, fogColor, fogFactorLeft);
+clickArtworkRender = mix(clickArtworkRender, fogColor, fogDepthRight);
 
 vec3 globalRender;
 
