@@ -63,6 +63,7 @@ export class Grounds extends Group {
 
     const dust = new Dust();
     const leaf = new Leaf();
+    leaf.object.mesh.scale.z = -1;
     const butterfly = new Butterfly();
 
     // Ground 1
