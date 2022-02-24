@@ -28,7 +28,7 @@ float dispPower = 1. - cos(uv.y * PI * uDisplaceIntensity);
 
 float displacement = noise * dispPower * rayModifier;
 newMvPosition.x -= displacement * rayDirection.x;
-newMvPosition.y -= displacement * .03 * rayDirection.y;
+// newMvPosition.y -= displacement * .03 * rayDirection.y;
 newMvPosition.z -= displacement * rayDirection.z * uFlipped;
 
 gl_Position = projectionMatrix * modelViewMatrix * newMvPosition;

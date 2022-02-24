@@ -19,7 +19,6 @@ export class Rocks extends Group {
   static rock;
   constructor() {
     super();
-    this.currentRocks = [];
 
     if (!Rocks.rock) {
       this.parameters = {
@@ -82,17 +81,7 @@ export class Rocks extends Group {
       rocksFolder.addColor(rockUniforms.uColor, "value").name("Color");
       rocksFolder.addColor(rockUniforms.uColor2, "value").name("Color2");
     }
-
-    // this.fillCurrentRocksArray(35);
   }
-
-  // fillCurrentRocksArray(maxRocksNumber) {
-  //   for (let i = 0; i < maxRocksNumber; i++) {
-  //     const newRock = Rocks.rock.clone();
-  //     this.currentRocks.push(newRock);
-  //     this.add(newRock);
-  //   }
-  // }
 
   setRocks(positions = []) {
     for (let i = 0; i < positions.length; i++) {
@@ -107,9 +96,5 @@ export class Rocks extends Group {
 
       this.add(newRock);
     }
-    // if (positions.length < this.currentRocks.length) {
-    //   for (let i = positions.length; i < this.currentRocks.length; i++)
-    //     this.currentRocks[i].visible = false;
-    // }
   }
 }

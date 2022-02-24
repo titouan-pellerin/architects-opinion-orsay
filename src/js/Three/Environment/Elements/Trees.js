@@ -30,7 +30,6 @@ export class Trees extends Group {
     super();
 
     this.spheresToRaycast = [];
-    // this.currentTrees = [];
 
     if (!Trees.tree1 && !Trees.tree2) {
       const trunkUniforms = {
@@ -257,22 +256,11 @@ export class Trees extends Group {
       Trees.tree1 = tree1;
       Trees.tree2 = tree2;
     }
-
-    // this.fillCurrentTreesArray(60);
   }
-
-  // fillCurrentTreesArray(maxTreesNumber) {
-  //   for (let i = 0; i < maxTreesNumber; i++) {
-  //     const newTree = i % 2 === 0 ? Trees.tree1.clone() : Trees.tree2.clone();
-  //     this.currentTrees.push(newTree);
-  //     this.add(newTree);
-  //   }
-  // }
 
   setTrees(positions = []) {
     for (let i = 0; i < positions.length; i++) {
       const newTree = i % 2 === 0 ? Trees.tree1.clone() : Trees.tree2.clone();
-      // if (!newTree.visible) newTree.visible = true;
       newTree.position.set(positions[i].x, -3.5, positions[i].y);
       newTree.rotation.set(
         (Math.random() - 0.5) * 0.1 * Math.PI * 2,
@@ -290,9 +278,5 @@ export class Trees extends Group {
       );
       this.add(newTree);
     }
-    // if (positions.length < this.currentTrees.length) {
-    //   for (let i = positions.length; i < this.currentTrees.length; i++)
-    //     this.currentTrees[i].visible = false;
-    // }
   }
 }

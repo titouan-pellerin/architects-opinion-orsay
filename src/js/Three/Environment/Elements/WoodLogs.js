@@ -12,8 +12,6 @@ export class WoodLogs extends Group {
   constructor() {
     super();
 
-    this.currentLogsGroups = [];
-
     if (!WoodLogs.logsGroup) {
       const barkUniforms = {
         uColor: { value: new Color("#180c04") },
@@ -106,17 +104,7 @@ export class WoodLogs extends Group {
       woodLogsFolder.addColor(logUniforms.uColor, "value").name("InnerColor");
       woodLogsFolder.addColor(logUniforms.uColor2, "value").name("InnerColor2");
     }
-
-    // this.fillCurrentLogsGroupArray(10);
   }
-
-  // fillCurrentLogsGroupArray(maxLogsGroupNumber) {
-  //   for (let i = 0; i < maxLogsGroupNumber; i++) {
-  //     const newLogsGroup = WoodLogs.logsGroup.clone();
-  //     this.currentLogsGroups.push(newLogsGroup);
-  //     this.add(newLogsGroup);
-  //   }
-  // }
 
   setWoodLogs(positions = []) {
     for (let i = 0; i < positions.length; i++) {
@@ -129,9 +117,5 @@ export class WoodLogs extends Group {
 
       this.add(newLogsGroup);
     }
-    // if (positions.length < this.currentLogsGroups.length) {
-    //   for (let i = positions.length; i < this.currentLogsGroups.length; i++)
-    //     this.currentLogsGroups[i].visible = false;
-    // }
   }
 }
