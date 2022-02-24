@@ -1,32 +1,20 @@
 @font-face {
-  font-family: "text";
-  src: url("/assets/fonts/text/iskry.eot"),
-    url("/assets/fonts/text/iskry.woff2") format("woff2"),
-    url("/assets/fonts/text/iskry.woff") format("woff"),
-    url("/assets/fonts/text/iskry.ttf") format("truetype");
-  font-weight: lighter;
-  font-style: lighter;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "title";
-  src: url("/assets/fonts/title/lekyCalgria.otf") format("opentype");
-  font-weight: lighter;
-  font-style: lighter;
-  font-display: swap;
-  font-weight: 100;
+  src: url("/assets/fonts/FontsFree-Net-Bagerich.woff2") format("woff2"),
+    url("/assets/fonts/FontsFree-Net-Bagerich.woff") format("woff"),
+    url("/assets/fonts/FontsFree-Net-Bagerich.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "ParisMetro";
-  src: url("/assets/fonts/ParisRegular.eot");
-  src: url("/assets/fonts/ParisRegular.eot?#iefix") format("embedded-opentype"),
-    url("/assets/fonts/ParisRegular.woff2") format("woff2"),
-    url("ParisRegular.woff") format("woff"),
-    url("/assets/fonts/ParisRegular.ttf") format("truetype"),
-    url("/assets/fonts/ParisRegular.svg#ParisRegular") format("svg");
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
+  font-family: "text-regular";
+  src: url("/assets/fonts/louizetrial-regular-webfont.woff2") format("woff2"),
+    url("/assets/fonts/louizetrial-regular-webfont.woff") format("woff"),
+    url("/assets/fonts/louizetrial-regular-webfont.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "text-bold";
+  src: url("/assets/fonts/louizetrial-bold-webfont.woff2") format("woff2"),
+    url("/assets/fonts/louizetrial-bold-webfont.woff") format("woff"),
+    url("/assets/fonts/louizetrial-bold-webfont.otf") format("opentype");
 }

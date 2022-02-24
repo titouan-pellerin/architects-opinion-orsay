@@ -1,19 +1,43 @@
 @import "./utils/_fonts";
 @import "./utils/_var";
 @import "./utils/_reset";
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@import "./utils/_breakpoints.scss";
 
 html {
-  font-size: 85%;
+  background: $bg-color;
+  color: $text-color;
+  font-family: "text-regular";
+  @include desktop-lg-4k {
+    font-size: 1.5rem;
+  }
+
+  @include desktop-lg {
+    font-size: 1rem;
+  }
+
+  font-size: 0.75rem;
+
+  @include desktop-md {
+    font-size: 0.65625rem;
+  }
+
+  @include desktop-sm {
+    font-size: 0.5rem;
+  }
+
+  @include tablet {
+  }
 }
 
 body {
-  background-color: black;
+  font-family: "text-regular";
+}
+
+button {
+  background: none;
+  border: none;
+  color: $text-color;
+  cursor: pointer;
 }
 
 .canvas-container {
@@ -22,56 +46,256 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: -1;
+  opacity: 0.3;
 }
 
 .webgl {
   width: 100% !important;
   height: 100% !important;
+  // display: none;
 }
 
 .dom-container {
-  .menu-btn_open {
-    left: 20%;
-    top: 0;
-    position: absolute;
-  }
-  .menu-btn_close {
-    left: 30%;
-    top: 0;
-    position: absolute;
-    pointer-events: none;
-  }
-  .menu-btn_section {
-    left: 40%;
-    top: 0;
-    position: absolute;
-    pointer-events: none;
-  }
-  .artwork-in {
-    left: 50%;
-    top: 0;
-    position: absolute;
-  }
-  .artwork-out {
-    left: 60%;
-    top: 0;
-    position: absolute;
-  }
-  .subtitles {
-    position: absolute;
-    bottom: 2rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    color: #fff;
+  width: calc(100% - 6.875rem);
+  height: calc(100vh - 5.9375rem);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
 
-    p {
-      width: 50%;
+  .loader-container {
+    display: none;
+    .loader-animation_wrapper {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      svg {
+        width: 4.6875rem;
+        height: fit-content;
+      }
+    }
+    .loader-title_wrapper {
+      position: absolute;
+      .title {
+        font-family: "title";
+        font-size: 2.5rem;
+      }
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+    .loader-cta {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.375rem;
+      color: $text-color;
+    }
+    .loader-text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.375rem;
+      width: 55rem;
       text-align: center;
-      font-size: 1.15rem;
-      opacity: 0;
+    }
+    .loader-decoration {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+
+      svg {
+        width: 2.8125rem;
+        height: fit-content;
+      }
+    }
+    .loader-credits-wrapper {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      svg {
+        width: 6.875rem;
+        height: fit-content;
+
+        &:nth-child(1) {
+          margin-right: 1.1875rem;
+        }
+        &:nth-child(2) {
+          margin-left: 1.1875rem;
+        }
+      }
     }
   }
+
+  .btn-sound_container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 1.375rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      width: 0.8125rem;
+      height: fit-content;
+      margin-bottom: 0.2rem;
+    }
+
+    .text-wrapper {
+      position: relative;
+      margin-left: 0.75rem;
+      .text-on {
+        position: absolute;
+      }
+      .text-off {
+        opacity: 0;
+      }
+    }
+  }
+
+  .btn-chapters_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.375rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // display: none;
+
+    .line-wrapper {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+      height: 0.5rem;
+      margin: 0 0.75rem 0.2rem 0;
+
+      div {
+        width: 1.25rem;
+        height: 1px;
+        background: $text-color;
+      }
+    }
+  }
+
+  .btn-close_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.375rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+
+    .line-wrapper {
+      margin: 0 0.75rem 0.225rem 0;
+
+      div {
+        width: 1.25rem;
+        height: 1px;
+        background: $text-color;
+      }
+    }
+  }
+
+  .btn-back_container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.375rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .line-wrapper {
+      margin: 0 0 0.225rem 0.75rem;
+
+      div {
+        width: 1.25rem;
+        height: 1px;
+        background: $text-color;
+      }
+    }
+  }
+
+  .content-titles {
+    .chap {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .title {
+      font-family: "title";
+      font-size: 8.75rem;
+
+      .outline {
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: $text-color;
+        color: transparent;
+      }
+    }
+    .subtitle {
+      font-family: "text-regular";
+      font-size: 1.9375rem;
+    }
+  }
+
+  .content-subtitles {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: 0.25rem;
+    width: 55rem;
+    text-align: center;
+    font-size: 1.375rem;
+
+    p {
+      opacity: 1;
+    }
+  }
+}
+
+.menu-btn_open {
+  display: none;
+  left: 20%;
+  top: 0;
+  position: absolute;
+}
+.menu-btn_close {
+  display: none;
+  left: 30%;
+  top: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.menu-btn_section {
+  display: none;
+  left: 40%;
+  top: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.artwork-in {
+  display: none;
+  left: 50%;
+  top: 0;
+  position: absolute;
+}
+.artwork-out {
+  display: none;
+  left: 60%;
+  top: 0;
+  position: absolute;
 }

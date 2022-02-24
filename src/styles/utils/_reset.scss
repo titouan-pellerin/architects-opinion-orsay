@@ -3,7 +3,10 @@
 *::after {
   user-select: none;
   box-sizing: border-box;
+  user-select: none;
   // cursor: none; // si cursor custom
+  margin: 0;
+  padding: 0;
 }
 
 ::-webkit-scrollbar {
@@ -12,10 +15,8 @@
 
 html {
   height: 100vh; // keyboard ios hack
-  background: colors(red);
   font-family: sans-serif;
-  font-family: -apple-system, Avenir, Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
+  font-family: -apple-system, Avenir, Roboto, "Open Sans", "Helvetica Neue", sans-serif;
   color: colors(dark-gray);
   text-rendering: geometricPrecision;
   -webkit-text-size-adjust: none;
@@ -53,8 +54,8 @@ a {
   text-decoration: none;
 }
 
-ul[role='list'],
-ol[role='list'] {
+ul[role="list"],
+ol[role="list"] {
   list-style: none;
 }
 

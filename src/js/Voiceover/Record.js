@@ -3,7 +3,7 @@ import { PositionalAudio } from "three";
 import raf from "../utils/Raf";
 
 export class Record {
-  static domEl = document.querySelector(".subtitles p");
+  static domEl = document.querySelector(".content-subtitles p");
   /**
    *
    * @param {AudioBuffer} buffer
