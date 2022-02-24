@@ -86,6 +86,36 @@ export class CameraAnimation {
       0
     );
     tpToCheckpointTl.to(
+      mainScene.fog.color,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].skyBgColor.r,
+        g: mainScene.parameters.environments[index].skyBgColor.g,
+        b: mainScene.parameters.environments[index].skyBgColor.b,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.directionalLight.color,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].lightColor.r,
+        g: mainScene.parameters.environments[index].lightColor.g,
+        b: mainScene.parameters.environments[index].lightColor.b,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.directionalLight2.color,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].light2Color.r,
+        g: mainScene.parameters.environments[index].light2Color.g,
+        b: mainScene.parameters.environments[index].light2Color.b,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
       mainScene.customPass.material.uniforms.uSunProgress,
       {
         duration: 1,
@@ -135,6 +165,26 @@ export class CameraAnimation {
           r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
           g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
           b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        mainScene.directionalLight.color,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.b,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        mainScene.directionalLight2.color,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.b,
         },
         0
       );

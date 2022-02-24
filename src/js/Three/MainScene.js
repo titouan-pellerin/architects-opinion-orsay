@@ -27,6 +27,7 @@ import { guiFolders } from "../utils/Debug";
 import { customFogUniforms, isMobile, isSafari } from "../utils/misc";
 import { mouse } from "../utils/Mouse";
 import raf from "../utils/Raf";
+import { PostFX } from "./utils/PostFX";
 
 export class MainScene extends Scene {
   constructor() {
@@ -172,19 +173,19 @@ export class MainScene extends Scene {
     ShaderChunk.fog_pars_vertex = fogParsVertex;
     ShaderChunk.fog_vertex = fogVertex;
 
-    const directionalLight = new DirectionalLight(
+    this.directionalLight = new DirectionalLight(
       this.parameters.environments[0].lightColor.clone(),
       this.parameters.lightIntensity
     );
-    directionalLight.position.set(10, 10, -10);
-    this.add(directionalLight);
+    this.directionalLight.position.set(10, 10, -10);
+    this.add(this.directionalLight);
 
-    const directionalLight2 = new DirectionalLight(
+    this.directionalLight2 = new DirectionalLight(
       this.parameters.environments[0].light2Color.clone(),
       this.parameters.light2Intensity
     );
-    directionalLight2.position.set(-10, 10, 10);
-    this.add(directionalLight2);
+    this.directionalLight2.position.set(-10, 10, 10);
+    this.add(this.directionalLight2);
 
     const renderScene = new RenderPass(this, this.camera);
 
@@ -219,6 +220,8 @@ export class MainScene extends Scene {
       fragmentShader: fragmentShader,
     };
 
+    this.post = new PostFX(this.renderer, this.customShader.uniforms);
+
     this.customPass = new ShaderPass(this.customShader);
     this.customPass.setSize(this.sizes.width * 0.5, this.sizes.height * 0.5);
     this.composer.addPass(this.customPass);
@@ -241,25 +244,29 @@ export class MainScene extends Scene {
     lightFolder
       .addColor(this.parameters.environments[0], "lightColor")
       .onChange(() => {
-        directionalLight.color.set(this.parameters.environments[0].lightColor);
+        this.directionalLight.color.set(this.parameters.environments[0].lightColor);
       })
       .name("Color");
-    lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
-    lightFolder.add(directionalLight.position, "x").min(-30).max(30).name("PosX");
-    lightFolder.add(directionalLight.position, "y").min(0).max(30).name("PosY");
-    lightFolder.add(directionalLight.position, "z").min(-30).max(30).name("PosZ");
+    lightFolder.add(this.directionalLight, "intensity").min(0).max(10).name("Intensity");
+    lightFolder.add(this.directionalLight.position, "x").min(-30).max(30).name("PosX");
+    lightFolder.add(this.directionalLight.position, "y").min(0).max(30).name("PosY");
+    lightFolder.add(this.directionalLight.position, "z").min(-30).max(30).name("PosZ");
 
     const light2Folder = atmosphereFolder.addFolder("Light2");
     light2Folder
       .addColor(this.parameters.environments[0], "light2Color")
       .onChange(() => {
-        directionalLight2.color.set(this.parameters.environments[0].light2Color);
+        this.directionalLight2.color.set(this.parameters.environments[0].light2Color);
       })
       .name("Color");
-    light2Folder.add(directionalLight2, "intensity").min(0).max(10).name("Intensity");
-    light2Folder.add(directionalLight2.position, "x").min(-30).max(30).name("PosX");
-    light2Folder.add(directionalLight2.position, "y").min(0).max(30).name("PosY");
-    light2Folder.add(directionalLight2.position, "z").min(-30).max(30).name("PosZ");
+    light2Folder
+      .add(this.directionalLight2, "intensity")
+      .min(0)
+      .max(10)
+      .name("Intensity");
+    light2Folder.add(this.directionalLight2.position, "x").min(-30).max(30).name("PosX");
+    light2Folder.add(this.directionalLight2.position, "y").min(0).max(30).name("PosY");
+    light2Folder.add(this.directionalLight2.position, "z").min(-30).max(30).name("PosZ");
 
     const postGuiFunctions = {
       disablePost: () => {
@@ -347,7 +354,8 @@ export class MainScene extends Scene {
   update() {
     if (this.controls) this.controls.update();
 
-    this.composer.render();
+    // this.composer.render();
+    this.post.render(this, this.camera);
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
 
     customFogUniforms.time.value = raf.elapsedTime;
