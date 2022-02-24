@@ -81,9 +81,9 @@ export class Grounds extends Group {
       this.ground1.flowers
     );
 
-    this.ground1.trees.updateTreesPositions(positions.get("treesPositions")[0]);
-    this.ground1.rocks.updateRocksPositions(positions.get("rocksPositions")[0]);
-    this.ground1.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[0]);
+    this.ground1.trees.setTrees(positions.get("treesPositions")[0]);
+    this.ground1.rocks.setRocks(positions.get("rocksPositions")[0]);
+    this.ground1.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[0]);
 
     this.ground1.add(
       leaf.object.mesh,
@@ -108,9 +108,9 @@ export class Grounds extends Group {
       this.ground2.flowers
     );
 
-    this.ground2.trees.updateTreesPositions(positions.get("treesPositions")[1]);
-    this.ground2.rocks.updateRocksPositions(positions.get("rocksPositions")[1]);
-    this.ground2.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[1]);
+    this.ground2.trees.setTrees(positions.get("treesPositions")[1]);
+    this.ground2.rocks.setRocks(positions.get("rocksPositions")[1]);
+    this.ground2.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[1]);
 
     this.ground2.texture.flipY = false;
     this.ground2.scale.z = -1;
@@ -143,9 +143,9 @@ export class Grounds extends Group {
       this.ground3.flowers
     );
 
-    this.ground3.trees.updateTreesPositions(positions.get("treesPositions")[2]);
-    this.ground3.rocks.updateRocksPositions(positions.get("rocksPositions")[2]);
-    this.ground3.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[2]);
+    this.ground3.trees.setTrees(positions.get("treesPositions")[2]);
+    this.ground3.rocks.setRocks(positions.get("rocksPositions")[2]);
+    this.ground3.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[2]);
 
     this.ground3.add(
       leaf.object.mesh.clone(),
@@ -169,9 +169,9 @@ export class Grounds extends Group {
       this.ground4.flowers
     );
 
-    this.ground4.trees.updateTreesPositions(positions.get("treesPositions")[3]);
-    this.ground4.rocks.updateRocksPositions(positions.get("rocksPositions")[3]);
-    this.ground4.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[3]);
+    this.ground4.trees.setTrees(positions.get("treesPositions")[3]);
+    this.ground4.rocks.setRocks(positions.get("rocksPositions")[3]);
+    this.ground4.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[3]);
 
     this.ground4.texture.flipY = false;
     this.ground4.trees.scale.z = -1;
@@ -206,9 +206,9 @@ export class Grounds extends Group {
     // Ground.groundElements.curveTexturesData = null;
     // Ground.groundElements.curveTexturesMatrices = null;
 
-    this.ground5.trees.updateTreesPositions(positions.get("treesPositions")[4]);
-    this.ground5.rocks.updateRocksPositions(positions.get("rocksPositions")[4]);
-    this.ground5.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[4]);
+    this.ground5.trees.setTrees(positions.get("treesPositions")[4]);
+    this.ground5.rocks.setRocks(positions.get("rocksPositions")[4]);
+    this.ground5.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[4]);
 
     this.ground5.add(
       leaf.object.mesh.clone(),
