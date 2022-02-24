@@ -24,7 +24,7 @@ const customFogUniforms = {
   time: { value: 0 },
   progress: { value: -0.1 },
   transitionIsIn: { value: 0 },
-  // noiseTexture: { value: texturesMap.get("noiseTexture")[0] },
+  noiseTexture: { value: texturesMap.get("noiseTexture")[0] },
 };
 
 export { simplex, isSafari, isMobile, customFogUniforms };
