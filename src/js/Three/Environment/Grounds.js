@@ -320,9 +320,6 @@ export class Grounds extends Group {
   }
 
   switchGrounds() {
-    console.log(this.groundIndex);
-    console.time("switch");
-
     this.groundsArray
       .filter((ground) => ground.visible)
       .forEach((ground) => (ground.visible = false));
@@ -341,7 +338,6 @@ export class Grounds extends Group {
     this.raycasting.groundsToRaycast[1] = this.groundsArray[this.groundIndex + 1].ground;
 
     this.groundIndex++;
-    console.timeEnd("switch");
   }
 
   update() {

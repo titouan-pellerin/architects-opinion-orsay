@@ -60,7 +60,6 @@ export class CameraAnimation {
 
     const camPos = new Vector3(curvePoint.x, -1, curvePoint.y);
     const camPos2 = new Vector3(curvePoint2.x, -1, curvePoint2.y);
-    console.log(mainScene.parameters.environments[index]);
     const tpToCheckpointTl = gsap.timeline({ paused: true });
     tpToCheckpointTl.to(
       mainScene.background,
@@ -69,9 +68,6 @@ export class CameraAnimation {
         r: mainScene.parameters.environments[index].skyBgColor.r,
         g: mainScene.parameters.environments[index].skyBgColor.g,
         b: mainScene.parameters.environments[index].skyBgColor.b,
-        onUpdate: () => {
-          console.log(mainScene.background.r);
-        },
       },
       0
     );
@@ -142,8 +138,6 @@ export class CameraAnimation {
   goToCheckpoint(raycasting) {
     raycasting.removeArtworks();
     mouse.range.x = 0.2;
-
-    console.log(this.checkpointsIndex);
 
     if (this.checkpointsIndex <= 4) {
       this.voiceOver.playChapter(this.checkpointsIndex);

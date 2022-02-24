@@ -27,7 +27,6 @@ import { guiFolders } from "../utils/Debug";
 import { customFogUniforms, isMobile, isSafari } from "../utils/misc";
 import { mouse } from "../utils/Mouse";
 import raf from "../utils/Raf";
-import { PostFX } from "./utils/PostFX";
 
 export class MainScene extends Scene {
   constructor() {
@@ -220,8 +219,6 @@ export class MainScene extends Scene {
       fragmentShader: fragmentShader,
     };
 
-    this.post = new PostFX(this.renderer, this.customShader.uniforms);
-
     this.customPass = new ShaderPass(this.customShader);
     this.customPass.setSize(this.sizes.width * 0.5, this.sizes.height * 0.5);
     this.composer.addPass(this.customPass);
@@ -354,8 +351,7 @@ export class MainScene extends Scene {
   update() {
     if (this.controls) this.controls.update();
 
-    // this.composer.render();
-    this.post.render(this, this.camera);
+    this.composer.render();
     this.customPass.uniforms.uTime.value = raf.elapsedTime;
 
     customFogUniforms.time.value = raf.elapsedTime;

@@ -1,11 +1,10 @@
-precision highp float;
-
 #include ../utils/noise2d;
 
 #define PI 3.1415926535897932384626433832795
 
-uniform sampler2D uScene;
-uniform vec2 uResolution;
+varying vec2 vUv;
+
+uniform sampler2D tDiffuse;
 uniform sampler2D uNoiseTexture;
 uniform float uTime;
 uniform float uProgress;
@@ -36,35 +35,34 @@ float parabola(float x) {
 }
 
 void main() {
-  vec2 uv = gl_FragCoord.xy / uResolution.xy;
 
     // Tint
   vec4 TintColor = vec4(uTintColor, 1.0);
 
   vec2 rotateTest = rotate(uBlurPos, sin(uTime) + PI * 0.5, vec2(0., 0.));
-  float noise = 1.0 - abs(cnoise(uv * 8. + uTime * 0.25));
+  float noise = 1.0 - abs(cnoise(vUv * 8. + uTime * 0.25));
 
-  float transitionNoise = 1.0 - cnoise(6. * uv + (uTime * 0.5));
+  float transitionNoise = 1.0 - cnoise(6. * vUv + (uTime * 0.5));
 
     // Corner
-  float corner = pow(1.0 - distance(uv, vec2(0.5)), uCornerSize);
+  float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
   vec4 cornerColor = vec4(corner + uCornerIntensity) + vec4(uCornerColor, 1.0);
 
-  // float fakeligthing = 1.0 - cfakeligthing(uv * 20.);
+  // float fakeligthing = 1.0 - cfakeligthing(vUv * 20.);
     // Part1, tint & corner
-  // vec4 p1 = texture2D(uScene, uv) * cornerColor * TintColor * 0.5;
+  // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
 
-  vec4 p1 = texture2D(uScene, uv) * 0.5 * cornerColor;
+  vec4 p1 = texture2D(tDiffuse, vUv) * 0.5 * cornerColor;
 
     // Blur
   vec4 color = vec4(0.0);
 
   float total = 0.0;
 
-  // vec2 toCenter = uBlurPos * abs(sin(uTime)) - uv * uRes;
-  // vec2 toCenter = uBlurPos * parabola(uSunProgress) - uv * uRes;
-  vec2 toCenter = vec2(uSunProgress, parabola(uSunProgress)) * uBlurPos - uv * uRes;
-  // vec2 toCenter = uBlurPos - uv * uRes;
+  // vec2 toCenter = uBlurPos * abs(sin(uTime)) - vUv * uRes;
+  // vec2 toCenter = uBlurPos * parabola(uSunProgress) - vUv * uRes;
+  vec2 toCenter = vec2(uSunProgress, parabola(uSunProgress)) * uBlurPos - vUv * uRes;
+  // vec2 toCenter = uBlurPos - vUv * uRes;
 
   float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
 
@@ -75,7 +73,7 @@ void main() {
   for(float t = 0.0; t <= 40.0; t++) {
     percent = (t + offset) / 80.0;
     weight = 4.0 * (percent - percent * percent);
-    blur = texture2D(uScene, uv + toCenter * percent * uBlurIntensity / uRes);
+    blur = texture2D(tDiffuse, vUv + toCenter * percent * uBlurIntensity / uRes);
     // vec4 blur = vec4(1.);
     blur.rgb *= blur.a;
     color += blur * weight;
@@ -94,19 +92,19 @@ void main() {
 		// fetch the 3x3 neighbourhood of a fragment
 
 		// first column
-  float tx0y0 = texture2D(uScene, uv + texel * vec2(-1, -1)).r;
-  float tx0y1 = texture2D(uScene, uv + texel * vec2(-1, 0)).r;
-  float tx0y2 = texture2D(uScene, uv + texel * vec2(-1, 1)).r;
+  float tx0y0 = texture2D(tDiffuse, vUv + texel * vec2(-1, -1)).r;
+  float tx0y1 = texture2D(tDiffuse, vUv + texel * vec2(-1, 0)).r;
+  float tx0y2 = texture2D(tDiffuse, vUv + texel * vec2(-1, 1)).r;
 
 		// second column
-  float tx1y0 = texture2D(uScene, uv + texel * vec2(0, -1)).r;
-  float tx1y1 = texture2D(uScene, uv + texel * vec2(0, 0)).r;
-  float tx1y2 = texture2D(uScene, uv + texel * vec2(0, 1)).r;
+  float tx1y0 = texture2D(tDiffuse, vUv + texel * vec2(0, -1)).r;
+  float tx1y1 = texture2D(tDiffuse, vUv + texel * vec2(0, 0)).r;
+  float tx1y2 = texture2D(tDiffuse, vUv + texel * vec2(0, 1)).r;
 
 		// third column
-  float tx2y0 = texture2D(uScene, uv + texel * vec2(1, -1)).r;
-  float tx2y1 = texture2D(uScene, uv + texel * vec2(1, 0)).r;
-  float tx2y2 = texture2D(uScene, uv + texel * vec2(1, 1)).r;
+  float tx2y0 = texture2D(tDiffuse, vUv + texel * vec2(1, -1)).r;
+  float tx2y1 = texture2D(tDiffuse, vUv + texel * vec2(1, 0)).r;
+  float tx2y2 = texture2D(tDiffuse, vUv + texel * vec2(1, 1)).r;
 
 		// gradient value in x direction
   float valueGx = Gx[0][0] * tx0y0 + Gx[1][0] * tx1y0 + Gx[2][0] * tx2y0 +
@@ -126,13 +124,13 @@ void main() {
   vec4 menuRender = ((p2 * 0.75) * vec4(G2));
   // vec4 menuRender = ((p2 * 0.75) * vec4(G2 * 0.2)); // smooth color à changer
 
-  float noiseTexture = texture2D(uNoiseTexture, 0.5 * (uv + 1.0)).r;
+  float noiseTexture = texture2D(uNoiseTexture, 0.5 * (vUv + 1.0)).r;
 
   float temp = uProgress;
   temp += ((10.0 * noiseTexture - 5.0 * transitionNoise) * 0.05) - 0.3;
   temp *= G * 0.9;
 
-  float distanceFromCenter = length(uv - 0.5);
+  float distanceFromCenter = length(vUv - 0.5);
   temp = smoothstep(temp - 0.05, temp, distanceFromCenter);
 
   vec4 finalRender;

@@ -197,6 +197,9 @@ export class Environment {
       duration: 0,
       value: -0.1,
       delay: -1,
+      onComplete: () => {
+        this.debugObject.tpToCheckpoints0();
+      },
     });
     menuAnimation.to(customFogUniforms.progress, {
       duration: 3,
@@ -220,6 +223,8 @@ export class Environment {
         openMenu.style.pointerEvents = "all";
         artworkIn.style.pointerEvents = "all";
         artworkOut.style.pointerEvents = "all";
+        // this.resumeExperience();
+        // this.cameraAnimation.goToCheckpoint(raycasting);
       },
     });
 
