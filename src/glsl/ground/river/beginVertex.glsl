@@ -16,11 +16,13 @@ vNoise2 = noise2;
 vNoise3 = noise3;
 vNoise4 = noise4;
 
-float rayModifier = mix(.001, 0., clamp((distance(rayPos, vec3(worldPosition.x, - 2.5, worldPosition.z))), .0, 1.) * 1.);
+float distanceMax = 1. + cnoise(vec2(transformed.z * 50., uTime));
 
-vRayModifier = rayModifier * 1000.;
+float rayModifier = mix(.002, 0., clamp((distance(rayPos, vec3(worldPosition.x, - 2.5, worldPosition.z))), .0, distanceMax) / distanceMax);
 
-transformed.z -= rayModifier;
+vRayModifier = rayModifier * 500.;
+
+transformed.z += rayModifier;
 
 transformed.z += noise;
 transformed.z += noise2;
