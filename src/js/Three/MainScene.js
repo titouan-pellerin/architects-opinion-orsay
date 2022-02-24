@@ -37,30 +37,53 @@ export class MainScene extends Scene {
 
     this.parameters = {
       tintColor: new Color("#ffffff"),
-
-      // Morning
-      // skyBgColor: new Color("#bdbf36"),
-      // lightColor: new Color("#47404f"),
-      // light2Color: new Color("#c396e8"),
-      // cornerColor: new Color("#6600ff"),
-
-      // Morning backup for toto
-      skyBgColor: new Color("#e5aa43"),
-      cornerColor: new Color("#5a544e"),
-      lightColor: new Color("#5a544e"),
-      light2Color: new Color("#d8923d"),
-
-      // Day
-      skyBgColor2: new Color("#8ea1a9"),
-      cornerColor2: new Color("#feffe1"),
-      lightColor2: new Color("#4e4313"),
-      light2Color2: new Color("#bbbd84"),
-
-      // Night
-      // skyBgColor: new Color("#7ad5ff"),
-      // cornerColor: new Color("#11051f"),
-      // lightColor: new Color("#3e70c1"),
-      // light2Color: new Color("#d69ee5"),
+      environments: [
+        // Morning
+        {
+          skyBgColor: new Color("#e5aa43"),
+          cornerColor: new Color("#5a544e"),
+          lightColor: new Color("#5a544e"),
+          light2Color: new Color("#d8923d"),
+          sunProgress: 0,
+        },
+        // Day
+        {
+          skyBgColor: new Color("#8ea1a9"),
+          cornerColor: new Color("#feffe1"),
+          lightColor: new Color("#4e4313"),
+          light2Color: new Color("#bbbd84"),
+          sunProgress: 1,
+        },
+        {
+          skyBgColor: new Color("#fff"),
+          cornerColor: new Color("#fff"),
+          lightColor: new Color("#fff"),
+          light2Color: new Color("#fff"),
+          sunProgress: 0,
+        },
+        // Night
+        {
+          skyBgColor: new Color("#7ad5ff"),
+          cornerColor: new Color("#11051f"),
+          lightColor: new Color("#3e70c1"),
+          light2Color: new Color("#d69ee5"),
+          sunProgress: 1,
+        },
+        {
+          skyBgColor: new Color("#000"),
+          cornerColor: new Color("#000"),
+          lightColor: new Color("#000"),
+          light2Color: new Color("#000"),
+          sunProgress: 0,
+        },
+        {
+          skyBgColor: new Color("#fff"),
+          cornerColor: new Color("#fff"),
+          lightColor: new Color("#fff"),
+          light2Color: new Color("#fff"),
+          sunProgress: 1,
+        },
+      ],
 
       lightIntensity: 0.5,
       light2Intensity: 0.5,
@@ -136,12 +159,12 @@ export class MainScene extends Scene {
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.compile(this, this.camera);
-    this.background = this.parameters.skyBgColor;
+    this.background = this.parameters.environments[0].skyBgColor.clone();
 
     this.cameraContainer.position.set(0, -1, 25);
     this.add(this.cameraContainer);
 
-    const fog = new Fog(this.parameters.skyBgColor, 20, 35);
+    const fog = new Fog(this.parameters.environments[0].skyBgColor.clone(), 20, 35);
     this.fog = fog;
 
     ShaderChunk.fog_pars_fragment = fogParsFragment;
@@ -150,14 +173,14 @@ export class MainScene extends Scene {
     ShaderChunk.fog_vertex = fogVertex;
 
     const directionalLight = new DirectionalLight(
-      this.parameters.lightColor,
+      this.parameters.environments[0].lightColor.clone(),
       this.parameters.lightIntensity
     );
     directionalLight.position.set(10, 10, -10);
     this.add(directionalLight);
 
     const directionalLight2 = new DirectionalLight(
-      this.parameters.light2Color,
+      this.parameters.environments[0].light2Color.clone(),
       this.parameters.light2Intensity
     );
     directionalLight2.position.set(-10, 10, 10);
@@ -176,12 +199,12 @@ export class MainScene extends Scene {
         uMenuSwitch: { value: 0 },
         tDiffuse: { value: null },
         uTintColor: { value: this.parameters.tintColor },
-        uCornerColor: { value: this.parameters.cornerColor },
+        uCornerColor: { value: this.parameters.environments[0].cornerColor.clone() },
         uCornerIntensity: { value: 1 },
         uCornerSize: { value: 4.5 },
         uProgress: { value: 0 },
         uFadeProgress: { value: 0 },
-        uSunProgress: { value: 0.3 },
+        uSunProgress: { value: this.parameters.environments[0].sunProgress },
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
@@ -205,10 +228,10 @@ export class MainScene extends Scene {
     const atmosphereFolder = guiFolders.get("atmosphere");
 
     atmosphereFolder
-      .addColor(this.parameters, "skyBgColor")
+      .addColor(this.parameters.environments[0], "skyBgColor")
       .onChange(() => {
-        fog.color.set(this.parameters.skyBgColor);
-        this.background.set(this.parameters.skyBgColor);
+        fog.color.set(this.parameters.environments[0].skyBgColor);
+        this.background.set(this.parameters.environments[0].skyBgColor);
       })
       .name("SkyBgColor");
     atmosphereFolder.add(fog, "near").min(-30).max(30).name("FogNear");
@@ -216,9 +239,9 @@ export class MainScene extends Scene {
 
     const lightFolder = atmosphereFolder.addFolder("Light");
     lightFolder
-      .addColor(this.parameters, "lightColor")
+      .addColor(this.parameters.environments[0], "lightColor")
       .onChange(() => {
-        directionalLight.color.set(this.parameters.lightColor);
+        directionalLight.color.set(this.parameters.environments[0].lightColor);
       })
       .name("Color");
     lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
@@ -228,9 +251,9 @@ export class MainScene extends Scene {
 
     const light2Folder = atmosphereFolder.addFolder("Light2");
     light2Folder
-      .addColor(this.parameters, "light2Color")
+      .addColor(this.parameters.environments[0], "light2Color")
       .onChange(() => {
-        directionalLight2.color.set(this.parameters.light2Color);
+        directionalLight2.color.set(this.parameters.environments[0].light2Color);
       })
       .name("Color");
     light2Folder.add(directionalLight2, "intensity").min(0).max(10).name("Intensity");
@@ -252,9 +275,11 @@ export class MainScene extends Scene {
     postFolder.add(postGuiFunctions, "enablePost");
     const cornerFolder = postFolder.addFolder("Corner");
     cornerFolder
-      .addColor(this.parameters, "cornerColor")
+      .addColor(this.parameters.environments[0], "cornerColor")
       .onChange(() => {
-        this.customPass.uniforms.uCornerColor.value.set(this.parameters.cornerColor);
+        this.customPass.uniforms.uCornerColor.value.set(
+          this.parameters.environments[0].cornerColor
+        );
       })
       .name("Color");
     cornerFolder

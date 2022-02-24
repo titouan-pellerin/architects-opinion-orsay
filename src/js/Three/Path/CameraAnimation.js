@@ -50,7 +50,9 @@ export class CameraAnimation {
 
   tpToCheckpoint(index) {
     if (index === 0) this.tick.value = 0;
-    else this.tick.value = this.checkpoints[index - 1].tick;
+    else {
+      this.tick.value = this.checkpoints[index - 1].tick;
+    }
     const nextTick = this.tick.value + 0.007;
 
     const curvePoint = this.path.spline.getPointAt(this.tick.value);
@@ -58,12 +60,47 @@ export class CameraAnimation {
 
     const camPos = new Vector3(curvePoint.x, -1, curvePoint.y);
     const camPos2 = new Vector3(curvePoint2.x, -1, curvePoint2.y);
+    console.log(mainScene.parameters.environments[index]);
+    const tpToCheckpointTl = gsap.timeline({ paused: true });
+    tpToCheckpointTl.to(
+      mainScene.background,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].skyBgColor.r,
+        g: mainScene.parameters.environments[index].skyBgColor.g,
+        b: mainScene.parameters.environments[index].skyBgColor.b,
+        onUpdate: () => {
+          console.log(mainScene.background.r);
+        },
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.fog.color,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].skyBgColor.r,
+        g: mainScene.parameters.environments[index].skyBgColor.g,
+        b: mainScene.parameters.environments[index].skyBgColor.b,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.customPass.material.uniforms.uSunProgress,
+      {
+        duration: 1,
+        value: mainScene.parameters.environments[index].sunProgress,
+      },
+      0
+    );
+    tpToCheckpointTl.play();
 
     mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
     mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
     mainScene.cameraContainer.userData.lookingAt = camPos2;
     mainScene.cameraContainer.rotateX(Math.PI);
     mainScene.cameraContainer.rotateZ(Math.PI);
+
     this.checkpointsIndex = index;
   }
 
@@ -72,11 +109,12 @@ export class CameraAnimation {
    * @param {Number} index
    * @param {Raycasting} raycasting
    */
-  goToCheckpoint(index, raycasting) {
+  goToCheckpoint(raycasting) {
     raycasting.removeArtworks();
     mouse.range.x = 0.2;
 
-    if (index) this.checkpointsIndex = index;
+    console.log(this.checkpointsIndex);
+
     if (this.checkpointsIndex <= 4) {
       this.voiceOver.playChapter(this.checkpointsIndex);
       this.goToCheckpointTl = gsap.timeline({ paused: true });
@@ -84,9 +122,9 @@ export class CameraAnimation {
         mainScene.background,
         {
           duration: this.checkpoints[this.checkpointsIndex].duration,
-          r: mainScene.parameters.skyBgColor2.r,
-          g: mainScene.parameters.skyBgColor2.g,
-          b: mainScene.parameters.skyBgColor2.b,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
         },
         0
       );
@@ -94,9 +132,9 @@ export class CameraAnimation {
         mainScene.fog.color,
         {
           duration: this.checkpoints[this.checkpointsIndex].duration,
-          r: mainScene.parameters.skyBgColor2.r,
-          g: mainScene.parameters.skyBgColor2.g,
-          b: mainScene.parameters.skyBgColor2.b,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
         },
         0
       );
@@ -104,7 +142,7 @@ export class CameraAnimation {
         mainScene.customPass.material.uniforms.uSunProgress,
         {
           duration: this.checkpoints[this.checkpointsIndex].duration,
-          value: 0.3,
+          value: mainScene.parameters.environments[this.checkpointsIndex + 1].sunProgress,
         },
         0
       );

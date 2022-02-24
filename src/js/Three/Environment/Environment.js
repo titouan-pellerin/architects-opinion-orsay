@@ -102,7 +102,7 @@ export class Environment {
         music.setVolume(0.09);
         music.play();
         this.voiceOver.init(audioListener);
-        this.cameraAnimation.goToCheckpoint(null, raycasting);
+        this.cameraAnimation.goToCheckpoint(raycasting);
       },
       tpToCheckpoints0: () => {
         this.grounds.groundIndex = 0;
