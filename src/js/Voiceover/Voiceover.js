@@ -45,6 +45,7 @@ export class Voiceover {
       ? this.currentChapter[index + 1].init(this.audioListener)
       : null;
     this.currentRecord = this.currentChapter[index];
+    this.currentRecord.currentSubtitleIndex = 0;
     if (!this.currentRecord.audio) this.currentRecord.init(this.audioListener);
     this.currentRecord.play();
 

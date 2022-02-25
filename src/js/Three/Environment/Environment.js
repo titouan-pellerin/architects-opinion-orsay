@@ -20,7 +20,6 @@ export class Environment {
       envScale: 100,
       groundSize: 0.5,
       groundColor: new Color("#fbab32"),
-      skyColor: new Color("#ffffff"),
       speed: 0.125,
       stroke: 5000,
       smallNoise: 500,
@@ -29,6 +28,8 @@ export class Environment {
       smallNoiseSky: 318,
       bigNoiseSky: 9.7,
     };
+
+    this.musicVolume = { level: 0 };
 
     this.forestPathLine = new ForestPathLine(1024, 1, this.parameters);
 
@@ -89,48 +90,50 @@ export class Environment {
 
     raycasting.start();
 
-    document.addEventListener("visibilitychange", this.checkVisibility.bind(this));
-
     this.debugObject = {
       start: () => {
-        const audioListener = new AudioListener();
-        mainScene.camera.add(audioListener);
-        const music = new PositionalAudio(audioListener);
-        music.setRefDistance(30);
-        music.setRolloffFactor(0);
-        music.setBuffer(soundsMap.get("music"));
-        music.setVolume(0.09);
-        music.play();
-        this.voiceOver.init(audioListener);
+        this.startExperience();
+        // const audioListener = new AudioListener();
+        // mainScene.camera.add(audioListener);
+        // const music = new PositionalAudio(audioListener);
+        // music.setRefDistance(30);
+        // music.setRolloffFactor(0);
+        // music.setBuffer(soundsMap.get("music"));
+        // music.setVolume(0.09);
+        // music.play();
+        // this.voiceOver.init(audioListener);
+      },
+      playCheckpoint: () => {
         this.cameraAnimation.goToCheckpoint(raycasting);
       },
       tpToCheckpoints0: () => {
         this.grounds.groundIndex = 0;
-        this.cameraAnimation.tpToCheckpoint(0);
+        this.cameraAnimation.tpToCheckpoint(0, raycasting);
       },
       tpToCheckpoints1: () => {
         this.grounds.groundIndex = 0;
-        this.cameraAnimation.tpToCheckpoint(1);
+        this.cameraAnimation.tpToCheckpoint(1, raycasting);
       },
       tpToCheckpoints2: () => {
         this.grounds.groundIndex = 1;
-        this.cameraAnimation.tpToCheckpoint(2);
+        this.cameraAnimation.tpToCheckpoint(2, raycasting);
       },
       tpToCheckpoints3: () => {
         this.grounds.groundIndex = 2;
-        this.cameraAnimation.tpToCheckpoint(3);
+        this.cameraAnimation.tpToCheckpoint(3, raycasting);
       },
       tpToCheckpoints4: () => {
         this.grounds.groundIndex = 3;
-        this.cameraAnimation.tpToCheckpoint(4);
+        this.cameraAnimation.tpToCheckpoint(4, raycasting);
       },
       tpToCheckpoints5: () => {
         this.grounds.groundIndex = 3;
-        this.cameraAnimation.tpToCheckpoint(5);
+        this.cameraAnimation.tpToCheckpoint(5, raycasting);
       },
     };
 
-    guiFolders.get("experience").add(this.debugObject, "start").name("Next");
+    guiFolders.get("experience").add(this.debugObject, "start");
+    guiFolders.get("experience").add(this.debugObject, "playCheckpoint");
     guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints0");
     guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints1");
     guiFolders.get("experience").add(this.debugObject, "tpToCheckpoints2");
@@ -198,7 +201,8 @@ export class Environment {
       value: -0.1,
       delay: -1,
       onComplete: () => {
-        this.debugObject.tpToCheckpoints0();
+        this.debugObject.tpToCheckpoints3();
+        // this.resumeExperience();
       },
     });
     menuAnimation.to(customFogUniforms.progress, {
@@ -271,17 +275,42 @@ export class Environment {
       chockwaveAnimation.pause(0);
       chockwaveAnimation.play();
     });
+
+    this.musicVolumeTween = gsap
+      .to(this.musicVolume, {
+        duration: 1,
+        level: 0.05,
+        onUpdate: () => {
+          this.music.setVolume(this.musicVolume.level);
+        },
+      })
+      .pause();
   }
 
-  checkVisibility() {
-    if (document.visibilityState === "visible") this.resumeExperience();
-    else this.pauseExperience();
+  startExperience() {
+    this.audioListener = new AudioListener();
+    mainScene.camera.add(this.audioListener);
+    this.music = new PositionalAudio(this.audioListener);
+    this.music.setRefDistance(60);
+    this.music.setRolloffFactor(0);
+    this.music.setBuffer(soundsMap.get("music"));
+    this.music.setVolume(0);
+    this.music.play();
+    gsap.to(this.musicVolume, {
+      duration: 2,
+      level: 0.15,
+      onUpdate: () => {
+        this.music.setVolume(this.musicVolume.level);
+      },
+    });
+    this.voiceOver.init(this.audioListener);
   }
 
   pauseExperience() {
     console.log("Pause experience");
     this.cameraAnimation.pause();
     mouse.pause();
+    if (this.music) this.musicVolumeTween.play();
     if (this.voiceOver.currentRecord) this.voiceOver.pause();
   }
 
@@ -289,6 +318,7 @@ export class Environment {
     console.log("Resume experience");
     this.cameraAnimation.resume();
     mouse.resume();
+    if (this.music) this.musicVolumeTween.reverse();
     if (this.voiceOver.currentRecord) this.voiceOver.resume();
   }
 }

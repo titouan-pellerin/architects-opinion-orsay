@@ -70,10 +70,10 @@ export class MainScene extends Scene {
           sunProgress: 1,
         },
         {
-          skyBgColor: new Color("#000"),
-          cornerColor: new Color("#000"),
-          lightColor: new Color("#000"),
-          light2Color: new Color("#000"),
+          skyBgColor: new Color("#ffff00"),
+          cornerColor: new Color("#ffff00"),
+          lightColor: new Color("#ffff00"),
+          light2Color: new Color("#ffff00"),
           sunProgress: 0,
         },
         {
@@ -161,7 +161,6 @@ export class MainScene extends Scene {
     this.renderer.compile(this, this.camera);
     this.background = this.parameters.environments[0].skyBgColor.clone();
 
-    this.cameraContainer.position.set(0, -1, 25);
     this.add(this.cameraContainer);
 
     const fog = new Fog(this.parameters.environments[0].skyBgColor.clone(), 20, 35);

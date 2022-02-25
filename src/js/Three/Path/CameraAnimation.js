@@ -48,11 +48,13 @@ export class CameraAnimation {
       });
   }
 
-  tpToCheckpoint(index) {
+  tpToCheckpoint(index, raycasting) {
+    this.goToCheckpointTl = null;
     if (index === 0) this.tick.value = 0;
-    else {
-      this.tick.value = this.checkpoints[index - 1].tick;
-    }
+    else this.tick.value = this.checkpoints[index - 1].tick;
+
+    // this.voiceOver.playChapter(index);
+
     const nextTick = this.tick.value + 0.007;
 
     const curvePoint = this.path.spline.getPointAt(this.tick.value);
@@ -128,6 +130,7 @@ export class CameraAnimation {
     mainScene.cameraContainer.rotateZ(Math.PI);
 
     this.checkpointsIndex = index;
+    this.goToCheckpoint(raycasting);
   }
 
   /**

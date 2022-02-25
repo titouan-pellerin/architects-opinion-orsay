@@ -57,10 +57,10 @@ export class Record {
   init(audioListener) {
     this.audioListener = audioListener;
     this.audio = new PositionalAudio(audioListener);
-    this.audio.setRefDistance(30);
+    this.audio.setRefDistance(60);
     this.audio.setRolloffFactor(0);
     this.audio.setBuffer(this.buffer);
-    this.audio.setVolume(0.5);
+    this.audio.setVolume(0.7);
 
     return this;
   }
