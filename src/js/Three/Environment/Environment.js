@@ -173,15 +173,15 @@ export class Environment {
       duration: 0,
       value: 1,
       delay: -1,
+      // onComplete: () => {
+      //   this.debugObject.tpToCheckpoints0();
+      //   // this.resumeExperience();
+      // },
     });
     this.menuAnimation.to(customFogUniforms.progress, {
       duration: 0,
       value: -0.1,
       delay: -1,
-      onComplete: () => {
-        this.debugObject.tpToCheckpoints0();
-        // this.resumeExperience();
-      },
     });
     this.menuAnimation.to(customFogUniforms.progress, {
       duration: 3,
@@ -311,6 +311,7 @@ export class Environment {
     this.menuAnimation.pause(0);
     this.menuAnimation.play();
     this.closeMenu(false);
+    if (this.music) this.musicVolumeTween.reverse();
   }
 
   pauseExperience() {
