@@ -47,7 +47,7 @@ button {
   top: 0;
   left: 0;
   z-index: -1;
-  opacity: 0.3;
+  // opacity: 0.3;
 }
 
 .webgl {
@@ -83,6 +83,7 @@ button {
       .title {
         font-family: "title";
         font-size: 2.5rem;
+        line-height: 2.14rem;
       }
       .subtitle {
         font-size: 1rem;
@@ -134,6 +135,25 @@ button {
     }
   }
 
+  .btn-next_container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: 2rem;
+    font-size: 1.375rem;
+    display: none;
+
+    .text-wrapper {
+      position: relative;
+      margin-left: 0.75rem;
+      .text-on {
+        position: absolute;
+      }
+      .text-off {
+        opacity: 0;
+      }
+    }
+  }
   .btn-sound_container {
     position: absolute;
     bottom: 0;
@@ -141,17 +161,19 @@ button {
     font-size: 1.375rem;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: end;
+    // display: none;
 
     svg {
       width: 0.8125rem;
       height: fit-content;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.4rem;
     }
 
     .text-wrapper {
       position: relative;
       margin-left: 0.75rem;
+      line-height: 1.375rem;
       .text-on {
         position: absolute;
       }
@@ -216,6 +238,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+    // display: none;
 
     .line-wrapper {
       margin: 0 0 0.225rem 0.75rem;
@@ -228,7 +251,7 @@ button {
     }
   }
 
-  .content-titles {
+  .content-interface_titles {
     .chap {
       position: absolute;
       left: 50%;
@@ -239,6 +262,7 @@ button {
     .title {
       font-family: "title";
       font-size: 8.75rem;
+      line-height: 7.5rem;
 
       .outline {
         -webkit-text-stroke-width: 1px;
@@ -249,14 +273,46 @@ button {
     .subtitle {
       font-family: "text-regular";
       font-size: 1.9375rem;
+      line-height: 6.5rem;
     }
   }
 
+  .content-artwork_titles {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    .title {
+      width: 55rem;
+      font-size: 6.0625rem;
+      line-height: 6.0625rem;
+      font-family: "title";
+    }
+
+    .subtitle {
+      margin-top: 1.5rem;
+      font-size: 1.375rem;
+    }
+  }
+  .content-artwork_footer {
+    position: absolute;
+    bottom: 0;
+    font-size: 1.375rem;
+    line-height: 1.6rem;
+    width: 11.25rem;
+
+    .title {
+      font-weight: bold;
+      margin-bottom: 0.45em;
+    }
+  }
   .content-subtitles {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
-    bottom: 0.25rem;
+    bottom: 2rem;
     width: 55rem;
     text-align: center;
     font-size: 1.375rem;
