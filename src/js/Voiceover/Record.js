@@ -66,6 +66,7 @@ export class Record {
   }
 
   play() {
+    this.currentSubtitleIndex = 0;
     this.startTime = this.audio.context.currentTime;
     this.audio.play();
 

@@ -201,7 +201,7 @@ export class Environment {
       value: -0.1,
       delay: -1,
       onComplete: () => {
-        this.debugObject.tpToCheckpoints3();
+        this.debugObject.tpToCheckpoints0();
         // this.resumeExperience();
       },
     });
