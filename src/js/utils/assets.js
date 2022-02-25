@@ -88,6 +88,11 @@ const artwork16 = textureLoader.load(
   "/assets/artworks/vol-de-mouettes-jacques-gruber.jpg"
 );
 
+const easter = location.hash.includes("bzh")
+  ? textureLoader.load("/assets/artworks/gwenn-ha-du.jpg")
+  : textureLoader.load("/assets/artworks/venom.jpg");
+easter.encoding = sRGBEncoding;
+
 const flowerPattern = textureLoader.load("/assets/flower/flower.jpg");
 flowerPattern.encoding = sRGBEncoding;
 flowerPattern.flipY = false;
@@ -209,10 +214,6 @@ if (!location.hash.includes("bzh") && !location.hash.includes("enzo")) {
     },
   ]);
 } else {
-  const easter = location.hash.includes("bzh")
-    ? textureLoader.load("/assets/artworks/gwenn-ha-du.jpg")
-    : textureLoader.load("/assets/artworks/venom.jpg");
-  easter.encoding = sRGBEncoding;
   texturesMap.set("artworksTextures", [
     {
       texture: easter,

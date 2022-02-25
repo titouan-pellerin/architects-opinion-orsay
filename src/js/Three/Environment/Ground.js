@@ -10,9 +10,9 @@ import riverBeginVertexShader from "@glsl/ground/river/beginVertex.glsl";
 import riverCommonFragmentShader from "@glsl/ground/river/commonFragment.glsl";
 import riverCommonVertexShader from "@glsl/ground/river/commonVertex.glsl";
 import riverOutputFragmentShader from "@glsl/ground/river/outputFragment.glsl";
-import { customFogUniforms } from "@js/utils/misc";
 import { CustomMeshToonMaterial } from "@js/Three/utils/CustomMeshToonMaterial";
 import { MeshSurfaceSampler } from "@js/Three/utils/MeshSurfaceSampler";
+import { customFogUniforms } from "@js/utils/misc";
 import {
   Color,
   Group,

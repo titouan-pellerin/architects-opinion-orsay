@@ -197,8 +197,8 @@ export class CameraAnimation {
         this.tick,
         {
           // delay: this.checkpointsIndex === 0 ? 3 : 0,
-          duration: this.checkpoints[this.checkpointsIndex].duration,
-          // duration: 1,
+          // duration: this.checkpoints[this.checkpointsIndex].duration,
+          duration: 1,
           value: this.checkpoints[this.checkpointsIndex].tick,
           // value: 1,
           ease: CustomEase.create(

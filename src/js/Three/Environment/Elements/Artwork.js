@@ -3,6 +3,7 @@ import outerCommonFragmentShader from "@glsl/artworks/outer/commonFragment.glsl"
 import outerCommonVertexShader from "@glsl/artworks/outer/commonVertex.glsl";
 import outerOutputFragmentShader from "@glsl/artworks/outer/outputFragment.glsl";
 import { customFogUniforms } from "@js/utils/misc";
+import gsap from "gsap";
 import {
   BoxGeometry,
   Color,
@@ -17,6 +18,26 @@ import {
 export class Artwork extends Group {
   static materialInner;
   static materialOuter;
+  static artworkContentTitle = document.querySelector(".content-artwork_titles .title");
+  static artworkContentSubtitle = document.querySelector(
+    ".content-artwork_titles .subtitle"
+  );
+  static artworkFooterTitle = document.querySelector(".content-artwork_footer .title");
+  static artworkFooterSubtitle = document.querySelector(
+    ".content-artwork_footer .author"
+  );
+  static contentArtworkTitlesTween = gsap
+    .to(".content-artwork_titles", {
+      duration: 0.5,
+      opacity: 1,
+    })
+    .pause();
+  static contentArtworkFooterTween = gsap
+    .to(".content-artwork_footer", {
+      duration: 0.5,
+      opacity: 1,
+    })
+    .pause();
   constructor(details, position) {
     super();
     this.details = details;
@@ -104,5 +125,13 @@ export class Artwork extends Group {
     this.outerMesh.updateMatrix();
     this.innerMesh.updateMatrix();
     this.add(this.innerMesh, this.outerMesh);
+  }
+
+  updateDom() {
+    Artwork.artworkContentTitle.textContent = Artwork.artworkFooterTitle.textContent =
+      this.details.title;
+    Artwork.artworkContentSubtitle.textContent =
+      Artwork.artworkFooterSubtitle.textContent =
+        this.details.author + " - " + this.details.year;
   }
 }
