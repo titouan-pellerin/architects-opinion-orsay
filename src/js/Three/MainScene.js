@@ -297,29 +297,28 @@ export class MainScene extends Scene {
 
     const chaptersBtn = document.querySelector(".btn-chapters_container");
     const CloseBtn = document.querySelector(".btn-close_container");
+    const contentMenu = document.querySelector(".content-menu");
     const li = document.querySelector(".menu-btn_section");
     const artworkIn = document.querySelector(".artwork-in");
     const artworkOut = document.querySelector(".artwork-out");
 
     chaptersBtn.addEventListener("click", () => {
-      console.log("coiucou");
       chaptersBtn.style.pointerEvents = "none";
-      artworkIn.style.pointerEvents = "none";
-      artworkOut.style.pointerEvents = "none";
+      chaptersBtn.style.opacity = "0";
       gsap.to(this.customPass.uniforms.uProgress, {
         value: 1.3,
         duration: 1.5,
         onComplete: () => {
           this.customPass.uniforms.uMenuSwitch.value = 1.0;
           this.customPass.uniforms.uProgress.value = 0;
-          CloseBtn.style.pointerEvents = "all";
-          li.style.pointerEvents = "all";
+          contentMenu.style.pointerEvents = "all";
+          contentMenu.style.opacity = "1";
         },
       });
     });
     CloseBtn.addEventListener("click", () => {
-      CloseBtn.style.pointerEvents = "none";
-      li.style.pointerEvents = "none";
+      contentMenu.style.pointerEvents = "none";
+      contentMenu.style.opacity = "0";
       gsap.to(this.customPass.uniforms.uProgress, {
         value: 1.3,
         duration: 1.5,
@@ -327,15 +326,12 @@ export class MainScene extends Scene {
           this.customPass.uniforms.uMenuSwitch.value = 0.0;
           this.customPass.uniforms.uProgress.value = 0;
           chaptersBtn.style.pointerEvents = "all";
-          artworkIn.style.pointerEvents = "all";
-          artworkOut.style.pointerEvents = "all";
+          chaptersBtn.style.opacity = "1";
         },
       });
     });
 
     const menuAnimation = gsap.timeline({ paused: true });
-    menuAnimation.to(CloseBtn, { duration: 0, pointerEvents: "none" });
-    menuAnimation.to(li, { duration: 0, pointerEvents: "none" });
     menuAnimation.to(this.customPass.uniforms.uMenuSwitch, {
       duration: 0,
       value: 2,
@@ -372,9 +368,6 @@ export class MainScene extends Scene {
         this.customPass.uniforms.uProgress.value = 0;
         this.customPass.uniforms.uMenuSwitch.value = 0;
         this.customPass.uniforms.uFadeProgress.value = 0;
-        chaptersBtn.style.pointerEvents = "all";
-        artworkIn.style.pointerEvents = "all";
-        artworkOut.style.pointerEvents = "all";
       },
     });
 

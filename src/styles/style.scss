@@ -256,18 +256,18 @@ button {
         cursor: pointer;
 
         &:first-child {
-          margin: 0 25rem 1.625rem 0 !important;
+          margin: 0 25rem 3rem 0 !important;
         }
 
         &:nth-child(2n + 1) {
-          margin: 1.625rem 25rem 1.625rem 0;
+          margin: 3rem 25rem 3rem 0;
         }
         &:nth-child(2n) {
-          margin: 1.625rem 0 1.625rem 25rem;
+          margin: 3rem 0 3rem 25rem;
         }
 
         &:last-child {
-          margin: 1.625rem 0 0 25rem !important;
+          margin: 3rem 0 0 25rem !important;
         }
 
         .title {
@@ -283,8 +283,8 @@ button {
         }
 
         .subtitle {
-          margin-top: 1.5rem;
           font-size: 1.375rem;
+          margin-bottom: 0.75rem;
         }
       }
     }
