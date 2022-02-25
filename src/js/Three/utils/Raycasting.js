@@ -2,20 +2,22 @@ import { MathUtils, Raycaster, Vector3 } from "three";
 import { mouse } from "../../utils/Mouse";
 import raf from "../../utils/Raf";
 import { Artwork } from "../Environment/Elements/Artwork";
+import { Ground } from "../Environment/Ground";
 import { mainScene } from "../MainScene";
 
 export class Raycasting {
   constructor(cameraAnimation) {
     this.cameraAnimation = cameraAnimation;
     this.raycaster = new Raycaster();
-    this.raycaster.far = 35;
+    this.raycaster.far = 30;
     this.groundsToRaycast = [];
     this.artworks = [];
     this.spheresToRaycast = [];
     this.currentIntersect = null;
     this.onClickHandler = this.onClick.bind(this);
 
-    this.rayPos = new Vector3();
+    this.leavesRayPos = new Vector3();
+    this.groundRayPos = new Vector3();
     this.groundFlipped = 1;
   }
 
@@ -57,35 +59,61 @@ export class Raycasting {
       if (intersects[0].object.parent instanceof Artwork) {
         document.body.style.cursor = "pointer";
         this.currentIntersect = intersects[0].object;
-      } else {
-        // console.log(intersects[0].object.geometry);
-        intersects[0].object.parent.scale.z === -1
-          ? (this.groundFlipped = -1)
-          : (this.groundFlipped = 1);
+        this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 0, 2, raf.deltaTime);
+        this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 0, 2, raf.deltaTime);
+      } else if (intersects[0].object.parent instanceof Ground) {
+        this.groundFlipped = MathUtils.damp(
+          this.groundFlipped,
+          intersects[0].object.parent.scale.z,
+          4.5,
+          raf.deltaTime
+        );
 
         document.body.style.cursor = "default";
         this.currentIntersect = null;
-        this.rayPos.x = MathUtils.damp(
-          this.rayPos.x,
+        this.groundRayPos.x = MathUtils.damp(
+          this.groundRayPos.x,
           intersects[0].point.x,
           4.5,
           raf.deltaTime
         );
-        this.rayPos.y = MathUtils.damp(
-          this.rayPos.y,
+        this.groundRayPos.y = MathUtils.damp(
+          this.groundRayPos.y,
           intersects[0].point.y,
           4.5,
           raf.deltaTime
         );
-        this.rayPos.z = MathUtils.damp(
-          this.rayPos.z,
+        this.groundRayPos.z = MathUtils.damp(
+          this.groundRayPos.z,
+          intersects[0].point.z,
+          4.5,
+          raf.deltaTime
+        );
+      } else {
+        document.body.style.cursor = "default";
+        this.currentIntersect = null;
+        this.leavesRayPos.x = MathUtils.damp(
+          this.leavesRayPos.x,
+          intersects[0].point.x,
+          4.5,
+          raf.deltaTime
+        );
+        this.leavesRayPos.y = MathUtils.damp(
+          this.leavesRayPos.y,
+          intersects[0].point.y,
+          4.5,
+          raf.deltaTime
+        );
+        this.leavesRayPos.z = MathUtils.damp(
+          this.leavesRayPos.z,
           intersects[0].point.z,
           4.5,
           raf.deltaTime
         );
       }
     } else {
-      this.rayPos.y = MathUtils.damp(this.rayPos.y, -5, 1, raf.deltaTime);
+      this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 3, 2, raf.deltaTime);
+      this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 3, 2, raf.deltaTime);
       document.body.style.cursor = "default";
       this.currentIntersect = null;
     }

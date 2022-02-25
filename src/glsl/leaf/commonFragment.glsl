@@ -3,7 +3,7 @@
 
 uniform vec3 uColor;
 uniform vec3 uColor2;
-varying vec2 vUv;
+// varying vec2 vUv;
 varying vec3 vColor;
 
 vec2 rotate(vec2 uv, float rotation, vec2 mid) {

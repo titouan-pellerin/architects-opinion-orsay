@@ -30,7 +30,6 @@ export class Trees extends Group {
     super();
 
     this.spheresToRaycast = [];
-    this.currentTrees = [];
 
     if (!Trees.tree1 && !Trees.tree2) {
       const trunkUniforms = {
@@ -237,7 +236,7 @@ export class Trees extends Group {
         sphereToRaycast5,
       ];
       tree1.add(...spheresToRaycast1);
-      tree1.visible = false;
+      tree1.visible = true;
       tree1.matrixAutoUpdate = false;
 
       const tree2 = new Group();
@@ -251,29 +250,17 @@ export class Trees extends Group {
         sphereToRaycast11,
       ];
       tree2.add(...spheresToRaycast2);
-      tree2.visible = false;
+      tree2.visible = true;
       tree2.matrixAutoUpdate = false;
 
       Trees.tree1 = tree1;
       Trees.tree2 = tree2;
     }
-
-    this.fillCurrentTreesArray(60);
   }
 
-  fillCurrentTreesArray(maxTreesNumber) {
-    for (let i = 0; i < maxTreesNumber; i++) {
-      const newTree = i % 2 === 0 ? Trees.tree1.clone() : Trees.tree2.clone();
-      this.currentTrees.push(newTree);
-      this.add(newTree);
-    }
-  }
-
-  updateTreesPositions(positions = []) {
-    this.spheresToRaycast.length = 0;
+  setTrees(positions = []) {
     for (let i = 0; i < positions.length; i++) {
-      const newTree = this.currentTrees[i];
-      if (!newTree.visible) newTree.visible = true;
+      const newTree = i % 2 === 0 ? Trees.tree1.clone() : Trees.tree2.clone();
       newTree.position.set(positions[i].x, -3.5, positions[i].y);
       newTree.rotation.set(
         (Math.random() - 0.5) * 0.1 * Math.PI * 2,
@@ -289,10 +276,7 @@ export class Trees extends Group {
       this.spheresToRaycast.push(
         ...newTree.children.filter((child) => child.geometry instanceof SphereGeometry)
       );
-    }
-    if (positions.length < this.currentTrees.length) {
-      for (let i = positions.length; i < this.currentTrees.length; i++)
-        this.currentTrees[i].visible = false;
+      this.add(newTree);
     }
   }
 }

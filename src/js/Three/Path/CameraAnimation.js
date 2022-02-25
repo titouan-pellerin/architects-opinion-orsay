@@ -48,9 +48,13 @@ export class CameraAnimation {
       });
   }
 
-  tpToCheckpoint(index) {
+  tpToCheckpoint(index, raycasting) {
+    this.goToCheckpointTl = null;
     if (index === 0) this.tick.value = 0;
     else this.tick.value = this.checkpoints[index - 1].tick;
+
+    // this.voiceOver.playChapter(index);
+
     const nextTick = this.tick.value + 0.007;
 
     const curvePoint = this.path.spline.getPointAt(this.tick.value);
@@ -58,13 +62,75 @@ export class CameraAnimation {
 
     const camPos = new Vector3(curvePoint.x, -1, curvePoint.y);
     const camPos2 = new Vector3(curvePoint2.x, -1, curvePoint2.y);
+    const tpToCheckpointTl = gsap.timeline({ paused: true });
+    tpToCheckpointTl.to(
+      mainScene.background,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].skyBgColor.r,
+        g: mainScene.parameters.environments[index].skyBgColor.g,
+        b: mainScene.parameters.environments[index].skyBgColor.b,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.fog.color,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].skyBgColor.r,
+        g: mainScene.parameters.environments[index].skyBgColor.g,
+        b: mainScene.parameters.environments[index].skyBgColor.b,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.fog.color,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].skyBgColor.r,
+        g: mainScene.parameters.environments[index].skyBgColor.g,
+        b: mainScene.parameters.environments[index].skyBgColor.b,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.directionalLight.color,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].lightColor.r,
+        g: mainScene.parameters.environments[index].lightColor.g,
+        b: mainScene.parameters.environments[index].lightColor.b,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.directionalLight2.color,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].light2Color.r,
+        g: mainScene.parameters.environments[index].light2Color.g,
+        b: mainScene.parameters.environments[index].light2Color.b,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.customPass.material.uniforms.uSunProgress,
+      {
+        duration: 1,
+        value: mainScene.parameters.environments[index].sunProgress,
+      },
+      0
+    );
+    tpToCheckpointTl.play();
 
     mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
     mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
     mainScene.cameraContainer.userData.lookingAt = camPos2;
     mainScene.cameraContainer.rotateX(Math.PI);
     mainScene.cameraContainer.rotateZ(Math.PI);
+
     this.checkpointsIndex = index;
+    this.goToCheckpoint(raycasting);
   }
 
   /**
@@ -72,45 +138,98 @@ export class CameraAnimation {
    * @param {Number} index
    * @param {Raycasting} raycasting
    */
-  goToCheckpoint(index, raycasting) {
+  goToCheckpoint(raycasting) {
     raycasting.removeArtworks();
     mouse.range.x = 0.2;
 
-    if (!index) index = this.checkpointsIndex;
-    if (index <= 4) {
-      this.voiceOver.playChapter(index);
-      gsap.to(this.tick, {
-        // delay: index === 0 ? 3 : 0,
-        duration: this.checkpoints[index].duration * 0.5,
-        // duration: 1,
-        value: this.checkpoints[index].tick,
-        // value: 1,
-        ease: CustomEase.create(
-          "custom",
-          `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378
+    if (this.checkpointsIndex <= 4) {
+      this.voiceOver.playChapter(this.checkpointsIndex);
+      this.goToCheckpointTl = gsap.timeline({ paused: true });
+      this.goToCheckpointTl.to(
+        mainScene.background,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        mainScene.fog.color,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        mainScene.directionalLight.color,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.b,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        mainScene.directionalLight2.color,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.b,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        mainScene.customPass.material.uniforms.uSunProgress,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          value: mainScene.parameters.environments[this.checkpointsIndex + 1].sunProgress,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        this.tick,
+        {
+          // delay: this.checkpointsIndex === 0 ? 3 : 0,
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          // duration: 1,
+          value: this.checkpoints[this.checkpointsIndex].tick,
+          // value: 1,
+          ease: CustomEase.create(
+            "custom",
+            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378
               0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
-        ),
-        onUpdate: () => {
-          const nextTick = this.tick.value + 0.007;
+          ),
+          onUpdate: () => {
+            const nextTick = this.tick.value + 0.007;
 
-          const curvePoint = this.path.spline.getPointAt(this.tick.value);
-          const curvePoint2 = this.path.spline.getPointAt(nextTick);
+            const curvePoint = this.path.spline.getPointAt(this.tick.value);
+            const curvePoint2 = this.path.spline.getPointAt(nextTick);
 
-          const camPos = new Vector3(curvePoint.x, -1, curvePoint.y);
-          const camPos2 = new Vector3(curvePoint2.x, -1, curvePoint2.y);
+            const camPos = new Vector3(curvePoint.x, -1, curvePoint.y);
+            const camPos2 = new Vector3(curvePoint2.x, -1, curvePoint2.y);
 
-          mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
-          mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
-          mainScene.cameraContainer.userData.lookingAt = camPos2;
-          mainScene.cameraContainer.rotateX(Math.PI);
-          mainScene.cameraContainer.rotateZ(Math.PI);
+            mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
+            mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
+            mainScene.cameraContainer.userData.lookingAt = camPos2;
+            mainScene.cameraContainer.rotateX(Math.PI);
+            mainScene.cameraContainer.rotateZ(Math.PI);
+          },
+          onComplete: () => {
+            raycasting.updateArtworks(this.checkpoints[this.checkpointsIndex].artworks);
+            this.checkpointsIndex++;
+            mouse.range.x = 0.3;
+          },
         },
-        onComplete: () => {
-          raycasting.updateArtworks(this.checkpoints[index].artworks);
-          this.checkpointsIndex++;
-          mouse.range.x = 0.4;
-        },
-      });
+        0
+      );
+      this.goToCheckpointTl.play();
     }
   }
 
@@ -130,6 +249,12 @@ export class CameraAnimation {
       x: newCamPos.x,
       y: newCamPos.y,
       z: newCamPos.z,
+    });
+    gsap.to(mouse.range, {
+      duration: 3,
+      ease: "power3.inOut",
+      x: 0.15,
+      y: 0.07,
     });
     this.lookAtTween = gsap.to(mainScene.cameraContainer.userData.lookingAt, {
       duration: 3,
@@ -152,5 +277,12 @@ export class CameraAnimation {
       //   // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
       // },
     });
+  }
+
+  pause() {
+    if (this.goToCheckpointTl) this.goToCheckpointTl.pause();
+  }
+  resume() {
+    if (this.goToCheckpointTl) this.goToCheckpointTl.resume();
   }
 }

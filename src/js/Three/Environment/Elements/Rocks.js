@@ -19,7 +19,6 @@ export class Rocks extends Group {
   static rock;
   constructor() {
     super();
-    this.currentRocks = [];
 
     if (!Rocks.rock) {
       this.parameters = {
@@ -72,7 +71,7 @@ export class Rocks extends Group {
         instance.updateMatrix();
         rockInstancedMesh.setMatrixAt(i, instance.matrix);
       }
-      rockInstancedMesh.visible = false;
+      rockInstancedMesh.visible = true;
       Rocks.rock = rockInstancedMesh;
 
       /**
@@ -82,22 +81,11 @@ export class Rocks extends Group {
       rocksFolder.addColor(rockUniforms.uColor, "value").name("Color");
       rocksFolder.addColor(rockUniforms.uColor2, "value").name("Color2");
     }
-
-    this.fillCurrentRocksArray(35);
   }
 
-  fillCurrentRocksArray(maxRocksNumber) {
-    for (let i = 0; i < maxRocksNumber; i++) {
-      const newRock = Rocks.rock.clone();
-      this.currentRocks.push(newRock);
-      this.add(newRock);
-    }
-  }
-
-  updateRocksPositions(positions = []) {
+  setRocks(positions = []) {
     for (let i = 0; i < positions.length; i++) {
-      const newRock = this.currentRocks[i];
-      if (!newRock.visible) newRock.visible = true;
+      const newRock = Rocks.rock.clone();
       newRock.position.set(positions[i].x, -3, positions[i].y);
       newRock.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
 
@@ -105,10 +93,8 @@ export class Rocks extends Group {
       newRock.scale.set(randomScale, randomScale, randomScale);
 
       newRock.updateMatrix();
-    }
-    if (positions.length < this.currentRocks.length) {
-      for (let i = positions.length; i < this.currentRocks.length; i++)
-        this.currentRocks[i].visible = false;
+
+      this.add(newRock);
     }
   }
 }

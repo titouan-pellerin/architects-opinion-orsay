@@ -2,7 +2,6 @@ import fogFragment from "@glsl/customFog/fogFragment.glsl";
 import fogParsFragment from "@glsl/customFog/fogParsFragment.glsl";
 import fogParsVertex from "@glsl/customFog/fogParsVertex.glsl";
 import fogVertex from "@glsl/customFog/fogVertex.glsl";
-import gsap from "gsap";
 import {
   ACESFilmicToneMapping,
   Color,
@@ -12,7 +11,6 @@ import {
   PerspectiveCamera,
   Scene,
   ShaderChunk,
-  ShaderLib,
   sRGBEncoding,
   Vector2,
   Vector3,
@@ -34,40 +32,58 @@ export class MainScene extends Scene {
   constructor() {
     super();
 
-    this.fogUniforms = {
-      coucou: { value: 0.2 },
-      ...ShaderLib.toon.uniforms,
-    };
-
     this.resVec2 = new Vector2();
     this.blurVec2 = new Vector2();
 
-    const parameters = {
+    this.parameters = {
       tintColor: new Color("#ffffff"),
-
-      // Morning
-      // skyBgColor: new Color("#bdbf36"),
-      // lightColor: new Color("#47404f"),
-      // light2Color: new Color("#c396e8"),
-      // cornerColor: new Color("#6600ff"),
-
-      // Morning backup for toto
-      skyBgColor: new Color("#e5aa43"),
-      cornerColor: new Color("#5a544e"),
-      lightColor: new Color("#5a544e"),
-      light2Color: new Color("#d8923d"),
-
-      // Day
-      // skyBgColor: new Color("#8ea1a9"),
-      // cornerColor: new Color("#feffe1"),
-      // lightColor: new Color("#4e4313"),
-      // light2Color: new Color("#bbbd84"),
-
-      // Night
-      // skyBgColor: new Color("#7ad5ff"),
-      // cornerColor: new Color("#11051f"),
-      // lightColor: new Color("#3e70c1"),
-      // light2Color: new Color("#d69ee5"),
+      environments: [
+        // Morning
+        {
+          skyBgColor: new Color("#e5aa43"),
+          cornerColor: new Color("#5a544e"),
+          lightColor: new Color("#5a544e"),
+          light2Color: new Color("#d8923d"),
+          sunProgress: 0,
+        },
+        // Day
+        {
+          skyBgColor: new Color("#8ea1a9"),
+          cornerColor: new Color("#feffe1"),
+          lightColor: new Color("#4e4313"),
+          light2Color: new Color("#bbbd84"),
+          sunProgress: 1,
+        },
+        {
+          skyBgColor: new Color("#fff"),
+          cornerColor: new Color("#fff"),
+          lightColor: new Color("#fff"),
+          light2Color: new Color("#fff"),
+          sunProgress: 0,
+        },
+        // Night
+        {
+          skyBgColor: new Color("#7ad5ff"),
+          cornerColor: new Color("#11051f"),
+          lightColor: new Color("#3e70c1"),
+          light2Color: new Color("#d69ee5"),
+          sunProgress: 1,
+        },
+        {
+          skyBgColor: new Color("#ffff00"),
+          cornerColor: new Color("#ffff00"),
+          lightColor: new Color("#ffff00"),
+          light2Color: new Color("#ffff00"),
+          sunProgress: 0,
+        },
+        {
+          skyBgColor: new Color("#fff"),
+          cornerColor: new Color("#fff"),
+          lightColor: new Color("#fff"),
+          light2Color: new Color("#fff"),
+          sunProgress: 1,
+        },
+      ],
 
       lightIntensity: 0.5,
       light2Intensity: 0.5,
@@ -84,7 +100,7 @@ export class MainScene extends Scene {
     };
 
     this.canvas = document.querySelector(".webgl");
-    this.camera = new PerspectiveCamera(30, this.aspectRatio, isSafari() ? 2 : 1, 35);
+    this.camera = new PerspectiveCamera(30, this.aspectRatio, isSafari() ? 2 : 1.5, 35);
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
@@ -142,12 +158,12 @@ export class MainScene extends Scene {
     this.renderer.premultipliedAlpha = false;
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.background = new Color(parameters.skyBgColor);
+    this.renderer.compile(this, this.camera);
+    this.background = this.parameters.environments[0].skyBgColor.clone();
 
-    this.cameraContainer.position.set(0, -1, 25);
     this.add(this.cameraContainer);
 
-    const fog = new Fog(parameters.skyBgColor, 20, 35);
+    const fog = new Fog(this.parameters.environments[0].skyBgColor.clone(), 20, 35);
     this.fog = fog;
 
     ShaderChunk.fog_pars_fragment = fogParsFragment;
@@ -155,19 +171,19 @@ export class MainScene extends Scene {
     ShaderChunk.fog_pars_vertex = fogParsVertex;
     ShaderChunk.fog_vertex = fogVertex;
 
-    const directionalLight = new DirectionalLight(
-      parameters.lightColor,
-      parameters.lightIntensity
+    this.directionalLight = new DirectionalLight(
+      this.parameters.environments[0].lightColor.clone(),
+      this.parameters.lightIntensity
     );
-    directionalLight.position.set(10, 10, -10);
-    this.add(directionalLight);
+    this.directionalLight.position.set(10, 10, -10);
+    this.add(this.directionalLight);
 
-    const directionalLight2 = new DirectionalLight(
-      parameters.light2Color,
-      parameters.light2Intensity
+    this.directionalLight2 = new DirectionalLight(
+      this.parameters.environments[0].light2Color.clone(),
+      this.parameters.light2Intensity
     );
-    directionalLight2.position.set(-10, 10, 10);
-    this.add(directionalLight2);
+    this.directionalLight2.position.set(-10, 10, 10);
+    this.add(this.directionalLight2);
 
     const renderScene = new RenderPass(this, this.camera);
 
@@ -176,19 +192,19 @@ export class MainScene extends Scene {
     this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.composer.addPass(renderScene);
 
-    const customShader = {
+    this.customShader = {
       uniforms: {
         uTime: { value: 0 },
         uMenuSwitch: { value: 0 },
         tDiffuse: { value: null },
-        uTintColor: { value: parameters.tintColor },
-        uCornerColor: { value: parameters.cornerColor },
+        uTintColor: { value: this.parameters.tintColor },
+        uCornerColor: { value: this.parameters.environments[0].cornerColor.clone() },
         uCornerIntensity: { value: 1 },
         uCornerSize: { value: 4.5 },
         uProgress: { value: 0 },
         uFadeProgress: { value: 0 },
         uBorderFadeProgress: { value: 1 },
-        uSunProgress: { value: 0.3 },
+        uSunProgress: { value: this.parameters.environments[0].sunProgress },
         uBlurIntensity: { value: 1.75 },
         uNoiseTexture: { value: null },
         uBlurPos: {
@@ -202,7 +218,8 @@ export class MainScene extends Scene {
       fragmentShader: fragmentShader,
     };
 
-    this.customPass = new ShaderPass(customShader);
+    this.customPass = new ShaderPass(this.customShader);
+    this.customPass.setSize(this.sizes.width * 0.5, this.sizes.height * 0.5);
     this.composer.addPass(this.customPass);
     this.customPass.material.uniforms.uNoiseTexture.value =
       texturesMap.get("noiseTexture")[0];
@@ -210,10 +227,10 @@ export class MainScene extends Scene {
     const atmosphereFolder = guiFolders.get("atmosphere");
 
     atmosphereFolder
-      .addColor(parameters, "skyBgColor")
+      .addColor(this.parameters.environments[0], "skyBgColor")
       .onChange(() => {
-        fog.color.set(parameters.skyBgColor);
-        this.background.set(parameters.skyBgColor);
+        fog.color.set(this.parameters.environments[0].skyBgColor);
+        this.background.set(this.parameters.environments[0].skyBgColor);
       })
       .name("SkyBgColor");
     atmosphereFolder.add(fog, "near").min(-30).max(30).name("FogNear");
@@ -221,27 +238,31 @@ export class MainScene extends Scene {
 
     const lightFolder = atmosphereFolder.addFolder("Light");
     lightFolder
-      .addColor(parameters, "lightColor")
+      .addColor(this.parameters.environments[0], "lightColor")
       .onChange(() => {
-        directionalLight.color.set(parameters.lightColor);
+        this.directionalLight.color.set(this.parameters.environments[0].lightColor);
       })
       .name("Color");
-    lightFolder.add(directionalLight, "intensity").min(0).max(10).name("Intensity");
-    lightFolder.add(directionalLight.position, "x").min(-30).max(30).name("PosX");
-    lightFolder.add(directionalLight.position, "y").min(0).max(30).name("PosY");
-    lightFolder.add(directionalLight.position, "z").min(-30).max(30).name("PosZ");
+    lightFolder.add(this.directionalLight, "intensity").min(0).max(10).name("Intensity");
+    lightFolder.add(this.directionalLight.position, "x").min(-30).max(30).name("PosX");
+    lightFolder.add(this.directionalLight.position, "y").min(0).max(30).name("PosY");
+    lightFolder.add(this.directionalLight.position, "z").min(-30).max(30).name("PosZ");
 
     const light2Folder = atmosphereFolder.addFolder("Light2");
     light2Folder
-      .addColor(parameters, "light2Color")
+      .addColor(this.parameters.environments[0], "light2Color")
       .onChange(() => {
-        directionalLight2.color.set(parameters.light2Color);
+        this.directionalLight2.color.set(this.parameters.environments[0].light2Color);
       })
       .name("Color");
-    light2Folder.add(directionalLight2, "intensity").min(0).max(10).name("Intensity");
-    light2Folder.add(directionalLight2.position, "x").min(-30).max(30).name("PosX");
-    light2Folder.add(directionalLight2.position, "y").min(0).max(30).name("PosY");
-    light2Folder.add(directionalLight2.position, "z").min(-30).max(30).name("PosZ");
+    light2Folder
+      .add(this.directionalLight2, "intensity")
+      .min(0)
+      .max(10)
+      .name("Intensity");
+    light2Folder.add(this.directionalLight2.position, "x").min(-30).max(30).name("PosX");
+    light2Folder.add(this.directionalLight2.position, "y").min(0).max(30).name("PosY");
+    light2Folder.add(this.directionalLight2.position, "z").min(-30).max(30).name("PosZ");
 
     const postGuiFunctions = {
       disablePost: () => {
@@ -257,9 +278,11 @@ export class MainScene extends Scene {
     postFolder.add(postGuiFunctions, "enablePost");
     const cornerFolder = postFolder.addFolder("Corner");
     cornerFolder
-      .addColor(parameters, "cornerColor")
+      .addColor(this.parameters.environments[0], "cornerColor")
       .onChange(() => {
-        this.customPass.uniforms.uCornerColor.value.set(parameters.cornerColor);
+        this.customPass.uniforms.uCornerColor.value.set(
+          this.parameters.environments[0].cornerColor
+        );
       })
       .name("Color");
     cornerFolder
@@ -294,126 +317,6 @@ export class MainScene extends Scene {
     window.addEventListener("resize", this.resize.bind(this));
 
     raf.subscribe("scene", this.update.bind(this));
-
-    const chaptersBtn = document.querySelector(".btn-chapters_container");
-    const CloseBtn = document.querySelector(".btn-close_container");
-    const contentMenu = document.querySelector(".content-menu");
-    const li = document.querySelector(".menu-btn_section");
-    const artworkIn = document.querySelector(".artwork-in");
-    const artworkOut = document.querySelector(".artwork-out");
-
-    chaptersBtn.addEventListener("click", () => {
-      chaptersBtn.style.pointerEvents = "none";
-      chaptersBtn.style.opacity = "0";
-      gsap.to(this.customPass.uniforms.uProgress, {
-        value: 1.3,
-        duration: 1.5,
-        onComplete: () => {
-          this.customPass.uniforms.uMenuSwitch.value = 1.0;
-          this.customPass.uniforms.uProgress.value = 0;
-          contentMenu.style.pointerEvents = "all";
-          contentMenu.style.opacity = "1";
-        },
-      });
-    });
-    CloseBtn.addEventListener("click", () => {
-      contentMenu.style.pointerEvents = "none";
-      contentMenu.style.opacity = "0";
-      gsap.to(this.customPass.uniforms.uProgress, {
-        value: 1.3,
-        duration: 1.5,
-        onComplete: () => {
-          this.customPass.uniforms.uMenuSwitch.value = 0.0;
-          this.customPass.uniforms.uProgress.value = 0;
-          chaptersBtn.style.pointerEvents = "all";
-          chaptersBtn.style.opacity = "1";
-        },
-      });
-    });
-
-    const menuAnimation = gsap.timeline({ paused: true });
-    menuAnimation.to(this.customPass.uniforms.uMenuSwitch, {
-      duration: 0,
-      value: 2,
-    });
-    menuAnimation.to(customFogUniforms.progress, { duration: 3, value: 1.15 });
-    menuAnimation.to(this.customPass.uniforms.uBorderFadeProgress, {
-      duration: 1.25,
-      value: 0.2,
-      delay: -3,
-    });
-    menuAnimation.to(customFogUniforms.transitionIsIn, {
-      duration: 0,
-      value: 1,
-      delay: -1,
-    });
-    menuAnimation.to(customFogUniforms.progress, { duration: 0, value: -0.1, delay: -1 });
-    menuAnimation.to(customFogUniforms.progress, {
-      duration: 3,
-      value: 1.15,
-      delay: -1,
-    });
-    menuAnimation.to(this.customPass.uniforms.uFadeProgress, {
-      value: 1,
-      duration: 1.5,
-      delay: -2.5,
-    });
-    menuAnimation.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
-    menuAnimation.to(customFogUniforms.progress, {
-      duration: 0,
-      value: -0.1,
-      onComplete: () => {
-        this.customPass.uniforms.uBorderFadeProgress.value = 1;
-        this.customPass.uniforms.uMenuSwitch.value = 0.0;
-        this.customPass.uniforms.uProgress.value = 0;
-        this.customPass.uniforms.uMenuSwitch.value = 0;
-        this.customPass.uniforms.uFadeProgress.value = 0;
-      },
-    });
-
-    li.addEventListener("click", () => {
-      menuAnimation.pause(0);
-      menuAnimation.play();
-    });
-
-    const chockwaveAnimation = gsap.timeline({ paused: true });
-    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
-      duration: 0,
-      value: 2,
-    });
-    chockwaveAnimation.to(artworkIn, { duration: 0, pointerEvents: "none" });
-    chockwaveAnimation.to(artworkOut, { duration: 0, pointerEvents: "none" });
-    chockwaveAnimation.to(chaptersBtn, { duration: 0, pointerEvents: "none" });
-    chockwaveAnimation.to(customFogUniforms.progress, { duration: 2.25, value: 1.15 });
-    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
-      duration: 0,
-      value: 3,
-      delay: -1.25,
-    });
-    chockwaveAnimation.to(customFogUniforms.progress, {
-      duration: 0,
-      value: -0.1,
-      delay: -1.25,
-    });
-    chockwaveAnimation.to(customFogUniforms.progress, {
-      duration: 2.25,
-      value: 1.15,
-      delay: -1.25,
-    });
-    chockwaveAnimation.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
-    chockwaveAnimation.to(customFogUniforms.progress, { duration: 0, value: -0.1 });
-    chockwaveAnimation.to(artworkIn, { duration: 0, pointerEvents: "all" });
-    chockwaveAnimation.to(artworkOut, { duration: 0, pointerEvents: "all" });
-    chockwaveAnimation.to(chaptersBtn, { duration: 0, pointerEvents: "all" });
-
-    artworkIn.addEventListener("click", () => {
-      chockwaveAnimation.pause(0);
-      chockwaveAnimation.play();
-    });
-    artworkOut.addEventListener("click", () => {
-      chockwaveAnimation.pause(0);
-      chockwaveAnimation.play();
-    });
   }
 
   resize() {

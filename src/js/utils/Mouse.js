@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import { MathUtils, Vector2 } from "three";
 import { mainScene } from "../Three/MainScene";
 import raf from "./Raf";
@@ -8,23 +9,16 @@ class Mouse {
     this.normalizedMouseCoords = new Vector2();
     this.range = new Vector2(0.2, 0.1);
     this.mouseMoveHandler = this.mouseMove.bind(this);
-    this.isOnMouseMove = true;
     document.addEventListener("mousemove", this.mouseMoveHandler);
     raf.subscribe("mouse", this.update.bind(this));
   }
 
   mouseMove(e) {
-    this.isOnMouseMove = true;
     this.mouseCoords.x = e.clientX;
     this.mouseCoords.y = e.clientY;
 
     this.normalizedMouseCoords.x = (e.clientX / window.innerWidth) * 2 - 1;
     this.normalizedMouseCoords.y = -(e.clientY / window.innerHeight) * 2 + 1;
-  }
-
-  removeMouseMove() {
-    this.isOnMouseMove = false;
-    document.removeEventListener("mousemove", this.mouseMoveHandler);
   }
 
   update() {
@@ -47,8 +41,20 @@ class Mouse {
       2,
       raf.deltaTime
     );
-    // mainScene.camera.rotation.y += xRotateOffset;
-    // mainScene.camera.rotation.x += yRotateOffset;
+  }
+
+  pause() {
+    // this.removeMouseMove();
+    gsap.to(this.range, {
+      duration: 1,
+      x: 0.1,
+      y: 0.05,
+    });
+  }
+
+  resume() {
+    // document.addEventListener("mousemove", this.mouseMoveHandler);
+    gsap.to(this.range, { duration: 1, x: 0.2, y: 0.1 });
   }
 }
 

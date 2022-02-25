@@ -54,31 +54,45 @@ export class Artwork extends Group {
       );
     };
 
-    this.artworkMaterialInner = new MeshBasicMaterial({
-      map: details.texture,
-    });
+    this.artworkMaterialInner = new MeshBasicMaterial();
 
     this.artworkMaterialInner.onBeforeCompile = (shader) => {
       shader.uniforms = {
+        uTexture: { value: details.texture },
         ...shader.uniforms,
-        ...this.artworkUniforms,
         ...customFogUniforms,
       };
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        `#include <common>
+        uniform sampler2D uTexture;`
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        `#include <output_fragment>
+        gl_FragColor = texture2D(uTexture, vUv);`
+      );
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <begin_vertex>",
+        `#include <begin_vertex>
+        vUv = uv;`
+      );
     };
     this.artworkGeometryOuter = new BoxGeometry();
     this.artworkGeometryInner = new PlaneGeometry();
 
+    const scaleFactor = details.dimensions[0] > details.dimensions[1] ? 3.4 : 2.4;
     this.outerMesh = new Mesh(this.artworkGeometryOuter, this.artworkMaterialOuter);
     this.outerMesh.scale.set(
-      2.4,
-      (details.dimensions[1] * 2.4) / details.dimensions[0],
+      scaleFactor,
+      (details.dimensions[1] * scaleFactor) / details.dimensions[0],
       0.3
     );
 
     this.innerMesh = new Mesh(this.artworkGeometryInner, this.artworkMaterialInner);
     this.innerMesh.scale.set(
-      2.3,
-      (details.dimensions[1] * 2.3) / details.dimensions[0],
+      scaleFactor - 0.1,
+      (details.dimensions[1] * scaleFactor - 0.1) / details.dimensions[0],
       3
     );
     this.innerMesh.position.z = -0.14;

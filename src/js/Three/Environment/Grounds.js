@@ -61,9 +61,9 @@ export class Grounds extends Group {
       uRayPos: { value: new Vector3() },
     };
 
-    const dust = new Dust();
-    const leaf = new Leaf();
-    const butterfly = new Butterfly();
+    const dustParticles = new Dust();
+    const leafParticles = new Leaf();
+    const butterflyParticles = new Butterfly();
 
     // Ground 1
     this.ground1 = new Ground(
@@ -81,15 +81,20 @@ export class Grounds extends Group {
       this.ground1.flowers
     );
 
-    this.ground1.trees.updateTreesPositions(positions.get("treesPositions")[0]);
-    this.ground1.rocks.updateRocksPositions(positions.get("rocksPositions")[0]);
-    this.ground1.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[0]);
+    this.ground1.trees.setTrees(positions.get("treesPositions")[0]);
+    this.ground1.rocks.setRocks(positions.get("rocksPositions")[0]);
+    this.ground1.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[0]);
+
+    const dustParticlesMesh1 = dustParticles.object.mesh;
+    const leafParticlesMesh1 = leafParticles.object.mesh;
+    const butterflyParticlesMesh1 = butterflyParticles.object.mesh;
+    const butterflyParticlesMirrorMesh1 = butterflyParticles.object.mirrorMesh;
 
     this.ground1.add(
-      leaf.object.mesh,
-      dust.object.mesh,
-      butterfly.object.mesh,
-      butterfly.object.mirrorMesh
+      dustParticlesMesh1,
+      leafParticlesMesh1,
+      butterflyParticlesMesh1,
+      butterflyParticlesMirrorMesh1
     );
 
     // Ground 2
@@ -108,9 +113,9 @@ export class Grounds extends Group {
       this.ground2.flowers
     );
 
-    this.ground2.trees.updateTreesPositions(positions.get("treesPositions")[1]);
-    this.ground2.rocks.updateRocksPositions(positions.get("rocksPositions")[1]);
-    this.ground2.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[1]);
+    this.ground2.trees.setTrees(positions.get("treesPositions")[1]);
+    this.ground2.rocks.setRocks(positions.get("rocksPositions")[1]);
+    this.ground2.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[1]);
 
     this.ground2.texture.flipY = false;
     this.ground2.scale.z = -1;
@@ -119,11 +124,20 @@ export class Grounds extends Group {
     this.ground2.woodLogs.scale.z = -1;
     this.ground2.position.z = -parameters.envScale * parameters.groundSize;
 
+    const leafParticlesMesh2 = leafParticlesMesh1.clone();
+    const dustParticlesMesh2 = dustParticlesMesh1.clone();
+    const butterflyParticlesMesh2 = butterflyParticlesMesh1.clone();
+    const butterflyParticlesMirrorMesh2 = butterflyParticlesMirrorMesh1.clone();
+    dustParticlesMesh2.scale.z = -1;
+    leafParticlesMesh2.scale.z = -1;
+    butterflyParticlesMesh2.scale.z = -1;
+    butterflyParticlesMirrorMesh2.scale.z = -1;
+
     this.ground2.add(
-      leaf.object.mesh.clone(),
-      dust.object.mesh.clone(),
-      butterfly.object.mesh.clone(),
-      butterfly.object.mirrorMesh.clone()
+      leafParticlesMesh2,
+      dustParticlesMesh2,
+      butterflyParticlesMesh2,
+      butterflyParticlesMirrorMesh2
     );
 
     this.ground3 = new Ground(
@@ -143,15 +157,24 @@ export class Grounds extends Group {
       this.ground3.flowers
     );
 
-    this.ground3.trees.updateTreesPositions(positions.get("treesPositions")[2]);
-    this.ground3.rocks.updateRocksPositions(positions.get("rocksPositions")[2]);
-    this.ground3.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[2]);
+    this.ground3.trees.setTrees(positions.get("treesPositions")[2]);
+    this.ground3.rocks.setRocks(positions.get("rocksPositions")[2]);
+    this.ground3.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[2]);
+
+    const leafParticlesMesh3 = leafParticlesMesh1.clone();
+    const dustParticlesMesh3 = dustParticlesMesh1.clone();
+    const butterflyParticlesMesh3 = butterflyParticlesMesh1.clone();
+    const butterflyParticlesMirrorMesh3 = butterflyParticlesMirrorMesh1.clone();
+    dustParticlesMesh3.updateMatrix();
+    leafParticlesMesh3.updateMatrix();
+    butterflyParticlesMesh3.updateMatrix();
+    butterflyParticlesMirrorMesh3.updateMatrix();
 
     this.ground3.add(
-      leaf.object.mesh.clone(),
-      dust.object.mesh.clone(),
-      butterfly.object.mesh.clone(),
-      butterfly.object.mirrorMesh.clone()
+      leafParticlesMesh3,
+      dustParticlesMesh3,
+      butterflyParticlesMesh3,
+      butterflyParticlesMirrorMesh3
     );
 
     this.ground4 = new Ground(
@@ -169,9 +192,9 @@ export class Grounds extends Group {
       this.ground4.flowers
     );
 
-    this.ground4.trees.updateTreesPositions(positions.get("treesPositions")[3]);
-    this.ground4.rocks.updateRocksPositions(positions.get("rocksPositions")[3]);
-    this.ground4.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[3]);
+    this.ground4.trees.setTrees(positions.get("treesPositions")[3]);
+    this.ground4.rocks.setRocks(positions.get("rocksPositions")[3]);
+    this.ground4.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[3]);
 
     this.ground4.texture.flipY = false;
     this.ground4.trees.scale.z = -1;
@@ -180,11 +203,20 @@ export class Grounds extends Group {
     this.ground4.scale.z = -1;
     this.ground4.position.z = -parameters.envScale * parameters.groundSize * 3;
 
+    const leafParticlesMesh4 = leafParticlesMesh1.clone();
+    const dustParticlesMesh4 = dustParticlesMesh1.clone();
+    const butterflyParticlesMesh4 = butterflyParticlesMesh1.clone();
+    const butterflyParticlesMirrorMesh4 = butterflyParticlesMirrorMesh1.clone();
+    dustParticlesMesh3.scale.z = -1;
+    leafParticlesMesh3.scale.z = -1;
+    butterflyParticlesMesh3.scale.z = -1;
+    butterflyParticlesMirrorMesh3.scale.z = -1;
+
     this.ground4.add(
-      leaf.object.mesh.clone(),
-      dust.object.mesh.clone(),
-      butterfly.object.mesh.clone(),
-      butterfly.object.mirrorMesh.clone()
+      leafParticlesMesh4,
+      dustParticlesMesh4,
+      butterflyParticlesMesh4,
+      butterflyParticlesMirrorMesh4
     );
 
     this.ground5 = new Ground(
@@ -203,23 +235,24 @@ export class Grounds extends Group {
       this.ground5.grass,
       this.ground5.flowers
     );
-    Ground.groundElements.curveTexturesData = null;
-    Ground.groundElements.curveTexturesMatrices = null;
+    // Ground.groundElements.curveTexturesData = null;
+    // Ground.groundElements.curveTexturesMatrices = null;
 
-    this.ground5.trees.updateTreesPositions(positions.get("treesPositions")[4]);
-    this.ground5.rocks.updateRocksPositions(positions.get("rocksPositions")[4]);
-    this.ground5.woodLogs.updateWoodLogsPositions(positions.get("woodLogsPositions")[4]);
+    this.ground5.trees.setTrees(positions.get("treesPositions")[4]);
+    this.ground5.rocks.setRocks(positions.get("rocksPositions")[4]);
+    this.ground5.woodLogs.setWoodLogs(positions.get("woodLogsPositions")[4]);
 
-    this.ground5.add(
-      leaf.object.mesh.clone(),
-      dust.object.mesh.clone(),
-      butterfly.object.mesh.clone(),
-      butterfly.object.mirrorMesh.clone()
+    const leafParticlesMesh5 = leafParticlesMesh1.clone();
+    const dustParticlesMesh5 = dustParticlesMesh1.clone();
+    const butterflyParticlesMesh5 = butterflyParticlesMesh1.clone();
+    const butterflyParticlesMirrorMesh5 = butterflyParticlesMirrorMesh1.clone();
+
+    this.ground2.add(
+      leafParticlesMesh5,
+      dustParticlesMesh5,
+      butterflyParticlesMesh5,
+      butterflyParticlesMirrorMesh5
     );
-
-    this.ground3.visible = false;
-    this.ground4.visible = false;
-    this.ground5.visible = false;
 
     this.raycasting.spheresToRaycast[0] = this.ground1.trees.spheresToRaycast;
     this.raycasting.spheresToRaycast[1] = this.ground2.trees.spheresToRaycast;
@@ -233,6 +266,9 @@ export class Grounds extends Group {
       this.ground5,
     ];
     this.add(this.ground1, this.ground2, this.ground3, this.ground4, this.ground5);
+    this.ground3.visible = false;
+    this.ground4.visible = false;
+    this.ground5.visible = false;
     this.add(...artworks);
 
     raf.subscribe("grounds", this.update.bind(this));
@@ -284,15 +320,14 @@ export class Grounds extends Group {
   }
 
   switchGrounds() {
-    console.log(this.groundIndex);
-    console.time("switch");
-
     this.groundsArray
       .filter((ground) => ground.visible)
       .forEach((ground) => (ground.visible = false));
 
     this.groundsArray[this.groundIndex].visible = true;
     this.groundsArray[this.groundIndex + 1].visible = true;
+    this.groundsArray[this.groundIndex].updateMatrix();
+    this.groundsArray[this.groundIndex + 1].updateMatrix();
 
     this.raycasting.spheresToRaycast[0] =
       this.groundsArray[this.groundIndex].trees.spheresToRaycast;
@@ -303,7 +338,6 @@ export class Grounds extends Group {
     this.raycasting.groundsToRaycast[1] = this.groundsArray[this.groundIndex + 1].ground;
 
     this.groundIndex++;
-    console.timeEnd("switch");
   }
 
   update() {
@@ -316,11 +350,11 @@ export class Grounds extends Group {
 
     this.grassUniforms.uTime.value = raf.elapsedTime;
 
-    this.flowersUniforms.uRayPos.value.copy(this.raycasting.rayPos);
-    this.riverUniforms.uRayPos.value.copy(this.raycasting.rayPos);
-    this.grassUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    this.flowersUniforms.uRayPos.value.copy(this.raycasting.groundRayPos);
+    this.riverUniforms.uRayPos.value.copy(this.raycasting.groundRayPos);
+    this.grassUniforms.uRayPos.value.copy(this.raycasting.groundRayPos);
     this.grassUniforms.uFlipped.value = this.raycasting.groundFlipped;
-    this.leafUniforms.uRayPos.value.copy(this.raycasting.rayPos);
+    this.leafUniforms.uRayPos.value.copy(this.raycasting.leavesRayPos);
 
     this.flowersUniforms.uTime.value = raf.elapsedTime;
     this.riverUniforms.uTime.value = raf.elapsedTime;

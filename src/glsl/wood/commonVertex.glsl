@@ -3,7 +3,7 @@
 #include <common>
 // varying vec4 vNoise;
 varying float vNoise;
-varying vec2 vUv;
+// varying vec2 vUv;
 uniform float uTime;
 uniform float uSpeed;
 uniform float uDisplaceIntensity;

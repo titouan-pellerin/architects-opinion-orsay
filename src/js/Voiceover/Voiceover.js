@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import { records } from "../utils/assets";
 import raf from "../utils/Raf";
 import { Record } from "./Record";
@@ -8,8 +9,12 @@ export class Voiceover {
     this.recordsByChapter = [];
     this.currentChapter;
     this.currentRecord;
+    this.nextRecord;
+    this.currentRecordSource;
     this.chapterIndex = 0;
     this.recordIndex = 0;
+
+    this.volume = { level: 0.5 };
 
     this.audioListener = null;
 
@@ -20,8 +25,6 @@ export class Voiceover {
       }
       this.recordsByChapter.push(currentChapter);
     }
-
-    // this.playChapter(0);
   }
 
   init(audioListener) {
@@ -30,30 +33,69 @@ export class Voiceover {
   }
 
   playChapter(index = this.chapterIndex) {
-    this.audioListener.context.resume();
+    console.log("Chapter", index);
     this.currentChapter = this.recordsByChapter[index];
-    this.recordIndex = 0;
+    if (this.currentRecord) {
+      this.recordIndex = 0;
+      this.currentRecord.audio.source.onended = null;
+      this.currentRecord = this.currentChapter[0];
+    }
     this.playRecord(0);
     this.chapterIndex++;
   }
 
-  playRecord(index = this.recordIndex) {
+  playRecord(index) {
+    console.log("Record", index);
     if (this.currentRecord && this.currentRecord.audio) this.currentRecord.audio.pause();
-    const nextRecord = this.currentChapter[index + 1]
+    this.nextRecord = this.currentChapter[index + 1]
       ? this.currentChapter[index + 1].init(this.audioListener)
       : null;
     this.currentRecord = this.currentChapter[index];
+    this.currentRecord.currentSubtitleIndex = 0;
     if (!this.currentRecord.audio) this.currentRecord.init(this.audioListener);
     this.currentRecord.play();
-    this.currentRecord.audio.source.onended = () => {
-      this.currentRecord.audio.isPlaying = false;
-      if (nextRecord) {
-        this.recordIndex++;
-        this.playRecord(this.recordIndex);
-      } else {
-        raf.unsubscribe("subtitles");
-        this.recordIndex = 0;
-      }
-    };
+
+    this.currentRecord.audio.source.onended = this.onRecordEnded.bind(this);
+  }
+
+  onRecordEnded() {
+    // this.currentRecord.audio.isPlaying = false;
+    if (this.nextRecord) {
+      this.recordIndex++;
+      this.playRecord(this.recordIndex);
+    } else {
+      raf.unsubscribe("subtitles");
+      this.recordIndex = 0;
+    }
+
+    // });
+  }
+
+  pause() {
+    gsap.to(this.volume, {
+      duration: 0.5,
+      level: 0,
+      onUpdate: () => {
+        this.currentRecord.audio.setVolume(this.volume.level);
+      },
+      onComplete: () => {
+        this.currentRecord.audio.pause();
+      },
+    });
+    this.currentRecord.pause();
+  }
+
+  resume() {
+    this.currentRecord.audio.play();
+    this.currentRecord.audio.source.onended = this.onRecordEnded.bind(this);
+
+    gsap.to(this.volume, {
+      duration: 0.5,
+      level: 0.5,
+      onUpdate: () => {
+        this.currentRecord.audio.setVolume(this.volume.level);
+      },
+    });
+    this.currentRecord.resume();
   }
 }
