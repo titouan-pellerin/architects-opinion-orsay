@@ -344,10 +344,8 @@ export class Environment {
 
   muteExperience() {
     if (this.masterVolume.level === 1) {
-      this.isMuted = true;
       this.muteTween.play();
     } else if (this.masterVolume.level === 0) {
-      this.isMuted = false;
       this.muteTween.reverse();
     }
   }
