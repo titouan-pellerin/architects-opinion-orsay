@@ -82,9 +82,9 @@ void main() {
   } 
 
   // Part2, adding some blur
-  vec4 p2 = ((color / total));
+  vec4 p2 = ((color / total)) * .6;
 
-  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y) * 1.5;
+  vec2 texel = vec2(1. / uRes.x, 1. / uRes.y);
 
 	// kernel definition (in glsl matrices are filled in column-major order)
   const mat3 Gx = mat3(-1, -2, -1, 0, 0, 0, 1, 2, 1); // x direction kernel
@@ -118,7 +118,7 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float G = pow(abs(noise * 2.0 + 0.35), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
+  float G = pow(abs(noise * 2.0 + 0.25), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
   float G2 = pow(2.0, sqrt((valueGx * valueGx) + (valueGy * valueGy)));
 
   vec4 mainRender = (p1 + p2) * vec4(G);

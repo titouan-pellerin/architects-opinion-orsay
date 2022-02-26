@@ -22,7 +22,12 @@ const tVec3 = new Vector3();
 const tCol = new Color();
 
 const params = {
-  color: "#e5ba43",
+  //  MORNING
+  // color: "#e5aa43",
+  //  DAY
+  color: "#ffffb3",
+  //  NIGHT
+  // color: "#284e84",
 };
 
 export class Dust {
