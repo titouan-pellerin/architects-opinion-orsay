@@ -261,6 +261,13 @@ export class Environment {
           this.music.setVolume(this.musicVolume.level);
         },
       });
+      gsap.to(".loader-cta", {
+        duration: 2,
+        opacity: 0,
+        onComplete: () => {
+          document.querySelector(".loader-cta").style.pointerEvents = "none";
+        },
+      });
       this.voiceOver.init(this.audioListener);
     }
   }

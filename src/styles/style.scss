@@ -48,7 +48,7 @@ button {
   left: 0;
   // z-index: -1;
   // opacity: 0.3;
-  // opacity: 0;
+  opacity: 0;
 }
 
 .webgl {
@@ -93,7 +93,9 @@ button {
       }
     }
     .loader-cta {
-      display: none;
+      // display: none;
+      pointer-events: none;
+      opacity: 0;
       position: absolute;
       left: 50%;
       top: 50%;
