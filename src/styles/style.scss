@@ -3,6 +3,10 @@
 @import "./utils/_reset";
 @import "./utils/_breakpoints.scss";
 
+:root {
+  --accent-color: #e5aa43;
+}
+
 html {
   background: $bg-color;
   color: $text-color;
