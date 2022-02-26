@@ -3,26 +3,30 @@ import commonVertexShader from "@glsl/dust/commonVertex.glsl";
 import outputFragmentShader from "@glsl/dust/outputFragment.glsl";
 import projectVertexShader from "@glsl/dust/projectVertex.glsl";
 import { customFogUniforms } from "@js/utils/misc";
-import { MeshBasicMaterial } from "three";
 import {
-  AdditiveBlending,
   Color,
   DoubleSide,
   InstancedBufferAttribute,
   InstancedBufferGeometry,
   MathUtils,
   Mesh,
+  MeshBasicMaterial,
   PlaneBufferGeometry,
-  ShaderMaterial,
   Vector3,
 } from "three";
 import raf from "../../../utils/Raf";
+import { mainScene } from "../../MainScene";
 
 const tVec3 = new Vector3();
 const tCol = new Color();
 
 const params = {
-  color: "#e5ba43",
+  //  MORNING
+  // color: "#e5aa43",
+  //  DAY
+  color: "#ffffb3",
+  //  NIGHT
+  // color: "#284e84",
 };
 
 export class Dust {
@@ -85,13 +89,6 @@ export class Dust {
   }
 
   setMaterial() {
-    this.dustUniforms = {
-      uTime: { value: 0 },
-      uColor: { value: tCol.set(params.color) },
-      uAlpha: { value: 1 },
-      ...customFogUniforms,
-    };
-
     this.object.material = new MeshBasicMaterial({
       side: DoubleSide,
       transparent: true,
@@ -101,7 +98,7 @@ export class Dust {
     this.object.material.onBeforeCompile = (shader) => {
       shader.uniforms = {
         ...shader.uniforms,
-        ...this.dustUniforms,
+        ...mainScene.dustUniforms,
         ...customFogUniforms,
       };
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -132,6 +129,6 @@ export class Dust {
   }
 
   update() {
-    this.dustUniforms.uTime.value = raf.elapsedTime;
+    mainScene.dustUniforms.uTime.value = raf.elapsedTime;
   }
 }

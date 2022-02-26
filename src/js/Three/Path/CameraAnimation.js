@@ -69,6 +69,12 @@ export class CameraAnimation {
         r: mainScene.parameters.environments[index].skyBgColor.r,
         g: mainScene.parameters.environments[index].skyBgColor.g,
         b: mainScene.parameters.environments[index].skyBgColor.b,
+        onUpdate: () => {
+          document.documentElement.style.setProperty(
+            "--accent-color",
+            "#" + mainScene.background.getHexString()
+          );
+        },
       },
       0
     );
@@ -117,6 +123,24 @@ export class CameraAnimation {
       {
         duration: 1,
         value: mainScene.parameters.environments[index].sunProgress,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.customPass.material.uniforms.uCornerSize,
+      {
+        duration: 1,
+        value: mainScene.parameters.environments[index].cornerSize,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.dustUniforms.uColor.value,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].skyBgColor.r,
+        g: mainScene.parameters.environments[index].skyBgColor.g,
+        b: mainScene.parameters.environments[index].skyBgColor.b,
       },
       0
     );
@@ -239,6 +263,24 @@ export class CameraAnimation {
         0
       );
       this.goToCheckpointTl.to(
+        mainScene.customPass.material.uniforms.uCornerSize,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          value: mainScene.parameters.environments[this.checkpointsIndex + 1].cornerSize,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        mainScene.dustUniforms.uColor.value,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
         this.tick,
         {
           delay: 3,
@@ -252,6 +294,10 @@ export class CameraAnimation {
               0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
           ),
           onUpdate: () => {
+            document.documentElement.style.setProperty(
+              "--accent-color",
+              "#" + mainScene.background.getHexString()
+            );
             const nextTick = this.tick.value + 0.007;
 
             const curvePoint = this.path.spline.getPointAt(this.tick.value);

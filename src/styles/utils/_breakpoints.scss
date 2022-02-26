@@ -89,7 +89,13 @@
 
 /* Small height */
 @mixin sm-height {
-  @media only screen and (max-height: 480px) {
+  @media only screen and (max-height: 900px) and (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin xs-height {
+  @media only screen and (max-height: 750px) and (min-width: 1024px) {
     @content;
   }
 }

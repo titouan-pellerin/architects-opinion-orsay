@@ -98,6 +98,7 @@ function init() {
     //     },
     //   })
     //   .play();
+
     discoverTl
       .to(".loader-animation_wrapper", {
         duration: 0,
@@ -161,22 +162,6 @@ function init() {
         },
       })
       .play();
-
-    // gsap.to(".loader-animation_wrapper", {
-    //   duration: 1,
-    //   delay: 2,
-    //   opacity: 0,
-    //   onComplete: () => {
-    //     gsap.to(discorverBtn, {
-    //       duration: 1,
-    //       opacity: 1,
-    //       onComplete: () => {
-    //         discorverBtn.addEventListener("click", () => environment.startExperience());
-    //         discorverBtn.style.pointerEvents = "all";
-    //       },
-    //     });
-    //   },
-    // });
   };
 }
 

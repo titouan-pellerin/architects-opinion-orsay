@@ -82,7 +82,7 @@ void main() {
   } 
 
   // Part2, adding some blur
-  vec4 p2 = ((color / total));
+  vec4 p2 = ((color / total)) * 0.6 ;
 
   vec2 texel = vec2(1. / uRes.x, 1. / uRes.y);
 
@@ -118,10 +118,10 @@ void main() {
     Gy[0][2] * tx0y2 + Gy[1][2] * tx1y2 + Gy[2][2] * tx2y2;
 
 		// magnitute of the total gradient
-  float G = pow(abs(noise * 2.0 + 0.35), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
+  float G = pow(abs(noise * 2.0 + 0.25), sqrt((valueGx * valueGx * noise) + (valueGy * valueGy * noise)));
   float G2 = pow(2.0, sqrt((valueGx * valueGx) + (valueGy * valueGy)));
 
-  vec4 mainRender = (p1 + p2) * vec4(G);
+  vec4 mainRender = (p1 + p2) * 0.7 * vec4(G);
   // vec4 menuRender = ((p2 * 0.75) * vec4(G2));
   vec4 menuRender = ((p2 * 0.75) * vec4(G2 * uBorderFadeProgress)); // smooth color à changer
 

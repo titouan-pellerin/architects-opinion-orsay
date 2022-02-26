@@ -1,13 +1,15 @@
 @font-face {
   font-family: "title";
-  src: url("/assets/fonts/FontsFree-Net-Bagerich.woff2") format("woff2"),
-    url("/assets/fonts/FontsFree-Net-Bagerich.woff") format("woff"),
-    url("/assets/fonts/FontsFree-Net-Bagerich.ttf") format("truetype");
+  font-weight: lighter;
+  src: url("/assets/fonts/bagerich.ttf") format("truetype"),
+    url("/assets/fonts/bagerich.woff2") format("woff2"),
+    url("/assets/fonts/bagerich.woff") format("woff");
 }
 
 @font-face {
   font-family: "text-regular";
-  src: url("/assets/fonts/louizetrial-regular-webfont.woff2") format("woff2"),
-    url("/assets/fonts/louizetrial-regular-webfont.woff") format("woff"),
-    url("/assets/fonts/louizetrial-regular-webfont.otf") format("opentype");
+  font-weight: lighter;
+  src: url("/assets/fonts/louize-regular.otf") format("opentype"),
+    url("/assets/fonts/louize-regular.woff2") format("woff2"),
+    url("/assets/fonts/louize-regular.woff") format("woff");
 }
