@@ -31,6 +31,16 @@ export class Environment {
 
     this.musicVolume = { level: 0 };
     this.chapterClicked;
+    this.masterVolume = { level: 1 };
+    this.muteTween = gsap
+      .to(this.masterVolume, {
+        duration: 0.5,
+        level: 0,
+        onUpdate: () => {
+          this.audioListener.setMasterVolume(this.masterVolume.level);
+        },
+      })
+      .pause();
 
     this.forestPathLine = new ForestPathLine(1024, 1, this.parameters);
 
@@ -43,31 +53,37 @@ export class Environment {
       this.artworks.push(artwork);
     }
 
+    const chaptersDomElements = document.querySelectorAll(".chap");
+
     const checkpoints = [];
-    const checkpoint1 = new Checkpoint(0.16, 35.3, this.forestPathLine.spline, [
-      this.artworks[0],
-      this.artworks[1],
-      this.artworks[2],
-      this.artworks[3],
-    ]);
-    const checkpoint2 = new Checkpoint(0.42, 51.6, this.forestPathLine.spline, [
-      this.artworks[4],
-      this.artworks[5],
-      this.artworks[6],
-      this.artworks[7],
-    ]);
-    const checkpoint3 = new Checkpoint(0.62, 32.6, this.forestPathLine.spline, [
-      this.artworks[8],
-      this.artworks[9],
-      this.artworks[10],
-      this.artworks[11],
-    ]);
-    const checkpoint4 = new Checkpoint(0.8, 45.3, this.forestPathLine.spline, [
-      this.artworks[12],
-      this.artworks[13],
-      this.artworks[14],
-      this.artworks[15],
-    ]);
+    const checkpoint1 = new Checkpoint(
+      0.16,
+      35.3,
+      this.forestPathLine.spline,
+      [this.artworks[0], this.artworks[1], this.artworks[2], this.artworks[3]],
+      chaptersDomElements[1]
+    );
+    const checkpoint2 = new Checkpoint(
+      0.42,
+      51.6,
+      this.forestPathLine.spline,
+      [this.artworks[4], this.artworks[5], this.artworks[6], this.artworks[7]],
+      chaptersDomElements[2]
+    );
+    const checkpoint3 = new Checkpoint(
+      0.62,
+      32.6,
+      this.forestPathLine.spline,
+      [this.artworks[8], this.artworks[9], this.artworks[10], this.artworks[11]],
+      chaptersDomElements[3]
+    );
+    const checkpoint4 = new Checkpoint(
+      0.8,
+      45.3,
+      this.forestPathLine.spline,
+      [this.artworks[12], this.artworks[13], this.artworks[14], this.artworks[15]],
+      chaptersDomElements[4]
+    );
     const checkpoint5 = new Checkpoint(0.9, 21.3, this.forestPathLine.spline, []);
     checkpoints.push(checkpoint1, checkpoint2, checkpoint3, checkpoint4, checkpoint5);
 
@@ -122,9 +138,16 @@ export class Environment {
     // this.li = document.querySelector(".menu-btn_section");
     this.artworkIn = document.querySelector(".artwork-in");
     this.artworkOut = document.querySelector(".artwork-out");
+    this.soundBtn = document.querySelector(".btn-sound_container");
+    this.nextBtn = document.querySelector(".btn-next_container");
 
     this.chaptersBtn.addEventListener("click", this.openMenu.bind(this));
     this.closeBtn.addEventListener("click", this.closeMenu.bind(this));
+    this.soundBtn.addEventListener("click", this.muteExperience.bind(this));
+    this.nextBtn.addEventListener("click", () => {
+      this.cameraAnimation.goToCheckpoint(this.raycasting);
+    });
+
     this.menuChapters.forEach((menuChapter) => {
       menuChapter.addEventListener("click", this.clickChapter.bind(this), false);
     });
@@ -268,6 +291,10 @@ export class Environment {
           document.querySelector(".loader-cta").style.pointerEvents = "none";
         },
       });
+      gsap.to(".canvas-container", {
+        duration: 2,
+        opacity: 1,
+      });
       this.voiceOver.init(this.audioListener);
     }
   }
@@ -328,5 +355,17 @@ export class Environment {
     this.raycasting.isPaused = false;
     if (this.music) this.musicVolumeTween.reverse();
     if (this.voiceOver.currentRecord) this.voiceOver.resume();
+  }
+
+  muteExperience() {
+    if (this.audioListener) {
+      if (this.masterVolume.level === 1) {
+        this.isMuted = true;
+        this.muteTween.play();
+      } else if (this.masterVolume.level === 0) {
+        this.isMuted = false;
+        this.muteTween.reverse();
+      }
+    }
   }
 }

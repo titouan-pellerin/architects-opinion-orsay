@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import { MathUtils, Raycaster, Vector3 } from "three";
 import { mouse } from "../../utils/Mouse";
 import raf from "../../utils/Raf";
@@ -18,6 +19,14 @@ export class Raycasting {
     this.currentIntersect = null;
 
     this.onClickHandler = this.onClick.bind(this);
+    this.backBtn = document.querySelector(".btn-back_container");
+    this.backBtn.addEventListener("click", this.onBackBtnClick.bind(this));
+    this.backBtnTween = gsap
+      .to(this.backBtn, {
+        duration: 1,
+        opacity: 1,
+      })
+      .pause();
 
     this.leavesRayPos = new Vector3();
     this.groundRayPos = new Vector3();
@@ -43,13 +52,23 @@ export class Raycasting {
     if (this.currentIntersect) {
       this.isPaused = true;
       Artwork.contentArtworkTitlesTween.reverse();
-      Artwork.contentArtworkFooterTween.play();
       this.cameraAnimation.goToArtwork(this.currentIntersect.parent);
+      Artwork.contentArtworkFooterTween.play();
+      this.backBtnTween.play();
     }
+  }
+
+  onBackBtnClick() {
+    this.cameraAnimation.goBackFromArtwork().eventCallback("onReverseComplete", () => {
+      this.isPaused = false;
+    });
+    Artwork.contentArtworkFooterTween.reverse();
+    this.backBtnTween.reverse();
   }
 
   updateArtworks(newArtworks = []) {
     this.artworks = newArtworks;
+    this.isPaused = false;
   }
 
   removeArtworks() {
@@ -68,6 +87,7 @@ export class Raycasting {
         if (!this.currentIntersect) {
           intersects[0].object.parent.updateDom();
           Artwork.contentArtworkTitlesTween.play();
+          Artwork.canvasContainerTween.play();
         }
         document.body.style.cursor = "pointer";
         this.currentIntersect = intersects[0].object;
@@ -77,6 +97,7 @@ export class Raycasting {
         document.body.style.cursor = "default";
         this.currentIntersect = null;
         Artwork.contentArtworkTitlesTween.reverse();
+        Artwork.canvasContainerTween.reverse();
 
         this.groundFlipped = MathUtils.damp(
           this.groundFlipped,
@@ -107,6 +128,7 @@ export class Raycasting {
         document.body.style.cursor = "default";
         this.currentIntersect = null;
         Artwork.contentArtworkTitlesTween.reverse();
+        Artwork.canvasContainerTween.reverse();
 
         this.leavesRayPos.x = MathUtils.damp(
           this.leavesRayPos.x,
@@ -133,6 +155,7 @@ export class Raycasting {
       document.body.style.cursor = "default";
       this.currentIntersect = null;
       Artwork.contentArtworkTitlesTween.reverse();
+      Artwork.canvasContainerTween.reverse();
     }
   }
 }

@@ -66,6 +66,12 @@ export class Voiceover {
     } else {
       raf.unsubscribe("subtitles");
       this.recordIndex = 0;
+      document.querySelector(".btn-next_container .text").textContent = "Next chapter";
+      gsap.to(".btn-next_container", {
+        duration: 1,
+        opacity: 1,
+        pointerEvents: "all",
+      });
     }
 
     // });

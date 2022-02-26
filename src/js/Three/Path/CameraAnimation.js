@@ -24,13 +24,11 @@ export class CameraAnimation {
     this.voiceOver = voiceOver;
     this.checkpoints = checkpoints;
     this.checkpointsIndex = 0;
-    this.isAtCheckpoint = false;
-    this.isLeavingCheckpoint = false;
     this.envScale = envScale;
     this.path = path;
 
-    this.lookAtTween;
-    this.positionTween;
+    this.goToCheckpointTl;
+    this.goToArtworkTl;
 
     this.tick = {
       value: 0,
@@ -39,6 +37,7 @@ export class CameraAnimation {
     this.debugObject = {
       showLine: false,
     };
+
     guiFolders
       .get("experience")
       .add(this.debugObject, "showLine")
@@ -144,7 +143,46 @@ export class CameraAnimation {
 
     if (this.checkpointsIndex <= 4) {
       this.voiceOver.playChapter(this.checkpointsIndex);
+
+      if (this.checkpoints[this.checkpointsIndex].chapterDomEl) {
+        gsap
+          .timeline()
+          .to(
+            ".canvas-container",
+            {
+              opacity: 0.5,
+              duration: 2,
+            },
+            0
+          )
+          .to(
+            this.checkpoints[this.checkpointsIndex].chapterDomEl,
+            {
+              opacity: 1,
+              duration: 2,
+            },
+            0
+          )
+          .to(this.checkpoints[this.checkpointsIndex].chapterDomEl, {
+            delay: 2,
+            duration: 1,
+            opacity: 0,
+          })
+          .to(".canvas-container", {
+            opacity: 1,
+            duration: 1,
+            delay: -2,
+          });
+      } else document.querySelector(".btn-next_container .text").textContent = "Continue";
       this.goToCheckpointTl = gsap.timeline({ paused: true });
+      this.goToCheckpointTl.to(
+        ".btn-next_container",
+        {
+          duration: 1,
+          opacity: 0,
+        },
+        0
+      );
       this.goToCheckpointTl.to(
         mainScene.background,
         {
@@ -243,40 +281,71 @@ export class CameraAnimation {
     newCamPos.multiplyScalar(8);
     newCamPos.add(artwork.position);
 
-    this.positionTween = gsap.to(mainScene.cameraContainer.position, {
-      duration: 3,
-      ease: "power3.inOut",
-      x: newCamPos.x,
-      y: newCamPos.y,
-      z: newCamPos.z,
-    });
-    gsap.to(mouse.range, {
-      duration: 3,
-      ease: "power3.inOut",
-      x: 0.15,
-      y: 0.07,
-    });
-    this.lookAtTween = gsap.to(mainScene.cameraContainer.userData.lookingAt, {
-      duration: 3,
-      ease: "power3.inOut",
-      x: artwork.position.x,
-      y: artwork.position.y,
-      z: artwork.position.z,
-      onUpdate: () => {
-        mainScene.cameraContainer.lookAt(
-          mainScene.cameraContainer.userData.lookingAt.x,
-          mainScene.cameraContainer.userData.lookingAt.y,
-          mainScene.cameraContainer.userData.lookingAt.z
-        );
-        mainScene.cameraContainer.rotateX(Math.PI);
-        mainScene.cameraContainer.rotateZ(Math.PI);
-      },
-      // onComplete: () => {
-      //   this.positionTween.reverse();
-      //   this.lookAtTween.reverse();
-      //   // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
-      // },
-    });
+    this.goToArtworkTl = gsap
+      .timeline({ paused: true })
+      .to(
+        [".content-subtitles", ".btn-next_container .text-wrapper"],
+        {
+          duration: 1,
+          opacity: 0,
+        },
+        0
+      )
+      .to(
+        mouse.range,
+        {
+          duration: 3.5,
+          ease: "power3.inOut",
+          x: 0.15,
+          y: 0.07,
+        },
+        0
+      )
+      .to(
+        mainScene.cameraContainer.position,
+        {
+          // delay: 1,
+          duration: 3.5,
+          ease: "power3.inOut",
+          x: newCamPos.x,
+          y: newCamPos.y,
+          z: newCamPos.z,
+        },
+        0
+      )
+      .to(
+        mainScene.cameraContainer.userData.lookingAt,
+        {
+          duration: 3,
+          ease: "power3.inOut",
+          x: artwork.position.x,
+          y: artwork.position.y,
+          z: artwork.position.z,
+          onUpdate: () => {
+            mainScene.cameraContainer.lookAt(
+              mainScene.cameraContainer.userData.lookingAt.x,
+              mainScene.cameraContainer.userData.lookingAt.y,
+              mainScene.cameraContainer.userData.lookingAt.z
+            );
+            mainScene.cameraContainer.rotateX(Math.PI);
+            mainScene.cameraContainer.rotateZ(Math.PI);
+          },
+          // onComplete: () => {
+          //   this.positionTween.reverse();
+          //   this.lookAtTween.reverse();
+          //   // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
+          // },
+        },
+        0
+      );
+    this.goToArtworkTl.play();
+  }
+
+  goBackFromArtwork() {
+    if (this.goToArtworkTl) {
+      this.goToArtworkTl.reverse();
+    }
+    return this.goToArtworkTl;
   }
 
   pause() {

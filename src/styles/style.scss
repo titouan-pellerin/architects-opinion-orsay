@@ -48,7 +48,7 @@ button {
   left: 0;
   // z-index: -1;
   // opacity: 0.3;
-  opacity: 0;
+  // opacity: 0;
 }
 
 .webgl {
@@ -67,7 +67,7 @@ button {
   z-index: 2;
 
   .loader-container {
-    // display: none;
+    display: none;
     .loader-animation_wrapper {
       opacity: 1;
       pointer-events: none;
@@ -148,8 +148,10 @@ button {
     transform: translate(-50%, -50%);
     bottom: 2rem;
     font-size: 1.375rem;
-    display: none;
-
+    // display: none;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 5;
     .text-wrapper {
       position: relative;
       margin-left: 0.75rem;
@@ -315,7 +317,8 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    display: none;
+    // display: none;
+    opacity: 0;
 
     .line-wrapper {
       margin: 0 0 0.225rem 0.75rem;
@@ -330,6 +333,8 @@ button {
 
   .content-interface_titles {
     .chap {
+      pointer-events: none;
+      opacity: 0;
       position: absolute;
       left: 50%;
       top: 50%;
@@ -392,6 +397,7 @@ button {
     }
   }
   .content-subtitles {
+    opacity: 1;
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
