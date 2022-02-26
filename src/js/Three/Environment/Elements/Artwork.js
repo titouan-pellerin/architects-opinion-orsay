@@ -40,13 +40,6 @@ export class Artwork extends Group {
     })
     .pause();
 
-  static canvasContainerTween = gsap
-    .to(".canvas-container", {
-      duration: 0.4,
-      opacity: 0.5,
-    })
-    .pause();
-
   constructor(details, position) {
     super();
     this.details = details;

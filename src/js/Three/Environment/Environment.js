@@ -1,6 +1,6 @@
 import gsap from "gsap";
-import { AudioListener, Color, PositionalAudio } from "three";
-import { soundsMap, texturesMap } from "../../utils/assets";
+import { Color } from "three";
+import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { customFogUniforms } from "../../utils/misc";
 import { mouse } from "../../utils/Mouse";
@@ -15,7 +15,7 @@ import { Artwork } from "./Elements/Artwork";
 import { Grounds } from "./Grounds";
 
 export class Environment {
-  constructor() {
+  constructor(audioListener, music) {
     this.parameters = {
       envScale: 100,
       groundSize: 0.5,
@@ -29,7 +29,10 @@ export class Environment {
       bigNoiseSky: 9.7,
     };
 
-    this.musicVolume = { level: 0 };
+    this.audioListener = audioListener;
+    this.music = music;
+
+    this.musicVolume = { level: 0.15 };
     this.chapterClicked;
     this.masterVolume = { level: 1 };
     this.muteTween = gsap
@@ -214,6 +217,10 @@ export class Environment {
         mainScene.customPass.uniforms.uProgress.value = 0;
         mainScene.customPass.uniforms.uMenuSwitch.value = 0;
         mainScene.customPass.uniforms.uFadeProgress.value = 0;
+        mainScene.customPass.uniforms.uMenuSwitch.value = 0.0;
+        mainScene.customPass.uniforms.uProgress.value = 0;
+        this.chaptersBtn.style.pointerEvents = "all";
+        this.chaptersBtn.style.opacity = "1";
       },
     });
 
@@ -268,35 +275,11 @@ export class Environment {
   }
 
   startExperience() {
-    if (!this.audioListener) {
-      this.audioListener = new AudioListener();
-      mainScene.camera.add(this.audioListener);
-      this.music = new PositionalAudio(this.audioListener);
-      this.music.setRefDistance(60);
-      this.music.setRolloffFactor(0);
-      this.music.setBuffer(soundsMap.get("music"));
-      this.music.setVolume(0);
-      this.music.play();
-      gsap.to(this.musicVolume, {
-        duration: 2,
-        level: 0.15,
-        onUpdate: () => {
-          this.music.setVolume(this.musicVolume.level);
-        },
-      });
-      gsap.to(".loader-cta", {
-        duration: 2,
-        opacity: 0,
-        onComplete: () => {
-          document.querySelector(".loader-cta").style.pointerEvents = "none";
-        },
-      });
-      gsap.to(".canvas-container", {
-        duration: 2,
-        opacity: 1,
-      });
-      this.voiceOver.init(this.audioListener);
-    }
+    this.voiceOver.init(this.audioListener);
+  }
+
+  goToCheckpoint() {
+    this.cameraAnimation.goToCheckpoint(this.raycasting);
   }
 
   openMenu() {
@@ -316,19 +299,21 @@ export class Environment {
   }
 
   closeMenu(resume = true) {
-    if (resume) this.resumeExperience();
+    if (resume) {
+      this.resumeExperience();
+      gsap.to(mainScene.customPass.uniforms.uProgress, {
+        value: 1.3,
+        duration: 1.5,
+        onComplete: () => {
+          mainScene.customPass.uniforms.uMenuSwitch.value = 0.0;
+          mainScene.customPass.uniforms.uProgress.value = 0;
+          this.chaptersBtn.style.pointerEvents = "all";
+          this.chaptersBtn.style.opacity = "1";
+        },
+      });
+    }
     this.contentMenu.style.pointerEvents = "none";
     this.contentMenu.style.opacity = "0";
-    gsap.to(mainScene.customPass.uniforms.uProgress, {
-      value: 1.3,
-      duration: 1.5,
-      onComplete: () => {
-        mainScene.customPass.uniforms.uMenuSwitch.value = 0.0;
-        mainScene.customPass.uniforms.uProgress.value = 0;
-        this.chaptersBtn.style.pointerEvents = "all";
-        this.chaptersBtn.style.opacity = "1";
-      },
-    });
   }
 
   clickChapter(e) {
@@ -358,14 +343,12 @@ export class Environment {
   }
 
   muteExperience() {
-    if (this.audioListener) {
-      if (this.masterVolume.level === 1) {
-        this.isMuted = true;
-        this.muteTween.play();
-      } else if (this.masterVolume.level === 0) {
-        this.isMuted = false;
-        this.muteTween.reverse();
-      }
+    if (this.masterVolume.level === 1) {
+      this.isMuted = true;
+      this.muteTween.play();
+    } else if (this.masterVolume.level === 0) {
+      this.isMuted = false;
+      this.muteTween.reverse();
     }
   }
 }
