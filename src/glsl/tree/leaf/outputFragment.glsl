@@ -4,7 +4,7 @@
 float rightPattern = 1.0 - (step(1.0, length(vUv)));
 float leftPattern = 1.0 - (step(1.0, length(1.0 - vUv)));
 // vec4 shape = vec4(rightPattern) * vec4(leftPattern) * vec4(uColor * 1.5, 1.0);
-vec4 shape = vec4(rightPattern) * vec4(leftPattern) * vec4(mix(uColor, vec3(3.), vRayModifier) * 1.5, 1.);
+vec4 shape = vec4(rightPattern) * vec4(leftPattern) * vec4(mix(uColor, vec3(2.5), vRayModifier) * 1.5, 1.);
 
 // Noise
 float noise = cnoise(vUv * 10.);

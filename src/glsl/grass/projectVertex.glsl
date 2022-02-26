@@ -13,7 +13,7 @@ vec4 worldPosition = modelMatrix * instanceMatrix * vec4(position, 1.);
 // Displacement on each vertex
 float noise = smoothNoise(newMvPosition.xz + vec2(0., time));
 
-float rayModifierMax = 2.7;
+float rayModifierMax = 1.5;
 float rayModifierMin = 1.;
 
 vec3 rayPos = uRayPos;
@@ -28,7 +28,6 @@ float dispPower = 1. - cos(uv.y * PI * uDisplaceIntensity);
 
 float displacement = noise * dispPower * rayModifier;
 newMvPosition.x -= displacement * rayDirection.x;
-// newMvPosition.y -= displacement * .03 * rayDirection.y;
 newMvPosition.z -= displacement * rayDirection.z * uFlipped;
 
 gl_Position = projectionMatrix * modelViewMatrix * newMvPosition;

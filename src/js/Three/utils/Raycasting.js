@@ -65,7 +65,7 @@ export class Raycasting {
         this.groundFlipped = MathUtils.damp(
           this.groundFlipped,
           intersects[0].object.parent.scale.z,
-          4.5,
+          6,
           raf.deltaTime
         );
 
@@ -74,19 +74,19 @@ export class Raycasting {
         this.groundRayPos.x = MathUtils.damp(
           this.groundRayPos.x,
           intersects[0].point.x,
-          4.5,
+          6,
           raf.deltaTime
         );
         this.groundRayPos.y = MathUtils.damp(
           this.groundRayPos.y,
           intersects[0].point.y,
-          4.5,
+          6,
           raf.deltaTime
         );
         this.groundRayPos.z = MathUtils.damp(
           this.groundRayPos.z,
           intersects[0].point.z,
-          4.5,
+          6,
           raf.deltaTime
         );
       } else {
@@ -95,19 +95,19 @@ export class Raycasting {
         this.leavesRayPos.x = MathUtils.damp(
           this.leavesRayPos.x,
           intersects[0].point.x,
-          4.5,
+          6,
           raf.deltaTime
         );
         this.leavesRayPos.y = MathUtils.damp(
           this.leavesRayPos.y,
           intersects[0].point.y,
-          4.5,
+          6,
           raf.deltaTime
         );
         this.leavesRayPos.z = MathUtils.damp(
           this.leavesRayPos.z,
           intersects[0].point.z,
-          4.5,
+          6,
           raf.deltaTime
         );
       }
