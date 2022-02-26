@@ -121,6 +121,24 @@ export class CameraAnimation {
       },
       0
     );
+    tpToCheckpointTl.to(
+      mainScene.customPass.material.uniforms.uCornerSize,
+      {
+        duration: 1,
+        value: mainScene.parameters.environments[index].cornerSize,
+      },
+      0
+    );
+    tpToCheckpointTl.to(
+      mainScene.dustUniforms.uColor.value,
+      {
+        duration: 1,
+        r: mainScene.parameters.environments[index].skyBgColor.r,
+        g: mainScene.parameters.environments[index].skyBgColor.g,
+        b: mainScene.parameters.environments[index].skyBgColor.b,
+      },
+      0
+    );
     tpToCheckpointTl.play();
 
     mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
@@ -190,6 +208,24 @@ export class CameraAnimation {
         {
           duration: this.checkpoints[this.checkpointsIndex].duration,
           value: mainScene.parameters.environments[this.checkpointsIndex + 1].sunProgress,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        mainScene.customPass.material.uniforms.uCornerSize,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          value: mainScene.parameters.environments[this.checkpointsIndex + 1].cornerSize,
+        },
+        0
+      );
+      this.goToCheckpointTl.to(
+        mainScene.dustUniforms.uColor.value,
+        {
+          duration: this.checkpoints[this.checkpointsIndex].duration,
+          r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
+          g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
+          b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
         },
         0
       );

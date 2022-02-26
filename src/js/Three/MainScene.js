@@ -37,63 +37,97 @@ export class MainScene extends Scene {
 
     this.parameters = {
       tintColor: new Color("#ffffff"),
-      environments: [
-        // Morning
-        {
-          skyBgColor: new Color("#e5aa43"),
-          cornerColor: new Color("#5a544e"),
-          lightColor: new Color("#5a544e"),
-          light2Color: new Color("#d8923d"),
-          // sunProgress: 0.3,
-          sunProgress: 0,
-        },
-        // Day
-        {
-          skyBgColor: new Color("#e5aa43"),
-          cornerColor: new Color("#5a544e"),
-          lightColor: new Color("#5a544e"),
-          light2Color: new Color("#d8923d"),
-          // sunProgress: 0.3,
-          sunProgress: 0,
-        },
-        {
-          skyBgColor: new Color("#ffffb3"),
-          // skyBgColor: new Color("#91d17a"),
-          cornerColor: new Color("#5a544e"),
-          lightColor: new Color("#c8b8a7"),
-          light2Color: new Color("#dcd7b3"),
-          // sunProgress: 0.3,
-          sunProgress: 0.5,
-        },
-        // Night
-        {
-          skyBgColor: new Color("#ffffb3"),
-          // skyBgColor: new Color("#91d17a"),
-          cornerColor: new Color("#5a544e"),
-          lightColor: new Color("#c8b8a7"),
-          light2Color: new Color("#dcd7b3"),
-          // sunProgress: 0.3,
-          sunProgress: 0.5,
-        },
-        {
-          skyBgColor: new Color("#7ad5ff"),
-          cornerColor: new Color("#5a544e"),
-          lightColor: new Color("#5a544e"),
-          light2Color: new Color("#d69ee5"),
-          sunProgress: 1,
-        },
-        {
-          skyBgColor: new Color("#7ad5ff"),
-          cornerColor: new Color("#5a544e"),
-          lightColor: new Color("#5a544e"),
-          light2Color: new Color("#d69ee5"),
-          sunProgress: 1,
-        },
-      ],
-
+      cornerColor: new Color("#5a544e"),
       lightIntensity: 0.5,
       light2Intensity: 0.5,
+      environments: [
+        // Checkpoint 0 - Morning
+        {
+          skyBgColor: new Color("#e5aa43"),
+          lightColor: new Color("#5a544e"),
+          light2Color: new Color("#d8923d"),
+          cornerSize: 4,
+          // sunProgress: 0.3,
+          sunProgress: 0,
+        },
+        // Checkpoint 1
+        {
+          skyBgColor: new Color(0.958643, 0.864793, 0.523806),
+          lightColor: new Color(0.60934, 0.562502, 0.513332),
+          light2Color: new Color(0.856381, 0.733361, 0.514228),
+          cornerSize: 5.188686,
+          // sunProgress: 0.3,
+          sunProgress: 0.297171,
+        },
+        // Checkpoint 2
+        {
+          skyBgColor: new Color(0.995253, 0.98448, 0.681511),
+          lightColor: new Color(0.764234, 0.70331, 0.638656),
+          light2Color: new Color(0.862015, 0.830539, 0.680415),
+          cornerSize: 5.906854,
+          // sunProgress: 0.3,
+          sunProgress: 0.476714,
+        },
+        // Checkpoint 3
+        {
+          skyBgColor: new Color(0.739699, 0.9178, 0.850704),
+          lightColor: new Color(0.56901, 0.525838, 0.480702),
+          light2Color: new Color(0.851004, 0.731598, 0.799802),
+          cornerSize: 6.998066,
+          // sunProgress: 0.3,
+          sunProgress: 0.749556,
+        },
+        // Checkpoint 4
+        {
+          skyBgColor: new Color(0.575353, 0.865901, 0.944616),
+          lightColor: new Color(0.843588, 0.661146, 0.861603),
+          light2Color: new Color(0.433102, 0.402285, 0.37074),
+          cornerSize: 7.628346,
+          // sunProgress: 0.3,
+          sunProgress: 0.907074,
+        },
+        {
+          skyBgColor: new Color("#7ad5ff"),
+          lightColor: new Color("#5a544e"),
+          light2Color: new Color("#d69ee5"),
+          cornerSize: 8,
+          sunProgress: 1,
+        },
+
+        // {
+        //   skyBgColor: new Color("#ffffb3"),
+        //   // skyBgColor: new Color("#91d17a"),
+        //   lightColor: new Color("#c8b8a7"),
+        //   light2Color: new Color("#dcd7b3"),
+        //   cornerSize: 6,
+        //   // sunProgress: 0.3,
+        //   sunProgress: 0.5,
+        // },
+
+        /* 
+        Checkpoint 3
+        0.739699 0.9178 0.850704
+        0.56901 0.525838 0.480702
+        0.851004 0.731598 0.799802
+        6.998066
+        0.749556
+        
+        Checkpoint 4
+        0.575353 0.865901 0.944616
+        0.433102 0.402285 0.37074
+        0.843588 0.661146 0.861603
+        7.628346
+        0.907074
+        */
+      ],
     };
+
+    this.dustUniforms = {
+      uTime: { value: 0 },
+      uColor: { value: this.parameters.environments[0].skyBgColor.clone() },
+      uAlpha: { value: 1 },
+    };
+
     this.maxRes = isMobile() ? 1080 : 1440;
     this.aspectRatio =
       (window.innerWidth * devicePixelRatio) / (window.innerHeight * devicePixelRatio);
@@ -204,7 +238,7 @@ export class MainScene extends Scene {
         uMenuSwitch: { value: 0 },
         tDiffuse: { value: null },
         uTintColor: { value: this.parameters.tintColor },
-        uCornerColor: { value: this.parameters.environments[0].cornerColor.clone() },
+        uCornerColor: { value: this.parameters.cornerColor },
         uCornerIntensity: { value: 1 },
 
         // MORNING
@@ -214,7 +248,7 @@ export class MainScene extends Scene {
         // uCornerSize: { value: 6 },
 
         // NIGHT
-        uCornerSize: { value: 8 },
+        uCornerSize: { value: this.parameters.environments[0].cornerSize },
 
         uProgress: { value: 0 },
         uFadeProgress: { value: 0 },
@@ -293,11 +327,9 @@ export class MainScene extends Scene {
     postFolder.add(postGuiFunctions, "enablePost");
     const cornerFolder = postFolder.addFolder("Corner");
     cornerFolder
-      .addColor(this.parameters.environments[0], "cornerColor")
+      .addColor(this.parameters, "cornerColor")
       .onChange(() => {
-        this.customPass.uniforms.uCornerColor.value.set(
-          this.parameters.environments[0].cornerColor
-        );
+        this.customPass.uniforms.uCornerColor.value.set(this.parameters.cornerColor);
       })
       .name("Color");
     cornerFolder
