@@ -285,15 +285,51 @@ export class Environment {
   openMenu() {
     this.pauseExperience();
     this.chaptersBtn.style.pointerEvents = "none";
-    this.chaptersBtn.style.opacity = "0";
+    gsap.to(this.chaptersBtn, { duration: 1, opacity: 0 });
+    gsap.to(".content-subtitles", { duration: 1, opacity: 0 });
+    gsap.to(".canvas-container", { duration: 1, opacity: 1 });
+    gsap.to(".content-interface_titles .chap", { duration: 1, opacity: 0 });
+    gsap.to(".content-menu .title-wrapper .title-section", {
+      duration: 1.25,
+      opacity: "1",
+      stagger: 0.15,
+      delay: 0.5,
+    });
+    gsap.to(".content-menu svg", {
+      duration: 1,
+      opacity: "1",
+      delay: 1,
+    });
+    gsap.to(".content-menu .credits-title", {
+      duration: 1,
+      opacity: "1",
+      stagger: 0.1,
+      delay: 1,
+    });
+    gsap.to(".content-menu a", {
+      duration: 1,
+      opacity: "1",
+      stagger: 0.1,
+      delay: 1,
+    });
+    gsap.to(".content-menu .credits-wrapper span", {
+      duration: 1,
+      opacity: "1",
+      delay: 1,
+    });
+    gsap.to(".content-menu .btn-close_container", {
+      duration: 1,
+      opacity: "1",
+      delay: 1,
+    });
     gsap.to(mainScene.customPass.uniforms.uProgress, {
       value: 1.3,
       duration: 1.5,
       onComplete: () => {
         mainScene.customPass.uniforms.uMenuSwitch.value = 1.0;
         mainScene.customPass.uniforms.uProgress.value = 0;
+
         this.contentMenu.style.pointerEvents = "all";
-        this.contentMenu.style.opacity = "1";
       },
     });
   }
@@ -308,12 +344,41 @@ export class Environment {
           mainScene.customPass.uniforms.uMenuSwitch.value = 0.0;
           mainScene.customPass.uniforms.uProgress.value = 0;
           this.chaptersBtn.style.pointerEvents = "all";
-          this.chaptersBtn.style.opacity = "1";
         },
       });
+      gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 1 });
+      gsap.to(".content-subtitles", { duration: 1, opacity: 1, delay: 1 });
+    } else {
+      gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 3.5 });
     }
     this.contentMenu.style.pointerEvents = "none";
-    this.contentMenu.style.opacity = "0";
+    gsap.to(".content-menu .btn-close_container", {
+      duration: 1,
+      opacity: "0",
+    });
+    gsap.to(".content-menu .title-wrapper .title-section", {
+      duration: 1,
+      opacity: "0",
+      stagger: 0.1,
+    });
+    gsap.to(".content-menu svg", {
+      duration: 1,
+      opacity: "0",
+    });
+    gsap.to(".content-menu .credits-title", {
+      duration: 1,
+      opacity: "0",
+      stagger: 0.1,
+    });
+    gsap.to(".content-menu a", {
+      duration: 1,
+      opacity: "0",
+      stagger: 0.1,
+    });
+    gsap.to(".content-menu .credits-wrapper span", {
+      duration: 1,
+      opacity: "0",
+    });
   }
 
   clickChapter(e) {
