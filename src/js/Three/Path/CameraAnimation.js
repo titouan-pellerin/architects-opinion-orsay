@@ -278,8 +278,8 @@ export class CameraAnimation {
           this.tick,
           {
             delay: goToCheckpointDelay,
-            duration: this.checkpoints[this.checkpointsIndex].duration,
-            // duration: 1,
+            // duration: this.checkpoints[this.checkpointsIndex].duration,
+            duration: 1,
             value: this.checkpoints[this.checkpointsIndex].tick,
             // value: 1,
             ease: CustomEase.create(
@@ -380,6 +380,15 @@ export class CameraAnimation {
           x: newCamPos.x,
           y: newCamPos.y,
           z: newCamPos.z,
+        },
+        0
+      )
+      .to(
+        mainScene.fog,
+        {
+          duration: 3.5,
+          near: 10,
+          far: 30,
         },
         0
       )
