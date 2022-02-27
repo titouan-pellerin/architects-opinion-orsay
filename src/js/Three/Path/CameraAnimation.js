@@ -321,6 +321,7 @@ export class CameraAnimation {
                   ".btn-restart_container",
                   {
                     duration: 1,
+                    delay: 2,
                     opacity: 1,
                     pointerEvents: "all",
                   },
@@ -329,6 +330,7 @@ export class CameraAnimation {
                 .to(
                   ".canvas-container",
                   {
+                    delay: 2,
                     opacity: 0.3,
                     duration: 1,
                   },
