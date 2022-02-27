@@ -21,12 +21,21 @@ export class Raycasting {
     this.backBtn = document.querySelector(".btn-back_container");
     this.backBtn.addEventListener("click", this.onBackBtnClick.bind(this));
     this.backBtnTween = gsap
-      .to(this.backBtn, {
-        duration: 1,
-        opacity: 1,
-        pointerEvents: "all",
-      })
-      .pause();
+      .timeline({ paused: true })
+      .to(
+        this.backBtn,
+        {
+          duration: 0.5,
+          opacity: 1,
+          pointerEvents: "all",
+        },
+        0
+      )
+      .to(
+        [".btn-chapters_container", ".btn-next_container"],
+        { duration: 0.5, opacity: 0, pointerEvents: "none" },
+        0
+      );
     this.canvasContainerTween;
 
     this.leavesRayPos = new Vector3();
