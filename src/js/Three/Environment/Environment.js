@@ -309,7 +309,14 @@ export class Environment {
       gsap.to(".btn-next_container", { duration: 1, opacity: 1, delay: 1 });
     } else {
       gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 3.5 });
-      gsap.to(".content-subtitles p", { duration: 1, opacity: 1, delay: 5 });
+      gsap.to(".content-subtitles", {
+        duration: 1,
+        opacity: 1,
+        delay: 3.5,
+        onComplete: () => {
+          if (this.music) this.musicVolumeTween.reverse();
+        },
+      });
     }
     this.contentMenu.style.pointerEvents = "none";
     gsap.to(".content-menu .btn-close_container", {
@@ -347,7 +354,6 @@ export class Environment {
     this.menuAnimation.pause(0);
     this.menuAnimation.play();
     this.closeMenu(false);
-    if (this.music) this.musicVolumeTween.reverse();
   }
 
   pauseExperience() {

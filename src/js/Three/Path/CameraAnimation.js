@@ -172,33 +172,33 @@ export class CameraAnimation {
             ".canvas-container",
             {
               opacity: 0.3,
-              duration: 2,
+              duration: 1,
             },
-            0
+            1
           )
           .to(
             this.checkpoints[this.checkpointsIndex].chapterDomEl,
             {
               opacity: 1,
-              duration: 2,
+              duration: 1,
             },
-            0
+            1.15
           )
           .to(this.checkpoints[this.checkpointsIndex].chapterDomEl, {
-            delay: 2,
+            delay: 1.5,
             duration: 1,
             opacity: 0,
           })
           .to(".canvas-container", {
             opacity: 1,
             duration: 1,
-            delay: -1,
+            delay: -1.35,
           });
       }
       const goToCheckpointDelay = this.checkpointsIndex === 4 ? 0 : 3;
       this.goToCheckpointTl = gsap
         .timeline({ paused: true })
-        .call(() => this.voiceOver.playChapter(this.checkpointsIndex), [], 3)
+        .call(() => this.voiceOver.playChapter(this.checkpointsIndex), [], 4.5)
         .to(
           mainScene.background,
           {
