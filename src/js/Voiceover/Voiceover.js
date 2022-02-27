@@ -35,12 +35,11 @@ export class Voiceover {
   playChapter(index = this.chapterIndex) {
     this.currentChapter = this.recordsByChapter[index];
     if (this.currentRecord) {
+      // Reset record
       this.recordIndex = 0;
-      // this.currentRecord.audio.source.onended = null;
-      this.currentRecord.audio.source.onended = this.onRecordEnded.bind(this);
-
+      this.currentRecord.audio.source.onended = null;
       this.currentRecord.audio = null;
-      this.currentRecord = this.currentChapter[0];
+      this.currentRecord = this.currentChapter[0].init(this.audioListener);
     }
     this.playRecord(0);
     this.chapterIndex++;
@@ -60,9 +59,6 @@ export class Voiceover {
   }
 
   onRecordEnded() {
-    console.log("Record ended", this.recordIndex);
-
-    // this.currentRecord.audio.isPlaying = false;
     if (this.nextRecord) {
       this.recordIndex++;
       this.playRecord(this.recordIndex);
