@@ -55,6 +55,7 @@ export class Raycasting {
       Artwork.contentArtworkTitlesTween.reverse();
       this.cameraAnimation.goToArtwork(this.currentIntersect.parent);
       Artwork.contentArtworkFooterTween.play();
+      Artwork.chockwaveAnimation.play(0);
       this.backBtnTween.play();
     }
   }
@@ -64,6 +65,8 @@ export class Raycasting {
       this.isZoomed = false;
     });
     Artwork.contentArtworkFooterTween.reverse();
+    Artwork.chockwaveAnimation.play(0);
+
     this.backBtnTween.reverse();
   }
 

@@ -40,6 +40,31 @@ export class Artwork extends Group {
     })
     .pause();
 
+  static chockwaveAnimation = gsap
+    .timeline({ paused: true })
+    .to(customFogUniforms.transitionIsIn, {
+      duration: 0,
+      value: 2,
+    })
+    .to(customFogUniforms.progress, { duration: 2.25, value: 1.15 })
+    .to(customFogUniforms.transitionIsIn, {
+      duration: 0,
+      value: 3,
+      delay: -1.25,
+    })
+    .to(customFogUniforms.progress, {
+      duration: 0,
+      value: -0.1,
+      delay: -1.25,
+    })
+    .to(customFogUniforms.progress, {
+      duration: 2.25,
+      value: 1.15,
+      delay: -1.25,
+    })
+    .to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 })
+    .to(customFogUniforms.progress, { duration: 0, value: -0.1 });
+
   constructor(details, position) {
     super();
     this.details = details;
@@ -77,12 +102,17 @@ export class Artwork extends Group {
       );
     };
 
+    // this.overrideFogUniforms = {
+    //   progress: { value: 0 },
+    // };
+
     this.artworkMaterialInner = new MeshBasicMaterial();
 
     this.artworkMaterialInner.onBeforeCompile = (shader) => {
       shader.uniforms = {
         uTexture: { value: details.texture },
         ...shader.uniforms,
+        // ...this.overrideFogUniforms,
         ...customFogUniforms,
       };
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -136,4 +166,6 @@ export class Artwork extends Group {
       Artwork.artworkFooterSubtitle.textContent =
         this.details.author + " - " + this.details.year;
   }
+
+  // hoverMaterial() {}
 }

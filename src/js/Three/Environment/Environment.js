@@ -223,44 +223,14 @@ export class Environment {
       },
     });
 
-    const chockwaveAnimation = gsap.timeline({ paused: true });
-    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
-      duration: 0,
-      value: 2,
-    });
-    chockwaveAnimation.to(this.artworkIn, { duration: 0, pointerEvents: "none" });
-    chockwaveAnimation.to(this.artworkOut, { duration: 0, pointerEvents: "none" });
-    chockwaveAnimation.to(this.chaptersBtn, { duration: 0, pointerEvents: "none" });
-    chockwaveAnimation.to(customFogUniforms.progress, { duration: 2.25, value: 1.15 });
-    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
-      duration: 0,
-      value: 3,
-      delay: -1.25,
-    });
-    chockwaveAnimation.to(customFogUniforms.progress, {
-      duration: 0,
-      value: -0.1,
-      delay: -1.25,
-    });
-    chockwaveAnimation.to(customFogUniforms.progress, {
-      duration: 2.25,
-      value: 1.15,
-      delay: -1.25,
-    });
-    chockwaveAnimation.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
-    chockwaveAnimation.to(customFogUniforms.progress, { duration: 0, value: -0.1 });
-    chockwaveAnimation.to(this.artworkIn, { duration: 0, pointerEvents: "all" });
-    chockwaveAnimation.to(this.artworkOut, { duration: 0, pointerEvents: "all" });
-    chockwaveAnimation.to(this.chaptersBtn, { duration: 0, pointerEvents: "all" });
-
-    this.artworkIn.addEventListener("click", () => {
-      chockwaveAnimation.pause(0);
-      chockwaveAnimation.play();
-    });
-    this.artworkOut.addEventListener("click", () => {
-      chockwaveAnimation.pause(0);
-      chockwaveAnimation.play();
-    });
+    // this.artworkIn.addEventListener("click", () => {
+    //   chockwaveAnimation.pause(0);
+    //   chockwaveAnimation.play();
+    // });
+    // this.artworkOut.addEventListener("click", () => {
+    //   chockwaveAnimation.pause(0);
+    //   chockwaveAnimation.play();
+    // });
 
     this.musicVolumeTween = gsap
       .to(this.musicVolume, {
