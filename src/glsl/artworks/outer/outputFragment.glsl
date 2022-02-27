@@ -26,7 +26,7 @@ float glassLine4 = mod((vUv.x - vUv.y) * 5.0, 1.0);
 float glass = 1.0 - length(vPos);
 float glassRender = (glass + glassLine + glassLine2 + glassLine3 + glassLine4);
 
-float shape = (left + right + top + bottom + back) + (glassRender * 0.05);
+float shape = (left + right + top + bottom + back) + (glassRender * 0.075);
 
 // Render
 vec3 render = mix(uColor, uColor2, ((s1 * s2) + (s3 * s4)));

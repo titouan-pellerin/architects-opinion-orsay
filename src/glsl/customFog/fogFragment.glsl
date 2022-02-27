@@ -1,6 +1,6 @@
 float fogFactor = smoothstep(fogNear, fogFar, vFogDepthZ);
-float fogFactorLeft = smoothstep(20., fogFar, vFogDepthLeft);
-float fogDepthRight = smoothstep(20., fogFar, vFogDepthRight);
+float fogFactorLeft = smoothstep(19., fogFar, vFogDepthLeft);
+float fogDepthRight = smoothstep(19., fogFar, vFogDepthRight);
 
 float vFogAnimation = smoothstep(fogNear * 5., fogFar, vFogDepthZ);
 

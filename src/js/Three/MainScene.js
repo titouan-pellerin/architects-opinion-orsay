@@ -27,10 +27,13 @@ import { guiFolders } from "../utils/Debug";
 import { customFogUniforms, isMobile, isSafari } from "../utils/misc";
 import { mouse } from "../utils/Mouse";
 import raf from "../utils/Raf";
+import Splitting from "splitting";
 
 export class MainScene extends Scene {
   constructor() {
     super();
+
+    Splitting();
 
     this.resVec2 = new Vector2();
     this.blurVec2 = new Vector2();
