@@ -725,7 +725,6 @@ button {
         position: relative;
         opacity: 0;
         font-family: "text-medium";
-        font-style: italic;
       }
 
       span {
@@ -865,19 +864,19 @@ button {
 
       .title {
         font-family: "title";
-        font-size: 7.5rem;
+        font-size: 6.0625rem;
         line-height: 1;
         width: 65rem;
 
         .outline {
-          -webkit-text-stroke-width: 0.0625rem;
+          -webkit-text-stroke-width: 0.040625rem;
           -webkit-text-stroke-color: $text-color;
           color: transparent;
         }
       }
       .subtitle {
         font-family: "text-regular";
-        font-size: 1.9375rem;
+        font-size: 1.375rem;
       }
 
       &:first-child {
@@ -899,26 +898,27 @@ button {
 
     .title {
       font-family: "title";
-      font-size: 7.5rem;
+      font-size: 6.0625rem;
       line-height: 1;
-      width: 65rem;
+      width: 49.3rem;
     }
     .subtitle {
       font-family: "text-regular";
       margin-top: 2rem;
-      font-size: 1.6607rem;
+      font-size: 1.375rem;
     }
   }
   .content-artwork_footer {
     position: absolute;
     bottom: 0;
     font-size: 1.375rem;
-    width: 12rem;
+    width: 15rem;
     opacity: 0;
     pointer-events: none;
 
     .title {
       margin-bottom: 0.75em;
+      font-family: "text-medium";
     }
   }
   .content-subtitles {
@@ -932,7 +932,7 @@ button {
     font-size: 1.375rem;
 
     p {
-      opacity: 1;
+      opacity: 0;
     }
   }
 }

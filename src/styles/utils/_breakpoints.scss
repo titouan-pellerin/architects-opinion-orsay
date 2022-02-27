@@ -2,6 +2,13 @@
  * Breakpoints for responside design.
  */
 
+/* Desktop, large size max */
+@mixin desktop-lg-max {
+  @media only screen and (max-width: 1921px) {
+    @content;
+  }
+}
+
 /* Desktop, large size */
 @mixin desktop-lg {
   @media only screen and (min-width: 1921px) {

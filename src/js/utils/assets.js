@@ -104,7 +104,7 @@ if (!location.hash.includes("bzh") && !location.hash.includes("enzo")) {
       texture: artwork1,
       dimensions: [548, 850],
       author: "Emile Gallé",
-      title: "La Main aux algues et aux coquillages",
+      title: "La Main aux algues </br> et aux coquillages",
       year: "1904",
     },
     {
@@ -118,7 +118,7 @@ if (!location.hash.includes("bzh") && !location.hash.includes("enzo")) {
       texture: artwork3,
       dimensions: [546, 850],
       author: "Henry Cros",
-      title: "La reine Isabeau de Bavière (1371-1435)",
+      title: "La reine Isabeau </br> de Bavière",
       year: "1875",
     },
     {

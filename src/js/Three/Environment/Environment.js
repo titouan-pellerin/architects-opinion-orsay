@@ -289,6 +289,7 @@ export class Environment {
     gsap.to(".content-subtitles", { duration: 1, opacity: 0 });
     gsap.to(".canvas-container", { duration: 1, opacity: 1 });
     gsap.to(".content-interface_titles .chap", { duration: 1, opacity: 0 });
+    gsap.to(".btn-next_container", { duration: 1, opacity: 0 });
     gsap.to(".content-menu .title-wrapper .title-section", {
       duration: 1.25,
       opacity: "1",
@@ -348,8 +349,10 @@ export class Environment {
       });
       gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 1 });
       gsap.to(".content-subtitles", { duration: 1, opacity: 1, delay: 1 });
+      gsap.to(".btn-next_container", { duration: 1, opacity: 1, delay: 1 });
     } else {
-      gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 3.5 });
+      gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 6 });
+      gsap.to(".content-subtitles", { duration: 1, opacity: 1, delay: 6 });
     }
     this.contentMenu.style.pointerEvents = "none";
     gsap.to(".content-menu .btn-close_container", {

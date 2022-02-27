@@ -130,10 +130,9 @@ export class Artwork extends Group {
   }
 
   updateDom() {
-    Artwork.artworkContentTitle.textContent = Artwork.artworkFooterTitle.textContent =
+    Artwork.artworkContentTitle.innerHTML = Artwork.artworkFooterTitle.innerHTML =
       this.details.title;
-    Artwork.artworkContentSubtitle.textContent =
-      Artwork.artworkFooterSubtitle.textContent =
-        this.details.author + " - " + this.details.year;
+    Artwork.artworkContentSubtitle.innerHTML = Artwork.artworkFooterSubtitle.innerHTML =
+      this.details.author + " - " + this.details.year;
   }
 }
