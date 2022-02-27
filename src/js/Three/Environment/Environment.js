@@ -213,11 +213,9 @@ export class Environment {
 
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden") {
-        console.log("hidden", new Date().getSeconds());
         this.audioListener.context.suspend();
         return;
       }
-      console.log("visible", new Date().getSeconds());
       this.audioListener.context.resume();
     });
   }
