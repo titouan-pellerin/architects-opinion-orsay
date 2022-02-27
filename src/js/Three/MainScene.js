@@ -22,14 +22,14 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import fragmentShader from "../../glsl/post/fragment.glsl";
 import vertexShader from "../../glsl/post/vertex.glsl";
+import { mouse } from "../../main";
 import { texturesMap } from "../utils/assets";
 import { guiFolders } from "../utils/Debug";
-import { customFogUniforms, isMobile, isSafari } from "../utils/misc";
-import { mouse } from "../utils/Mouse";
+import { customFogUniforms, isSafari } from "../utils/misc";
 import raf from "../utils/Raf";
 
 export class MainScene extends Scene {
-  constructor() {
+  constructor(gpuTier) {
     super();
 
     this.resVec2 = new Vector2();
@@ -128,7 +128,7 @@ export class MainScene extends Scene {
       uAlpha: { value: 1 },
     };
 
-    this.maxRes = isMobile() ? 1080 : 1440;
+    this.maxRes = gpuTier >= 2 ? 1440 : 1080;
     this.aspectRatio =
       (window.innerWidth * devicePixelRatio) / (window.innerHeight * devicePixelRatio);
     this.sizes = {
@@ -403,6 +403,3 @@ export class MainScene extends Scene {
     customFogUniforms.time.value = raf.elapsedTime;
   }
 }
-
-const mainScene = new MainScene();
-export { mainScene };

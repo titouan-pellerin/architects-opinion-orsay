@@ -1,9 +1,9 @@
 import { Color, Group, Line, Vector3 } from "three";
+import { mainScene } from "../../../main";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
-import { mainScene } from "../MainScene";
 import { Checkpoint } from "../Path/Checkpoint";
 import { Butterfly } from "./Elements/Butterfly";
 import { Dust } from "./Elements/Dust";

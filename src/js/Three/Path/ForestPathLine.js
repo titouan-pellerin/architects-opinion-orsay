@@ -1,7 +1,7 @@
 import { BufferGeometry, Line, LineBasicMaterial, SplineCurve, Vector3 } from "three";
+import { mainScene } from "../../../main";
 import { texturesMap } from "../../utils/assets";
 import { positions } from "../../utils/positions";
-import { mainScene } from "../MainScene";
 
 export class ForestPathLine extends Line {
   constructor(splinePrecision = 1024, pathWidth, parameters) {

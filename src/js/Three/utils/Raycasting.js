@@ -1,10 +1,9 @@
 import gsap from "gsap";
 import { MathUtils, Raycaster, Vector3 } from "three";
-import { mouse } from "../../utils/Mouse";
+import { mainScene, mouse } from "../../../main";
 import raf from "../../utils/Raf";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { Ground } from "../Environment/Ground";
-import { mainScene } from "../MainScene";
 
 export class Raycasting {
   constructor(cameraAnimation) {

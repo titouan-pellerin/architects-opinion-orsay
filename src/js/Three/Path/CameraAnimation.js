@@ -1,11 +1,10 @@
 /* eslint-disable no-undef */
 import gsap from "gsap";
 import { Line, Vector3 } from "three";
+import { mainScene, mouse } from "../../../main";
 import { guiFolders } from "../../utils/Debug";
-import { mouse } from "../../utils/Mouse";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { Artwork } from "../Environment/Elements/Artwork";
-import { mainScene } from "../MainScene";
 import { Raycasting } from "../utils/Raycasting";
 import { Checkpoint } from "./Checkpoint";
 

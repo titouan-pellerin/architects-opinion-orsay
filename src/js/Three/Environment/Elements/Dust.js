@@ -14,8 +14,8 @@ import {
   PlaneBufferGeometry,
   Vector3,
 } from "three";
+import { mainScene } from "../../../../main";
 import raf from "../../../utils/Raf";
-import { mainScene } from "../../MainScene";
 
 const tVec3 = new Vector3();
 const tCol = new Color();

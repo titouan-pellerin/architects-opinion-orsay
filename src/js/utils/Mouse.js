@@ -1,9 +1,9 @@
 import gsap from "gsap";
 import { MathUtils, Vector2 } from "three";
-import { mainScene } from "../Three/MainScene";
+import { mainScene } from "../../main";
 import raf from "./Raf";
 
-class Mouse {
+export class Mouse {
   constructor() {
     this.mouseCoords = new Vector2();
     this.normalizedMouseCoords = new Vector2();
@@ -57,6 +57,3 @@ class Mouse {
     gsap.to(this.range, { duration: 1, x: 0.2, y: 0.1 });
   }
 }
-
-const mouse = new Mouse();
-export { mouse };
