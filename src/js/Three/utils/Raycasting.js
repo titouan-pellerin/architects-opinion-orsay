@@ -24,6 +24,7 @@ export class Raycasting {
       .to(this.backBtn, {
         duration: 1,
         opacity: 1,
+        pointerEvents: "all",
       })
       .pause();
     this.canvasContainerTween;
@@ -62,6 +63,7 @@ export class Raycasting {
   onBackBtnClick() {
     this.cameraAnimation.goBackFromArtwork().eventCallback("onReverseComplete", () => {
       this.isZoomed = false;
+      this.backBtn.style.pointerEvents = "none";
     });
     Artwork.contentArtworkFooterTween.reverse();
 
@@ -105,8 +107,8 @@ export class Raycasting {
         }
         document.body.style.cursor = "pointer";
         this.currentIntersect = intersects[0].object.parent;
-        this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 0, 2, raf.deltaTime);
-        this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 0, 2, raf.deltaTime);
+        this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 0, 0, raf.deltaTime);
+        this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 0, 0, raf.deltaTime);
       } else if (intersects[0].object.parent instanceof Ground) {
         document.body.style.cursor = "default";
         if (this.currentIntersect) this.currentIntersect.hoverTimeline.reverse();
@@ -169,8 +171,8 @@ export class Raycasting {
         );
       }
     } else {
-      this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 3, 2, raf.deltaTime);
-      this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 3, 2, raf.deltaTime);
+      this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 0, 2, raf.deltaTime);
+      this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 0, 2, raf.deltaTime);
       document.body.style.cursor = "default";
       if (this.currentIntersect) this.currentIntersect.hoverTimeline.reverse();
       this.currentIntersect = null;
