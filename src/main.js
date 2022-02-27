@@ -17,6 +17,7 @@ function startClick() {
   audioListener = new AudioListener();
   mainScene.camera.add(audioListener);
   music = new PositionalAudio(audioListener);
+  music.setLoop(true);
   music.setRefDistance(60);
   music.setRolloffFactor(0);
   music.setBuffer(soundsMap.get("music"));
