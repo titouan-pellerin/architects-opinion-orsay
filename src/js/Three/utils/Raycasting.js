@@ -53,9 +53,8 @@ export class Raycasting {
     if (this.currentIntersect) {
       this.isZoomed = true;
       Artwork.contentArtworkTitlesTween.reverse();
-      this.cameraAnimation.goToArtwork(this.currentIntersect.parent);
+      this.cameraAnimation.goToArtwork(this.currentIntersect);
       Artwork.contentArtworkFooterTween.play();
-      Artwork.chockwaveAnimation.play(0);
       this.backBtnTween.play();
     }
   }
@@ -65,7 +64,6 @@ export class Raycasting {
       this.isZoomed = false;
     });
     Artwork.contentArtworkFooterTween.reverse();
-    Artwork.chockwaveAnimation.play(0);
 
     this.backBtnTween.reverse();
   }
@@ -94,6 +92,7 @@ export class Raycasting {
       ) {
         if (!this.currentIntersect) {
           intersects[0].object.parent.updateDom();
+          intersects[0].object.parent.hoverTimeline.play();
           Artwork.contentArtworkTitlesTween.play();
           if (!this.canvasContainerTween)
             this.canvasContainerTween = gsap
@@ -105,13 +104,15 @@ export class Raycasting {
           this.canvasContainerTween.play();
         }
         document.body.style.cursor = "pointer";
-        this.currentIntersect = intersects[0].object;
+        this.currentIntersect = intersects[0].object.parent;
         this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 0, 2, raf.deltaTime);
         this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 0, 2, raf.deltaTime);
       } else if (intersects[0].object.parent instanceof Ground) {
         document.body.style.cursor = "default";
+        if (this.currentIntersect) this.currentIntersect.hoverTimeline.reverse();
         this.currentIntersect = null;
         Artwork.contentArtworkTitlesTween.reverse();
+
         if (this.canvasContainerTween) this.canvasContainerTween.reverse();
 
         this.groundFlipped = MathUtils.damp(
@@ -141,8 +142,11 @@ export class Raycasting {
         );
       } else {
         document.body.style.cursor = "default";
+        if (this.currentIntersect) this.currentIntersect.hoverTimeline.reverse();
+
         this.currentIntersect = null;
         Artwork.contentArtworkTitlesTween.reverse();
+
         if (this.canvasContainerTween) this.canvasContainerTween.reverse();
 
         this.leavesRayPos.x = MathUtils.damp(
@@ -168,8 +172,10 @@ export class Raycasting {
       this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 3, 2, raf.deltaTime);
       this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 3, 2, raf.deltaTime);
       document.body.style.cursor = "default";
+      if (this.currentIntersect) this.currentIntersect.hoverTimeline.reverse();
       this.currentIntersect = null;
       Artwork.contentArtworkTitlesTween.reverse();
+
       if (this.canvasContainerTween) this.canvasContainerTween.reverse();
     }
   }
