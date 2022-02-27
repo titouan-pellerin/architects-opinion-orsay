@@ -2,7 +2,6 @@ import gsap from "gsap";
 import { Color } from "three";
 import { mainScene, mouse } from "../../../main";
 import { texturesMap } from "../../utils/assets";
-import { guiFolders } from "../../utils/Debug";
 import { customFogUniforms } from "../../utils/misc";
 import { positions } from "../../utils/positions";
 import { Voiceover } from "../../Voiceover/Voiceover";
@@ -109,27 +108,6 @@ export class Environment {
 
     this.raycasting.start();
 
-    this.debugObject = {
-      start: () => {
-        this.startExperience();
-        // const audioListener = new AudioListener();
-        // mainScene.camera.add(audioListener);
-        // const music = new PositionalAudio(audioListener);
-        // music.setRefDistance(30);
-        // music.setRolloffFactor(0);
-        // music.setBuffer(soundsMap.get("music"));
-        // music.setVolume(0.09);
-        // music.play();
-        // this.voiceOver.init(audioListener);
-      },
-      playCheckpoint: () => {
-        this.cameraAnimation.goToCheckpoint(this.raycasting);
-      },
-    };
-
-    guiFolders.get("experience").add(this.debugObject, "start");
-    guiFolders.get("experience").add(this.debugObject, "playCheckpoint");
-
     /**
      * Menu animations
      */
@@ -223,15 +201,6 @@ export class Environment {
       },
     });
 
-    // this.artworkIn.addEventListener("click", () => {
-    //   chockwaveAnimation.pause(0);
-    //   chockwaveAnimation.play();
-    // });
-    // this.artworkOut.addEventListener("click", () => {
-    //   chockwaveAnimation.pause(0);
-    //   chockwaveAnimation.play();
-    // });
-
     this.musicVolumeTween = gsap
       .to(this.musicVolume, {
         duration: 1,
@@ -241,6 +210,16 @@ export class Environment {
         },
       })
       .pause();
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        console.log("hidden", new Date().getSeconds());
+        this.audioListener.context.suspend();
+        return;
+      }
+      console.log("visible", new Date().getSeconds());
+      this.audioListener.context.resume();
+    });
   }
 
   startExperience() {
