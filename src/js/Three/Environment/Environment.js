@@ -171,9 +171,8 @@ export class Environment {
       value: 1,
       delay: -1,
       onComplete: () => {
-        console.log(this.chapterClicked);
         switch (this.chapterClicked) {
-          case 0 || 1:
+          case 0 && 1:
             this.grounds.groundIndex = 0;
             break;
           case 2:
@@ -187,9 +186,6 @@ export class Environment {
             break;
         }
         this.cameraAnimation.tpToCheckpoint(this.chapterClicked, this.raycasting);
-
-        // this.debugObject.tpToCheckpoints0();
-        // this.resumeExperience();
       },
     });
     this.menuAnimation.to(customFogUniforms.progress, {

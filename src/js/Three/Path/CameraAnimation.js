@@ -196,11 +196,12 @@ export class CameraAnimation {
             delay: -2,
           });
       } else document.querySelector(".btn-next_container .text").textContent = "Continue";
+      const goToCheckpointDelay = this.checkpointsIndex === 4 ? 0 : 3;
       this.goToCheckpointTl = gsap.timeline({ paused: true });
       this.goToCheckpointTl.to(
         ".btn-next_container",
         {
-          delay: 3,
+          delay: goToCheckpointDelay,
           duration: 1,
           opacity: 0,
           onComplete: () => {
@@ -212,7 +213,7 @@ export class CameraAnimation {
       this.goToCheckpointTl.to(
         mainScene.background,
         {
-          delay: 3,
+          delay: goToCheckpointDelay,
           duration: this.checkpoints[this.checkpointsIndex].duration,
           r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
           g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
@@ -223,7 +224,7 @@ export class CameraAnimation {
       this.goToCheckpointTl.to(
         mainScene.fog.color,
         {
-          delay: 3,
+          delay: goToCheckpointDelay,
           duration: this.checkpoints[this.checkpointsIndex].duration,
           r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
           g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
@@ -234,7 +235,7 @@ export class CameraAnimation {
       this.goToCheckpointTl.to(
         mainScene.directionalLight.color,
         {
-          delay: 3,
+          delay: goToCheckpointDelay,
           duration: this.checkpoints[this.checkpointsIndex].duration,
           r: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.r,
           g: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.g,
@@ -245,7 +246,7 @@ export class CameraAnimation {
       this.goToCheckpointTl.to(
         mainScene.directionalLight2.color,
         {
-          delay: 3,
+          delay: goToCheckpointDelay,
           duration: this.checkpoints[this.checkpointsIndex].duration,
           r: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.r,
           g: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.g,
@@ -256,7 +257,7 @@ export class CameraAnimation {
       this.goToCheckpointTl.to(
         mainScene.customPass.material.uniforms.uSunProgress,
         {
-          delay: 3,
+          delay: goToCheckpointDelay,
           duration: this.checkpoints[this.checkpointsIndex].duration,
           value: mainScene.parameters.environments[this.checkpointsIndex + 1].sunProgress,
         },
@@ -265,6 +266,7 @@ export class CameraAnimation {
       this.goToCheckpointTl.to(
         mainScene.customPass.material.uniforms.uCornerSize,
         {
+          delay: goToCheckpointDelay,
           duration: this.checkpoints[this.checkpointsIndex].duration,
           value: mainScene.parameters.environments[this.checkpointsIndex + 1].cornerSize,
         },
@@ -273,6 +275,7 @@ export class CameraAnimation {
       this.goToCheckpointTl.to(
         mainScene.dustUniforms.uColor.value,
         {
+          delay: goToCheckpointDelay,
           duration: this.checkpoints[this.checkpointsIndex].duration,
           r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
           g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
@@ -283,7 +286,7 @@ export class CameraAnimation {
       this.goToCheckpointTl.to(
         this.tick,
         {
-          delay: 3,
+          delay: goToCheckpointDelay,
           duration: this.checkpoints[this.checkpointsIndex].duration,
           // duration: 1,
           value: this.checkpoints[this.checkpointsIndex].tick,
