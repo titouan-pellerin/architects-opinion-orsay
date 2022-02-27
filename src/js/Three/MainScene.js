@@ -2,6 +2,7 @@ import fogFragment from "@glsl/customFog/fogFragment.glsl";
 import fogParsFragment from "@glsl/customFog/fogParsFragment.glsl";
 import fogParsVertex from "@glsl/customFog/fogParsVertex.glsl";
 import fogVertex from "@glsl/customFog/fogVertex.glsl";
+import Splitting from "splitting";
 import {
   ACESFilmicToneMapping,
   Color,
@@ -27,7 +28,6 @@ import { texturesMap } from "../utils/assets";
 import { guiFolders } from "../utils/Debug";
 import { customFogUniforms, isSafari } from "../utils/misc";
 import raf from "../utils/Raf";
-import Splitting from "splitting";
 
 export class MainScene extends Scene {
   constructor(gpuTier) {

@@ -33,16 +33,18 @@ export class Voiceover {
   }
 
   playChapter(index = this.chapterIndex) {
-    this.currentChapter = this.recordsByChapter[index];
-    if (this.currentRecord) {
-      // Reset record
-      this.recordIndex = 0;
-      this.currentRecord.audio.source.onended = null;
-      this.currentRecord.audio = null;
-      this.currentRecord = this.currentChapter[0].init(this.audioListener);
+    if (this.recordsByChapter[index]) {
+      this.currentChapter = this.recordsByChapter[index];
+      if (this.currentRecord) {
+        // Reset record
+        this.recordIndex = 0;
+        this.currentRecord.audio.source.onended = null;
+        this.currentRecord.audio = null;
+        this.currentRecord = this.currentChapter[0].init(this.audioListener);
+      }
+      this.playRecord(0);
+      this.chapterIndex++;
     }
-    this.playRecord(0);
-    this.chapterIndex++;
   }
 
   playRecord(index) {

@@ -218,6 +218,14 @@ export class Environment {
       }
       this.audioListener.context.resume();
     });
+
+    document.querySelector(".btn-restart_container").addEventListener("click", () => {
+      this.pauseExperience();
+      this.grounds.groundIndex = 0;
+      this.cameraAnimation.tpToCheckpoint(0, this.raycasting);
+      this.menuAnimation.play(0);
+      this.resumeExperience();
+    });
   }
 
   startExperience() {

@@ -68,12 +68,6 @@ export class CameraAnimation {
         r: mainScene.parameters.environments[index].skyBgColor.r,
         g: mainScene.parameters.environments[index].skyBgColor.g,
         b: mainScene.parameters.environments[index].skyBgColor.b,
-        onUpdate: () => {
-          document.documentElement.style.setProperty(
-            "--accent-color",
-            "#" + mainScene.background.getHexString()
-          );
-        },
       },
       0
     );
@@ -297,10 +291,6 @@ export class CameraAnimation {
               0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
             ),
             onUpdate: () => {
-              document.documentElement.style.setProperty(
-                "--accent-color",
-                "#" + mainScene.background.getHexString()
-              );
               const nextTick = this.tick.value + 0.007;
 
               const curvePoint = this.path.spline.getPointAt(this.tick.value);
@@ -316,9 +306,34 @@ export class CameraAnimation {
               mainScene.cameraContainer.rotateZ(Math.PI);
             },
             onComplete: () => {
-              raycasting.updateArtworks(this.checkpoints[this.checkpointsIndex].artworks);
-              this.checkpointsIndex++;
-              mouse.range.x = 0.3;
+              if (this.checkpointsIndex !== 4) {
+                raycasting.updateArtworks(
+                  this.checkpoints[this.checkpointsIndex].artworks
+                );
+                this.checkpointsIndex++;
+                mouse.range.x = 0.3;
+                return;
+              }
+
+              gsap
+                .timeline()
+                .to(
+                  ".btn-restart_container",
+                  {
+                    duration: 1,
+                    opacity: 1,
+                    pointerEvents: "all",
+                  },
+                  0
+                )
+                .to(
+                  ".canvas-container",
+                  {
+                    opacity: 0.3,
+                    duration: 1,
+                  },
+                  0
+                );
             },
           },
           0
