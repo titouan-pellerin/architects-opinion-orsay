@@ -220,11 +220,14 @@ export class Environment {
     });
 
     document.querySelector(".btn-restart_container").addEventListener("click", () => {
+      gsap.to(".btn-restart_container", {
+        opacity: 0,
+        duration: 1,
+        pointerEvents: "none",
+      });
       this.pauseExperience();
-      this.grounds.groundIndex = 0;
-      this.cameraAnimation.tpToCheckpoint(0, this.raycasting);
-      this.menuAnimation.play(0);
-      this.resumeExperience();
+      this.clickChapter(null, 0);
+      // this.resumeExperience();
     });
   }
 
@@ -338,8 +341,9 @@ export class Environment {
     });
   }
 
-  clickChapter(e) {
-    this.chapterClicked = parseInt(e.currentTarget.dataset.chapter);
+  clickChapter(e, customIndex) {
+    this.chapterClicked =
+      customIndex === 0 ? customIndex : parseInt(e.currentTarget.dataset.chapter);
     this.menuAnimation.pause(0);
     this.menuAnimation.play();
     this.closeMenu(false);
