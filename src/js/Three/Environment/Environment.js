@@ -1,12 +1,11 @@
 import gsap from "gsap";
 import { Color } from "three";
+import { mainScene, mouse } from "../../../main";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { customFogUniforms } from "../../utils/misc";
-import { mouse } from "../../utils/Mouse";
 import { positions } from "../../utils/positions";
 import { Voiceover } from "../../Voiceover/Voiceover";
-import { mainScene } from "../MainScene";
 import { CameraAnimation } from "../Path/CameraAnimation";
 import { Checkpoint } from "../Path/Checkpoint";
 import { ForestPathLine } from "../Path/ForestPathLine";
@@ -32,7 +31,7 @@ export class Environment {
     this.audioListener = audioListener;
     this.music = music;
 
-    this.musicVolume = { level: 0.15 };
+    this.musicVolume = { level: 0.12 };
     this.chapterClicked;
     this.masterVolume = { level: 1 };
     this.muteTween = gsap
@@ -171,9 +170,11 @@ export class Environment {
       value: 1,
       delay: -1,
       onComplete: () => {
-        console.log(this.chapterClicked);
         switch (this.chapterClicked) {
-          case 0 || 1:
+          case 0:
+            this.grounds.groundIndex = 0;
+            break;
+          case 1:
             this.grounds.groundIndex = 0;
             break;
           case 2:
@@ -187,9 +188,7 @@ export class Environment {
             break;
         }
         this.cameraAnimation.tpToCheckpoint(this.chapterClicked, this.raycasting);
-
-        // this.debugObject.tpToCheckpoints0();
-        // this.resumeExperience();
+        // this.grounds.switchGrounds();
       },
     });
     this.menuAnimation.to(customFogUniforms.progress, {
@@ -224,44 +223,14 @@ export class Environment {
       },
     });
 
-    const chockwaveAnimation = gsap.timeline({ paused: true });
-    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
-      duration: 0,
-      value: 2,
-    });
-    chockwaveAnimation.to(this.artworkIn, { duration: 0, pointerEvents: "none" });
-    chockwaveAnimation.to(this.artworkOut, { duration: 0, pointerEvents: "none" });
-    chockwaveAnimation.to(this.chaptersBtn, { duration: 0, pointerEvents: "none" });
-    chockwaveAnimation.to(customFogUniforms.progress, { duration: 2.25, value: 1.15 });
-    chockwaveAnimation.to(customFogUniforms.transitionIsIn, {
-      duration: 0,
-      value: 3,
-      delay: -1.25,
-    });
-    chockwaveAnimation.to(customFogUniforms.progress, {
-      duration: 0,
-      value: -0.1,
-      delay: -1.25,
-    });
-    chockwaveAnimation.to(customFogUniforms.progress, {
-      duration: 2.25,
-      value: 1.15,
-      delay: -1.25,
-    });
-    chockwaveAnimation.to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 });
-    chockwaveAnimation.to(customFogUniforms.progress, { duration: 0, value: -0.1 });
-    chockwaveAnimation.to(this.artworkIn, { duration: 0, pointerEvents: "all" });
-    chockwaveAnimation.to(this.artworkOut, { duration: 0, pointerEvents: "all" });
-    chockwaveAnimation.to(this.chaptersBtn, { duration: 0, pointerEvents: "all" });
-
-    this.artworkIn.addEventListener("click", () => {
-      chockwaveAnimation.pause(0);
-      chockwaveAnimation.play();
-    });
-    this.artworkOut.addEventListener("click", () => {
-      chockwaveAnimation.pause(0);
-      chockwaveAnimation.play();
-    });
+    // this.artworkIn.addEventListener("click", () => {
+    //   chockwaveAnimation.pause(0);
+    //   chockwaveAnimation.play();
+    // });
+    // this.artworkOut.addEventListener("click", () => {
+    //   chockwaveAnimation.pause(0);
+    //   chockwaveAnimation.play();
+    // });
 
     this.musicVolumeTween = gsap
       .to(this.musicVolume, {

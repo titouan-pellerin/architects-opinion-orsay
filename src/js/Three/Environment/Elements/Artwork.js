@@ -127,6 +127,32 @@ export class Artwork extends Group {
     this.outerMesh.updateMatrix();
     this.innerMesh.updateMatrix();
     this.add(this.innerMesh, this.outerMesh);
+
+    // Hover animation
+    this.hoverTimeline = gsap
+      .timeline({ paused: true })
+      .to(customFogUniforms.transitionIsIn, {
+        duration: 0,
+        value: 2,
+      })
+      .to(customFogUniforms.progress, { duration: 2.25, value: 1.15 });
+    // .to(customFogUniforms.transitionIsIn, {
+    //   duration: 0,
+    //   value: 3,
+    //   delay: -1.25,
+    // })
+    // .to(customFogUniforms.progress, {
+    //   duration: 0,
+    //   value: -0.1,
+    //   delay: -1.25,
+    // })
+    // .to(customFogUniforms.progress, {
+    //   duration: 2.25,
+    //   value: 1.15,
+    //   delay: -1.25,
+    // })
+    // .to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 })
+    // .to(customFogUniforms.progress, { duration: 0, value: -0.1 });
   }
 
   updateDom() {

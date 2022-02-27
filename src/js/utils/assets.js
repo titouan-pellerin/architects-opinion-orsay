@@ -480,7 +480,7 @@ records.push(
   buffersChapter5
 );
 
-audioLoader.loadAsync("/assets/musics/ambiant.mp3").then((audioBuffer) => {
+audioLoader.loadAsync("/assets/musics/music.mp3").then((audioBuffer) => {
   soundsMap.set("music", audioBuffer);
 });
 

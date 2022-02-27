@@ -1,9 +1,9 @@
 import { Color, Group, Line, Vector3 } from "three";
+import { mainScene } from "../../../main";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
-import { mainScene } from "../MainScene";
 import { Checkpoint } from "../Path/Checkpoint";
 import { Butterfly } from "./Elements/Butterfly";
 import { Dust } from "./Elements/Dust";
@@ -326,6 +326,7 @@ export class Grounds extends Group {
 
     this.groundsArray[this.groundIndex].visible = true;
     this.groundsArray[this.groundIndex + 1].visible = true;
+    console.log("visibles", this.groundIndex, this.groundIndex + 1);
     this.groundsArray[this.groundIndex].updateMatrix();
     this.groundsArray[this.groundIndex + 1].updateMatrix();
 

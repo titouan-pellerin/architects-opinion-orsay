@@ -1,11 +1,10 @@
 /* eslint-disable no-undef */
 import gsap from "gsap";
 import { Line, Vector3 } from "three";
+import { mainScene, mouse } from "../../../main";
 import { guiFolders } from "../../utils/Debug";
-import { mouse } from "../../utils/Mouse";
 import { Voiceover } from "../../Voiceover/Voiceover";
 import { Artwork } from "../Environment/Elements/Artwork";
-import { mainScene } from "../MainScene";
 import { Raycasting } from "../utils/Raycasting";
 import { Checkpoint } from "./Checkpoint";
 
@@ -165,6 +164,15 @@ export class CameraAnimation {
     raycasting.removeArtworks();
     mouse.range.x = 0.2;
 
+    gsap.to(
+      ".btn-next_container",
+      {
+        duration: 1,
+        opacity: 0,
+      },
+      0
+    );
+
     if (this.checkpointsIndex <= 4) {
       if (this.checkpoints[this.checkpointsIndex].chapterDomEl) {
         gsap
@@ -193,133 +201,128 @@ export class CameraAnimation {
           .to(".canvas-container", {
             opacity: 1,
             duration: 1,
-            delay: -2,
+            delay: -1,
           });
       } else document.querySelector(".btn-next_container .text").textContent = "Continue";
-      this.goToCheckpointTl = gsap.timeline({ paused: true });
-      this.goToCheckpointTl.to(
-        ".btn-next_container",
-        {
-          delay: 3,
-          duration: 1,
-          opacity: 0,
-          onComplete: () => {
-            this.voiceOver.playChapter(this.checkpointsIndex);
+      const goToCheckpointDelay = this.checkpointsIndex === 4 ? 0 : 3;
+      this.goToCheckpointTl = gsap
+        .timeline({ paused: true })
+        .call(() => this.voiceOver.playChapter(this.checkpointsIndex), [], 3)
+        .to(
+          mainScene.background,
+          {
+            delay: goToCheckpointDelay,
+            duration: this.checkpoints[this.checkpointsIndex].duration,
+            r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
+            g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
+            b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
           },
-        },
-        0
-      );
-      this.goToCheckpointTl.to(
-        mainScene.background,
-        {
-          delay: 3,
-          duration: this.checkpoints[this.checkpointsIndex].duration,
-          r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
-          g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
-          b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
-        },
-        0
-      );
-      this.goToCheckpointTl.to(
-        mainScene.fog.color,
-        {
-          delay: 3,
-          duration: this.checkpoints[this.checkpointsIndex].duration,
-          r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
-          g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
-          b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
-        },
-        0
-      );
-      this.goToCheckpointTl.to(
-        mainScene.directionalLight.color,
-        {
-          delay: 3,
-          duration: this.checkpoints[this.checkpointsIndex].duration,
-          r: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.r,
-          g: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.g,
-          b: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.b,
-        },
-        0
-      );
-      this.goToCheckpointTl.to(
-        mainScene.directionalLight2.color,
-        {
-          delay: 3,
-          duration: this.checkpoints[this.checkpointsIndex].duration,
-          r: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.r,
-          g: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.g,
-          b: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.b,
-        },
-        0
-      );
-      this.goToCheckpointTl.to(
-        mainScene.customPass.material.uniforms.uSunProgress,
-        {
-          delay: 3,
-          duration: this.checkpoints[this.checkpointsIndex].duration,
-          value: mainScene.parameters.environments[this.checkpointsIndex + 1].sunProgress,
-        },
-        0
-      );
-      this.goToCheckpointTl.to(
-        mainScene.customPass.material.uniforms.uCornerSize,
-        {
-          duration: this.checkpoints[this.checkpointsIndex].duration,
-          value: mainScene.parameters.environments[this.checkpointsIndex + 1].cornerSize,
-        },
-        0
-      );
-      this.goToCheckpointTl.to(
-        mainScene.dustUniforms.uColor.value,
-        {
-          duration: this.checkpoints[this.checkpointsIndex].duration,
-          r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
-          g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
-          b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
-        },
-        0
-      );
-      this.goToCheckpointTl.to(
-        this.tick,
-        {
-          delay: 3,
-          duration: this.checkpoints[this.checkpointsIndex].duration,
-          // duration: 1,
-          value: this.checkpoints[this.checkpointsIndex].tick,
-          // value: 1,
-          ease: CustomEase.create(
-            "custom",
-            `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378
+          0
+        )
+        .to(
+          mainScene.fog.color,
+          {
+            delay: goToCheckpointDelay,
+            duration: this.checkpoints[this.checkpointsIndex].duration,
+            r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
+            g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
+            b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
+          },
+          0
+        )
+        .to(
+          mainScene.directionalLight.color,
+          {
+            delay: goToCheckpointDelay,
+            duration: this.checkpoints[this.checkpointsIndex].duration,
+            r: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.r,
+            g: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.g,
+            b: mainScene.parameters.environments[this.checkpointsIndex + 1].lightColor.b,
+          },
+          0
+        )
+        .to(
+          mainScene.directionalLight2.color,
+          {
+            delay: goToCheckpointDelay,
+            duration: this.checkpoints[this.checkpointsIndex].duration,
+            r: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.r,
+            g: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.g,
+            b: mainScene.parameters.environments[this.checkpointsIndex + 1].light2Color.b,
+          },
+          0
+        )
+        .to(
+          mainScene.customPass.material.uniforms.uSunProgress,
+          {
+            delay: goToCheckpointDelay,
+            duration: this.checkpoints[this.checkpointsIndex].duration,
+            value:
+              mainScene.parameters.environments[this.checkpointsIndex + 1].sunProgress,
+          },
+          0
+        )
+        .to(
+          mainScene.customPass.material.uniforms.uCornerSize,
+          {
+            delay: goToCheckpointDelay,
+            duration: this.checkpoints[this.checkpointsIndex].duration,
+            value:
+              mainScene.parameters.environments[this.checkpointsIndex + 1].cornerSize,
+          },
+          0
+        )
+        .to(
+          mainScene.dustUniforms.uColor.value,
+          {
+            delay: goToCheckpointDelay,
+            duration: this.checkpoints[this.checkpointsIndex].duration,
+            r: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.r,
+            g: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.g,
+            b: mainScene.parameters.environments[this.checkpointsIndex + 1].skyBgColor.b,
+          },
+          0
+        )
+        .to(
+          this.tick,
+          {
+            delay: goToCheckpointDelay,
+            duration: this.checkpoints[this.checkpointsIndex].duration,
+            // duration: 1,
+            value: this.checkpoints[this.checkpointsIndex].tick,
+            // value: 1,
+            ease: CustomEase.create(
+              "custom",
+              `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378
               0.507,0.512 0.595,0.65 0.718,0.779 0.822,0.876 0.887,0.937 0.931,1 1,1`
-          ),
-          onUpdate: () => {
-            document.documentElement.style.setProperty(
-              "--accent-color",
-              "#" + mainScene.background.getHexString()
-            );
-            const nextTick = this.tick.value + 0.007;
+            ),
+            onUpdate: () => {
+              document.documentElement.style.setProperty(
+                "--accent-color",
+                "#" + mainScene.background.getHexString()
+              );
+              const nextTick = this.tick.value + 0.007;
 
-            const curvePoint = this.path.spline.getPointAt(this.tick.value);
-            const curvePoint2 = this.path.spline.getPointAt(nextTick);
+              const curvePoint = this.path.spline.getPointAt(this.tick.value);
+              const curvePoint2 = this.path.spline.getPointAt(nextTick);
 
-            const camPos = new Vector3(curvePoint.x, -1, curvePoint.y);
-            const camPos2 = new Vector3(curvePoint2.x, -1, curvePoint2.y);
+              const camPos = new Vector3(curvePoint.x, -1, curvePoint.y);
+              const camPos2 = new Vector3(curvePoint2.x, -1, curvePoint2.y);
 
-            mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
-            mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
-            mainScene.cameraContainer.userData.lookingAt = camPos2;
-            mainScene.cameraContainer.rotateX(Math.PI);
-            mainScene.cameraContainer.rotateZ(Math.PI);
+              mainScene.cameraContainer.position.set(camPos.x, camPos.y, camPos.z);
+              mainScene.cameraContainer.lookAt(camPos2.x, camPos2.y, camPos2.z);
+              mainScene.cameraContainer.userData.lookingAt = camPos2;
+              mainScene.cameraContainer.rotateX(Math.PI);
+              mainScene.cameraContainer.rotateZ(Math.PI);
+            },
+            onComplete: () => {
+              raycasting.updateArtworks(this.checkpoints[this.checkpointsIndex].artworks);
+              this.checkpointsIndex++;
+              mouse.range.x = 0.3;
+            },
           },
-          onComplete: () => {
-            raycasting.updateArtworks(this.checkpoints[this.checkpointsIndex].artworks);
-            this.checkpointsIndex++;
-            mouse.range.x = 0.3;
-          },
-        },
-        0
-      );
+          0
+        );
       this.goToCheckpointTl.play();
     }
   }

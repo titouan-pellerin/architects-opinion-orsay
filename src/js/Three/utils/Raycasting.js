@@ -1,10 +1,9 @@
 import gsap from "gsap";
 import { MathUtils, Raycaster, Vector3 } from "three";
-import { mouse } from "../../utils/Mouse";
+import { mainScene, mouse } from "../../../main";
 import raf from "../../utils/Raf";
 import { Artwork } from "../Environment/Elements/Artwork";
 import { Ground } from "../Environment/Ground";
-import { mainScene } from "../MainScene";
 
 export class Raycasting {
   constructor(cameraAnimation) {
@@ -34,6 +33,7 @@ export class Raycasting {
     this.groundFlipped = 1;
 
     this.isPaused = false;
+    this.isZoomed = false;
   }
 
   start() {
@@ -51,9 +51,9 @@ export class Raycasting {
   onClick(e) {
     e.preventDefault();
     if (this.currentIntersect) {
-      this.isPaused = true;
+      this.isZoomed = true;
       Artwork.contentArtworkTitlesTween.reverse();
-      this.cameraAnimation.goToArtwork(this.currentIntersect.parent);
+      this.cameraAnimation.goToArtwork(this.currentIntersect);
       Artwork.contentArtworkFooterTween.play();
       this.backBtnTween.play();
     }
@@ -61,9 +61,10 @@ export class Raycasting {
 
   onBackBtnClick() {
     this.cameraAnimation.goBackFromArtwork().eventCallback("onReverseComplete", () => {
-      this.isPaused = false;
+      this.isZoomed = false;
     });
     Artwork.contentArtworkFooterTween.reverse();
+
     this.backBtnTween.reverse();
   }
 
@@ -84,9 +85,14 @@ export class Raycasting {
     );
 
     if (intersects.length) {
-      if (intersects[0].object.parent instanceof Artwork && !this.isPaused) {
+      if (
+        intersects[0].object.parent instanceof Artwork &&
+        !this.isPaused &&
+        !this.isZoomed
+      ) {
         if (!this.currentIntersect) {
           intersects[0].object.parent.updateDom();
+          intersects[0].object.parent.hoverTimeline.play();
           Artwork.contentArtworkTitlesTween.play();
           if (!this.canvasContainerTween)
             this.canvasContainerTween = gsap
@@ -98,13 +104,15 @@ export class Raycasting {
           this.canvasContainerTween.play();
         }
         document.body.style.cursor = "pointer";
-        this.currentIntersect = intersects[0].object;
+        this.currentIntersect = intersects[0].object.parent;
         this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 0, 2, raf.deltaTime);
         this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 0, 2, raf.deltaTime);
       } else if (intersects[0].object.parent instanceof Ground) {
         document.body.style.cursor = "default";
+        if (this.currentIntersect) this.currentIntersect.hoverTimeline.reverse();
         this.currentIntersect = null;
         Artwork.contentArtworkTitlesTween.reverse();
+
         if (this.canvasContainerTween) this.canvasContainerTween.reverse();
 
         this.groundFlipped = MathUtils.damp(
@@ -134,8 +142,11 @@ export class Raycasting {
         );
       } else {
         document.body.style.cursor = "default";
+        if (this.currentIntersect) this.currentIntersect.hoverTimeline.reverse();
+
         this.currentIntersect = null;
         Artwork.contentArtworkTitlesTween.reverse();
+
         if (this.canvasContainerTween) this.canvasContainerTween.reverse();
 
         this.leavesRayPos.x = MathUtils.damp(
@@ -161,8 +172,10 @@ export class Raycasting {
       this.groundRayPos.y = MathUtils.damp(this.groundRayPos.y, 3, 2, raf.deltaTime);
       this.leavesRayPos.y = MathUtils.damp(this.leavesRayPos.y, 3, 2, raf.deltaTime);
       document.body.style.cursor = "default";
+      if (this.currentIntersect) this.currentIntersect.hoverTimeline.reverse();
       this.currentIntersect = null;
       Artwork.contentArtworkTitlesTween.reverse();
+
       if (this.canvasContainerTween) this.canvasContainerTween.reverse();
     }
   }

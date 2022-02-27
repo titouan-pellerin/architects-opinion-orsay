@@ -60,15 +60,16 @@ export class Record {
     this.audio.setRefDistance(60);
     this.audio.setRolloffFactor(0);
     this.audio.setBuffer(this.buffer);
-    this.audio.setVolume(0.7);
-
+    this.audio.setVolume(1);
+    this.pausedTime = 0;
+    this.previousDurations = 0;
+    this.currentSubtitleIndex = 0;
     return this;
   }
 
   play() {
-    this.currentSubtitleIndex = 0;
     this.startTime = this.audio.context.currentTime;
-    this.audio.play();
+    this.audio.play(0);
 
     raf.subscribe("subtitles", this.onProgress.bind(this));
     this.showSubtitle();
