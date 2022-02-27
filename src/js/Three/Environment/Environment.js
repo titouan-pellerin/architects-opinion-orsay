@@ -255,7 +255,7 @@ export class Environment {
     this.pauseExperience();
     this.chaptersBtn.style.pointerEvents = "none";
     gsap.to(this.chaptersBtn, { duration: 1, opacity: 0 });
-    gsap.to(".content-subtitles", { duration: 1, opacity: 0 });
+    gsap.to(".content-subtitles p", { duration: 1, opacity: 0 });
     gsap.to(".canvas-container", { duration: 1, opacity: 1 });
     gsap.to(".content-interface_titles .chap", { duration: 1, opacity: 0 });
     gsap.to(".btn-next_container", { duration: 1, opacity: 0 });
@@ -317,11 +317,11 @@ export class Environment {
         },
       });
       gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 1 });
-      gsap.to(".content-subtitles", { duration: 1, opacity: 1, delay: 1 });
+      gsap.to(".content-subtitles p", { duration: 1, opacity: 1, delay: 1 });
       gsap.to(".btn-next_container", { duration: 1, opacity: 1, delay: 1 });
     } else {
-      gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 6 });
-      gsap.to(".content-subtitles", { duration: 1, opacity: 1, delay: 6 });
+      gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 3.5 });
+      gsap.to(".content-subtitles p", { duration: 1, opacity: 1, delay: 5 });
     }
     this.contentMenu.style.pointerEvents = "none";
     gsap.to(".content-menu .btn-close_container", {
@@ -381,8 +381,49 @@ export class Environment {
 
   muteExperience() {
     if (this.masterVolume.level === 1) {
+      gsap.to(".btn-sound_container .wrapper-on", {
+        duration: 0.35,
+        opacity: 0,
+        ease: "circ.out",
+        onComplete: () => {},
+      });
+      gsap.to(".btn-sound_container .wrapper-off", {
+        duration: 0.35,
+        opacity: 1,
+        delay: 0.25,
+        ease: "circ.out",
+        onComplete: () => {},
+      });
+      gsap.to(".btn-sound_container .wrapper", {
+        duration: 0.35,
+        transform: "translateY(-100%)",
+        delay: 0.25,
+        ease: "circ.out",
+        onComplete: () => {},
+      });
       this.muteTween.play();
     } else if (this.masterVolume.level === 0) {
+      gsap.to(".btn-sound_container .wrapper-on", {
+        duration: 0.35,
+        opacity: 1,
+        delay: 0.25,
+        ease: "circ.out",
+        onComplete: () => {},
+      });
+      gsap.to(".btn-sound_container .wrapper-off", {
+        duration: 0.35,
+        opacity: 0,
+        ease: "circ.out",
+        onComplete: () => {},
+      });
+      gsap.to(".btn-sound_container .wrapper", {
+        duration: 0.35,
+        delay: 0.25,
+        ease: "circ.out",
+        transform: "translateY(0)",
+        onComplete: () => {},
+      });
+
       this.muteTween.reverse();
     }
   }

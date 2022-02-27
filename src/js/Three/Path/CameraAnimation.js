@@ -164,14 +164,11 @@ export class CameraAnimation {
     raycasting.removeArtworks();
     mouse.range.x = 0.2;
 
-    gsap.to(
-      ".btn-next_container",
-      {
-        duration: 1,
-        opacity: 0,
-      },
-      0
-    );
+    gsap.to(".btn-next_container .text", {
+      duration: 1,
+      opacity: 0,
+      pointerEvents: "none",
+    });
 
     if (this.checkpointsIndex <= 4) {
       if (this.checkpoints[this.checkpointsIndex].chapterDomEl) {
@@ -203,7 +200,7 @@ export class CameraAnimation {
             duration: 1,
             delay: -1,
           });
-      } else document.querySelector(".btn-next_container .text").textContent = "Continue";
+      }
       const goToCheckpointDelay = this.checkpointsIndex === 4 ? 0 : 3;
       this.goToCheckpointTl = gsap
         .timeline({ paused: true })
