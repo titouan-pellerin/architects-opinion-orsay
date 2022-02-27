@@ -33,6 +33,7 @@ export class Raycasting {
     this.groundFlipped = 1;
 
     this.isPaused = false;
+    this.isZoomed = false;
   }
 
   start() {
@@ -50,7 +51,7 @@ export class Raycasting {
   onClick(e) {
     e.preventDefault();
     if (this.currentIntersect) {
-      this.isPaused = true;
+      this.isZoomed = true;
       Artwork.contentArtworkTitlesTween.reverse();
       this.cameraAnimation.goToArtwork(this.currentIntersect.parent);
       Artwork.contentArtworkFooterTween.play();
@@ -60,7 +61,7 @@ export class Raycasting {
 
   onBackBtnClick() {
     this.cameraAnimation.goBackFromArtwork().eventCallback("onReverseComplete", () => {
-      this.isPaused = false;
+      this.isZoomed = false;
     });
     Artwork.contentArtworkFooterTween.reverse();
     this.backBtnTween.reverse();
@@ -83,7 +84,11 @@ export class Raycasting {
     );
 
     if (intersects.length) {
-      if (intersects[0].object.parent instanceof Artwork && !this.isPaused) {
+      if (
+        intersects[0].object.parent instanceof Artwork &&
+        !this.isPaused &&
+        !this.isZoomed
+      ) {
         if (!this.currentIntersect) {
           intersects[0].object.parent.updateDom();
           Artwork.contentArtworkTitlesTween.play();

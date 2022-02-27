@@ -31,7 +31,7 @@ export class Environment {
     this.audioListener = audioListener;
     this.music = music;
 
-    this.musicVolume = { level: 0.15 };
+    this.musicVolume = { level: 0.12 };
     this.chapterClicked;
     this.masterVolume = { level: 1 };
     this.muteTween = gsap
@@ -171,7 +171,10 @@ export class Environment {
       delay: -1,
       onComplete: () => {
         switch (this.chapterClicked) {
-          case 0 && 1:
+          case 0:
+            this.grounds.groundIndex = 0;
+            break;
+          case 1:
             this.grounds.groundIndex = 0;
             break;
           case 2:
@@ -185,6 +188,7 @@ export class Environment {
             break;
         }
         this.cameraAnimation.tpToCheckpoint(this.chapterClicked, this.raycasting);
+        // this.grounds.switchGrounds();
       },
     });
     this.menuAnimation.to(customFogUniforms.progress, {

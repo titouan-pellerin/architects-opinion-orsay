@@ -37,7 +37,7 @@ function startClick() {
   const musicVolume = { level: 0 };
   gsap.to(musicVolume, {
     duration: 2,
-    level: 0.15,
+    level: 0.12,
     onUpdate: () => {
       music.setVolume(musicVolume.level);
     },
@@ -45,6 +45,10 @@ function startClick() {
 }
 
 function init() {
+  loadingManager.onProgress = (_url, loaded, total) => {
+    const percentLoaded = (loaded / total) * 100;
+    // console.log(Math.round(percentLoaded));
+  };
   loadingManager.onLoad = () => {
     // Init timeline
     discoverTl
@@ -73,7 +77,7 @@ function init() {
         delay: -1,
       })
       .to(".loader-text", {
-        duration: 1,
+        duration: 3,
         opacity: 1,
         onComplete: () => {
           console.time("init");
@@ -85,7 +89,7 @@ function init() {
       })
       .to(".loader-text", {
         delay: 6,
-        duration: 1,
+        duration: 2,
         opacity: 0,
       })
       .to(".content-interface_titles .title-wrapper", {
@@ -94,16 +98,16 @@ function init() {
       })
       .to(".canvas-container", {
         duration: 2,
-        opacity: 1,
+        opacity: 0.3,
         delay: -2,
       })
       .to([".btn-chapters_container", ".btn-sound_container"], {
         opacity: 1,
-        duration: 1,
+        duration: 2,
         pointerEvents: "all",
       })
       .to(".content-interface_titles .title-wrapper", {
-        duration: 1,
+        duration: 2,
         opacity: 0,
         onComplete: () => {
           environment.goToCheckpoint();
