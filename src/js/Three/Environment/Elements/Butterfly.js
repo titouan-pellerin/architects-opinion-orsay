@@ -23,7 +23,7 @@ const butterfliesColors = ["#0000ff", "#00ff00", "#0ffff0", "#ff0000"];
 export class Butterfly {
   constructor() {
     this.object = {};
-    this.count = 50 * 5;
+    this.count = 50;
     this.init();
 
     raf.subscribe("butterfly", this.update.bind(this));
@@ -46,8 +46,7 @@ export class Butterfly {
     this.speedFactor = new Float32Array(particlesCount * 1);
 
     for (let i = 0; i < particlesCount; i++) {
-      // this.positions[i * 3 + 0] = MathUtils.randFloatSpread(50);
-      this.positions[i * 3 + 0] = MathUtils.randFloat(-225, 25);
+      this.positions[i * 3 + 0] = MathUtils.randFloatSpread(50);
       this.positions[i * 3 + 1] = -10;
       this.positions[i * 3 + 2] = MathUtils.randFloat(2, 1);
 

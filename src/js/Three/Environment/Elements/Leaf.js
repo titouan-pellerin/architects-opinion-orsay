@@ -28,7 +28,7 @@ const leavesColors = ["#fff", "#ccc", "#999"];
 export class Leaf {
   constructor() {
     this.object = {};
-    this.count = 250;
+    this.count = 250 * 5;
     this.init();
 
     raf.subscribe("leaf", this.update.bind(this));
@@ -53,7 +53,8 @@ export class Leaf {
     for (let i = 0; i < particlesCount; i++) {
       this.positions[i * 3 + 0] = MathUtils.randFloatSpread(50);
       this.positions[i * 3 + 1] = -5;
-      this.positions[i * 3 + 2] = MathUtils.randFloatSpread(50);
+      // this.positions[i * 3 + 2] = MathUtils.randFloatSpread(50);
+      this.positions[i * 3 + 2] = MathUtils.randFloat(-225, 25);
 
       const randomColor = tCol.set(
         leavesColors[MathUtils.randInt(0, leavesColors.length - 1)]
