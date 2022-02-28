@@ -411,8 +411,8 @@ export class CameraAnimation {
         mainScene.fog,
         {
           duration: 3,
-          near: 7,
-          far: 27,
+          near: 8,
+          far: 28,
         },
         0.5
       )

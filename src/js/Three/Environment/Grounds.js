@@ -123,6 +123,8 @@ export class Grounds extends Group {
 
     const butterflyParticlesMesh2 = butterflyParticlesMesh1.clone();
     const butterflyParticlesMirrorMesh2 = butterflyParticlesMirrorMesh1.clone();
+    butterflyParticlesMesh2.scale.z = -1;
+    butterflyParticlesMirrorMesh2.scale.z = -1;
 
     this.ground2.add(butterflyParticlesMesh2, butterflyParticlesMirrorMesh2);
 
@@ -180,6 +182,8 @@ export class Grounds extends Group {
 
     const butterflyParticlesMesh4 = butterflyParticlesMesh1.clone();
     const butterflyParticlesMirrorMesh4 = butterflyParticlesMirrorMesh1.clone();
+    butterflyParticlesMesh4.scale.z = -1;
+    butterflyParticlesMirrorMesh4.scale.z = -1;
 
     this.ground4.add(butterflyParticlesMesh4, butterflyParticlesMirrorMesh4);
 

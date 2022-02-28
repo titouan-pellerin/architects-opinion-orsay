@@ -143,7 +143,10 @@ export class Artwork extends Group {
   updateDom() {
     Artwork.artworkContentTitle.innerHTML = Artwork.artworkFooterTitle.innerHTML =
       this.details.title;
-    Artwork.artworkContentSubtitle.textContent = this.details.author;
+    Artwork.artworkContentSubtitle.textContent = this.details.author.replace(
+      "</br>",
+      " - "
+    );
     Artwork.artworkFooterSubtitle.innerHTML = this.details.author;
   }
 }
