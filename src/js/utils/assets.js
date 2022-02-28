@@ -91,6 +91,7 @@ const artwork16 = textureLoader.load(
 const easter = location.hash.includes("bzh")
   ? textureLoader.load("/assets/artworks/gwenn-ha-du.jpg")
   : textureLoader.load("/assets/artworks/venom.jpg");
+const easterName = location.hash.includes("bzh") ? "Drapeau Breton" : "Venomenomnom";
 easter.encoding = sRGBEncoding;
 
 const flowerPattern = textureLoader.load("/assets/flower/flower.jpg");
@@ -202,98 +203,98 @@ if (!location.hash.includes("bzh") && !location.hash.includes("enzo")) {
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Emile Gallé - 1904",
-      title: "La Main aux algues </br> et aux coquillages",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Eugène Rousseau - 1884",
-      title: "Présentoir",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Henry Cros - 1875",
-      title: "La reine Isabeau </br> de Bavière",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Albert Dammouse - 1880",
-      title: "Vase",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Walter Crane - 1889",
-      title: "The Peacock Garden",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "William Morris - 1883",
-      title: "Holland Park carpet",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Victor Horta </br> 1898-1901",
-      title: "Horta Museum </br> (Maison Horta)",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Hector Guimard - 1897",
-      title: "Banquette de fumoir",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Hector Guimard </br> 1895-1898",
-      title: "Portail d'entrée </br> Castel Béranger",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Hector Guimard - 1900",
-      title: "Édicul, dit La libellule",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Victor Horta </br> 1894-1905",
-      title: "Hotel Tassel",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Victor Horta </br> 1894-1905",
-      title: "Hotel Tassel",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "René Lalique - 1904",
-      title: "Pendentif",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "René Lalique - 1897",
-      title: "Pavot",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Louis Majorelle </br> 1898-1899",
-      title: "Fauteuil",
+      author: "",
+      title: easterName,
     },
     {
       texture: easter,
       dimensions: [1500, 1000],
-      author: "Jacques Gruber </br> 1905-1908",
-      title: "Vol de mouettes",
+      author: "",
+      title: easterName,
     },
   ]);
 }
