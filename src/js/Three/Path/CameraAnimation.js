@@ -157,6 +157,7 @@ export class CameraAnimation {
   goToCheckpoint(raycasting) {
     raycasting.removeArtworks();
     mouse.range.x = 0.2;
+    console.log(mouse.range);
 
     gsap.to(".btn-next_container .text", {
       duration: 1,
@@ -278,8 +279,8 @@ export class CameraAnimation {
           this.tick,
           {
             delay: goToCheckpointDelay,
-            // duration: this.checkpoints[this.checkpointsIndex].duration,
-            duration: 1,
+            duration: this.checkpoints[this.checkpointsIndex].duration,
+            // duration: 1,
             value: this.checkpoints[this.checkpointsIndex].tick,
             // value: 1,
             ease: CustomEase.create(
@@ -309,6 +310,7 @@ export class CameraAnimation {
                 );
                 this.checkpointsIndex++;
                 mouse.range.x = 0.3;
+                console.log(mouse.range);
                 return;
               }
 
@@ -368,6 +370,9 @@ export class CameraAnimation {
           ease: "power3.inOut",
           x: 0.15,
           y: 0.07,
+          onComplete: () => {
+            console.log(mouse.range);
+          },
         },
         0
       )

@@ -13,12 +13,12 @@ const discoverTl = gsap.timeline({ paused: true });
 
 let mainScene, mouse, environment, audioListener, music;
 
-async function getTier() {
+async function initScene() {
   const gpuTier = await getGPUTier();
-  mainScene = new MainScene(gpuTier.tier);
+  mainScene = new MainScene(gpuTier);
   mouse = new Mouse();
 }
-getTier();
+initScene();
 
 export { mainScene, mouse };
 
