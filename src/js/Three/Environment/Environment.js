@@ -225,6 +225,16 @@ export class Environment {
         duration: 1,
         pointerEvents: "none",
       });
+      gsap.to(".btn-next_container .text", {
+        duration: 0,
+        opacity: 0,
+        pointerEvents: "none",
+      });
+      gsap.to(".btn-next_container", {
+        duration: 0,
+        opacity: 1,
+        pointerEvents: "all",
+      });
       this.pauseExperience();
       this.clickChapter(null, 0);
       // this.resumeExperience();
@@ -317,6 +327,7 @@ export class Environment {
           if (this.music) this.musicVolumeTween.reverse();
         },
       });
+      gsap.to(".btn-next_container", { duration: 1, opacity: 1, delay: 3.5 });
     }
     this.contentMenu.style.pointerEvents = "none";
     gsap.to(".content-menu .btn-close_container", {
@@ -357,7 +368,6 @@ export class Environment {
   }
 
   pauseExperience() {
-    console.log("Pause experience");
     this.cameraAnimation.pause();
     mouse.pause();
     this.raycasting.isPaused = true;
@@ -366,7 +376,6 @@ export class Environment {
   }
 
   resumeExperience() {
-    console.log("Resume experience");
     this.cameraAnimation.resume();
     mouse.resume();
     this.raycasting.isPaused = false;

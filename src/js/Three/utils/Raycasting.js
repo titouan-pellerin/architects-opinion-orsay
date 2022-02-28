@@ -28,7 +28,23 @@ export class Raycasting {
     //     delay: 2,
     //   })
     //   .pause();
-    this.canvasContainerTween;
+    // this.backBtnTween = gsap
+    //   .timeline({ paused: true })
+    //   .to(
+    //     this.backBtn,
+    //     {
+    //       duration: 0.5,
+    //       opacity: 1,
+    //       pointerEvents: "all",
+    //     },
+    //     0
+    //   )
+    //   .to(
+    //     [".btn-chapters_container", ".btn-next_container"],
+    //     { duration: 0.5, opacity: 0, pointerEvents: "none" },
+    //     0
+    //   );
+    // this.canvasContainerTween;
 
     this.leavesRayPos = new Vector3();
     this.groundRayPos = new Vector3();
@@ -68,6 +84,11 @@ export class Raycasting {
         opacity: 1,
         delay: 2,
       });
+      gsap.to([".btn-chapters_container", ".btn-next_container"], {
+        duration: 0.5,
+        opacity: 0,
+        pointerEvents: "none",
+      });
       // this.backBtnTween.play();
     }
   }
@@ -85,6 +106,12 @@ export class Raycasting {
       duration: 0.5,
       opacity: 0,
       pointerEvents: "none",
+    });
+    gsap.to([".btn-chapters_container", ".btn-next_container"], {
+      duration: 0.5,
+      opacity: 1,
+      pointerEvents: "all",
+      delay: 2.5,
     });
 
     // this.backBtnTween.reverse();

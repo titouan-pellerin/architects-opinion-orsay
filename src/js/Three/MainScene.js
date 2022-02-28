@@ -130,7 +130,10 @@ export class MainScene extends Scene {
       uAlpha: { value: 1 },
     };
 
-    this.maxRes = gpuTier >= 2 ? 1440 : 1080;
+    this.maxRes =
+      gpuTier.tier === 3 && gpuTier.gpu.includes("apple") && gpuTier.gpu.includes("m1")
+        ? 1440
+        : 1080;
     this.aspectRatio =
       (window.innerWidth * devicePixelRatio) / (window.innerHeight * devicePixelRatio);
     this.sizes = {
@@ -146,6 +149,15 @@ export class MainScene extends Scene {
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
+    this.cameraContainer.position.fromArray([0, -1, 25]);
+    this.cameraContainer.lookAt(-0.04318495869608319, -1, 23.437242292434117);
+    this.cameraContainer.userData.lookingAt = new Vector3(
+      -0.04318495869608319,
+      -1,
+      23.437242292434117
+    );
+    this.cameraContainer.rotateX(Math.PI);
+    this.cameraContainer.rotateZ(Math.PI);
 
     const orbitDebug = {
       enabled: false,
@@ -200,7 +212,7 @@ export class MainScene extends Scene {
     this.renderer.premultipliedAlpha = false;
     this.renderer.setSize(this.sizes.width, this.sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    // this.renderer.compile(this, this.camera);
+    this.renderer.compile(this, this.camera);
     this.background = this.parameters.environments[0].skyBgColor.clone();
 
     this.add(this.cameraContainer);
