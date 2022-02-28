@@ -150,6 +150,15 @@ export class MainScene extends Scene {
     this.camera.updateProjectionMatrix();
     this.cameraContainer = new Group();
     this.cameraContainer.add(this.camera);
+    this.cameraContainer.position.fromArray([0, -1, 25]);
+    this.cameraContainer.lookAt(-0.04318495869608319, -1, 23.437242292434117);
+    this.cameraContainer.userData.lookingAt = new Vector3(
+      -0.04318495869608319,
+      -1,
+      23.437242292434117
+    );
+    this.cameraContainer.rotateX(Math.PI);
+    this.cameraContainer.rotateZ(Math.PI);
 
     const orbitDebug = {
       enabled: false,

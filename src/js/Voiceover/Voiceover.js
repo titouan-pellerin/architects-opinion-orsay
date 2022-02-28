@@ -61,7 +61,6 @@ export class Voiceover {
   }
 
   onRecordEnded() {
-    console.log("record ended");
     if (this.nextRecord) {
       this.recordIndex++;
       this.playRecord(this.recordIndex);

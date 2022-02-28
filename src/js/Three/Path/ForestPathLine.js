@@ -36,5 +36,7 @@ export class ForestPathLine extends Line {
     mainScene.cameraContainer.userData.lookingAt = camPos2;
     mainScene.cameraContainer.rotateX(Math.PI);
     mainScene.cameraContainer.rotateZ(Math.PI);
+
+    console.log(camPos, camPos2);
   }
 }

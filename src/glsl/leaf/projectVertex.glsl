@@ -13,7 +13,7 @@ float time = - uTime * 0.4;
 float noise = cnoise(pos.yz) * 40.;
 
 float loop = mod(time - (aOffset) * maxDuration, maxDuration) / maxDuration;
-vLoop = loop;
+// vLoop = loop;
 vec3 particlePos = pos + aPositions;
 
 // particlePos.y = loop * ((particlePos.y + sin(time - aOffset * aScale)) + (offset)) - 50.;

@@ -9,7 +9,7 @@ attribute float aOffset;
 attribute float aScale;
 attribute float aSpeedFactor;
 
-varying float vLoop;
+// varying float vLoop;
 varying float vRandomScale;
 // // varying vec2 vUv;
 varying vec3 vPos;
