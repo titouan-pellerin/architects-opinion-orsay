@@ -154,6 +154,16 @@ button {
         width: 4.6875rem;
         height: fit-content;
       }
+
+      .mask {
+        opacity: 0.3;
+        position: absolute;
+        left: 0;
+      }
+
+      .logo {
+        clip-path: inset(100% 0 0 0);
+      }
     }
     .loader-title_wrapper {
       opacity: 1;
