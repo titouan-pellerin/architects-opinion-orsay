@@ -146,7 +146,7 @@ if (!location.hash.includes("bzh") && !location.hash.includes("enzo")) {
       texture: artwork7,
       dimensions: [2610, 3910],
       author: "Victor Horta",
-      title: "Horta Museum (Maison Horta)",
+      title: "Horta Museum </br> (Maison Horta)",
       year: "1898-1901",
     },
     {
@@ -167,7 +167,7 @@ if (!location.hash.includes("bzh") && !location.hash.includes("enzo")) {
       texture: artwork10,
       dimensions: [1497, 1899],
       author: "Hector Guimard",
-      title: "Édicul, dit La libellule",
+      title: "Édicule, </br> dit La libellule",
       year: "1900",
     },
     {

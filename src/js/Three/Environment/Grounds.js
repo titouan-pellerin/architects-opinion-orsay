@@ -326,7 +326,6 @@ export class Grounds extends Group {
 
     this.groundsArray[this.groundIndex].visible = true;
     this.groundsArray[this.groundIndex + 1].visible = true;
-    console.log("visibles", this.groundIndex, this.groundIndex + 1);
     this.groundsArray[this.groundIndex].updateMatrix();
     this.groundsArray[this.groundIndex + 1].updateMatrix();
 

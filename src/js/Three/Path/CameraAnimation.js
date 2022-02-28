@@ -156,8 +156,7 @@ export class CameraAnimation {
    */
   goToCheckpoint(raycasting) {
     raycasting.removeArtworks();
-    mouse.range.x = 0.2;
-    console.log(mouse.range);
+    mouse.range.fromArray([0.2, 0.1]);
 
     gsap.to(".btn-next_container .text", {
       duration: 1,
@@ -196,10 +195,15 @@ export class CameraAnimation {
             delay: -1.35,
           });
       }
-      const goToCheckpointDelay = this.checkpointsIndex === 4 ? 0 : 3;
+      const goToCheckpointDelay =
+        this.checkpointsIndex === 4 || this.checkpointsIndex === 5 ? 0 : 3;
       this.goToCheckpointTl = gsap
         .timeline({ paused: true })
-        .call(() => this.voiceOver.playChapter(this.checkpointsIndex), [], 4.5)
+        .call(
+          () => this.voiceOver.playChapter(this.checkpointsIndex),
+          [],
+          goToCheckpointDelay + 1.5
+        )
         .to(
           mainScene.background,
           {
@@ -310,7 +314,6 @@ export class CameraAnimation {
                 );
                 this.checkpointsIndex++;
                 mouse.range.x = 0.3;
-                console.log(mouse.range);
                 return;
               }
 
@@ -323,6 +326,16 @@ export class CameraAnimation {
                     delay: 2,
                     opacity: 1,
                     pointerEvents: "all",
+                  },
+                  0
+                )
+                .to(
+                  ".btn-next_container",
+                  {
+                    duration: 1,
+                    delay: 0,
+                    opacity: 0,
+                    pointerEvents: "none",
                   },
                   0
                 )
@@ -370,9 +383,6 @@ export class CameraAnimation {
           ease: "power3.inOut",
           x: 0.15,
           y: 0.07,
-          onComplete: () => {
-            console.log(mouse.range);
-          },
         },
         0
       )
@@ -391,11 +401,11 @@ export class CameraAnimation {
       .to(
         mainScene.fog,
         {
-          duration: 3.5,
-          near: 10,
-          far: 30,
+          duration: 3,
+          near: 7,
+          far: 27,
         },
-        0
+        0.5
       )
       .to(
         mainScene.cameraContainer.userData.lookingAt,
