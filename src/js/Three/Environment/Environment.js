@@ -30,7 +30,7 @@ export class Environment {
     this.audioListener = audioListener;
     this.music = music;
 
-    this.musicVolume = { level: 0.12 };
+    this.musicVolume = { level: 0.08 };
     this.chapterClicked;
     this.masterVolume = { level: 1 };
     this.muteTween = gsap

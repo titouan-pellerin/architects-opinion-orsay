@@ -97,11 +97,12 @@ export class Voiceover {
 
     gsap.to(this.volume, {
       duration: 0.5,
-      level: 0.5,
+      level: 0.8,
       onUpdate: () => {
         this.currentRecord.audio.setVolume(this.volume.level);
       },
     });
+
     this.currentRecord.resume();
   }
 }

@@ -37,7 +37,7 @@ function startClick() {
   const musicVolume = { level: 0 };
   gsap.to(musicVolume, {
     duration: 2,
-    level: 0.12,
+    level: 0.08,
     onUpdate: () => {
       music.setVolume(musicVolume.level);
     },
