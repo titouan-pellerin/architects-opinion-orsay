@@ -3,7 +3,6 @@ vUv = uv;
 
 vec4 worldPosition = modelMatrix * vec4(position, 1.);
 vec3 rayPos = uRayPos;
-// rayPos.y = - 2.5;
 
 float noise = cnoise(transformed.xy * 200. - (uTime * 0.3)) * 0.00015;
 float noise2 = cnoise(transformed.xy * 100. - (uTime * 0.35)) * 0.0002;
@@ -20,7 +19,7 @@ float distanceMax = 1. + cnoise(vec2(transformed.z * 50., uTime));
 
 float rayModifier = mix(.0008, 0., clamp((distance(rayPos, vec3(worldPosition.x, - 2.5, worldPosition.z))), .0, distanceMax) / distanceMax);
 
-vRayModifier = rayModifier * 1250.;
+vRayModifier = rayModifier * 100.;
 
 transformed.z += rayModifier;
 

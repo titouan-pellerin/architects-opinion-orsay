@@ -1,4 +1,3 @@
-// #include ../../utils/noise3d;
 #include ../../utils/noise2d;
 
 #include <common>

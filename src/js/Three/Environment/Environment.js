@@ -242,7 +242,7 @@ export class Environment {
   openMenu() {
     this.pauseExperience();
     this.chaptersBtn.style.pointerEvents = "none";
-    gsap.to(this.chaptersBtn, { duration: 1, opacity: 0 });
+    gsap.to(this.chaptersBtn, { duration: 0.5, opacity: 0 });
     gsap.to(".content-subtitles p", { duration: 1, opacity: 0 });
     gsap.to(".canvas-container", { duration: 1, opacity: 1 });
     gsap.to(".content-interface_titles .chap", { duration: 1, opacity: 0 });
@@ -276,7 +276,7 @@ export class Environment {
       delay: 1,
     });
     gsap.to(".content-menu .btn-close_container", {
-      duration: 1,
+      duration: 0.5,
       opacity: "1",
       delay: 1,
     });
@@ -304,11 +304,11 @@ export class Environment {
           this.chaptersBtn.style.pointerEvents = "all";
         },
       });
-      gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 1 });
+      gsap.to(this.chaptersBtn, { duration: 0.5, opacity: 1, delay: 1 });
       gsap.to(".content-subtitles p", { duration: 1, opacity: 1, delay: 1 });
       gsap.to(".btn-next_container", { duration: 1, opacity: 1, delay: 1 });
     } else {
-      gsap.to(this.chaptersBtn, { duration: 1, opacity: 1, delay: 3.5 });
+      gsap.to(this.chaptersBtn, { duration: 0.5, opacity: 1, delay: 3.5 });
       gsap.to(".content-subtitles", {
         duration: 1,
         opacity: 1,
@@ -320,7 +320,7 @@ export class Environment {
     }
     this.contentMenu.style.pointerEvents = "none";
     gsap.to(".content-menu .btn-close_container", {
-      duration: 1,
+      duration: 0.5,
       opacity: "0",
     });
     gsap.to(".content-menu .title-wrapper .title-section", {
@@ -376,25 +376,34 @@ export class Environment {
 
   muteExperience() {
     if (this.masterVolume.level === 1) {
-      gsap.to(".btn-sound_container .wrapper-on", {
+      gsap.to(".btn-sound_container .wrapper-off svg", {
+        duration: 0,
+        opacity: 1,
+      });
+      gsap.to(".btn-sound_container .wrapper-on svg", {
         duration: 0.35,
         opacity: 0,
         ease: "circ.out",
-        onComplete: () => {},
+        onComplete: () => {
+          gsap.to(".btn-sound_container .wrapper-on", {
+            duration: 0.35,
+            opacity: 0,
+            ease: "circ.out",
+          });
+        },
       });
+
       gsap.to(".btn-sound_container .wrapper-off", {
         duration: 0.35,
         opacity: 1,
         delay: 0.25,
         ease: "circ.out",
-        onComplete: () => {},
       });
       gsap.to(".btn-sound_container .wrapper", {
         duration: 0.35,
         transform: "translateY(-100%)",
         delay: 0.25,
         ease: "circ.out",
-        onComplete: () => {},
       });
       this.muteTween.play();
     } else if (this.masterVolume.level === 0) {
@@ -403,20 +412,28 @@ export class Environment {
         opacity: 1,
         delay: 0.25,
         ease: "circ.out",
-        onComplete: () => {},
       });
-      gsap.to(".btn-sound_container .wrapper-off", {
+      gsap.to(".btn-sound_container .wrapper-on svg", {
+        duration: 0,
+        opacity: 1,
+      });
+      gsap.to(".btn-sound_container .wrapper-off svg", {
         duration: 0.35,
         opacity: 0,
         ease: "circ.out",
-        onComplete: () => {},
+        onComplete: () => {
+          gsap.to(".btn-sound_container .wrapper-off", {
+            duration: 0.35,
+            opacity: 0,
+            ease: "circ.out",
+          });
+        },
       });
       gsap.to(".btn-sound_container .wrapper", {
         duration: 0.35,
         delay: 0.25,
         ease: "circ.out",
         transform: "translateY(0)",
-        onComplete: () => {},
       });
 
       this.muteTween.reverse();
