@@ -115,6 +115,10 @@ export class Butterfly {
         ...this.butterflyUniforms,
         ...customFogUniforms,
       };
+      shader.defines = {
+        ...shader.defines,
+        PARTICLES: true,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader

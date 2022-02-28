@@ -118,6 +118,10 @@ export class Leaf {
         ...this.leavesUniforms,
         ...customFogUniforms,
       };
+      shader.defines = {
+        ...shader.defines,
+        PARTICLES: true,
+      };
       shader.fragmentShader = shader.fragmentShader.replace(
         "#include <common>",
         commonFragmentShader

@@ -281,7 +281,6 @@ export class Grounds extends Group {
   }
 
   switchGrounds() {
-    console.log(mainScene.cameraContainer.position.z);
     this.groundsArray
       .filter((ground) => ground.visible)
       .forEach((ground) => (ground.visible = false));
