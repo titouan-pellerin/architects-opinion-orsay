@@ -238,8 +238,46 @@ export class Environment {
           pointerEvents: "all",
         });
         this.pauseExperience();
-        this.clickChapter(null, 0);
+        this.chapterClicked = 0;
+        // this.menuAnimation.pause(0);
+        // this.menuAnimation.play();
+        // this.clickChapter(null, 0);
         // this.resumeExperience();
+        const spaghettiTl = gsap.timeline({ paused: true });
+        spaghettiTl.to(customFogUniforms.progress, { duration: 3, value: 1.15 });
+        spaghettiTl.to(customFogUniforms.transitionIsIn, {
+          duration: 0,
+          value: 1,
+          delay: -1,
+          onComplete: () => {
+            this.grounds.groundIndex = 0;
+            this.cameraAnimation.tpToCheckpoint(this.chapterClicked, this.raycasting);
+            // this.grounds.switchGrounds();
+          },
+        });
+        spaghettiTl.to(customFogUniforms.progress, {
+          duration: 0,
+          value: -0.1,
+          delay: -1,
+        });
+        spaghettiTl.to(customFogUniforms.progress, {
+          duration: 3,
+          value: 1.15,
+          delay: -1,
+        });
+        spaghettiTl.to(customFogUniforms.transitionIsIn, {
+          duration: 0,
+          value: 0,
+        });
+        spaghettiTl.to(customFogUniforms.progress, {
+          duration: 0,
+          value: -0.1,
+          onComplete: () => {
+            this.chaptersBtn.style.pointerEvents = "all";
+            this.chaptersBtn.style.opacity = "1";
+          },
+        });
+        spaghettiTl.play();
       });
   }
 
