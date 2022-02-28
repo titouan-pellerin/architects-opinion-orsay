@@ -32,7 +32,7 @@ const params = {
 export class Dust {
   constructor() {
     this.object = {};
-    this.count = 20000;
+    this.count = 20000 * 5;
     this.init();
 
     raf.subscribe("dust", this.update.bind(this));
@@ -52,10 +52,13 @@ export class Dust {
     this.offset = new Float32Array(particlesCount * 1);
     this.scale = new Float32Array(particlesCount * 1);
 
+    // -225 : 25
+
     for (let i = 0; i < particlesCount; i++) {
       this.positions[i * 3 + 0] = MathUtils.randFloatSpread(1);
       this.positions[i * 3 + 1] = MathUtils.randFloatSpread(1);
-      this.positions[i * 3 + 2] = MathUtils.randFloatSpread(40);
+      // this.positions[i * 3 + 2] = MathUtils.randFloatSpread(40);
+      this.positions[i * 3 + 2] = MathUtils.randFloat(-225, 25);
 
       this.offset[i + 0] = MathUtils.randFloatSpread(75);
       this.scale[i + 0] = MathUtils.randFloat(0.5, 3);

@@ -90,9 +90,14 @@ export class Grounds extends Group {
     const butterflyParticlesMesh1 = butterflyParticles.object.mesh;
     const butterflyParticlesMirrorMesh1 = butterflyParticles.object.mirrorMesh;
 
-    this.ground1.add(
+    // this.ground1.add(
+    //   dustParticlesMesh1,
+    //   leafParticlesMesh1,
+    //   butterflyParticlesMesh1,
+    //   butterflyParticlesMirrorMesh1
+    // );
+    mainScene.add(
       dustParticlesMesh1,
-      leafParticlesMesh1,
       butterflyParticlesMesh1,
       butterflyParticlesMirrorMesh1
     );
@@ -133,12 +138,12 @@ export class Grounds extends Group {
     butterflyParticlesMesh2.scale.z = -1;
     butterflyParticlesMirrorMesh2.scale.z = -1;
 
-    this.ground2.add(
-      leafParticlesMesh2,
-      dustParticlesMesh2,
-      butterflyParticlesMesh2,
-      butterflyParticlesMirrorMesh2
-    );
+    // this.ground2.add(
+    //   leafParticlesMesh2,
+    //   dustParticlesMesh2,
+    //   butterflyParticlesMesh2,
+    //   butterflyParticlesMirrorMesh2
+    // );
 
     this.ground3 = new Ground(
       this.textures[2],
@@ -170,12 +175,12 @@ export class Grounds extends Group {
     butterflyParticlesMesh3.updateMatrix();
     butterflyParticlesMirrorMesh3.updateMatrix();
 
-    this.ground3.add(
-      leafParticlesMesh3,
-      dustParticlesMesh3,
-      butterflyParticlesMesh3,
-      butterflyParticlesMirrorMesh3
-    );
+    // this.ground3.add(
+    //   leafParticlesMesh3,
+    //   dustParticlesMesh3,
+    //   butterflyParticlesMesh3,
+    //   butterflyParticlesMirrorMesh3
+    // );
 
     this.ground4 = new Ground(
       this.textures[3],
@@ -212,12 +217,12 @@ export class Grounds extends Group {
     butterflyParticlesMesh3.scale.z = -1;
     butterflyParticlesMirrorMesh3.scale.z = -1;
 
-    this.ground4.add(
-      leafParticlesMesh4,
-      dustParticlesMesh4,
-      butterflyParticlesMesh4,
-      butterflyParticlesMirrorMesh4
-    );
+    // this.ground4.add(
+    //   leafParticlesMesh4,
+    //   dustParticlesMesh4,
+    //   butterflyParticlesMesh4,
+    //   butterflyParticlesMirrorMesh4
+    // );
 
     this.ground5 = new Ground(
       this.textures[4],
@@ -247,12 +252,12 @@ export class Grounds extends Group {
     const butterflyParticlesMesh5 = butterflyParticlesMesh1.clone();
     const butterflyParticlesMirrorMesh5 = butterflyParticlesMirrorMesh1.clone();
 
-    this.ground2.add(
-      leafParticlesMesh5,
-      dustParticlesMesh5,
-      butterflyParticlesMesh5,
-      butterflyParticlesMirrorMesh5
-    );
+    // this.ground5.add(
+    //   leafParticlesMesh5,
+    //   dustParticlesMesh5,
+    //   butterflyParticlesMesh5,
+    //   butterflyParticlesMirrorMesh5
+    // );
 
     this.raycasting.spheresToRaycast[0] = this.ground1.trees.spheresToRaycast;
     this.raycasting.spheresToRaycast[1] = this.ground2.trees.spheresToRaycast;
@@ -320,6 +325,7 @@ export class Grounds extends Group {
   }
 
   switchGrounds() {
+    console.log(mainScene.cameraContainer.position.z);
     this.groundsArray
       .filter((ground) => ground.visible)
       .forEach((ground) => (ground.visible = false));
