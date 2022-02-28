@@ -15,20 +15,12 @@ uniform float uMenuSwitch;
 uniform float uCornerIntensity;
 uniform float uCornerSize;
 uniform vec2 uRes;
-uniform vec3 uTintColor;
 uniform vec3 uCornerColor;
 
 uniform vec2 uBlurPos;
 uniform float uBlurIntensity;
 float random(vec3 scale, float seed) {
   return fract(sin(dot(gl_FragCoord.xyz + seed, scale)) * 43758.5453 + seed);
-}
-float hash(vec2 p) {
-  return fract(1e4 * sin(17.0 * p.x + p.y * 0.1) * (0.1 + abs(sin(p.y * 13.0 + p.x))));
-}
-
-vec2 rotate(vec2 uv, float rotation, vec2 mid) {
-  return vec2(cos(rotation) * (uv.x - mid.x) + sin(rotation) * (uv.y - mid.y) + mid.x, cos(rotation) * (uv.y - mid.y) - sin(rotation) * (uv.x - mid.x) + mid.y);
 }
 
 float parabola(float x) {
@@ -37,10 +29,6 @@ float parabola(float x) {
 
 void main() {
 
-    // Tint
-  vec4 TintColor = vec4(uTintColor, 1.0);
-
-  vec2 rotateTest = rotate(uBlurPos, sin(uTime) + PI * 0.5, vec2(0., 0.));
   float noise = 1.0 - abs(cnoise(vUv * 8. + uTime * 0.25));
 
   float transitionNoise = 1.0 - cnoise(6. * vUv + (uTime * 0.5));
@@ -49,10 +37,6 @@ void main() {
   float corner = pow(1.0 - distance(vUv, vec2(0.5)), uCornerSize);
   vec4 cornerColor = vec4(corner + uCornerIntensity) + vec4(uCornerColor, 1.0);
 
-  // float fakeligthing = 1.0 - cfakeligthing(vUv * 20.);
-    // Part1, tint & corner
-  // vec4 p1 = texture2D(tDiffuse, vUv) * cornerColor * TintColor * 0.5;
-
   vec4 p1 = texture2D(tDiffuse, vUv) * 0.5 * cornerColor;
 
     // Blur
@@ -60,10 +44,7 @@ void main() {
 
   float total = 0.0;
 
-  // vec2 toCenter = uBlurPos * abs(sin(uTime)) - vUv * uRes;
-  // vec2 toCenter = uBlurPos * parabola(uSunProgress) - vUv * uRes;
   vec2 toCenter = vec2(uSunProgress, parabola(uSunProgress)) * uBlurPos - vUv * uRes;
-  // vec2 toCenter = uBlurPos - vUv * uRes;
 
   float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
 
@@ -75,14 +56,13 @@ void main() {
     percent = (t + offset) / 80.0;
     weight = 4.0 * (percent - percent * percent);
     blur = texture2D(tDiffuse, vUv + toCenter * percent * uBlurIntensity / uRes);
-    // vec4 blur = vec4(1.);
     blur.rgb *= blur.a;
     color += blur * weight;
     total += weight;
   } 
 
   // Part2, adding some blur
-  vec4 p2 = ((color / total)) * 0.7 ;
+  vec4 p2 = ((color / total)) * 0.7;
 
   vec2 texel = vec2(1. / uRes.x, 1. / uRes.y);
 
@@ -122,7 +102,6 @@ void main() {
   float G2 = pow(2.0, sqrt((valueGx * valueGx) + (valueGy * valueGy)));
 
   vec4 mainRender = (p1 + p2) * 0.7 * vec4(G);
-  // vec4 menuRender = ((p2 * 0.75) * vec4(G2));
   vec4 menuRender = ((p2 * 0.4) * vec4(G2 * uBorderFadeProgress)); // smooth color à changer
 
   float noiseTexture = texture2D(uNoiseTexture, 0.5 * (vUv + 1.0)).r;

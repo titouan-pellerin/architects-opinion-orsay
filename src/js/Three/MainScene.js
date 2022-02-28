@@ -39,7 +39,6 @@ export class MainScene extends Scene {
     this.blurVec2 = new Vector2();
 
     this.parameters = {
-      tintColor: new Color("#ffffff"),
       cornerColor: new Color("#5a544e"),
       lightIntensity: 0.5,
       light2Intensity: 0.5,
@@ -131,7 +130,7 @@ export class MainScene extends Scene {
       uAlpha: { value: 1 },
     };
 
-    this.maxRes = gpuTier >= 2 ? 1440 : 1080;
+    this.maxRes = gpuTier >= 2 ? 720 : 1080;
     this.aspectRatio =
       (window.innerWidth * devicePixelRatio) / (window.innerHeight * devicePixelRatio);
     this.sizes = {
@@ -240,19 +239,9 @@ export class MainScene extends Scene {
         uTime: { value: 0 },
         uMenuSwitch: { value: 0 },
         tDiffuse: { value: null },
-        uTintColor: { value: this.parameters.tintColor },
         uCornerColor: { value: this.parameters.cornerColor },
         uCornerIntensity: { value: 1 },
-
-        // MORNING
-        // uCornerSize: { value: 4 },
-
-        // DAY
-        // uCornerSize: { value: 6 },
-
-        // NIGHT
         uCornerSize: { value: this.parameters.environments[0].cornerSize },
-
         uProgress: { value: 0 },
         uFadeProgress: { value: 0 },
         uBorderFadeProgress: { value: 1 },

@@ -28,7 +28,20 @@ float glassRender = (glass + glassLine + glassLine2 + glassLine3 + glassLine4);
 
 float shape = (left + right + top + bottom + back) + (glassRender * 0.075);
 
-// Render
-vec3 render = mix(uColor, uColor2, ((s1 * s2) + (s3 * s4)));
+float artNoiseTexture = texture2D(uNoiseTexture, 0.5 * (vUv + 1.0)).r;
 
-gl_FragColor = vec4(outgoingLight * (vec3(render) / vec3(ligthLeft * ligthRight) * 0.1), shape * diffuseColor.a);
+float transitionNoise = cnoise(5. * vUv + (uTime * 5.));
+
+float artTemp = uProgress;
+artTemp += ((10.0 * artNoiseTexture - 5.0 * transitionNoise) * 0.05) - .35;
+
+float artDistanceFromCenter = length(vUv - 0.5);
+artTemp = smoothstep(artTemp - 0.05, artTemp, artDistanceFromCenter);
+
+// Renders
+vec3 render = mix(uColor, uColor2, ((s1 * s2) + (s3 * s4)));
+vec3 hoverRender = mix(uColor, uColor2, ((s1 * s2) + (s3 * s4))) * 2.;
+
+vec3 finalRender = mix(render, vec3(1.), artTemp);
+
+gl_FragColor = vec4(outgoingLight * (finalRender / vec3(ligthLeft * ligthRight) * 0.1), shape * diffuseColor.a);

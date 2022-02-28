@@ -14,6 +14,7 @@ import {
   MeshToonMaterial,
   PlaneGeometry,
 } from "three";
+import { texturesMap } from "../../../utils/assets";
 
 export class Artwork extends Group {
   static materialInner;
@@ -45,8 +46,11 @@ export class Artwork extends Group {
     this.details = details;
 
     this.artworkUniforms = {
+      uTime: { value: 0 },
       uColor: { value: new Color("#180c04") },
       uColor2: { value: new Color("#f8c270") },
+      uNoiseTexture: { value: texturesMap.get("noiseTexture")[0] },
+      uProgress: { value: 0 },
     };
 
     this.artworkMaterialOuter = new MeshToonMaterial({
@@ -129,30 +133,8 @@ export class Artwork extends Group {
     this.add(this.innerMesh, this.outerMesh);
 
     // Hover animation
-    this.hoverTimeline = gsap
-      .timeline({ paused: true })
-      .to(customFogUniforms.transitionIsIn, {
-        duration: 0,
-        value: 2,
-      })
-      .to(customFogUniforms.progress, { duration: 2.25, value: 1.15 });
-    // .to(customFogUniforms.transitionIsIn, {
-    //   duration: 0,
-    //   value: 3,
-    //   delay: -1.25,
-    // })
-    // .to(customFogUniforms.progress, {
-    //   duration: 0,
-    //   value: -0.1,
-    //   delay: -1.25,
-    // })
-    // .to(customFogUniforms.progress, {
-    //   duration: 2.25,
-    //   value: 1.15,
-    //   delay: -1.25,
-    // })
-    // .to(customFogUniforms.transitionIsIn, { duration: 0, value: 0 })
-    // .to(customFogUniforms.progress, { duration: 0, value: -0.1 });
+    this.hoverTimeline = gsap.timeline({ paused: true });
+    this.hoverTimeline.to(this.artworkUniforms.uProgress, { duration: 1, value: 1 });
   }
 
   updateDom() {

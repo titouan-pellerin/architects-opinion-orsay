@@ -43,6 +43,15 @@ body {
   font-family: "text-regular";
 }
 
+@keyframes text {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
 .mobile-indication {
   display: none;
 
@@ -196,15 +205,6 @@ button {
               animation-delay: #{$i * 0.125}s;
             }
           }
-
-          @keyframes text {
-            from {
-              opacity: 1;
-            }
-            to {
-              opacity: 0.5;
-            }
-          }
         }
       }
     }
@@ -292,15 +292,6 @@ button {
               animation-delay: #{$i * 0.125}s;
             }
           }
-
-          @keyframes text {
-            from {
-              opacity: 1;
-            }
-            to {
-              opacity: 0.5;
-            }
-          }
         }
       }
     }
@@ -345,15 +336,6 @@ button {
           @for $i from 1 through 10 {
             &:nth-child(#{$i}n) {
               animation-delay: #{$i * 0.125}s;
-            }
-          }
-
-          @keyframes text {
-            from {
-              opacity: 1;
-            }
-            to {
-              opacity: 0.5;
             }
           }
         }
@@ -444,15 +426,6 @@ button {
               animation-delay: #{$i * 0.125}s;
             }
           }
-
-          @keyframes text {
-            from {
-              opacity: 1;
-            }
-            to {
-              opacity: 0.5;
-            }
-          }
         }
       }
     }
@@ -531,15 +504,6 @@ button {
               animation-delay: #{$i * 0.125}s;
             }
           }
-
-          @keyframes text {
-            from {
-              opacity: 1;
-            }
-            to {
-              opacity: 0.5;
-            }
-          }
         }
       }
 
@@ -613,15 +577,6 @@ button {
                 animation-delay: #{$i * 0.125}s;
               }
             }
-
-            @keyframes text {
-              from {
-                opacity: 1;
-              }
-              to {
-                opacity: 0.5;
-              }
-            }
           }
         }
 
@@ -672,7 +627,6 @@ button {
           font-size: 6.0625rem;
           line-height: 1;
           font-family: "title";
-          transition: 0.35s ease;
           -webkit-text-stroke-width: 0.040625rem;
           -webkit-text-stroke-color: transparent;
 
@@ -689,12 +643,7 @@ button {
         }
         &:hover {
           .title {
-            -webkit-text-stroke-width: 0.040625rem;
-            -webkit-text-stroke-color: $text-color;
-            color: transparent;
-
             .outline {
-              // -webkit-text-stroke-width: 0;
               color: $text-color;
             }
           }
@@ -705,15 +654,6 @@ button {
               @for $i from 1 through 8 {
                 &:nth-child(#{$i}n) {
                   animation-delay: #{$i * 0.125}s;
-                }
-              }
-
-              @keyframes text {
-                from {
-                  opacity: 1;
-                }
-                to {
-                  opacity: 0.5;
                 }
               }
             }
@@ -770,15 +710,6 @@ button {
           @for $i from 1 through 8 {
             &:nth-child(#{$i}n) {
               animation-delay: #{$i * 0.125}s;
-            }
-          }
-
-          @keyframes text {
-            from {
-              opacity: 1;
-            }
-            to {
-              opacity: 0.5;
             }
           }
         }
@@ -845,15 +776,6 @@ button {
           @for $i from 1 through 4 {
             &:nth-child(#{$i}n) {
               animation-delay: #{$i * 0.125}s;
-            }
-          }
-
-          @keyframes text {
-            from {
-              opacity: 1;
-            }
-            to {
-              opacity: 0.5;
             }
           }
         }
