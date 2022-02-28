@@ -243,10 +243,10 @@ export class Environment {
     this.pauseExperience();
     this.chaptersBtn.style.pointerEvents = "none";
     gsap.to(this.chaptersBtn, { duration: 0.5, opacity: 0 });
-    gsap.to(".content-subtitles p", { duration: 1, opacity: 0 });
-    gsap.to(".canvas-container", { duration: 1, opacity: 1 });
-    gsap.to(".content-interface_titles .chap", { duration: 1, opacity: 0 });
-    gsap.to(".btn-next_container", { duration: 1, opacity: 0 });
+    gsap.to(".content-subtitles", { duration: 0.5, opacity: 0 });
+    gsap.to(".canvas-container", { duration: 0.5, opacity: 1 });
+    gsap.to(".content-interface_titles .chap", { duration: 0.5, opacity: 0 });
+    gsap.to(".btn-next_container", { duration: 0.5, opacity: 0 });
     gsap.to(".content-menu .title-wrapper .title-section", {
       duration: 1.25,
       opacity: "1",
@@ -254,26 +254,26 @@ export class Environment {
       delay: 0.5,
     });
     gsap.to(".content-menu svg", {
-      duration: 1,
+      duration: 0.5,
       opacity: "1",
       delay: 1,
     });
     gsap.to(".content-menu .credits-title", {
-      duration: 1,
+      duration: 0.5,
       opacity: "1",
       stagger: 0.1,
-      delay: 1,
+      delay: 0.75,
     });
     gsap.to(".content-menu a", {
-      duration: 1,
+      duration: 0.5,
       opacity: "1",
       stagger: 0.1,
-      delay: 1,
+      delay: 0.75,
     });
     gsap.to(".content-menu .credits-wrapper span", {
-      duration: 1,
+      duration: 0.5,
       opacity: "1",
-      delay: 1,
+      delay: 0.75,
     });
     gsap.to(".content-menu .btn-close_container", {
       duration: 0.5,
@@ -305,12 +305,12 @@ export class Environment {
         },
       });
       gsap.to(this.chaptersBtn, { duration: 0.5, opacity: 1, delay: 1 });
-      gsap.to(".content-subtitles p", { duration: 1, opacity: 1, delay: 1 });
-      gsap.to(".btn-next_container", { duration: 1, opacity: 1, delay: 1 });
+      gsap.to(".content-subtitles", { duration: 0.5, opacity: 1, delay: 1 });
+      gsap.to(".btn-next_container", { duration: 0.5, opacity: 1, delay: 1 });
     } else {
       gsap.to(this.chaptersBtn, { duration: 0.5, opacity: 1, delay: 3.5 });
       gsap.to(".content-subtitles", {
-        duration: 1,
+        duration: 0.5,
         opacity: 1,
         delay: 3.5,
         onComplete: () => {
@@ -324,26 +324,26 @@ export class Environment {
       opacity: "0",
     });
     gsap.to(".content-menu .title-wrapper .title-section", {
-      duration: 1,
+      duration: 0.5,
       opacity: "0",
       stagger: 0.1,
     });
     gsap.to(".content-menu svg", {
-      duration: 1,
+      duration: 0.5,
       opacity: "0",
     });
     gsap.to(".content-menu .credits-title", {
-      duration: 1,
+      duration: 0.5,
       opacity: "0",
       stagger: 0.1,
     });
     gsap.to(".content-menu a", {
-      duration: 1,
+      duration: 0.5,
       opacity: "0",
       stagger: 0.1,
     });
     gsap.to(".content-menu .credits-wrapper span", {
-      duration: 1,
+      duration: 0.5,
       opacity: "0",
     });
   }

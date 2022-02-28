@@ -58,13 +58,13 @@ export class Raycasting {
       this.cameraAnimation.goToArtwork(this.currentIntersect);
       // Artwork.contentArtworkFooterTween.pause(0);
       gsap.to(this.backBtn, {
-        duration: 1,
+        duration: 0.5,
         opacity: 1,
         pointerEvents: "all",
-        delay: 2,
+        delay: 2.5,
       });
       gsap.to(".content-artwork_footer", {
-        duration: 1,
+        duration: 0.5,
         opacity: 1,
         delay: 2,
       });
@@ -78,11 +78,11 @@ export class Raycasting {
       this.backBtn.style.pointerEvents = "none";
     });
     gsap.to(".content-artwork_footer", {
-      duration: 1,
+      duration: 0.5,
       opacity: 0,
     });
     gsap.to(this.backBtn, {
-      duration: 1,
+      duration: 0.5,
       opacity: 0,
       pointerEvents: "none",
     });

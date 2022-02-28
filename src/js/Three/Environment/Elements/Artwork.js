@@ -31,20 +31,6 @@ export class Artwork extends Group {
   static artworkFooterSubtitle = document.querySelector(
     ".content-artwork_footer .author"
   );
-  // static contentArtworkFooterTween = gsap
-  //   .to(".content-artwork_footer", {
-  //     duration: 1,
-  //     opacity: 1,
-  //     delay: 1,
-  //   })
-  //   .pause();
-
-  // static contentArtworkFooterTweenOut = gsap
-  //   .to(".content-artwork_footer", {
-  //     duration: 1,
-  //     opacity: 0,
-  //   })
-  //   .pause();
 
   static contentArtworkTitlesTween = gsap
     .to(".content-artwork_titles", {
