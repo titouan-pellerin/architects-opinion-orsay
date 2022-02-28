@@ -130,7 +130,7 @@ export class MainScene extends Scene {
       uAlpha: { value: 1 },
     };
 
-    this.maxRes = gpuTier >= 2 ? 720 : 1080;
+    this.maxRes = gpuTier >= 2 ? 1440 : 1080;
     this.aspectRatio =
       (window.innerWidth * devicePixelRatio) / (window.innerHeight * devicePixelRatio);
     this.sizes = {

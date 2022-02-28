@@ -20,13 +20,14 @@ export class Raycasting {
     this.onClickHandler = this.onClick.bind(this);
     this.backBtn = document.querySelector(".btn-back_container");
     this.backBtn.addEventListener("click", this.onBackBtnClick.bind(this));
-    this.backBtnTween = gsap
-      .to(this.backBtn, {
-        duration: 1,
-        opacity: 1,
-        pointerEvents: "all",
-      })
-      .pause();
+    // this.backBtnTween = gsap
+    //   .to(this.backBtn, {
+    //     duration: 1,
+    //     opacity: 1,
+    //     pointerEvents: "all",
+    //     delay: 2,
+    //   })
+    //   .pause();
     this.canvasContainerTween;
 
     this.leavesRayPos = new Vector3();
@@ -55,8 +56,19 @@ export class Raycasting {
       this.isZoomed = true;
       Artwork.contentArtworkTitlesTween.reverse();
       this.cameraAnimation.goToArtwork(this.currentIntersect);
-      Artwork.contentArtworkFooterTween.play();
-      this.backBtnTween.play();
+      // Artwork.contentArtworkFooterTween.pause(0);
+      gsap.to(this.backBtn, {
+        duration: 1,
+        opacity: 1,
+        pointerEvents: "all",
+        delay: 2,
+      });
+      gsap.to(".content-artwork_footer", {
+        duration: 1,
+        opacity: 1,
+        delay: 2,
+      });
+      // this.backBtnTween.play();
     }
   }
 
@@ -65,9 +77,17 @@ export class Raycasting {
       this.isZoomed = false;
       this.backBtn.style.pointerEvents = "none";
     });
-    Artwork.contentArtworkFooterTween.reverse();
+    gsap.to(".content-artwork_footer", {
+      duration: 1,
+      opacity: 0,
+    });
+    gsap.to(this.backBtn, {
+      duration: 1,
+      opacity: 0,
+      pointerEvents: "none",
+    });
 
-    this.backBtnTween.reverse();
+    // this.backBtnTween.reverse();
   }
 
   updateArtworks(newArtworks = []) {
@@ -99,8 +119,8 @@ export class Raycasting {
           if (!this.canvasContainerTween)
             this.canvasContainerTween = gsap
               .to(".canvas-container", {
-                duration: 0.4,
-                opacity: 0.3,
+                duration: 0.5,
+                opacity: 0.5,
               })
               .pause();
           this.canvasContainerTween.play();
