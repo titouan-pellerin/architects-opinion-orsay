@@ -176,6 +176,7 @@ button {
       transform: translate(-50%, -50%);
       font-size: 1.375rem;
       color: $text-color;
+      z-index: 6;
 
       &:after {
         display: block;
@@ -303,11 +304,14 @@ button {
     top: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.375rem;
-    pointer-events: none;
-    opacity: 0;
+    opacity: 1;
+    pointer-events: all;
     z-index: 5;
 
     .text {
+      pointer-events: none;
+      opacity: 0;
+
       &:after {
         display: block;
         content: "";

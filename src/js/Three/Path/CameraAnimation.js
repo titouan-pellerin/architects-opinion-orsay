@@ -320,7 +320,7 @@ export class CameraAnimation {
               gsap
                 .timeline()
                 .to(
-                  ".btn-restart_container",
+                  ".btn-restart_container .text",
                   {
                     duration: 1,
                     delay: 2,
@@ -344,6 +344,16 @@ export class CameraAnimation {
                   {
                     delay: 2,
                     opacity: 0.3,
+                    duration: 1,
+                  },
+                  0
+                )
+                .to(
+                  ".btn-chapters_container",
+                  {
+                    delay: 2,
+                    opacity: 0,
+                    pointerEvents: "none",
                     duration: 1,
                   },
                   0

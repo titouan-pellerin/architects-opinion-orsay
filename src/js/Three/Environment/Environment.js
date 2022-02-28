@@ -219,26 +219,28 @@ export class Environment {
       this.audioListener.context.resume();
     });
 
-    document.querySelector(".btn-restart_container").addEventListener("click", () => {
-      gsap.to(".btn-restart_container", {
-        opacity: 0,
-        duration: 1,
-        pointerEvents: "none",
+    document
+      .querySelector(".btn-restart_container .text")
+      .addEventListener("click", () => {
+        gsap.to(".btn-restart_container .text", {
+          opacity: 0,
+          duration: 1,
+          pointerEvents: "none",
+        });
+        gsap.to(".btn-next_container .text", {
+          duration: 0,
+          opacity: 0,
+          pointerEvents: "none",
+        });
+        gsap.to(".btn-next_container", {
+          duration: 0,
+          opacity: 1,
+          pointerEvents: "all",
+        });
+        this.pauseExperience();
+        this.clickChapter(null, 0);
+        // this.resumeExperience();
       });
-      gsap.to(".btn-next_container .text", {
-        duration: 0,
-        opacity: 0,
-        pointerEvents: "none",
-      });
-      gsap.to(".btn-next_container", {
-        duration: 0,
-        opacity: 1,
-        pointerEvents: "all",
-      });
-      this.pauseExperience();
-      this.clickChapter(null, 0);
-      // this.resumeExperience();
-    });
   }
 
   startExperience() {

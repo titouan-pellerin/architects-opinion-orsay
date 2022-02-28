@@ -1,11 +1,10 @@
+import innerBeginVertexShader from "@glsl/artworks/inner/beginVertex.glsl";
+import innerCommonFragmentShader from "@glsl/artworks/inner/commonFragment.glsl";
+import innerOutputFragmentShader from "@glsl/artworks/inner/outputFragment.glsl";
 import outerBeginVertexShader from "@glsl/artworks/outer/beginVertex.glsl";
 import outerCommonFragmentShader from "@glsl/artworks/outer/commonFragment.glsl";
 import outerCommonVertexShader from "@glsl/artworks/outer/commonVertex.glsl";
 import outerOutputFragmentShader from "@glsl/artworks/outer/outputFragment.glsl";
-import innerBeginVertexShader from "@glsl/artworks/inner/beginVertex.glsl";
-import innerCommonFragmentShader from "@glsl/artworks/inner/commonFragment.glsl";
-import innerCommonVertexShader from "@glsl/artworks/inner/commonVertex.glsl";
-import innerOutputFragmentShader from "@glsl/artworks/inner/outputFragment.glsl";
 import { customFogUniforms } from "@js/utils/misc";
 import gsap from "gsap";
 import {
@@ -145,6 +144,6 @@ export class Artwork extends Group {
     Artwork.artworkContentTitle.innerHTML = Artwork.artworkFooterTitle.innerHTML =
       this.details.title;
     Artwork.artworkContentSubtitle.innerHTML = Artwork.artworkFooterSubtitle.innerHTML =
-      this.details.author + " - " + this.details.year;
+      this.details.author;
   }
 }
