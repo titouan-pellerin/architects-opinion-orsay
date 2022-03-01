@@ -58,7 +58,7 @@ export class Dust {
       this.positions[i * 3 + 0] = MathUtils.randFloatSpread(1);
       this.positions[i * 3 + 1] = MathUtils.randFloatSpread(1);
       // this.positions[i * 3 + 2] = MathUtils.randFloatSpread(40);
-      this.positions[i * 3 + 2] = MathUtils.randFloat(-225, 25);
+      this.positions[i * 3 + 2] = MathUtils.randFloat(-150, 100);
 
       this.offset[i + 0] = MathUtils.randFloatSpread(75);
       this.scale[i + 0] = MathUtils.randFloat(0.5, 3);
