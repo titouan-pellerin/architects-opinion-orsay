@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import gsap from "gsap";
 import { Line, Vector3 } from "three";
 import { mainScene, mouse } from "../../../main";
@@ -17,9 +16,6 @@ export class CameraAnimation {
    * @param {Voiceover} voiceOver
    */
   constructor(path, envScale, checkpoints, voiceOver) {
-    gsap.registerPlugin(CustomEase);
-    gsap.ticker.lagSmoothing(1000, 16);
-
     this.voiceOver = voiceOver;
     this.checkpoints = checkpoints;
     this.checkpointsIndex = 0;

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { getGPUTier } from "detect-gpu";
 import gsap from "gsap";
 import { AudioListener, PositionalAudio } from "three";
@@ -10,7 +11,8 @@ import "./styles/style.scss";
 
 const discorverBtn = document.querySelector(".loader-cta");
 const discoverTl = gsap.timeline({ paused: true });
-
+gsap.registerPlugin(CustomEase);
+gsap.ticker.lagSmoothing(1000, 16);
 let mainScene, mouse, environment, audioListener, music;
 
 async function initScene() {
