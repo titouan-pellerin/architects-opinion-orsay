@@ -45,14 +45,17 @@ function startClick() {
 }
 
 function init() {
+  gsap.to(".loader-animation_wrapper", {
+    opacity: 1,
+    duration: 0.5,
+  });
   loadingManager.onProgress = (_url, loaded, total) => {
     const percentLoaded = (loaded / total) * 100;
     // console.log(Math.round(percentLoaded));
     console.log(percentLoaded);
     gsap.to(".loader-animation_wrapper .logo", {
-      // eslint-disable-next-line max-len
       clipPath: `inset(${100 - percentLoaded}% ${0}% ${0}% ${0}%)`,
-      duration: 2,
+      duration: 0,
     });
   };
   loadingManager.onLoad = () => {
