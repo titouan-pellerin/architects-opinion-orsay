@@ -282,6 +282,7 @@ export class CameraAnimation {
             duration: this.checkpoints[this.checkpointsIndex].duration,
             // duration: 1,
             value: this.checkpoints[this.checkpointsIndex].tick,
+            // eslint-disable-next-line no-undef
             ease: CustomEase.create(
               "custom",
               `M0,0 C0.07,0 0.114,0.067 0.178,0.126 0.294,0.233 0.42,0.378
