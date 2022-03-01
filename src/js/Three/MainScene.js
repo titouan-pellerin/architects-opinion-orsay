@@ -211,7 +211,7 @@ export class MainScene extends Scene {
     this.renderer.depth = false;
     this.renderer.premultipliedAlpha = false;
     this.renderer.setSize(this.sizes.width, this.sizes.height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.compile(this, this.camera);
     this.background = this.parameters.environments[0].skyBgColor.clone();
 
@@ -383,10 +383,10 @@ export class MainScene extends Scene {
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(this.sizes.width, this.sizes.height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
     this.composer.setSize(this.sizes.width, this.sizes.height);
-    this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.composer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
     this.customPass.material.uniforms.uBlurPos.value = this.blurVec2.set(
       this.sizes.width,
