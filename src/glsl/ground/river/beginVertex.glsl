@@ -21,7 +21,7 @@ float rayModifier = mix(.0006, 0., clamp((distance(rayPos, vec3(worldPosition.x,
 
 vRayModifier = rayModifier * 100.;
 
-// transformed.z += rayModifier;
+transformed.z += rayModifier;
 
 transformed.z += noise;
 transformed.z += noise2;
