@@ -154,9 +154,19 @@ button {
         width: 4.6875rem;
         height: fit-content;
       }
+
+      .mask {
+        opacity: 0.3;
+        position: absolute;
+        left: 0;
+      }
+
+      .logo {
+        clip-path: inset(100% 0 0 0);
+      }
     }
     .loader-title_wrapper {
-      opacity: 1;
+      opacity: 0;
       position: absolute;
       .title {
         font-family: "title";
@@ -219,6 +229,10 @@ button {
       font-size: 1.375rem;
       width: 55rem;
       text-align: center;
+
+      span {
+        font-family: "text-medium";
+      }
     }
     .loader-decoration {
       opacity: 0;
@@ -229,10 +243,23 @@ button {
       svg {
         width: 2.6rem;
         height: fit-content;
+        animation: rotate 8s linear forwards infinite;
+        transform-origin: center;
+        transform: rotate(0deg);
+        will-change: transform;
+
+        @keyframes rotate {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
       }
     }
     .loader-credits-wrapper {
-      opacity: 1;
+      opacity: 0;
       position: absolute;
       right: 0;
       bottom: 0;
@@ -370,7 +397,7 @@ button {
 
     .wrapper-on {
       svg {
-        animation: svgRotation 2.4s linear infinite forwards;
+        animation: svgRotation 4s linear infinite forwards;
         top: 50%;
         left: 3%;
         position: absolute;
@@ -638,7 +665,7 @@ button {
             -webkit-text-stroke-width: 0.040625rem;
             -webkit-text-stroke-color: $text-color;
             color: transparent;
-            transition: 0.35s ease;
+            transition: 0.5s ease;
           }
         }
 

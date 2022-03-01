@@ -17,5 +17,7 @@
 @font-face {
   font-family: "text-medium";
   font-weight: normal;
-  src: url("/assets/fonts/louize-medium.otf") format("opentype");
+  src: url("/assets/fonts/louize-medium.otf") format("opentype"),
+    url("/assets/fonts/louize-regular.woff2") format("woff2"),
+    url("/assets/fonts/louize-regular.woff") format("woff");
 }

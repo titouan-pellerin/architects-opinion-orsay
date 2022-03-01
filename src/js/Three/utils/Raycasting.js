@@ -77,7 +77,7 @@ export class Raycasting {
         duration: 0.5,
         opacity: 1,
         pointerEvents: "all",
-        delay: 2.5,
+        delay: 2.25,
       });
       gsap.to(".content-artwork_footer", {
         duration: 0.5,
@@ -167,26 +167,26 @@ export class Raycasting {
         this.groundFlipped = MathUtils.damp(
           this.groundFlipped,
           intersects[0].object.parent.scale.z,
-          6,
+          5,
           raf.deltaTime
         );
 
         this.groundRayPos.x = MathUtils.damp(
           this.groundRayPos.x,
           intersects[0].point.x,
-          6,
+          5,
           raf.deltaTime
         );
         this.groundRayPos.y = MathUtils.damp(
           this.groundRayPos.y,
           intersects[0].point.y,
-          6,
+          5,
           raf.deltaTime
         );
         this.groundRayPos.z = MathUtils.damp(
           this.groundRayPos.z,
           intersects[0].point.z,
-          6,
+          5,
           raf.deltaTime
         );
       } else {
@@ -201,19 +201,19 @@ export class Raycasting {
         this.leavesRayPos.x = MathUtils.damp(
           this.leavesRayPos.x,
           intersects[0].point.x,
-          6,
+          5,
           raf.deltaTime
         );
         this.leavesRayPos.y = MathUtils.damp(
           this.leavesRayPos.y,
           intersects[0].point.y,
-          6,
+          5,
           raf.deltaTime
         );
         this.leavesRayPos.z = MathUtils.damp(
           this.leavesRayPos.z,
           intersects[0].point.z,
-          6,
+          5,
           raf.deltaTime
         );
       }

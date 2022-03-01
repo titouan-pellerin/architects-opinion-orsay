@@ -51,133 +51,159 @@ function init() {
   };
   loadingManager.onLoad = () => {
     // Init timeline
-    // discoverTl
-    //   .to(".loader-animation_wrapper", {
-    //     duration: 1,
-    //     opacity: 0,
-    //     onComplete: () => {
-    //       discorverBtn.style.pointerEvents = "all";
-    //     },
-    //   })
-    //   .to(discorverBtn, {
-    //     duration: 1,
-    //     opacity: 1,
-    //     onComplete: () => {
-    //       discorverBtn.addEventListener("click", startClick);
-    //       discoverTl.pause();
-    //     },
-    //   })
-    //   .to(discorverBtn, {
-    //     duration: 1,
-    //     opacity: 0,
-    //   })
-    //   .to([".loader-credits-wrapper", ".loader-title_wrapper"], {
-    //     opacity: 0,
-    //     duration: 1,
-    //     delay: -1,
-    //   })
-    //   .to(".loader-text", {
-    //     duration: 3,
-    //     opacity: 1,
-    //     onComplete: () => {
-    //       console.time("init");
-    //       environment = new Environment(audioListener, music);
-    //       environment.startExperience();
-    //       mainScene.add(environment.grounds);
-    //       console.timeEnd("init");
-    //     },
-    //   })
-    //   .to(".loader-text", {
-    //     delay: 6,
-    //     duration: 2,
-    //     opacity: 0,
-    //   })
-    //   .to(".content-interface_titles .title-wrapper", {
-    //     duration: 2,
-    //     opacity: 1,
-    //   })
-    //   .to(".canvas-container", {
-    //     duration: 2,
-    //     opacity: 0.3,
-    //     delay: -2,
-    //   })
-    //   .to([".btn-chapters_container", ".btn-sound_container"], {
-    //     opacity: 1,
-    //     duration: 2,
-    //     pointerEvents: "all",
-    //   })
-    //   .to(".content-interface_titles .title-wrapper", {
-    //     duration: 2,
-    //     opacity: 0,
-    //     onComplete: () => {
-    //       environment.goToCheckpoint();
-    //     },
-    //   })
-    //   .play();
-
     discoverTl
-      .to(".loader-animation_wrapper", {
-        duration: 0,
-        opacity: 0,
+      .to(".loader-animation_wrapper .logo", {
+        duration: 2,
+        clipPath: "inset(0% 0% 0% 0%)",
         onComplete: () => {
-          discorverBtn.style.pointerEvents = "all";
+          gsap.to(".loader-animation_wrapper", {
+            duration: 1,
+            opacity: 0,
+          });
+          gsap.to(".loader-title_wrapper", {
+            duration: 1,
+            opacity: 1,
+          });
+          gsap.to(".loader-credits-wrapper", {
+            duration: 1,
+            opacity: 1,
+          });
         },
       })
       .to(discorverBtn, {
-        duration: 0,
+        duration: 1,
         opacity: 1,
+        delay: 0.85,
         onComplete: () => {
+          discorverBtn.style.pointerEvents = "all";
           discorverBtn.addEventListener("click", startClick);
           discoverTl.pause();
         },
       })
       .to(discorverBtn, {
-        duration: 0,
+        duration: 1,
         opacity: 0,
       })
       .to([".loader-credits-wrapper", ".loader-title_wrapper"], {
+        duration: 1,
         opacity: 0,
-        duration: 0,
-        delay: 0,
       })
-      .to(".loader-text", {
+      .to(".loader-decoration", {
         duration: 1,
         opacity: 1,
+      })
+      .to(".loader-text", {
+        duration: 3,
+        opacity: 1,
+        delay: -0.5,
         onComplete: () => {
-          console.time("init");
           environment = new Environment(audioListener, music);
           environment.startExperience();
           mainScene.add(environment.grounds);
-          console.timeEnd("init");
         },
       })
       .to(".loader-text", {
-        delay: 0,
-        duration: 0,
+        delay: 6,
+        duration: 1.5,
         opacity: 0,
       })
-      .to(".content-interface_titles .title-wrapper", {
-        duration: 0,
-        opacity: 1,
+      .to(".loader-decoration", {
+        duration: 1,
+        opacity: 0,
+        delay: -1,
       })
       .to(".canvas-container", {
-        duration: 0,
-        opacity: 1,
-        delay: 0,
-      })
-      .to([".btn-chapters_container", ".btn-sound_container"], {
-        opacity: 1,
-        duration: 0,
-        pointerEvents: "all",
+        duration: 1,
+        opacity: 0.3,
       })
       .to(".content-interface_titles .title-wrapper", {
-        duration: 0,
+        duration: 1,
+        opacity: 1,
+        delay: -1,
+      })
+
+      .to(".content-interface_titles .title-wrapper", {
+        duration: 1,
         opacity: 0,
+        delay: 1.25,
         onComplete: () => {
-          environment.goToCheckpoint();
+          gsap.to([".btn-chapters_container", ".btn-sound_container"], {
+            opacity: 1,
+            duration: 0.5,
+            pointerEvents: "all",
+            delay: 3.5,
+          });
         },
       })
+      .add(gsap.delayedCall(-1, () => environment.goToCheckpoint(), []))
+      // .call(environment.goToCheckpoint, [], -2)
       .play();
+
+    // .play();
+
+    // discoverTl
+    //     .to(".loader-animation_wrapper", {
+    //       duration: 0,
+    //       opacity: 0,
+    //       onComplete: () => {
+    //         discorverBtn.style.pointerEvents = "all";
+    //       },
+    //     })
+    //     .to(discorverBtn, {
+    //       duration: 0,
+    //       opacity: 1,
+    //       onComplete: () => {
+    //         discorverBtn.addEventListener("click", startClick);
+    //         discoverTl.pause();
+    //       },
+    //     })
+    //     .to(discorverBtn, {
+    //       duration: 0,
+    //       opacity: 0,
+    //     })
+    //     .to([".loader-credits-wrapper", ".loader-title_wrapper"], {
+    //       opacity: 0,
+    //       duration: 0,
+    //       delay: 0,
+    //     })
+    //     .to(".loader-text", {
+    //       duration: 1,
+    //       opacity: 1,
+    //       onComplete: () => {
+    //         console.time("init");
+    //         environment = new Environment(audioListener, music);
+    //         environment.startExperience();
+    //         mainScene.add(environment.grounds);
+    //         console.timeEnd("init");
+    //       },
+    //     })
+    //     .to(".loader-text", {
+    //       delay: 0,
+    //       duration: 0,
+    //       opacity: 0,
+    //     })
+    //     .to(".content-interface_titles .title-wrapper", {
+    //       duration: 0,
+    //       opacity: 1,
+    //     })
+    //     .to(".canvas-container", {
+    //       duration: 0,
+    //       opacity: 1,
+    //       delay: 0,
+    //     })
+    //     .to([".btn-chapters_container", ".btn-sound_container"], {
+    //       opacity: 1,
+    //       duration: 0,
+    //       pointerEvents: "all",
+    //     })
+    //     .to(".content-interface_titles .title-wrapper", {
+    //       duration: 0,
+    //       opacity: 0,
+    //       onComplete: () => {
+    //         environment.goToCheckpoint();
+    //       },
+    //     })
+    // .play();
   };
 }
 

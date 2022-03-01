@@ -47,7 +47,7 @@ export class Artwork extends Group {
       uColor: { value: new Color("#180c04") },
       uColor2: { value: new Color("#f8c270") },
       uNoiseTexture: { value: texturesMap.get("noiseTexture")[0] },
-      uProgress: { value: 0 },
+      uProgress: { value: -0.1 },
     };
 
     this.artworkMaterialOuter = new MeshToonMaterial({
@@ -81,7 +81,7 @@ export class Artwork extends Group {
     this.artworkUniformsInner = {
       uTime: { value: 0 },
       uNoiseTexture: { value: texturesMap.get("noiseTexture")[0] },
-      uProgress: { value: 0 },
+      uProgress: { value: -0.1 },
     };
 
     this.artworkMaterialInner = new MeshBasicMaterial();
@@ -136,8 +136,8 @@ export class Artwork extends Group {
     // Hover animation
     this.hoverTimeline = gsap
       .timeline({ paused: true })
-      .to(this.artworkUniformsOuter.uProgress, { duration: 1, value: 1 }, 0)
-      .to(this.artworkUniformsInner.uProgress, { duration: 1, value: 1 }, 0);
+      .to(this.artworkUniformsOuter.uProgress, { duration: 1.25, value: 1 }, 0)
+      .to(this.artworkUniformsInner.uProgress, { duration: 1.25, value: 1 }, 0);
   }
 
   updateDom() {

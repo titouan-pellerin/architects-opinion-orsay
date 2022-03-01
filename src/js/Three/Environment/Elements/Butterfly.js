@@ -23,7 +23,7 @@ const butterfliesColors = ["#0000ff", "#00ff00", "#0ffff0", "#ff0000"];
 export class Butterfly {
   constructor() {
     this.object = {};
-    this.count = 50;
+    this.count = 80;
     this.init();
 
     raf.subscribe("butterfly", this.update.bind(this));
