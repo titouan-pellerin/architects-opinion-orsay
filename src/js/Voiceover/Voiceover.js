@@ -14,7 +14,7 @@ export class Voiceover {
     this.chapterIndex = 0;
     this.recordIndex = 0;
 
-    this.volume = { level: 0.5 };
+    this.volume = { level: 0.9 };
 
     this.audioListener = null;
 
@@ -97,7 +97,7 @@ export class Voiceover {
 
     gsap.to(this.volume, {
       duration: 0.5,
-      level: 1,
+      level: 0.9,
       onUpdate: () => {
         this.currentRecord.audio.setVolume(this.volume.level);
       },
