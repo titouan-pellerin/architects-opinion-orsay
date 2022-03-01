@@ -196,8 +196,7 @@ export class Environment {
         mainScene.customPass.uniforms.uFadeProgress.value = 0;
         mainScene.customPass.uniforms.uMenuSwitch.value = 0.0;
         mainScene.customPass.uniforms.uProgress.value = 0;
-        this.chaptersBtn.style.pointerEvents = "all";
-        this.chaptersBtn.style.opacity = "1";
+        gsap.to(this.chaptersBtn, { pointerEvents: "all", duration: 0, delay: 1.4 });
       },
     });
 
