@@ -48,28 +48,40 @@ function init() {
   loadingManager.onProgress = (_url, loaded, total) => {
     const percentLoaded = (loaded / total) * 100;
     // console.log(Math.round(percentLoaded));
+    console.log(percentLoaded);
+    gsap.to(".loader-animation_wrapper .logo", {
+      // eslint-disable-next-line max-len
+      clipPath: `inset(${100 - percentLoaded}% ${0}% ${0}% ${0}%)`,
+      duration: 2,
+    });
   };
   loadingManager.onLoad = () => {
     // Init timeline
     discoverTl
-      .to(".loader-animation_wrapper .logo", {
-        duration: 2,
-        clipPath: "inset(0% 0% 0% 0%)",
-        onComplete: () => {
-          gsap.to(".loader-animation_wrapper", {
-            duration: 1,
-            opacity: 0,
-          });
-          gsap.to(".loader-title_wrapper", {
-            duration: 1,
-            opacity: 1,
-          });
-          gsap.to(".loader-credits-wrapper", {
-            duration: 1,
-            opacity: 1,
-          });
+      .to(
+        ".loader-animation_wrapper",
+        {
+          duration: 1,
+          opacity: 0,
         },
-      })
+        0
+      )
+      .to(
+        ".loader-title_wrapper",
+        {
+          duration: 1,
+          opacity: 1,
+        },
+        0
+      )
+      .to(
+        ".loader-credits-wrapper",
+        {
+          duration: 1,
+          opacity: 1,
+        },
+        0
+      )
       .to(discorverBtn, {
         duration: 1,
         opacity: 1,
