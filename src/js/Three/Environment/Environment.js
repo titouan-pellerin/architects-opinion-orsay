@@ -222,6 +222,9 @@ export class Environment {
     document
       .querySelector(".btn-restart_container .text")
       .addEventListener("click", () => {
+        gsap.to(this.chaptersBtn, {
+          pointerEvents: "none",
+        });
         gsap.to(".btn-restart_container .text", {
           opacity: 0,
           duration: 1,
@@ -252,7 +255,6 @@ export class Environment {
           onComplete: () => {
             this.grounds.groundIndex = 0;
             this.cameraAnimation.tpToCheckpoint(this.chapterClicked, this.raycasting);
-            // this.grounds.switchGrounds();
           },
         });
         spaghettiTl.to(customFogUniforms.progress, {
@@ -273,8 +275,14 @@ export class Environment {
           duration: 0,
           value: -0.1,
           onComplete: () => {
-            this.chaptersBtn.style.pointerEvents = "all";
-            this.chaptersBtn.style.opacity = "1";
+            gsap.to(this.chaptersBtn, {
+              duration: 0.5,
+              opacity: 1,
+              delay: 0.5,
+              onComplete: () => {
+                this.chaptersBtn.style.pointerEvents = "all";
+              },
+            });
           },
         });
         spaghettiTl.play();
