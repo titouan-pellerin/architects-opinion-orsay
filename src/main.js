@@ -51,8 +51,6 @@ function init() {
   });
   loadingManager.onProgress = (_url, loaded, total) => {
     const percentLoaded = (loaded / total) * 100;
-    // console.log(Math.round(percentLoaded));
-    console.log(percentLoaded);
     gsap.to(".loader-animation_wrapper .logo", {
       clipPath: `inset(${100 - percentLoaded}% ${0}% ${0}% ${0}%)`,
       duration: 0,
@@ -88,7 +86,7 @@ function init() {
       .to(discorverBtn, {
         duration: 1,
         opacity: 1,
-        delay: 0.85,
+        // delay: 0.85,
         onComplete: () => {
           discorverBtn.style.pointerEvents = "all";
           discorverBtn.addEventListener("click", startClick);
