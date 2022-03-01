@@ -318,14 +318,18 @@ export class Environment {
       gsap.to(".content-subtitles", { duration: 0.5, opacity: 1, delay: 1 });
       gsap.to(".btn-next_container", { duration: 0.5, opacity: 1, delay: 1 });
     } else {
-      gsap.to(this.chaptersBtn, { duration: 0.5, opacity: 1, delay: 3.5 });
-      gsap.to(".content-subtitles", {
+      gsap.to(this.chaptersBtn, {
         duration: 0.5,
         opacity: 1,
         delay: 3.5,
         onComplete: () => {
           if (this.music) this.musicVolumeTween.reverse();
         },
+      });
+      gsap.to(".content-subtitles", {
+        duration: 0.5,
+        opacity: 1,
+        delay: 6.5,
       });
       gsap.to(".btn-next_container", { duration: 1, opacity: 1, delay: 3.5 });
     }
