@@ -342,7 +342,7 @@ export class CameraAnimation {
                   ".canvas-container",
                   {
                     delay: 2,
-                    opacity: 0.3,
+                    opacity: 0.75,
                     duration: 1,
                   },
                   0
