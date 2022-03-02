@@ -66,7 +66,6 @@ export class Dust {
 
   setGeometry() {
     const blueprintParticle = new PlaneBufferGeometry();
-    // blueprintParticle.scale(0.1, 0.1, 0.1);
     blueprintParticle.scale(0.01, 0.01, 0.01);
 
     this.object.geometry = new InstancedBufferGeometry();

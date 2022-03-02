@@ -89,6 +89,11 @@ export class Raycasting {
         opacity: 0,
         pointerEvents: "none",
       });
+      gsap.to(".btn-next_container", {
+        duration: 0,
+        delay: 0.5,
+        display: "none",
+      });
       // this.backBtnTween.play();
     }
   }
@@ -111,6 +116,11 @@ export class Raycasting {
       duration: 0.5,
       opacity: 1,
       pointerEvents: "all",
+      delay: 2.5,
+    });
+    gsap.to(".btn-next_container", {
+      duration: 0,
+      display: "block",
       delay: 2.5,
     });
 
