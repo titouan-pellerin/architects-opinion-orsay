@@ -385,7 +385,7 @@ export class CameraAnimation {
     this.goToArtworkTl = gsap
       .timeline({ paused: true })
       .to(
-        [".content-subtitles", ".btn-next_container .text"],
+        ".content-subtitles",
         {
           duration: 1,
           opacity: 0,

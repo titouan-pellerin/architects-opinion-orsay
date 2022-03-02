@@ -303,8 +303,7 @@ export class Environment {
     gsap.to(".content-subtitles", { duration: 0.5, opacity: 0 });
     gsap.to(".canvas-container", { duration: 0.5, opacity: 1 });
     gsap.to(".content-interface_titles .chap", { duration: 0.5, opacity: 0 });
-    gsap.to(".btn-next_container", { duration: 0.5, opacity: 0 });
-    gsap.to(".btn-next_container .text", { duration: 0, pointerEvents: "none" });
+    gsap.to(".btn-next_container", { duration: 0.5, opacity: 0, pointerEvents: "none" });
     gsap.to(".content-menu .title-wrapper .title-section", {
       duration: 1.25,
       opacity: "1",
@@ -369,7 +368,7 @@ export class Environment {
         opacity: 1,
         delay: 1,
         onComplete: () => {
-          gsap.to(".btn-next_container .text", { duration: 0, pointerEvents: "all" });
+          gsap.to(".btn-next_container", { duration: 0, pointerEvents: "all" });
         },
       });
     } else {
@@ -386,7 +385,12 @@ export class Environment {
         opacity: 1,
         delay: 6.5,
       });
-      gsap.to(".btn-next_container", { duration: 1, opacity: 1, delay: 3.5 });
+      gsap.to(".btn-next_container", {
+        duration: 1,
+        opacity: 1,
+        pointerEvents: "all",
+        delay: 3.5,
+      });
     }
     this.contentMenu.style.pointerEvents = "none";
     gsap.to(".content-menu .btn-close_container", {
