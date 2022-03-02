@@ -155,13 +155,17 @@ export class CameraAnimation {
     mouse.range.fromArray([0.2, 0.1]);
 
     gsap.to(".btn-next_container .text", {
-      duration: 1,
+      duration: 0,
       opacity: 0,
       pointerEvents: "none",
     });
 
     if (this.checkpointsIndex <= 4) {
       if (this.checkpoints[this.checkpointsIndex].chapterDomEl) {
+        gsap.to(".btn-chapters_container", {
+          duration: 0,
+          pointerEvents: "none",
+        });
         gsap
           .timeline()
           .to(
@@ -189,6 +193,12 @@ export class CameraAnimation {
             opacity: 1,
             duration: 1,
             delay: -1.35,
+            onComplete: () => {
+              gsap.to(".btn-chapters_container", {
+                duration: 0,
+                pointerEvents: "all",
+              });
+            },
           });
       }
       const goToCheckpointDelay =
@@ -375,10 +385,11 @@ export class CameraAnimation {
     this.goToArtworkTl = gsap
       .timeline({ paused: true })
       .to(
-        [".content-subtitles", ".btn-next_container .text-wrapper"],
+        [".content-subtitles", ".btn-next_container .text"],
         {
           duration: 1,
           opacity: 0,
+          pointerEvents: "none",
         },
         0
       )
