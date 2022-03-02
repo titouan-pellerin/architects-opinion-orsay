@@ -155,7 +155,7 @@ export class CameraAnimation {
     mouse.range.fromArray([0.2, 0.1]);
 
     gsap.to(".btn-next_container .text", {
-      duration: 0,
+      duration: 1,
       opacity: 0,
       pointerEvents: "none",
     });
