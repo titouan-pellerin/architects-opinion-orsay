@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { getGPUTier } from "detect-gpu";
 import gsap from "gsap";
-import { AudioListener, PositionalAudio } from "three";
+import { Audio, AudioListener } from "three";
 import { Environment } from "./js/Three/Environment/Environment";
 import { MainScene } from "./js/Three/MainScene";
 import { soundsMap } from "./js/utils/assets";
@@ -29,10 +29,10 @@ function startClick() {
   discoverTl.resume();
   audioListener = new AudioListener();
   mainScene.camera.add(audioListener);
-  music = new PositionalAudio(audioListener);
+  music = new Audio(audioListener);
   music.setLoop(true);
-  music.setRefDistance(60);
-  music.setRolloffFactor(0);
+  // music.setRefDistance(60);
+  // music.setRolloffFactor(0);
   music.setBuffer(soundsMap.get("music"));
   music.setVolume(0);
   music.play();

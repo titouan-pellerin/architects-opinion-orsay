@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import { PositionalAudio } from "three";
+import { Audio } from "three";
 import raf from "../utils/Raf";
 
 export class Record {
@@ -56,9 +56,9 @@ export class Record {
    */
   init(audioListener) {
     this.audioListener = audioListener;
-    this.audio = new PositionalAudio(audioListener);
-    this.audio.setRefDistance(60);
-    this.audio.setRolloffFactor(0);
+    this.audio = new Audio(audioListener);
+    // this.audio.setRefDistance(60);
+    // this.audio.setRolloffFactor(0);
     this.audio.setBuffer(this.buffer);
     this.audio.setVolume(0.9);
     this.pausedTime = 0;
