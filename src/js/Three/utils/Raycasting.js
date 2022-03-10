@@ -20,31 +20,6 @@ export class Raycasting {
     this.onClickHandler = this.onClick.bind(this);
     this.backBtn = document.querySelector(".btn-back_container");
     this.backBtn.addEventListener("click", this.onBackBtnClick.bind(this));
-    // this.backBtnTween = gsap
-    //   .to(this.backBtn, {
-    //     duration: 1,
-    //     opacity: 1,
-    //     pointerEvents: "all",
-    //     delay: 2,
-    //   })
-    //   .pause();
-    // this.backBtnTween = gsap
-    //   .timeline({ paused: true })
-    //   .to(
-    //     this.backBtn,
-    //     {
-    //       duration: 0.5,
-    //       opacity: 1,
-    //       pointerEvents: "all",
-    //     },
-    //     0
-    //   )
-    //   .to(
-    //     [".btn-chapters_container", ".btn-next_container"],
-    //     { duration: 0.5, opacity: 0, pointerEvents: "none" },
-    //     0
-    //   );
-    // this.canvasContainerTween;
 
     this.leavesRayPos = new Vector3();
     this.groundRayPos = new Vector3();
@@ -72,7 +47,6 @@ export class Raycasting {
       this.isZoomed = true;
       Artwork.contentArtworkTitlesTween.reverse();
       this.cameraAnimation.goToArtwork(this.currentIntersect);
-      // Artwork.contentArtworkFooterTween.pause(0);
       gsap.to(this.backBtn, {
         duration: 0.5,
         opacity: 1,
@@ -94,7 +68,6 @@ export class Raycasting {
         delay: 0.5,
         display: "none",
       });
-      // this.backBtnTween.play();
     }
   }
 
@@ -123,8 +96,6 @@ export class Raycasting {
       display: "block",
       delay: 2.5,
     });
-
-    // this.backBtnTween.reverse();
   }
 
   updateArtworks(newArtworks = []) {

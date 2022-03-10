@@ -9,5 +9,4 @@ float noise2 = smoothstep(0.0, .75, cnoise(vUv * 20. + uTime * .1));
 vec3 renderMix = (render * render2) + (render3 * render4);
 renderMix = mix(renderMix, vec3(noise * noise2) * uColor2 * 80., vRayModifier);
 
-// gl_FragColor = vec4(renderMix, renderMix.g);
 gl_FragColor = vec4(outgoingLight * renderMix, diffuseColor.a);

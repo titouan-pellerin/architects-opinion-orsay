@@ -65,7 +65,6 @@ export class Butterfly {
 
   setGeometry() {
     const blueprintParticle = new PlaneBufferGeometry(1, 1, 8, 8);
-    // blueprintParticle.rotateX(Math.PI * 0.75);
     blueprintParticle.scale(0.135, 0.135, 0.135);
 
     this.object.geometry = new InstancedBufferGeometry();
@@ -105,9 +104,6 @@ export class Butterfly {
 
     this.object.material = new MeshToonMaterial({
       side: DoubleSide,
-      // wireframe: true,
-      // transparent: true,
-      // blending: AdditiveBlending,
     });
     this.object.material.onBeforeCompile = (shader) => {
       shader.uniforms = {

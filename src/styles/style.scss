@@ -114,7 +114,6 @@ button {
   position: fixed;
   top: 0;
   left: 0;
-  // opacity: 0.3;
   opacity: 0;
 
   @include tablet {
@@ -135,7 +134,6 @@ button {
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  // mix-blend-mode: difference;
 
   @include tablet {
     display: none;

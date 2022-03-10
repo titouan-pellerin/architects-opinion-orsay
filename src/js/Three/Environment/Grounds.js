@@ -1,10 +1,9 @@
-import { Color, Group, Line, Vector3 } from "three";
+import { Color, Group, Vector3 } from "three";
 import { mainScene } from "../../../main";
 import { texturesMap } from "../../utils/assets";
 import { guiFolders } from "../../utils/Debug";
 import { positions } from "../../utils/positions";
 import raf from "../../utils/Raf";
-import { Checkpoint } from "../Path/Checkpoint";
 import { Butterfly } from "./Elements/Butterfly";
 import { Dust } from "./Elements/Dust";
 import { Leaf } from "./Elements/Leaf";
@@ -15,7 +14,6 @@ export class Grounds extends Group {
    *
    * @param {Number} groundAmount
    * @param {*} parameters
-   * @param {Line} forestPathLine
    * @param {Checkpoint[]} checkpoints
    */
   constructor(parameters = {}, forestPathLine, artworks, raycasting) {
@@ -128,7 +126,6 @@ export class Grounds extends Group {
     const dustParticlesMesh2 = dustParticlesMesh1.clone();
     const butterflyParticlesMesh2 = butterflyParticlesMesh1.clone();
     const butterflyParticlesMirrorMesh2 = butterflyParticlesMirrorMesh1.clone();
-    // dustParticlesMesh2.scale.z = -1;
     butterflyParticlesMesh2.scale.x = -1;
     butterflyParticlesMirrorMesh2.scale.x = -1;
 
@@ -198,7 +195,6 @@ export class Grounds extends Group {
     const dustParticlesMesh4 = dustParticlesMesh1.clone();
     const butterflyParticlesMesh4 = butterflyParticlesMesh1.clone();
     const butterflyParticlesMirrorMesh4 = butterflyParticlesMirrorMesh1.clone();
-    // dustParticlesMesh4.scale.z = -1;
     butterflyParticlesMesh4.scale.x = -1;
     butterflyParticlesMirrorMesh4.scale.x = -1;
 
@@ -224,8 +220,6 @@ export class Grounds extends Group {
       this.ground5.grass,
       this.ground5.flowers
     );
-    // Ground.groundElements.curveTexturesData = null;
-    // Ground.groundElements.curveTexturesMatrices = null;
 
     this.ground5.trees.setTrees(positions.get("treesPositions")[4]);
     this.ground5.rocks.setRocks(positions.get("rocksPositions")[4]);

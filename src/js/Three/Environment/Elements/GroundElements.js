@@ -168,8 +168,6 @@ export class GroundElements {
 
         instance.position.y =
           posY * (1 - red / (150 + random)) + (-2.85 * red) / (150 + random);
-        // posY * (1 - red / (150 + random)) + (-2.75 * red) / (150 + random);
-        // instance.scale.y = 1 * (1 - red / (150 + random)) + (0.5 * red) / (150 + random);
         if (i >= grassInstanceNumber) {
           const randomScale = MathUtils.randFloat(0.8, 1);
           instance.scale.set(randomScale, randomScale, randomScale);
@@ -210,7 +208,6 @@ export class GroundElements {
   setInstanceMatrices(groundIndex, grassInstancedMesh, flowersInstancedMesh) {
     let i = 0;
     while (i < grassInstancedMesh.count) {
-      // for (let i = 0; i < grassInstancedMesh.count; i++) {
       grassInstancedMesh.setMatrixAt(i, this.curveTexturesMatrices.get(groundIndex)[i]);
       grassInstancedMesh.setColorAt(
         i,
@@ -221,7 +218,6 @@ export class GroundElements {
 
     i = 0;
     while (i < flowersInstancedMesh.count) {
-      // for (let i = 0; i < flowersInstancedMesh.count; i++) {
       flowersInstancedMesh.setMatrixAt(
         i,
         this.curveTexturesMatrices.get(groundIndex)[i + grassInstancedMesh.count]
@@ -235,7 +231,5 @@ export class GroundElements {
 
     grassInstancedMesh.instanceMatrix.needsUpdate = true;
     flowersInstancedMesh.instanceMatrix.needsUpdate = true;
-    // grassInstancedMesh.updateMatrix();
-    // flowersInstancedMesh.updateMatrix();
   }
 }

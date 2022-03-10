@@ -1,9 +1,6 @@
 #include ../utils/noise3d;
-// #include ../utils/noise2d;
 #include <common>
-// varying vec4 vNoise;
 varying float vNoise;
-// varying vec2 vUv;
 uniform float uTime;
 uniform float uSpeed;
 uniform float uDisplaceIntensity;

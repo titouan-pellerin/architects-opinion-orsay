@@ -4,7 +4,6 @@ import outputFragmentShader from "@glsl/dust/outputFragment.glsl";
 import projectVertexShader from "@glsl/dust/projectVertex.glsl";
 import { customFogUniforms } from "@js/utils/misc";
 import {
-  Color,
   DoubleSide,
   InstancedBufferAttribute,
   InstancedBufferGeometry,
@@ -12,22 +11,9 @@ import {
   Mesh,
   MeshBasicMaterial,
   PlaneBufferGeometry,
-  Vector3,
 } from "three";
 import { mainScene } from "../../../../main";
 import raf from "../../../utils/Raf";
-
-const tVec3 = new Vector3();
-const tCol = new Color();
-
-const params = {
-  //  MORNING
-  // color: "#e5aa43",
-  //  DAY
-  color: "#ffffb3",
-  //  NIGHT
-  // color: "#284e84",
-};
 
 export class Dust {
   constructor() {
@@ -51,8 +37,6 @@ export class Dust {
     this.positions = new Float32Array(particlesCount * 3);
     this.offset = new Float32Array(particlesCount * 1);
     this.scale = new Float32Array(particlesCount * 1);
-
-    // -225 : 25
 
     for (let i = 0; i < particlesCount; i++) {
       this.positions[i * 3 + 0] = MathUtils.randFloatSpread(1);
@@ -124,9 +108,6 @@ export class Dust {
   setMesh() {
     this.object.mesh = new Mesh(this.object.geometry, this.object.material);
     this.object.mesh.frustumCulled = false;
-
-    // this.object.mesh.position.z = 20;
-    // this.object.mesh.position.y = -0.5;
   }
 
   update() {

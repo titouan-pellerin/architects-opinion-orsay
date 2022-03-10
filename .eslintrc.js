@@ -5,8 +5,6 @@ module.exports = {
     es2021: true,
   },
   extends: ["eslint:recommended"],
-  // extends: ["eslint:recommended", "plugin:prettier/recommended"],
-  // extends: ["eslint:recommended", "plugin:prettier/recommended", "prettier"],
   parserOptions: {
     ecmaVersion: 13,
     sourceType: "module",
@@ -17,10 +15,8 @@ module.exports = {
     "prefer-const": "error",
     "no-use-before-define": "error",
     "no-extra-boolean-cast": 0,
-    // "no-duplicate-imports": 1,
     indent: ["error", 2, { SwitchCase: 1 }],
     quotes: ["error", "double"],
-    // "prettier/prettier": ["error", {}, { usePrettierrc: true }],
     semi: ["error", "always"],
     "no-unused-vars": [
       "warn",
@@ -48,6 +44,5 @@ module.exports = {
         functions: "ignore",
       },
     ],
-    // "import/order": ["warn", { "newlines-between": "always" }],
   },
 };

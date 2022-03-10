@@ -73,8 +73,6 @@ export class Voiceover {
         pointerEvents: "all",
       });
     }
-
-    // });
   }
 
   pause() {

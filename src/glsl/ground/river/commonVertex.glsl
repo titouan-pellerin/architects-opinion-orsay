@@ -2,7 +2,6 @@
 
 #include <common>
 
-// varying vec2 vUv;
 varying float vNoise;
 varying float vNoise2;
 varying float vNoise3;

@@ -49,7 +49,6 @@ export class MainScene extends Scene {
           lightColor: new Color("#5a544e"),
           light2Color: new Color("#d8923d"),
           cornerSize: 4,
-          // sunProgress: 0.3,
           sunProgress: 0,
         },
         // Checkpoint 1
@@ -58,7 +57,6 @@ export class MainScene extends Scene {
           lightColor: new Color(0.60934, 0.562502, 0.513332),
           light2Color: new Color(0.856381, 0.733361, 0.514228),
           cornerSize: 5.188686,
-          // sunProgress: 0.3,
           sunProgress: 0.297171,
         },
         // Checkpoint 2
@@ -67,7 +65,6 @@ export class MainScene extends Scene {
           lightColor: new Color(0.764234, 0.70331, 0.638656),
           light2Color: new Color(0.862015, 0.830539, 0.680415),
           cornerSize: 5.906854,
-          // sunProgress: 0.3,
           sunProgress: 0.476714,
         },
         // Checkpoint 3
@@ -76,7 +73,6 @@ export class MainScene extends Scene {
           lightColor: new Color(0.56901, 0.525838, 0.480702),
           light2Color: new Color(0.851004, 0.731598, 0.799802),
           cornerSize: 6.998066,
-          // sunProgress: 0.3,
           sunProgress: 0.749556,
         },
         // Checkpoint 4
@@ -85,7 +81,6 @@ export class MainScene extends Scene {
           lightColor: new Color(0.843588, 0.661146, 0.861603),
           light2Color: new Color(0.433102, 0.402285, 0.37074),
           cornerSize: 7.628346,
-          // sunProgress: 0.3,
           sunProgress: 0.907074,
         },
         {
@@ -95,32 +90,6 @@ export class MainScene extends Scene {
           cornerSize: 8,
           sunProgress: 1,
         },
-
-        // {
-        //   skyBgColor: new Color("#ffffb3"),
-        //   // skyBgColor: new Color("#91d17a"),
-        //   lightColor: new Color("#c8b8a7"),
-        //   light2Color: new Color("#dcd7b3"),
-        //   cornerSize: 6,
-        //   // sunProgress: 0.3,
-        //   sunProgress: 0.5,
-        // },
-
-        /* 
-        Checkpoint 3
-        0.739699 0.9178 0.850704
-        0.56901 0.525838 0.480702
-        0.851004 0.731598 0.799802
-        6.998066
-        0.749556
-        
-        Checkpoint 4
-        0.575353 0.865901 0.944616
-        0.433102 0.402285 0.37074
-        0.843588 0.661146 0.861603
-        7.628346
-        0.907074
-        */
       ],
     };
 
@@ -182,9 +151,6 @@ export class MainScene extends Scene {
           this.controls.enableDamping = true;
           this.controls.dampingFactor = 0.05;
           this.controls.enableRotate = true;
-          // this.controls.enablePan = false;
-          // this.controls.enableZoom = false;
-          // this.controls.rotateSpeed = -0.1;
           this.camera.position.z += 3;
           this.controls.enabled = true;
           this.controls.update();

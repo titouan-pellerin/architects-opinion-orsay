@@ -4,8 +4,6 @@ uniform float uSpeed;
 uniform float uDisplaceIntensity;
 uniform vec3 uRayPos;
 
-// // varying vec2 vUv;
-
 float N(vec2 st) {
     return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
 }

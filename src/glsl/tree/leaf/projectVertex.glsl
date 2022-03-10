@@ -20,10 +20,6 @@ vRayModifier = map(rayModifier, rayModifierMin, rayModifierMax, 0., 1.);
 
 vec3 rayDirection = normalize(uRayPos.xyz - worldPosition.xyz);
 rayDirection = mix(vec3(1.), rayDirection, vRayModifier);
-// vec3 rayDirection = vec3(1.);
-
-// To make sure that rayDirection wont alterate instances which are not in range
-// rayDirection = mix(rayDirection, vec3(1.), rayModifier);
 
 float dispPower = 1. - cos(uv.y * PI * uDisplaceIntensity);
 

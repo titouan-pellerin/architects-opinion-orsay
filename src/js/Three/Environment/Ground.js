@@ -50,7 +50,6 @@ export class Ground extends Group {
         128,
         128
       );
-      // .toNonIndexed();
       const vertices = Ground.groundGeometry.getAttribute("position").array;
 
       for (let i = 0; i < vertices.length / 3; i++) {

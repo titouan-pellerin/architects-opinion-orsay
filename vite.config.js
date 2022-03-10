@@ -7,7 +7,6 @@ export default defineConfig({
     https: false,
     open: true,
   },
-  // assetsInclude: ["**/*.gltf"],
   plugins: [glsl()],
 
   resolve: {

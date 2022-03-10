@@ -31,8 +31,6 @@ function startClick() {
   mainScene.camera.add(audioListener);
   music = new Audio(audioListener);
   music.setLoop(true);
-  // music.setRefDistance(60);
-  // music.setRolloffFactor(0);
   music.setBuffer(soundsMap.get("music"));
   music.setVolume(0);
   music.play();
@@ -88,7 +86,6 @@ function init() {
       .to(discorverBtn, {
         duration: 1,
         opacity: 1,
-        // delay: 0.85,
         onComplete: () => {
           discorverBtn.style.pointerEvents = "all";
           discorverBtn.addEventListener("click", startClick);
@@ -151,74 +148,7 @@ function init() {
         },
       })
       .add(gsap.delayedCall(-1, () => environment.goToCheckpoint(), []))
-      // .call(environment.goToCheckpoint, [], -2)
       .play();
-
-    // .play();
-
-    // discoverTl
-    //     .to(".loader-animation_wrapper", {
-    //       duration: 0,
-    //       opacity: 0,
-    //       onComplete: () => {
-    //         discorverBtn.style.pointerEvents = "all";
-    //       },
-    //     })
-    //     .to(discorverBtn, {
-    //       duration: 0,
-    //       opacity: 1,
-    //       onComplete: () => {
-    //         discorverBtn.addEventListener("click", startClick);
-    //         discoverTl.pause();
-    //       },
-    //     })
-    //     .to(discorverBtn, {
-    //       duration: 0,
-    //       opacity: 0,
-    //     })
-    //     .to([".loader-credits-wrapper", ".loader-title_wrapper"], {
-    //       opacity: 0,
-    //       duration: 0,
-    //       delay: 0,
-    //     })
-    //     .to(".loader-text", {
-    //       duration: 1,
-    //       opacity: 1,
-    //       onComplete: () => {
-    //         console.time("init");
-    //         environment = new Environment(audioListener, music);
-    //         environment.startExperience();
-    //         mainScene.add(environment.grounds);
-    //         console.timeEnd("init");
-    //       },
-    //     })
-    //     .to(".loader-text", {
-    //       delay: 0,
-    //       duration: 0,
-    //       opacity: 0,
-    //     })
-    //     .to(".content-interface_titles .title-wrapper", {
-    //       duration: 0,
-    //       opacity: 1,
-    //     })
-    //     .to(".canvas-container", {
-    //       duration: 0,
-    //       opacity: 1,
-    //       delay: 0,
-    //     })
-    //     .to([".btn-chapters_container", ".btn-sound_container"], {
-    //       opacity: 1,
-    //       duration: 0,
-    //       pointerEvents: "all",
-    //     })
-    //     .to(".content-interface_titles .title-wrapper", {
-    //       duration: 0,
-    //       opacity: 0,
-    //       onComplete: () => {
-    //         environment.goToCheckpoint();
-    //       },
-    //     })
-    // .play();
   };
 }
 

@@ -1,5 +1,4 @@
 #include <common>
-// // varying vec2 vUv;
 varying float vRayModifier;
 
 uniform float uTime;

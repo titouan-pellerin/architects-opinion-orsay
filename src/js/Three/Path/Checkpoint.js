@@ -1,6 +1,3 @@
-import { SplineCurve } from "three";
-import { Artwork } from "../Environment/Elements/Artwork";
-
 export class Checkpoint {
   /**
    *

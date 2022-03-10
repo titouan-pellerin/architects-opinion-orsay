@@ -23,10 +23,6 @@ class MeshSurfaceSampler {
     }
 
     if (geometry.index) {
-      //   console.warn(
-      //     "MeshSurfaceSampler: Converting geometry to non-indexed BufferGeometry."
-      //   );
-
       geometry = geometry.toNonIndexed();
     }
 

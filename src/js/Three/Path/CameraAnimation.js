@@ -1,16 +1,11 @@
 import gsap from "gsap";
-import { Line, Vector3 } from "three";
+import { Vector3 } from "three";
 import { mainScene, mouse } from "../../../main";
 import { guiFolders } from "../../utils/Debug";
-import { Voiceover } from "../../Voiceover/Voiceover";
-import { Artwork } from "../Environment/Elements/Artwork";
-import { Raycasting } from "../utils/Raycasting";
-import { Checkpoint } from "./Checkpoint";
 
 export class CameraAnimation {
   /**
    *
-   * @param {Line} path
    * @param {Number} envScale
    * @param {Checkpoint[]} checkpoints
    * @param {Voiceover} voiceOver
@@ -46,8 +41,6 @@ export class CameraAnimation {
     this.goToCheckpointTl = null;
     if (index === 0) this.tick.value = 0;
     else this.tick.value = this.checkpoints[index - 1].tick;
-
-    // this.voiceOver.playChapter(index);
 
     const nextTick = this.tick.value + 0.007;
 
@@ -290,7 +283,6 @@ export class CameraAnimation {
           {
             delay: goToCheckpointDelay,
             duration: this.checkpoints[this.checkpointsIndex].duration,
-            // duration: 1,
             value: this.checkpoints[this.checkpointsIndex].tick,
             // eslint-disable-next-line no-undef
             ease: CustomEase.create(
@@ -406,7 +398,6 @@ export class CameraAnimation {
       .to(
         mainScene.cameraContainer.position,
         {
-          // delay: 1,
           duration: 3.5,
           ease: "power3.inOut",
           x: newCamPos.x,
@@ -441,11 +432,6 @@ export class CameraAnimation {
             mainScene.cameraContainer.rotateX(Math.PI);
             mainScene.cameraContainer.rotateZ(Math.PI);
           },
-          // onComplete: () => {
-          //   this.positionTween.reverse();
-          //   this.lookAtTween.reverse();
-          //   // this.raycasting.start(this.checkpoints[this.checkpointsIndex - 1].artworks);
-          // },
         },
         0
       );

@@ -115,7 +115,6 @@ export class Environment {
     this.closeBtn = document.querySelector(".btn-close_container");
     this.contentMenu = document.querySelector(".content-menu");
     this.menuChapters = document.querySelectorAll(".title-section");
-    // this.li = document.querySelector(".menu-btn_section");
     this.artworkIn = document.querySelector(".artwork-in");
     this.artworkOut = document.querySelector(".artwork-out");
     this.soundBtn = document.querySelector(".btn-sound_container");
@@ -166,7 +165,6 @@ export class Environment {
             break;
         }
         this.cameraAnimation.tpToCheckpoint(this.chapterClicked, this.raycasting);
-        // this.grounds.switchGrounds();
       },
     });
     this.menuAnimation.to(customFogUniforms.progress, {
@@ -241,10 +239,6 @@ export class Environment {
         });
         this.pauseExperience();
         this.chapterClicked = 0;
-        // this.menuAnimation.pause(0);
-        // this.menuAnimation.play();
-        // this.clickChapter(null, 0);
-        // this.resumeExperience();
         const spaghettiTl = gsap.timeline({ paused: true });
         spaghettiTl.to(customFogUniforms.progress, { duration: 3, value: 1.15 });
         spaghettiTl.to(customFogUniforms.transitionIsIn, {

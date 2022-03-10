@@ -44,7 +44,6 @@ export class Mouse {
   }
 
   pause() {
-    // this.removeMouseMove();
     gsap.to(this.range, {
       duration: 1,
       x: 0.1,
@@ -53,7 +52,6 @@ export class Mouse {
   }
 
   resume() {
-    // document.addEventListener("mousemove", this.mouseMoveHandler);
     gsap.to(this.range, { duration: 1, x: 0.2, y: 0.1 });
   }
 }

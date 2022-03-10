@@ -53,7 +53,6 @@ export class Leaf {
     for (let i = 0; i < particlesCount; i++) {
       this.positions[i * 3 + 0] = MathUtils.randFloatSpread(50);
       this.positions[i * 3 + 1] = -5;
-      // this.positions[i * 3 + 2] = MathUtils.randFloatSpread(50);
       this.positions[i * 3 + 2] = MathUtils.randFloat(-225, 25);
 
       const randomColor = tCol.set(
